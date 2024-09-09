@@ -4,8 +4,8 @@
  */
 package Controller;
 
-import DAO.UserDAO;
-import Entity.Users;
+import DAO.userDAO;
+import Entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("loginform.jsp").forward(request, response);
     }
 
     /**
@@ -95,17 +95,28 @@ public class LoginServlet extends HttpServlet {
         response.addCookie(cn);
         response.addCookie(cp);
 
-        UserDAO u = new UserDAO();
+        userDAO u = new userDAO();
         User a = u.Login(username, password);
         if (a == null) {
             request.setAttribute("mess", "Username or Password incorrect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("loginform.jsp").forward(request, response);
         } else {
-            if (a.getRoleID() == 3) {
+            if (a.getRoleID() == 5) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", a);
-                response.sendRedirect("adminHome.jsp");
-            } else {
+                response.sendRedirect("index.html");
+            }
+            else if (a.getRoleID() == 3) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", a);
+                response.sendRedirect("index_1.html");
+            } 
+            else if (a.getRoleID() == 4) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", a);
+                response.sendRedirect("index_1_1.html");
+            } 
+            else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", a);
                 response.sendRedirect("home");

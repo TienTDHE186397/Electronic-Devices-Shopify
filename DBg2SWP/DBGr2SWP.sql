@@ -1,5 +1,5 @@
-﻿--CREATE DATABASE DBGr2SWP3
---USE  DBGr2SWP3
+﻿--CREATE DATABASE DBGr2SWP5
+--USE  DBGr2SWP5
 
 --drop table Person
 CREATE TABLE Person(
@@ -50,29 +50,24 @@ CREATE TABLE ShowRoom (
     [ShowRoomName] NVARCHAR(100) NOT NULL,--Tên của rạp chiếu phim.
     [Address] NVARCHAR(500) NOT NULL--Địa chỉ của rạp chiếu phim.
 );
+
 --drop table Products
 CREATE TABLE Products (
-    [ProductID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,--Mã định danh duy nhất cho mỗi sản phẩm (phim).
-    [ProductName] NVARCHAR(100) NOT NULL,--Tên của phim.
-    [Genre] NVARCHAR(50) NOT NULL,
-    [Publisher] NVARCHAR(50) NOT NULL,
-    [Price] NVARCHAR(50) NOT NULL,--Giá vé của phim (lưu dưới dạng chuỗi).
-    [Image] NVARCHAR(MAX) NULL,--Ảnh đại diện của phim (có thể để trống).
-    [ImageBanner] NVARCHAR(MAX) NULL,--Ảnh bìa của phim (có thể để trống).
-    [Description] NVARCHAR(MAX) NULL,-- Mô tả chi tiết về phim (có thể để trống).
+    [ProductID] int IDENTITY(1,1) NOT NULL PRIMARY KEY,--Mã định danh duy nhất cho mỗi sản phẩm (phim).
     [Views] NVARCHAR(MAX) NULL,--Số lượt xem san pham 
     [releaseDate] DATE NULL,--Ngày phát hành của san pham.
     [QuantitySold] INT NULL,--Số lượng san pham da ban
 	[favourite] int null,-- So thich 
     [CategoryID] INT NULL,--Khóa ngoại liên kết với bảng Categories, xác định thể loại của phim.
-    Quantity int not null,
+     Quantity int not null,
 	[ShowRoomID] INT NULL,--Khóa ngoại liên kết với bảng Cinema, xác định rạp chiếu phim của sản phẩm.
     CONSTRAINT [FK_Products_Category] FOREIGN KEY ([CategoryID]) REFERENCES [dbo].[Categories] ([CategoryID]),
     CONSTRAINT [FK_Products_ShowRoom] FOREIGN KEY ([ShowRoomID]) REFERENCES [dbo].[ShowRoom] ([ShowRoomID])
 );
-drop table Phone
+
+--drop table Phone
 Create table Phone(
-       PhoneID int primary key not null,--Mã định danh duy nhất cho mỗi điện thoại
+       PhoneID nvarchar(50) not null primary key,--Mã định danh duy nhất cho mỗi điện thoại
        PhoneName nvarchar(255) not null,--Tên sản phẩm
        Price int not null,--Giá của sản phẩm
        ScreenSize decimal(10,2) not null,--Kích thước màn hình của sản phẩm
@@ -85,21 +80,17 @@ Create table Phone(
        Battery nvarchar(255) not null,--Pin của sản phẩm
        OperatingSystem nvarchar(255) not null,--Hệ điều hành của sản phẩm
        ScreenResolution nvarchar(255) not null,--Độ phân giải màn hình của sản phẩm
-	   CategoryID int not null,
-	   FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
+	   ProductID int not null,
+	   FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
-drop table Laptop
+
+--drop table Laptop
 create table Laptop(
-   LaptopID nvarchar(20) primary key not null,
-   CategoryID int not null,
-   Genre nvarchar(50) not null,
-   FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
-);
-drop table LaptopDetail
-create table Laptop(
-   LaptopID nvarchar(10) primary key not null,
-   CategoryID int not null,
+   LaptopID nvarchar(50) not null primary key,
+   ProductID int not null,
+   price int not null,
    LapName nvarchar(150) not null,
+   genre nvarchar(150) not null,
    CPU nvarchar(150) not null,
    Ram nvarchar(150) not null,
    Graphic_Card nvarchar(150) not null,
@@ -116,8 +107,25 @@ create table Laptop(
    Size nvarchar(100) not null,
    img NVARCHAR(MAX) NULL,
    description nvarchar(MAX) null,
-   FOREIGN KEY (LaptopID) REFERENCES Laptop(LaptopID)
+   FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
+
+CREATE TABLE Headphones (
+    Headphoneid nvarchar(200) PRIMARY KEY not null,
+	HeadphoneName nvarchar(200) not null,
+    brand nvarchar(200) NOT NULL,
+    model nvarchar(200) NOT NULL,
+    Features nvarchar(200) NOT NULL, -- Tính nữa
+    connection nvarchar(200) NOT NULL,--kieu ket noi co day hay ko day
+    battery_life INTEGER,
+    noise_cancel nvarchar(200),
+    price int not null,
+	img nvarchar(MAX),
+    description nvarchar(MAX),
+	ProductID int not null,
+	FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
 
 --drop table ShowRoomDetail
 Create table ShowRoomDetail(

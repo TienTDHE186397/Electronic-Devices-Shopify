@@ -8,7 +8,7 @@ package Entity;
  *
  * @author admin
  */
-public class Users {
+public class User {
 //    	[Username] [varchar](50) NOT NULL,
 //	[Password] [varchar](50) NOT NULL,
 //	[PersonID] [varchar](20) NOT NULL,
@@ -19,17 +19,17 @@ public class Users {
     private int RoleID;
     private String RoleName;
 
-    public Users(){
+    public User(){
     }
 
-    public Users(String Username, String Password, int PersonID, int RoleID) {
+    public User(String Username, String Password, int PersonID, int RoleID) {
         this.Username = Username;
         this.Password = Password;
         this.PersonID = PersonID;
         this.RoleID = RoleID;
     }
 
-    public Users(String Username, String Password, int PersonID, int RoleID, String RoleName) {
+    public User(String Username, String Password, int PersonID, int RoleID, String RoleName) {
         this.Username = Username;
         this.Password = Password;
         this.PersonID = PersonID;

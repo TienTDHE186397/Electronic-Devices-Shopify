@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
-import Entity.Users;
 import Entity.Product;
+import Entity.User;
 import Entity.Wallet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,11 +17,12 @@ import java.util.logging.Logger;
  * @author dutpr
  */
 public class userDAO extends DBContext {
-    public Users Login(String username, String pass) {
+   
+    public User Login(String username, String pass) {
         String sql = "SELECT * FROM Users WHERE Username = ? AND Password = ?";
         String xUsername, xPass;
         int xId, xRole;
-        Users x = null;
+        User x = null;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
@@ -32,7 +33,7 @@ public class userDAO extends DBContext {
                 xPass = rs.getString("Password");
                 xId = rs.getInt("PersonID");
                 xRole = rs.getInt("RoleID");
-                x = new Users(username, pass, xRole, xRole);
+                x = new User(username, pass, xRole, xRole);
 
             }
         } catch (Exception e) {
@@ -183,12 +184,11 @@ public class userDAO extends DBContext {
         }
     }
    public static void main(String[] args) {
-        userDAO dao = new userDAO();
-        Users a = dao.login("user3", "123");
-        if (a != null) {
-            System.out.println(a.getID());
-        } else {
-            System.out.println("Wallet not found.");
+        userDAO u = new userDAO();
+        ReaderDAO r = new ReaderDAO();
+
+        if(u.updatePassword("user2", "long")){
+            System.out.println("Sucss");
         }
     }
 }

@@ -35,8 +35,9 @@
                 <button>Đăng Ký</button>
             </form>
         </div>
+       
         <div class="form-container sign-in">
-            <form action="loginform" method="post">
+            <form action="login" method="post">
                 <h1>Đăng Nhập</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -45,13 +46,14 @@
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>Sử dụng tài khoản hiện có </span>
-                <input type="text" name="user" placeholder="Username" required>
-                <input type="password" name="pass" placeholder="Password"required><br>
+                <input name="user" type="text" id="inputEmail" class="form-control" value="${cookie.cname.value}" placeholder="Tên đăng nhập" required autofocus>
+                 <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Mật khẩu" value="${cookie.cpass.value}" required>
                 <div style="color: red"><b>${mess}</b></div>
                 <a href="#">Quên mật khẩu</a>
                 <button type="submit">Đăng Nhập</button>
             </form>
         </div>
+                
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
