@@ -1,4 +1,4 @@
-﻿USE  DBGr2SWP4
+﻿USE  DBGr2SWP5
 
 INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone) 
 VALUES 
@@ -21,17 +21,15 @@ Values
 ('saleManager'),
 ('admin');
 
-INSERT INTO Account (UserName, [Password],[Age],RoleID) VALUES
-('Admin','123',18,6),
-('customer1','123',18,1),
-('customer2','123',18,1),
-('makerting1','123',20,2),
-('makerting2','123',22,2),
-('shipper1','123',23,5),
-('shipper2','123',24,5),
-('sale1','123',23,3),
-('sale2','123',23,3),
-('saleManager1','123',24,4);
+INSERT INTO Users (UserName, [Password],PersonID,RoleID) VALUES
+('Admin','123',1,5),
+('customer1','123',2,1),
+('customer2','123',3,1),
+('makerting1','123',4,2),
+('makerting2','123',5,2),
+('sale1','123',8,3),
+('sale2','123',9,3),
+('saleManager1','123',10,4);
 
 Insert into Wallets(UserName,Balance) Values
 ('customer1',0),
