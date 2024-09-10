@@ -67,23 +67,22 @@ CREATE TABLE Products (
 
 --drop table Phone
 Create table Phone(
-       PhoneID nvarchar(50) not null primary key,--Mã định danh duy nhất cho mỗi điện thoại
-       PhoneName nvarchar(255) not null,--Tên sản phẩm
-       Price int not null,--Giá của sản phẩm
-       ScreenSize decimal(10,2) not null,--Kích thước màn hình của sản phẩm
-       DisplayTech nvarchar(255) not null,--Công nghệ màn hình của sản phẩm
-       RearCamera nvarchar(255) not null,--Camera sau của sản phẩm
-       FrontCamera nvarchar(255) not  null,--Camera trước của sản phẩm
-       Chipset nvarchar(255) not null,--Chip của mỗi sản phẩm
-       RAMCapicity int not null,--Dung lượng RAM của sản phẩm
-       InternalMemory int not null,--Bộ nhớ trong của sản phẩm
-       Battery nvarchar(255) not null,--Pin của sản phẩm
-       OperatingSystem nvarchar(255) not null,--Hệ điều hành của sản phẩm
-       ScreenResolution nvarchar(255) not null,--Độ phân giải màn hình của sản phẩm
-	   ProductID int not null,
-	   FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
-);
-
+PhoneID nvarchar(10) primary key not null,--Mã định danh duy nhất cho mỗi điện thoại
+ProductID nvarchar(10), --mã định danh cho sản phẩm 
+PhoneName nvarchar(255) not null,--Tên sản phẩm
+Price int not null,--Giá của sản phẩm
+ScreenSize decimal(10,2) not null,--Kích thước màn hình của sản phẩm
+DisplayTech nvarchar(255) not null,--Công nghệ màn hình của sản phẩm
+RearCamera nvarchar(255) not null,--Camera sau của sản phẩm
+FrontCamera nvarchar(255) not  null,--Camera trước của sản phẩm
+Chipset nvarchar(255) not null,--Chip của mỗi sản phẩm
+RAMCapicity int not null,--Dung lượng RAM của sản phẩm
+InternalMemory int not null,--Bộ nhớ trong của sản phẩm
+Battery nvarchar(255) not null,--Pin của sản phẩm
+OperatingSystem nvarchar(255) not null,--Hệ điều hành của sản phẩm
+ScreenResolution nvarchar(255) not null,--Độ phân giải màn hình của sản phẩm
+img NVARCHAR(MAX) NULL,
+)
 --drop table Laptop
 create table Laptop(
    LaptopID nvarchar(50) not null primary key,
@@ -126,6 +125,25 @@ CREATE TABLE Headphones (
 	FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
+CREATE TABLE PC(
+	pcId NVARCHAR(10) PRIMARY KEY NOT NULL, -- Mã định danh cho mỗi loại máy tính
+	ProductID int not null,
+	pcImage NVARCHAR(255) NOT NULL, -- Ảnh sản phẩm
+	pcName NVARCHAR(255) NOT NULL, -- Tên sản phẩm máy tính
+	pcBranch NVARCHAR(50) NOT NULL, -- Tên thương hiệu máy tính
+	pcPrice INT, --Giá của sản phẩm
+	pcCPU NVARCHAR(255) NOT NULL, -- Thông tin về vi xử lý
+	pcMemory NVARCHAR(255) NOT NULL, --Thông tin về bộ nhớ ram(GB)
+	pcDiskMemory NVARCHAR(255) NOT NULL, -- Thông tin về ổ cứng(GB)
+	pcVga NVARCHAR(255) NOT NULL, -- Thông tin về vi xử lý đồ hoạ
+	pcNetworkLan NVARCHAR(255) NOT NULL, -- Thông tin về card mạng 
+	pcPower INT, -- Thông tin về công suất điện (W)
+	pcSize NVARCHAR(255) NOT NULL, -- Thông tin về kích cỡ(L x W x H) mm hoặc cm
+	pcWeight DECIMAL(4,2), -- Thông tin về khối lượng(kg)
+	pcFrontPort NVARCHAR(255) NOT NULL, -- Thông tin về cổng trước
+	pcBackPort NVARCHAR(255) NOT NULL, --Thông tin về cổng sau 
+	pcGuarantee INT NOT NULL, -- Thông tin bảo hành(Tháng,month)
+)
 
 --drop table ShowRoomDetail
 Create table ShowRoomDetail(

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author dutpr
  */
-public class userDAO extends DBContext {
+public class UserDAO extends DBContext {
    
     public User Login(String username, String pass) {
         String sql = "SELECT * FROM Users WHERE Username = ? AND Password = ?";
@@ -184,7 +184,7 @@ public class userDAO extends DBContext {
         }
     }
    public static void main(String[] args) {
-        userDAO u = new userDAO();
+        UserDAO u = new UserDAO();
         ReaderDAO r = new ReaderDAO();
 
         if(u.updatePassword("user2", "long")){
