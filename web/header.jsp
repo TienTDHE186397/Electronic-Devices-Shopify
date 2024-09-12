@@ -12,7 +12,8 @@
         <title>JSP Page</title>
         <style>
             nav {
-                width: 150px; /* Độ rộng của menu */
+                width: 200px; /* Độ rộng của menu */
+                
             }
 
             nav ul {
@@ -87,7 +88,10 @@
                 display: block;
             }
 
-            /* Định dạng danh sách bên trong bảng */
+            .menu-top{
+                display: flex;
+                justify-content: center;
+            }
           
 
         </style>
@@ -97,44 +101,49 @@
     <section id="top">
         <div class="container-fluid">
             <div class="row top_1">
-                <div class="col-md-4">
-
-                </div>
-                <div class="col-md-8">
+              
+                <div class="col-md-12 menu-top">
                     <div class="top_1i text-end">
-                        <ul class="mb-0">
-                            <c:if test="${sessionScope.acc.roleID == 1}">
+                        <ul class="mb-lg-1">
+                            <c:if test="${sessionScope.acc.roleID != 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="vieworderadmin"><i class="fa fa-caret-right col_yell me-1"></i> View Orders</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.roleID == 1}">
+                            <c:if test="${sessionScope.acc.roleID != 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="managercinema"><i class="fa fa-caret-right col_yell me-1"></i> Manager Cinema</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.roleID == 1}">
+                            <c:if test="${sessionScope.acc.roleID != 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="manager"><i class="fa fa-caret-right col_yell me-1"></i> Manager Product</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.roleID == 1}">
+                            <c:if test="${sessionScope.acc.roleID != 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="manageraccount"><i class="fa fa-arrow-circle-o-right col_yell me-1"></i> Manager Account</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.isSell == 1}">
+                            <c:if test="${sessionScope.acc.isSell != 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="viewcalendar"><i class="fa fa-user col_yell me-1"></i> Loại Tài Khoản: Nhân Viên</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.isSell == 1 || sessionScope.acc.roleID == 1}">
+                                
+                            <c:if test="${sessionScope.acc.isSell != 1}">
+                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
+                                    <a class="text-light" href="viewcalendar"><i class="fa fa-user col_yell me-1"></i> BLOGS</a>
+                                </li>
+                            </c:if>
+                                
+                            <c:if test="${sessionScope.acc.isSell != 1 || sessionScope.acc.roleID == 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="viewcalendar"><i class="fa fa-pencil col_yell me-1"></i> View Calendar</a>
                                 </li>
                             </c:if>
 
-                            <c:if test="${sessionScope.acc.roleID == 0 && sessionScope.acc.isSell == 0}">
+                            <c:if test="${sessionScope.acc.roleID != 0 && sessionScope.acc.isSell != 0}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="#"><i class="fa fa-caret-right col_yell me-1"></i> Số Dư: <c:choose>
                                             <c:when test="${sessionScope.wallet.balance != 0}">
@@ -143,15 +152,15 @@
                                             <c:otherwise>
                                                 0
                                             </c:otherwise>
-                                        </c:choose> VND</a>
+                                        </c:choose>0 VND</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.roleID == 0 && sessionScope.acc.isSell == 0}">
+                            <c:if test="${sessionScope.acc.roleID != 0 && sessionScope.acc.isSell != 0}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="vieworderuser"><i class="fa fa-caret-right col_yell me-1"></i> View My Order</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc.roleID == 0 && sessionScope.acc.isSell == 0}">
+                            <c:if test="${sessionScope.acc.roleID != 0 && sessionScope.acc.isSell != 0}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
                                     <a class="text-light" href="#"><i class="fa fa-user col_yell me-1"></i>Loại Tài Khoản: Người Dùng</a>
                                 </li>
@@ -162,20 +171,16 @@
                                     <a class="text-light" href="logout"><i class="fa fa-sign-in col_yell me-1"></i> Logout</a>
                                 </li>
                             </c:if>
-                            <c:if test="${sessionScope.acc != null}">
+                            <c:if test="${sessionScope.acc == null}">
                                 <li class="nav-item  d-inline-block font_13 border-0">
                                     <a class="text-light" href="#"><i class="fa fa-user col_yell me-1"></i> Hello ${sessionScope.acc.user} </a>
                                 </li>
                             </c:if>
 
-                            <c:if test="${sessionScope.acc == null}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="loginform.jsp"><i class="fa fa-sign-in col_yell me-1"></i> Sign In</a>
-                                </li>
-                            </c:if>
+                         
                             <c:if test="${sessionScope.acc == null}">
                                 <li class="nav-item  d-inline-block font_13 border-0">
-                                    <a class="text-light" href="loginform.jsp"><i class="fa fa-user col_yell me-1"></i> Login </a>
+                                    <a class="text-light" href="login.jsp"><i class="fa fa-user col_yell me-1"></i> Login </a>
                                 </li>
                             </c:if>
                         </ul>
@@ -189,16 +194,14 @@
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-0">
-
+                        <div>
                         <nav>
                             <ul>
-
-
                                 <ul>
                                     <li>
                                         <a href="#" class="set-item">
-                                            <i class="fas fa-user"></i>
-                                            <span class="nav-item">trang chủ</span>
+                                            <i class="fas fa-laptop"></i>
+                                            <span class="nav-item">Laptop-Tablet</span>
                                         </a>
                                         <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
                                             <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Bluetooth</a></li>
@@ -211,27 +214,31 @@
                                 <ul>
                                     <li>
                                         <a href="#" class="set-item">
-                                            <i class="fa-solid fa-laptop"></i>
-                                            <span class="nav-item">LapTop</span>
+                                            <i class="fa-solid fa-computer"></i>
+                                            <span class="nav-item">PC</span>
+                                        </a>
+                                        <a href="#" class="set-item">
+                                            <i class="fa-solid fa-tv"></i>
+                                            <span class="nav-item">Màn hình</span>
                                         </a>
                                         <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Bluetooth</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Chụp tai</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Nhét Tai</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i> Có dây</a></li>
+                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Gaming</a></li>
+                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Đồ Hoạ</a></li>
+                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Lập Trình</a></li>
+                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i>Học Tập</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="nav-item">
                                         <a href="#" class="set-item">
-                                            <i class="fa-solid fa-laptop"></i>
-                                            <span class="nav-item">LapTop</span>
+                                            <i class="fa-solid fa-mobile-phone"></i>
+                                            <span class="nav-item">Điện Thoại</span>
                                         </a>
 
                                         <!-- Bảng tùy chọn sẽ hiển thị khi di chuột vào "LapTop" -->
-                                        <div class="dropdown-menu p-4 bg-light">
-                                            <div class="row">
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li class="row">
                                                 <div class="col-6">
                                                     <h5>Bluetooth</h5>
                                                     <ul>
@@ -246,8 +253,8 @@
                                                         <li><a class="dropdown-item" href="#option4">Option 4</a></li>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
 
@@ -279,20 +286,12 @@
                                         </ul>
                                     </li>
                                 </ul>
-
-
-
-
-
-
-
-
-
-
-
+                                
+                                
                             </ul>
                         </nav>
-
+                        </div>
+                        
                         <!--                       
                                                 <li class="nav-item dropdown">
                                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -330,12 +329,12 @@
         </nav>
     </section>
 
-    <section id="header_top" class="pt-4 pb-4">
+    <section id="header_top" class="pt-4 pb-4" style="background-color: #d70018">
         <div class="container-fluid">
             <div class="row header_top1">
                 <div class="col-md-3">
                     <div class="header_top1l">
-                        <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="home"><img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img"> TNREAL</a></h3>
+                        <h3 class="mb-0" style="font-family: serif ; color: red"><a class="col_dark" href="home"><img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img"> CELLPHONES</a></h3>
                     </div>
 
                 </div>
@@ -343,11 +342,11 @@
                     <form action="search" method="POST">
                         <div class="header_top1m">
                             <select name="categories" class="form-select  bg_light" >
-                                <option value="">Tất Cả Phim</option>
+                                <option value="">Tất Cả Sản Phẩm</option>
                                 <option>Mới Nhất</option>
                                 <option>Cũ Nhất</option>
                                 <option>Xem Nhiều</option>
-                                <option>Bán Chạy</option>
+                                <option>Yêu Thích</option>
                             </select>
 
                             <div class="input-group">
