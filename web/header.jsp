@@ -60,7 +60,7 @@
             .dropdown-menu {
                 display: none; /* Ẩn ban đầu */
                 position: absolute;
-                left: 80%; /* Bảng sẽ xuất hiện bên phải của mục "LapTop" */
+                left: 50%; /* Bảng sẽ xuất hiện bên phải của mục "LapTop" */
 
                 background-color: #f8f9fa;
                 box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Hiệu ứng bóng đổ */
@@ -237,23 +237,12 @@
                                         </a>
 
                                         <!-- Bảng tùy chọn sẽ hiển thị khi di chuột vào "LapTop" -->
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li class="row">
-                                                <div class="col-6">
-                                                    <h5>Bluetooth</h5>
-                                                    <ul>
-                                                        <li><a class="dropdown-item" href="#option1">Option 1</a></li>
-                                                        <li><a class="dropdown-item" href="#option2">Option 2</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-6">
-                                                    <h5>Chụp tai</h5>
-                                                    <ul>
-                                                        <li><a class="dropdown-item" href="#option3">Option 3</a></li>
-                                                        <li><a class="dropdown-item" href="#option4">Option 4</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
+                                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                            <li style="font-style: normal">HÃNG ĐIỆN THOẠI</li>
+                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Gaming</a></li>
+                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Đồ Hoạ</a></li>
+                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Lập Trình</a></li>
+                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i>Học Tập</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -334,11 +323,18 @@
             <div class="row header_top1">
                 <div class="col-md-3">
                     <div class="header_top1l">
-                        <h3 class="mb-0" style="font-family: serif ; color: red"><a class="col_dark" href="home"><img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img"> CELLPHONES</a></h3>
+                        <h3 class="mb-0">
+                            <a class="col_dark" href="home">
+                                <img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img">CELLPHONES
+                            </a>
+                        </h3>
                     </div>
 
                 </div>
-                <div class="col-md-6">
+                
+                
+                
+                <div class="col-md-4">
                     <form action="search" method="POST">
                         <div class="header_top1m">
                             <select name="categories" class="form-select  bg_light" >
@@ -364,6 +360,8 @@
             </div>
         </div>
     </section>
+    
+    
     <script>
         document.getElementById("laptop-menu").addEventListener("click", function (e) {
             e.preventDefault(); // Ngăn chặn link mặc định

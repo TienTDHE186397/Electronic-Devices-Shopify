@@ -20,7 +20,7 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <style>
             body {
-                font-family: 'JetBrain Mono', serif;
+                font-family: Roboto;
             }
             /* CSS */
             .prod_2im img {
@@ -69,6 +69,7 @@
                 text-transform: uppercase;
 
             }
+            
 #subs {
     background-color: #f7f7f7; /* Màu nền nhẹ */
     padding-top: 5rem;
@@ -105,16 +106,66 @@
                 background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
             }
 
+            .mobile{
+                align-content: center;
+                border: 1px solid #e5e7eb;
+                border-radius: 20px;
+                text-align: center;
+                margin: 10px;
+                background-color: #f3f4f6;
+                display: inline-block;
+                padding: 5px 10px;
+                justify-content: center;
+                font-family: Roboto;
+            }
+        
+         .card{
+             align-content: center;
+             border-radius: 20px;
+             margin: 20px;
+             width: 250px;
+             height: 450px;
+             align-items: center;
+         }   
+            
+        .card-title {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .price {
+            color: red;
+            font-weight: bold;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: red;
+            color: white;
+            padding: 5px;
+            font-size: 0.9rem;
+        }
+        .card-img-top{
+            width: 160px;
+            height: 160px;
+        }
+            
         </style>
 
 </head>
 <body>
+    
     <!-- Header start -->
     <%@include file="header.jsp" %>
 
     <!-- Header end -->
 
-    <!-- Films product start -->
+    <!-- Product start -->
+    
     <!-- Phần banner lớn start-->
     <section id="center" class="center_home">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -154,6 +205,113 @@
         </div>
     </section>
     
+    <section id="mobile">
+        <div class="row container-fluid">
+            <h2 class="col-md-2">ĐIỆN THOẠI</h2>
+            <div class="col-md-10 row">
+                <a href="#" class="col-auto mobile">Apple</a>
+                <a href="#" class="col-auto mobile">Samsung</a>
+                <a href="#" class="col-auto mobile">Xiaomi</a>
+                <a href="#" class="col-auto mobile">Oppo</a>
+                <a href="#" class="col-auto mobile">Vivo</a>
+                <a href="#" class="col-auto mobile">Realme</a>
+                <a href="#" class="col-auto mobile">Xem tất cả</a>
+            </div>    
+        </div>
+        
+        <div class="container-product-item row">
+            <div class="col-auto">
+                <div class="card position-relative">
+                    <span class="discount-badge">Giảm 15%</span>
+                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="iPhone 15 128GB">
+                    <div class="card-body">
+                        <h6 class="card-title">iPhone 15 128GB</h6>
+                        <p class="price">19.590.000đ <span class="original-price">22.990.000đ</span></p>
+                        <p>Smember giảm thêm đến <b>196.000đ</b></p>
+                        <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Card 2 -->
+            <div class="col-auto">
+                <div class="card position-relative">
+                    <span class="discount-badge">Giảm 17%</span>
+                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Samsung Galaxy M55">
+                    <div class="card-body">
+                        <h6 class="card-title">Samsung Galaxy M55 (12GB 256GB)</h6>
+                        <p class="price">10.490.000đ <span class="original-price">12.690.000đ</span></p>
+                        <p>Smember giảm thêm đến <b>105.000đ</b></p>
+                        <p>S-Student giảm thêm đến <b>600.000đ</b></p>
+                        <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Card 3 -->
+            <div class="col-auto">
+                <div class="card position-relative">
+                    <span class="discount-badge">Giảm 6%</span>
+                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
+                    <div class="card-body">
+                        <h6 class="card-title">Xiaomi Redmi 14C</h6>
+                        <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
+                        <p>Smember giảm thêm đến <b>31.000đ</b></p>
+                        <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-auto">
+                <div class="card position-relative">
+                    <span class="discount-badge">Giảm 6%</span>
+                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
+                    <div class="card-body">
+                        <h6 class="card-title">Xiaomi Redmi 14C</h6>
+                        <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
+                        <p>Smember giảm thêm đến <b>31.000đ</b></p>
+                        <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-auto">
+                <div class="card position-relative">
+                    <span class="discount-badge">Giảm 6%</span>
+                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
+                    <div class="card-body">
+                        <h6 class="card-title">Xiaomi Redmi 14C</h6>
+                        <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
+                        <p>Smember giảm thêm đến <b>31.000đ</b></p>
+                        <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        </div>
+            
+    </section>
+    
+    <section id="laptop">
+        <div class="row container-fluid">
+            <h2 class="col-md-2">LAPTOP</h2>
+            <div class="col-sm-10 row">
+                <a href="#" class="col-auto mobile">Apple</a>
+                <a href="#" class="col-auto mobile">Samsung</a>
+                <a href="#" class="col-auto mobile">Xiaomi</a>
+                <a href="#" class="col-auto mobile">Oppo</a>
+                <a href="#" class="col-auto mobile">Vivo</a>
+                <a href="#" class="col-auto mobile">Realme</a>
+                <a href="#" class="col-auto mobile">Xem tất cả</a>
+                
+            </div> 
+            
+            
+        </div>
+    </section>
+    <!-- Footer start -->
+        <%@include file="footer.jsp" %>
+    <!-- Footer end -->
 </body>
 
 </html>
