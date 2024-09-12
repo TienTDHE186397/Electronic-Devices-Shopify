@@ -44,7 +44,7 @@
 	 <div class="row footer_1">
 		<div class="col-md-4">
 		 <div class="footer_1i">
-		   <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="index.html"><img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img"> ALV Cinema</a></h3><br/>
+		   <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="index.html"><img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img"> Shopify</a></h3><br/>
 		   <p class="fs-6 mb-4">KẾT NỐI VỚI CHÚNG TÔI TRÊN MẠNG XÃ HỘI</p>
 		   <ul class="social-network social-circle mb-0 mt-3">
 					   <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-skype"></i></a></li>
@@ -72,10 +72,10 @@
 		   <h5 class="fs-6 mb-4">LIÊN KẾT NHANH</h5>
 		   <div class="row">
 			   <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="home">Trang Chủ</a></h6>
-			   <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Phim Mới</a></h6>
-			   <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Phim Hot</a></h6>
+			   <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Laptop</a></h6>
+			   <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Điện Thoại</a></h6>
 			   <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Blog</a></h6>
-			   <h6 class="font_14 fw-normal mb-0 col-md-12 col-6"><a href="#">Hỗ trợ</a></h6>
+			   <h6 class="font_14 fw-normal mb-0 col-md-12 col-6"><a href="#">PC</a></h6>
 		   </div>
 		 </div>
 		</div>
