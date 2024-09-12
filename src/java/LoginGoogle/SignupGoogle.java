@@ -74,7 +74,7 @@ public class SignupGoogle extends HttpServlet {
         String accessToken = getToken(code);
         UserGoogleDto user = getUserInfo(accessToken);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("fontanh.jsp").forward(request, response);
+        request.getRequestDispatcher("signup.jsp").forward(request, response);
     }
 
     /**

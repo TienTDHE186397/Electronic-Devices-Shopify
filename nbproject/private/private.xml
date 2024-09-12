@@ -7,9 +7,12 @@
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/login.jsp</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/LoginGoogle/Constants.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SignupServlet.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/LoginFaceBook/FacebookLogin.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/LoginFaceBook/LoginFaceBook.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/HomeControl.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Entity/UserGoogleDto.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/LoginGoogle/LoginGoogleHandler.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/LoginGoogle/SignupGoogle.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/LoginGoogle/UserGoogleDto.java</file>
         </group>
     </open-files>
 </project-private>

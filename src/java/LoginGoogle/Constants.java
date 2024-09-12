@@ -16,7 +16,7 @@ public class Constants {
 
 	public static String GOOGLE_REDIRECT_URI = "http://localhost:9999/WebDienTu/LoginGoogleHandler";
         
-        public static String GOOGLE_REDIRECT_URI2 = "http://localhost:9999/WebDienTu/LoginGoogleHandler";
+       public static String GOOGLE_REDIRECT_URI2 = "http://localhost:9999/WebDienTu/SignupGoogle";
         
         public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
 

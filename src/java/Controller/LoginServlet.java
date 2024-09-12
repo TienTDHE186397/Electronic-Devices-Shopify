@@ -96,29 +96,29 @@ public class LoginServlet extends HttpServlet {
         response.addCookie(cp);
 
         UserDAO u = new UserDAO();
-        User a = u.Login(username, password);
-        if (a == null) {
+        User user = u.Login(username, password);
+        if (user == null) {
             request.setAttribute("mess", "Username or Password incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            if (a.getRoleID() == 5) {
+            if (user.getRoleID() == 5) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", a);
+                session.setAttribute("user", user);
                 response.sendRedirect("homeAdmin");
             }
-            else if (a.getRoleID() == 3) {
+            else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", a);
+                session.setAttribute("user", user);
                 response.sendRedirect("HomeSale");
             } 
-            else if (a.getRoleID() == 4) {
+            else if (user.getRoleID() == 4) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", a);
+                session.setAttribute("user", user);
                 response.sendRedirect("homeSaleMananger");
             } 
             else {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", a);
+                session.setAttribute("user", user);
                 response.sendRedirect("home");
             }
 

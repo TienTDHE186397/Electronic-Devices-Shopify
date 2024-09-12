@@ -105,7 +105,7 @@
                         <ul class="mb-0">
                             <c:if test="${sessionScope.acc.roleID == 1}">
                                 <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="vieworderadmin"><i class="fa fa-caret-right col_yell me-1"></i> View Orders</a>
+                                    <a class="caret-right col_yetext-light" href="vieworderadmin"><i class="fa fa-ll me-1"></i> View Orders</a>
                                 </li>
                             </c:if>
                             <c:if test="${sessionScope.acc.roleID == 1}">
@@ -168,14 +168,12 @@
                                 </li>
                             </c:if>
 
-                            <c:if test="${sessionScope.acc == null}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="loginform.jsp"><i class="fa fa-sign-in col_yell me-1"></i> Sign In</a>
-                                </li>
-                            </c:if>
+                           <c:if test="${sessionScope.user != null}">
+                                        <li><i class="fa fa-user"></i> Chào mừng: ${sessionScope.user.username}</li>
+                                        </c:if>
                             <c:if test="${sessionScope.acc == null}">
                                 <li class="nav-item  d-inline-block font_13 border-0">
-                                    <a class="text-light" href="loginform.jsp"><i class="fa fa-user col_yell me-1"></i> Login </a>
+                                    <a class="text-light" href="login"><i class="fa fa-user col_yell me-1"></i> Login </a>
                                 </li>
                             </c:if>
                         </ul>

@@ -7,8 +7,6 @@ CREATE TABLE Person(
     Name NVARCHAR(50),
     Gender NVARCHAR(6),
     DateOfBirth DATE,
-    StartDate DATE,
-    Address NVARCHAR(200),
     Email VARCHAR(100),
     Phone VARCHAR(15)
 );

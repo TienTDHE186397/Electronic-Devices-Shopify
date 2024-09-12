@@ -79,8 +79,10 @@ public class LoginGoogleHandler extends HttpServlet {
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         UserGoogleDto user = getUserInfo(accessToken);
+        System.out.println(user);
         request.setAttribute("user", user);
         request.getRequestDispatcher("fontanh.jsp").forward(request, response);
+        
 
     }
 
