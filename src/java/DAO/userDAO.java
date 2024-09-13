@@ -184,11 +184,16 @@ public class UserDAO extends DBContext {
         }
     }
    public static void main(String[] args) {
-        UserDAO u = new UserDAO();
-        ReaderDAO r = new ReaderDAO();
+            String testUsername = "a"; // Thay thế bằng tên người dùng thực tế
+            String testPassword = "a"; // Thay thế bằng mật khẩu thực tế
+             UserDAO d = new UserDAO();
+            User user = d.Login(testUsername, testPassword);
 
-        if(u.updatePassword("user2", "long")){
-            System.out.println("Sucss");
-        }
+            if (user != null) {
+                System.out.println("Login successful: " + user);
+            } else {
+                System.out.println("Login failed");
+            }
+       
     }
 }

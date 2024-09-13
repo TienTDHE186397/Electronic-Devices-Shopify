@@ -4,6 +4,7 @@
  */
 package LoginGoogle;
 
+import DAO.PersonDAO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.Period;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -73,8 +76,21 @@ public class SignupGoogle extends HttpServlet {
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         UserGoogleDto user = getUserInfo(accessToken);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("signup.jsp").forward(request, response);
+        System.out.println(user);
+
+        String gmail = user.getEmail();
+        // Kiểm tra sự tồn tại của email
+        PersonDAO emailChecker = new PersonDAO();
+        if (emailChecker.isEmailExists(gmail)) {
+            String error = "Your account with email is existed Please Comeback login Page";
+            // Nếu email đã tồn tại, chuyển hướng đến fontanh.jsp
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("login").forward(request, response);
+        } else {
+            // Nếu email không tồn tại, chuyển hướng đến signupWithGG.jsp
+          request.setAttribute("user", user);
+          request.getRequestDispatcher("signupWithGG").forward(request, response);
+        }
     }
 
     /**
@@ -88,7 +104,7 @@ public class SignupGoogle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       
     }
 
     /**

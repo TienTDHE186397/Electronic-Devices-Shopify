@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Email;
 
-import DAO.PersonDAO;
-import DAO.UserDAO;
-import Entity.Person;
-import Entity.User;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 /**
  *
  * @author admin
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SendMailServlet", urlPatterns = {"/SendMailServlet"})
+public class SendMailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +42,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet SendMailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SendMailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("checksendemail.jsp").forward(request, response);
     }
 
     /**
@@ -77,56 +77,39 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String remember = request.getParameter("remember");
-        Cookie cn = new Cookie("cname", username);
-        Cookie cp = new Cookie("cpass", password);
-        Cookie cr = new Cookie("crem", remember);
+        final String username = "vuahaitac1543@gmail.com";
+        final String password = "asdc pyrk falq hcoa";
 
-        if (remember != null) {
-            cn.setMaxAge(60 * 60 * 24);
-            cp.setMaxAge(60 * 60 * 24);
-            cr.setMaxAge(60 * 60 * 24);
-        } else {
-            cn.setMaxAge(0);
-            cp.setMaxAge(0);
-            cr.setMaxAge(0);
-        }
-        response.addCookie(cr);
-        response.addCookie(cn);
-        response.addCookie(cp);
-        UserDAO u = new UserDAO();
-        User user = u.Login(username, password);
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587"); 
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true"); // Bật STARTTLS
 
-        if (user == null) {
-            request.setAttribute("mess", "Username or Password incorrect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            if (user.getRoleID() == 5) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homeAdmin");
-            } else if (user.getRoleID() == 3) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("HomeSale");
-            } else if (user.getRoleID() == 4) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homeSaleMananger");
-            } else if (user.getRoleID() == 1) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homepage.jsp");
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("login.jsp");
+        Session session = Session.getInstance(prop, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
             }
+        });
 
+        String emailTo = request.getParameter("to");
+        String emailSubject = request.getParameter("subject");
+        String emailContent = request.getParameter("content");
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo)); // Sử dụng setRecipients
+            message.setSubject(emailSubject);
+            message.setText(emailContent);
+            Transport.send(message);
+
+            response.getWriter().println("Email sent successfully!");
+        } catch (Exception e) {
+            e.printStackTrace(); // In chi tiết lỗi ra console
+            response.getWriter().println("Failed to send email: " + e.getMessage());
         }
-
     }
 
     /**
