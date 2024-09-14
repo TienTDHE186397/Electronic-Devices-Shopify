@@ -2,28 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package LoginGoogle;
 
 import DAO.PersonDAO;
 import DAO.UserDAO;
-import Entity.Person;
-import Entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "SignupContent", urlPatterns = {"/signupWithGG"})
+public class SignupContent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +40,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet SignupContent</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SignupContent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +61,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+       request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
     }
 
     /**
@@ -77,56 +75,36 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String remember = request.getParameter("remember");
-        Cookie cn = new Cookie("cname", username);
-        Cookie cp = new Cookie("cpass", password);
-        Cookie cr = new Cookie("crem", remember);
-
-        if (remember != null) {
-            cn.setMaxAge(60 * 60 * 24);
-            cp.setMaxAge(60 * 60 * 24);
-            cr.setMaxAge(60 * 60 * 24);
-        } else {
-            cn.setMaxAge(0);
-            cp.setMaxAge(0);
-            cr.setMaxAge(0);
-        }
-        response.addCookie(cr);
-        response.addCookie(cn);
-        response.addCookie(cp);
-        UserDAO u = new UserDAO();
-        User user = u.Login(username, password);
-
-        if (user == null) {
-            request.setAttribute("mess", "Username or Password incorrect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            if (user.getRoleID() == 5) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homeAdmin");
-            } else if (user.getRoleID() == 3) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("HomeSale");
-            } else if (user.getRoleID() == 4) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homeSaleMananger");
-            } else if (user.getRoleID() == 1) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homepage.jsp");
+        String dateString = request.getParameter("date");
+        
+        try {
+            LocalDate birthDate = LocalDate.parse(dateString);
+            LocalDate currentDate = LocalDate.now();
+            int age = Period.between(birthDate, currentDate).getYears();
+            if (age < 18) {
+                request.setAttribute("errorMessage", "Bạn phải lớn hơn 18 tuổi.");
+                request.getRequestDispatcher("SignupContent").forward(request, response);
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("login.jsp");
+                response.getWriter().println("Bạn đủ 18 tuổi.");
+// request.getRequestDispatcher("success.jsp").forward(request, response);
             }
-
+        } catch (Exception e) {
+            // Nếu có lỗi với dữ liệu nhập (ví dụ không nhập ngày sinh hợp lệ)
+            request.setAttribute("errorMessage", "Ngày sinh không hợp lệ.");
+            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
         }
-
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+            PersonDAO  ps = new PersonDAO();
+            UserDAO uDAO = new UserDAO();
+            PersonDAO rDAO = new PersonDAO();
+            boolean personAdded = rDAO.addPerson(name, null, dateString, null, null, email, phone);
+            if (personAdded) {
+                    String success = "Create Account Successfull";
+                    request.setAttribute("success", success);
+                    request.getRequestDispatcher("login").forward(request, response);
+    }
     }
 
     /**

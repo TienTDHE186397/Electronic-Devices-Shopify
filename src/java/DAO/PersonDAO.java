@@ -4,20 +4,24 @@
  */
 package DAO;
 
+import Entity.Person;
 import Entity.Reader;
+import Entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author Duc Long
  */
-public class ReaderDAO extends DBContext {
+public class PersonDAO extends DBContext {
 
-    public List<Reader> getAllReader() {
+    public List<Reader> getAllPerson() {
         List<Reader> listReader = new ArrayList<>();
         try {
             String sql = "select * from Person";
@@ -41,20 +45,25 @@ public class ReaderDAO extends DBContext {
         return listReader;
     }
 
-    public boolean addReader(String name, String gender, String dateOfBirth, String startDate, String address, String email, String phone) {
-        String sql = "INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public boolean addPerson(String name, String gender, String dateOfBirth, String startDate, String address, String email, String phone, int roleId, String password) {
+        // Câu lệnh SQL để thêm dữ liệu vào bảng Person
+        String sql = "INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone, RoleID, Password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, name);
-            st.setString(2, gender);
-            st.setString(3, dateOfBirth);
-            st.setString(4, startDate);  // StartDate is now included
-            st.setString(5, address);
-            st.setString(6, email);
-            st.setString(7, phone);
-            return st.executeUpdate() > 0;
+            st.setString(1, name);            // Tên người dùng
+            st.setString(2, gender);          // Giới tính
+            st.setString(3, dateOfBirth);     // Ngày sinh
+            st.setString(4, startDate);       // Ngày bắt đầu (có thể là ngày hiện tại hoặc ngày cụ thể khi đăng ký)
+            st.setString(5, address);         // Địa chỉ
+            st.setString(6, email);           // Email
+            st.setString(7, phone);           // Số điện thoại
+            st.setInt(8, roleId);             // Vai trò người dùng
+            st.setString(9, password);        // Mật khẩu (nên được mã hóa trước khi lưu vào cơ sở dữ liệu)
+
+            return st.executeUpdate() > 0;    // Trả về true nếu thêm thành công, false nếu không
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return false;                     // Trả về false nếu có lỗi xảy ra
         }
     }
 
@@ -87,7 +96,6 @@ public class ReaderDAO extends DBContext {
         }
         return null;
     }
-
 
     public Reader getPersonByCard(int cardid) {
         try {
@@ -131,7 +139,7 @@ public class ReaderDAO extends DBContext {
         return -1; // Indicate failure
     }
 
-    public boolean updateReader(int pid, String name, String gender, String date, String startdate, String address, String email, String phone) {
+    public boolean updatePerson(int pid, String name, String gender, String date, String startdate, String address, String email, String phone) {
         try {
             String sql = "update Person set Name = ?, Gender = ?, DateOfBirth = ?, StartDate = ?, Address = ?, Email = ?, Phone = ? where PersonID = ?";
             PreparedStatement st = connection.prepareStatement(sql);
@@ -152,14 +160,26 @@ public class ReaderDAO extends DBContext {
         return false;
     }
 
+    public boolean isEmailExists(String email) {
+        boolean exists = false;
+        String sql = "SELECT COUNT(*) FROM Person WHERE Email = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, email);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    exists = (count > 0);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return exists;
+    }
+
     public static void main(String[] args) {
-        ReaderDAO rDAO = new ReaderDAO();
-        int cardid = 9;
-        System.out.println(rDAO.getPersonByCard(cardid));
-//        if (r.addReader(null, null, null, null, null, null, null)) {
-//            System.out.println("Success");
-//        }
-       rDAO.updateReader(2, "Nguyễn Thị Bích Lương", "Nữ", "2000-09-09", null, "Tô Hiệu", "luong@gmail.com", "0986789988");
+
     }
 
 }
