@@ -34,11 +34,7 @@
                 overflow: hidden; /* Ẩn phần văn bản bị tràn */
                 text-overflow: ellipsis; /* Hiển thị dấu "..." khi văn bản tràn */
             }
-            .commingsoon{
-                white-space: nowrap; /* Ngăn chặn văn bản xuống dòng */
-                overflow: hidden; /* Ẩn phần văn bản bị tràn */
-                text-overflow: ellipsis; /* Hiển thị dấu "..." khi văn bản tràn */
-            }
+           
 
             .highlight-yellow {
                 color: #f7ba01;
@@ -183,14 +179,14 @@
     <body>
 
         <!-- Header start -->
-        <%@include file="header.jsp" %>
-
+        
+       
         <!-- Header end -->
 
         <!-- Product start -->
 
         <!-- Phần banner lớn start-->
-        <section id="center" class="center_home">
+        <section id="center" class="center_home container">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
