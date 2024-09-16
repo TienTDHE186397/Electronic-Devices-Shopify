@@ -1,392 +1,78 @@
 <%-- 
     Document   : header
-    Created on : May 27, 2024, 10:35:14 AM
-    Author     : Admin
+    Created on : Sep 14, 2024, 10:35:21 AM
+    Author     : Vu Duc Hai (HE181844)
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <style>
-            nav {
-                width: 200px; /* Độ rộng của menu */
-                
-            }
+<header>
+    <!--Link to library file-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" >
+    <!-- Intro settings -->
+    <style>
+        #intro {
+            /* Margin to fix overlapping fixed navbar */
+            margin-top: 58px;
+        }
 
-            nav ul {
-                list-style-type: none; /* Xóa dấu chấm đầu dòng */
-                padding: 0;
-                margin: 0;
+        @media (max-width: 991px) {
+            #intro {
+                /* Margin to fix overlapping fixed navbar */
+                margin-top: 45px;
             }
-
-            nav ul li {
-                margin-bottom: 2px; /* Khoảng cách giữa các mục */
-            }
-
-            nav ul li a {
-                display: flex; /* Để các biểu tượng và chữ nằm cùng hàng */
-                align-items: center;
-                text-decoration: none; /* Xóa gạch chân */
-                color: black; /* Màu chữ */
-                padding: 10px;
-                font-size: 10px; /* Kích thước chữ */
-                background-color: #f8f9fa; /* Màu nền */
-                border-radius: 5px; /* Bo góc */
-                transition: background-color 0.3s; /* Hiệu ứng khi di chuột */
-            }
-
-            nav ul li a:hover {
-                background-color: #e9ecef; /* Màu nền khi di chuột */
-            }
-
-            nav ul li a i {
-                margin-right: 10px; /* Khoảng cách giữa icon và chữ */
-            }
-
-            nav ul li a.logout {
-                color: red; /* Đổi màu cho mục "Logout" */
-            }
-            nav ul {
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-            }
-            nav ul li {
-                position: relative; /* Để có thể định vị dropdown */
-            }
-            .dropdown-menu {
-                display: none; /* Ẩn ban đầu */
-                position: absolute;
-                left: 50%; /* Bảng sẽ xuất hiện bên phải của mục "LapTop" */
-
-                background-color: #f8f9fa;
-                box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Hiệu ứng bóng đổ */
-
-                z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
-            }
+        }
+        
 
 
-            /* Hiển thị dropdown khi lướt chuột vào Set Item */
-            .set-item:hover + .dropdown-menu,
-            .dropdown-menu:hover {
-                display: block;
-            }
-            /* Tạo hiệu ứng dropdown hiển thị ngay bên phải */
-          
+    </style>
 
-            /* Ẩn bảng ban đầu */
-            .d-none {
-                display: none;
-            }
-
-            /* Hiển thị bảng khi di chuột vào mục "LapTop" hoặc bảng */
-            .nav-item:hover #laptop-options,
-            #laptop-options:hover {
-                display: block;
-            }
-
-            .menu-top{
-                display: flex;
-                justify-content: center;
-            }
-          
-
-        </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    </head>
-    <!-- Header start -->
-    <section id="top">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #d70018;box-shadow: #0000001a 0px 4px 6px -1px;color: #4a4a4a">
         <div class="container-fluid">
-            <div class="row top_1">
-              
-                <div class="col-md-12 menu-top">
-                    <div class="top_1i text-end">
-                        <ul class="mb-lg-1">
-                            <c:if test="${sessionScope.acc.roleID != 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="caret-right col_yetext-light" href="vieworderadmin"><i class="fa fa-ll me-1"></i> View Orders</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc.roleID != 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="managercinema"><i class="fa fa-caret-right col_yell me-1"></i> Manager Cinema</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc.roleID != 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="manager"><i class="fa fa-caret-right col_yell me-1"></i> Manager Product</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc.roleID != 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="manageraccount"><i class="fa fa-arrow-circle-o-right col_yell me-1"></i> Manager Account</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc.isSell != 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="viewcalendar"><i class="fa fa-user col_yell me-1"></i> Loại Tài Khoản: Nhân Viên</a>
-                                </li>
-                            </c:if>
-                                
-                            <c:if test="${sessionScope.acc.isSell != 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="viewcalendar"><i class="fa fa-user col_yell me-1"></i> BLOGS</a>
-                                </li>
-                            </c:if>
-                                
-                            <c:if test="${sessionScope.acc.isSell != 1 || sessionScope.acc.roleID == 1}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="viewcalendar"><i class="fa fa-pencil col_yell me-1"></i> View Calendar</a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.acc.roleID != 0 && sessionScope.acc.isSell != 0}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="#"><i class="fa fa-caret-right col_yell me-1"></i> Số Dư: <c:choose>
-                                            <c:when test="${sessionScope.wallet.balance != 0}">
-                                                ${sessionScope.wallet.balance}
-                                            </c:when>
-                                            <c:otherwise>
-                                                0
-                                            </c:otherwise>
-                                        </c:choose>0 VND</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc.roleID != 0 && sessionScope.acc.isSell != 0}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="vieworderuser"><i class="fa fa-caret-right col_yell me-1"></i> View My Order</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc.roleID != 0 && sessionScope.acc.isSell != 0}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="#"><i class="fa fa-user col_yell me-1"></i>Loại Tài Khoản: Người Dùng</a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.acc != null}">
-                                <li class="nav-item  d-inline-block font_13 me-2 pe-2">
-                                    <a class="text-light" href="logout"><i class="fa fa-sign-in col_yell me-1"></i> Logout</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.acc == null}">
-                                <li class="nav-item  d-inline-block font_13 border-0">
-                                    <a class="text-light" href="#"><i class="fa fa-user col_yell me-1"></i> Hello ${sessionScope.acc.user} </a>
-                                </li>
-                            </c:if>
-
-<<<<<<< HEAD
-                           <c:if test="${sessionScope.user != null}">
-                                        <li><i class="fa fa-user"></i> Chào mừng: ${sessionScope.user.username}</li>
-                                        </c:if>
-                            <c:if test="${sessionScope.acc == null}">
-                                <li class="nav-item  d-inline-block font_13 border-0">
-                                    <a class="text-light" href="login"><i class="fa fa-user col_yell me-1"></i> Login </a>
-=======
-                         
-                            <c:if test="${sessionScope.acc == null}">
-                                <li class="nav-item  d-inline-block font_13 border-0">
-                                    <a class="text-light" href="login.jsp"><i class="fa fa-user col_yell me-1"></i> Login </a>
->>>>>>> d597b861cb977dc866cd2cd270108892881e2f6a
-                                </li>
-                            </c:if>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="header" class="bg_light">
-        <nav class="navbar navbar-expand-md navbar-light pt-0 pb-0" id="navbar_sticky">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mb-0">
-                        <div>
-                        <nav>
-                            <ul>
-                                <ul>
-                                    <li>
-                                        <a href="#" class="set-item">
-                                            <i class="fas fa-laptop"></i>
-                                            <span class="nav-item">Laptop-Tablet</span>
-                                        </a>
-                                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Bluetooth</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Chụp tai</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Nhét Tai</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i> Có dây</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <a href="#" class="set-item">
-                                            <i class="fa-solid fa-computer"></i>
-                                            <span class="nav-item">PC</span>
-                                        </a>
-                                        <a href="#" class="set-item">
-                                            <i class="fa-solid fa-tv"></i>
-                                            <span class="nav-item">Màn hình</span>
-                                        </a>
-                                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Gaming</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Đồ Hoạ</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Lập Trình</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i>Học Tập</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li class="nav-item">
-                                        <a href="#" class="set-item">
-                                            <i class="fa-solid fa-mobile-phone"></i>
-                                            <span class="nav-item">Điện Thoại</span>
-                                        </a>
-
-                                        <!-- Bảng tùy chọn sẽ hiển thị khi di chuột vào "LapTop" -->
-                                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                            <li style="font-style: normal">HÃNG ĐIỆN THOẠI</li>
-                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Gaming</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Đồ Hoạ</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Lập Trình</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i>Học Tập</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
-                                <ul>
-                                    <li>
-                                        <a href="#" class="set-item">
-                                            <i class="fa-solid fa-headphones-simple"></i>
-                                            <span class="nav-item">Tai Nghe</span>
-                                        </a>
-                                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Bluetooth</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Chụp tai</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Nhét Tai</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i> Có dây</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <a href="#" class="set-item">
-                                            <i class="fa-regular fa-sun"></i>
-                                            <span class="nav-item">Khuyến Mãi</span>
-                                        </a>
-                                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="#sapchieu"><i class=""></i> Laptop khuyến mãi</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dangchieu"><i class=""></i>Tai nghe khuyến mãi</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dachieu"><i class=""></i>Điện thoại khuyến mãi</a></li>
-                                            <li><a class="dropdown-item border-0" href="#dacbiet"><i class=""></i> Tivi khuyến mãi</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                
-                                
-                            </ul>
-                        </nav>
+            <!-- Navbar brand -->
+            <a class="navbar-brand" target="_blank" href="#">
+                <img src="https://drive.google.com/file/d/1YoYfvxlyzbUCz0kMZ0TufLcRpMxcubhW/view?usp=sharing" height="16" alt=""
+                     loading="lazy" style="margin-top: -3px;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#navbarExample01"
+                    aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link" href="https://mdbootstrap.com/docs/standard/" target="_blank">Danh mục</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Xem giá tại
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Hồ Chí Minh</a>
+                            <a class="dropdown-item" href="#">Hà Nội</a>
                         </div>
-                        
-                        <!--                       
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Thể Loại
-                                                    </a>
-                                                    <ul class="dropdown-menu drop_2 drop_cat" aria-labelledby="navbarDropdown">
-                        <c:forEach var="c" items="${sessionScope.listC}">
-                            <li><a class="dropdown-item" href="category?cid=${c.categoryId}"><i class="fa fa-caret-right me-1 col_yell"></i> ${c.categoryName}</a></li>
-                        </c:forEach>
+                    </li>
                 </ul>
-            </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Ví
-                </a>
-                <ul class="dropdown-menu drop_2 drop_cat" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item border-0" href="Deposit.jsp"><i class="fa fa-caret-right me-1 col_yell"></i> Nạp Tiền</a></li>
-                        <c:if test="${sessionScope.acc.roleID == 1}">
-                        <li><a class="dropdown-item border-0" href="depositmanager"><i class="fa fa-caret-right me-1 col_yell"></i>Quản Lý Nạp Tiền</a></li>
-                        </c:if>
-                </ul>
-            </li>
+                <ul class="navbar-nav d-flex flex-row">
 
-            <li class="nav-item">
-                <a class="nav-link" href="contact.jsp">Liên Hệ</a>
-            </li>-->
-
-
-
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </section>
-
-    <section id="header_top" class="pt-4 pb-4" style="background-color: #d70018">
-        <div class="container-fluid">
-            <div class="row header_top1">
-                <div class="col-md-3">
-                    <div class="header_top1l">
-                        <h3 class="mb-0">
-                            <a class="col_dark" href="home">
-                                <img src="img/logo/logo.png" alt="ALV Cinema Logo" class="logo-img">CELLPHONES
+                    <li class="nav-item">
+                            <a class="menu-item " href="#" target="_blank">
+                                <div class="menu-icon"><i class="fa-solid fa-cart-plus"></i></div>
+                                <div class="menu-text">Giỏ hàng</div>
                             </a>
-                        </h3>
-                    </div>
+                    </li>
 
-                </div>
-                
-                
-                
-                <div class="col-md-4">
-                    <form action="search" method="POST">
-                        <div class="header_top1m">
-                            <select name="categories" class="form-select  bg_light" >
-                                <option value="">Tất Cả Sản Phẩm</option>
-                                <option>Mới Nhất</option>
-                                <option>Cũ Nhất</option>
-                                <option>Xem Nhiều</option>
-                                <option>Yêu Thích</option>
-                            </select>
-
-                            <div class="input-group">
-                                <input type="text" class="form-control border-start-0" placeholder="Tìm kiếm" name="txt">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary bg_yell" type="submit">
-                                        <i class="fa fa-search"></i> </button>
-                                </span>
-
-                            </div>
-                        </div>
-                    </form> 
-                </div>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://mdbootstrap.com/docs/standard/" target="_blank">Sign in</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </section>
-    
-    
-    <script>
-        document.getElementById("laptop-menu").addEventListener("click", function (e) {
-            e.preventDefault(); // Ngăn chặn link mặc định
-
-            var options = document.getElementById("laptop-options");
-
-            // Toggle hiển thị
-            if (options.classList.contains("d-none")) {
-                options.classList.remove("d-none");
-            } else {
-                options.classList.add("d-none");
-            }
-        });
-    </script>
-
-
-
-    <!-- Header end -->
-</html>
+    </nav>
+    <!-- Navbar -->
+</header>
+<!--Main Navigation-->
