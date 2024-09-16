@@ -1,7 +1,7 @@
 <%-- 
     Document   : footer
-    Created on : May 27, 2024, 10:35:21 AM
-    Author     : Admin
+    Created on : Sep 10, 2024, 10:35:21 AM
+    Author     : Vu Duc Hai (HE181844)
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -27,7 +27,7 @@
     </style>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #d70018;box-shadow: #0000001a 0px 4px 6px -1px;color: #4a4a4a">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container-fluid">
             <!-- Navbar brand -->
             <a class="navbar-brand" target="_blank" href="#">
