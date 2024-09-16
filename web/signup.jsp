@@ -23,41 +23,40 @@
 
         <div class="container" id="container">
             <div class="form-container sign-in" style="height: 500px; max-height: 600px; overflow-y: scroll">
-                <form action="signup" method="post">
+                <form action="RegisterServlet" method="post">
                     <h1>Đăng Kí</h1>
                     <div class="social-icons">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=profile%20email&redirect_uri=http://localhost:9999/WebDienTu/SignupGoogle&response_type=code&client_id=630598609264-9sp60ioal96seml048sl3946slk6eohr.apps.googleusercontent.com&approval_prompt=force" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                         <a href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=504057159000367&redirect_uri=http://localhost:9999/WebDienTu/LoginFaceBook&scope=email" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                     </div>
                     <span>Đăng Kí Tài Khoản</span>
-                    <input type="text" placeholder="Name" name="user" value="<%= request.getParameter("user") != null ? request.getParameter("user") : ""%>" required>
-                    <input type="password" placeholder="Password" name="pass" required>
-                    <input type="password" placeholder="RePassword" name="repass" required>
-                    <input name="name" type="text" id="user-fullname" class="form-control" placeholder="Họ tên" value="<%= request.getParameter("name") != null ? request.getParameter("name") : ""%>" required>
+                    <input name="name" type="text" placeholder="Name" value="<%= request.getParameter("user") != null ? request.getParameter("user") : ""%>" required>
+                    <input name="pass" type="password" placeholder="Password"  required>
+                    <input name="repass" type="password" placeholder="RePassword"  required>
                     <select name="gender" id="user-gender" class="form-control" required>
                         <option value="" disabled selected>Giới tính</option>
                         <option value="Male" <%= "Male".equals(request.getParameter("gender")) ? "selected" : ""%>>Nam</option>
                         <option value="Female" <%= "Female".equals(request.getParameter("gender")) ? "selected" : ""%>>Nữ</option>
                     </select>
                     <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" value="<%= request.getParameter("date") != null ? request.getParameter("date") : ""%>" required>
-                    <input name="email" type="email" id="user-email" class="form-control" placeholder="Email: example@gmail.com" value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" required>
+                    <input type="email" id="email" name="email" " value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" placeholder="email" >
                     <input name="phone" type="tel" id="user-phone" class="form-control" placeholder="Số điện thoại" value="<%= request.getParameter("phone") != null ? request.getParameter("phone") : ""%>" required>
-
+                    <input type="address" id="address" name="address" " value="<%= request.getParameter("address") != null ? request.getParameter("address") : ""%>" placeholder="address" >
                     <%
                         String error = (String) request.getAttribute("error");
                     %>
                     <h4><%= error != null ? error : ""%></h4>
 
-                    <button type="submit">Đăng Kí</button>
+                    <button type="submit " style="background-color:  #b22222">Đăng Kí</button>
                 </form>
             </div>
 
             <div class="toggle-container">
                 <div class="toggle">
-                    <div class="toggle-panel toggle-right">
-                        <h1>Hello, Friend!</h1>
-                        <p>If You Have Account Turn Back To The Login Page</p>
-                        <button onclick="redirectToLogin()">Đăng nhập</button>
+                    <div class="toggle-panel toggle-right" style="background-color:  #ef5455">
+                        <h1>Xin chào!</h1>
+                        <p>Nếu Đã Có Tài Khoản Hãy Ấn Vô Đây Để Đăng Nhập</p>
+                        <button onclick="redirectToLogin()"  style="background-color:  #b22222">Đăng nhập</button>
                     </div>
                 </div>
             </div>

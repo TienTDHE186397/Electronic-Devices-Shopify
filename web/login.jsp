@@ -22,17 +22,17 @@
     <body>
 
         <div class="container" id="container">
-            <div class="toggle-container">
+            <div class="toggle-container" style="background-color:  #ef5455">
                 <div class="toggle">
-                    <div class="toggle-panel toggle-left">
+                    <div class="toggle-panel toggle-left" style="background-color:  #ef5455">
                         <h1>Welcome Back!</h1>
                         <p>Enter your personal details to use all of site features</p>
                         <button class="hidden" id="login">Đăng Nhập</button>
                     </div>
-                    <div class="toggle-panel toggle-right">
+                    <div class="toggle-panel toggle-right" style="background-color:  #ef5455" >
                         <h1>Hello, Friend!</h1>
-                        <p>Register with your personal details to use all of site features</p>
-                        <button onclick="redirectToLogin()">Đăng Kí</button>
+                        <p>Nếu Chưa Có Tài Khoản Đăng kí tại đây</p>
+                        <button onclick="redirectToLogin()" style="background-color:  #b22222">Đăng Kí</button>
                     </div>
                 </div>  
             </div>
@@ -46,8 +46,9 @@
                         
                     </div>
                     <span>Sử dụng tài khoản hiện có </span>
-                    <input name="user" type="text" id="inputEmail" class="form-control" value="${cookie.cname.value}" placeholder="Tên đăng nhập" required autofocus>
+                    <input name="user" type="text" id="inputEmail" class="form-control" value="${cookie.cname.value}" placeholder="Email" required autofocus>
                     <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Mật khẩu" value="${cookie.cpass.value}" required>
+                    
                     <div class="all" style="width: 70%; display: flex; align-items: center; justify-content: space-between;">
 
                         <div  style="display: flex; align-items: center;">
@@ -66,7 +67,7 @@
 
                     <div style="color: red"><b>${mess}</b></div>
 
-                    <button type="submit">Đăng Nhập</button>
+                    <button type="submit" style="background-color:  #b22222">Đăng Nhập</button>
                 </form>
             </div>
 

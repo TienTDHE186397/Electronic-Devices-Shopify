@@ -1,60 +1,49 @@
 package Entity;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
+import java.sql.Date;
 
-import java.util.Date;
-
-
-
-/**
- *
- * @author admin
- */
 public class Person {
-    
-//     [PersonID] [int] IDENTITY(1,1) NOT NULL,
-//	[Name ] [nvarchar](50) NULL,
-//	[Gender] [nvarchar](6) NULL,
-//	[DateOfBirth] [date] NULL,
-//	[Email] [varchar](100) NULL,
-//	[Phone] [varchar](15) NULL,
-    
-    private int PersonID;
-    private String name;
-    private String gender;
-    private Date birth;
-    private String email;
-    private int roleID;
-    private String roleName;
-    private String username;
 
+    private int PersonID;
+    private String Name;
+    private String Gender;
+    private String DateOfBirth;
+    private String StartDate;
+    private String Address;
+    private String Email;
+    private String Phone;
+    private int roleID;
+    private String Pasword;
+    
     public Person() {
     }
-
-    public Person(int PersonID, String name, String gender, Date birth, String email,int roleID, String roleName, String username) {
+    
+    public Person(int PersonID, String Name, String Gender, String DateOfBirth, String Address, String Email, String Phone, int roleID, String Pasword, String code) {
         this.PersonID = PersonID;
-        this.name = name;
-        this.gender = gender;
-        this.birth = birth;
-        this.email = email;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
         this.roleID = roleID;
-        this.roleName = roleName;
-        this.username = username;
+        this.Pasword = Pasword;
+        
     }
 
-    
-    public String getUsername() {
-        return username;
+    public Person(String Name, String Gender, String DateOfBirth, String StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
+       
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    
     
     public int getPersonID() {
         return PersonID;
@@ -65,38 +54,62 @@ public class Person {
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        return Gender;
     }
 
   
+    public void setGender(String Gender) {
+        this.Gender = Gender;
+    }
+
+    public String getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setDateOfBirth(String DateOfBirth) {
+        this.DateOfBirth = DateOfBirth;
+    }
+
+    public String getStartDate() {
+        return StartDate;
+    }
+
+    public void setStartDate(String StartDate) {
+        this.StartDate = StartDate;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String Address) {
+        this.Address = Address;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
+    }
+
     public int getRoleID() {
         return roleID;
     }
@@ -105,20 +118,17 @@ public class Person {
         this.roleID = roleID;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getPasword() {
+        return Pasword;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setPasword(String Pasword) {
+        this.Pasword = Pasword;
     }
 
     @Override
     public String toString() {
-        return "Person{" + "PersonID=" + PersonID + ", name=" + name + ", gender=" + gender + ", birth=" + birth +  ", roleID=" + roleID + ", roleName=" + roleName + ", username=" + username + '}';
+        return "Person{" + "PersonID=" + PersonID + ", Name=" + Name + ", Gender=" + Gender + ", DateOfBirth=" + DateOfBirth + ", StartDate=" + StartDate + ", Address=" + Address + ", Email=" + Email + ", Phone=" + Phone + ", roleID=" + roleID + ", Pasword=" + Pasword + '}';
     }
-    
-    
-    
-    
+
 }

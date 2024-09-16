@@ -13,10 +13,10 @@
     </head>
     <body>
         <h1>HomePage</h1>
-        <form action="" method="post">
+        
           
-             <button onclick="redirectToLogin()">Đăng Xuat</button> <input type="reset" value="RESET">
-        </form>
+             <button onclick="redirectToLogin()">Đăng Xuat</button> 
+        
          <script>
             // Hàm chuyển hướng đến trang đăng nhập
             function redirectToLogin() {

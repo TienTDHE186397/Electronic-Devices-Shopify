@@ -12,11 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <h2>Email Verification</h2>
         <form action="SendMailServlet" method="post">
-            Enter Email:<input type="text" name="to"> <br>
-            Enter Subject: <input type="text" name="subject"><br>
-            <textarea id="id" name="content" rows="5" cols="10" ></textarea>
-            <input type="submit" value="Button"> <input type="reset" value="RESET">
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Send Verification Email</button>
         </form>
     </body>
 </html>

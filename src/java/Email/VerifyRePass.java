@@ -4,7 +4,8 @@
  */
 package Email;
 
-import jakarta.servlet.RequestDispatcher;
+import DAO.PersonDAO;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,20 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.Properties;
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
+
 /**
  *
  * @author admin
  */
-@WebServlet(name = "SendMailServlet", urlPatterns = {"/SendMailServlet"})
-public class SendMailServlet extends HttpServlet {
+@WebServlet(name = "VerifyRePass", urlPatterns = {"/VerifyRePass"})
+public class VerifyRePass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +39,10 @@ public class SendMailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SendMailServlet</title>");
+            out.println("<title>Servlet VerifyRePass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SendMailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyRePass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,7 +60,7 @@ public class SendMailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -77,32 +72,42 @@ public class SendMailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String recipient = request.getParameter("email");
+        // Lấy mã xác thực từ form
+        String inputCode = request.getParameter("verificationCode2");
 
-        if (recipient == null || recipient.isEmpty()) {
-            response.getWriter().println("Invalid email address");
-            return;
+        // Lấy mã xác thực lưu trữ trong session
+        HttpSession session = request.getSession();
+        String storedCode = (String) session.getAttribute("verificationCode");
+        // Kiểm tra mã xác thực
+        if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
+            // Lấy thông tin người dùng từ session và lưu vào database
+            String email = (String) session.getAttribute("tempEmail");
+            String password = (String) session.getAttribute("tempPassword");
+            PersonDAO personDAO = new PersonDAO();
+            boolean add = personDAO.updatePassword(email, password);  // Thêm người dùng vào database
+            if (add) {
+                System.out.println("Cập Nhật Thành Công");
+               
+            } else {
+                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
+            }
+            // Xóa thông tin tạm thời trong session
+            session.removeAttribute("verificationCode");
+            session.removeAttribute("tempEmail");
+            session.removeAttribute("tempPassword");
+
+            // Chuyển hướng tới trang thành công
+            request.setAttribute("message", "Cập Nhật Mật Khẩu Thành Công!");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+        } else {
+            // Xác thực thất bại
+            request.setAttribute("message", "Mã xác thực không chính xác.");
+            request.getRequestDispatcher("forgot.jsp").forward(request, response);
         }
-
-        // Tạo token ngẫu nhiên
-        SecureRandom random = new SecureRandom();
-        String token = new BigInteger(130, random).toString(32);
-
-        // Gửi email xác thực với token
-        MailSender.sendVerificationEmail(recipient, token);
-
-        // Phản hồi cho người dùng
-        request.setAttribute("message", "Verification email sent successfully to " + recipient);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("verifyEmail.jsp");
-        dispatcher.forward(request, response);
     }
-    private boolean validateToken(String token) {
-        // Thực hiện kiểm tra token (ví dụ: kiểm tra trong cơ sở dữ liệu)
-        // Trả về true nếu token hợp lệ, false nếu không hợp lệ
-        return true; // Thay đổi theo cách bạn kiểm tra token
-    }
+
     /**
      * Returns a short description of the servlet.
      *
