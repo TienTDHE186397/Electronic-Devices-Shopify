@@ -11,7 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- =============Style css ======================== -->
        <link rel="stylesheet" type="text/css" href="css/styleSale.css">
-       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+       
     </head>
       
     <body>
@@ -30,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
                     
                     <li>
-                       <a href="SaleHome.jsp">
+                        <a href="SaleHome.jsp">
                            <span class="icon">
                                <ion-icon name="pie-chart-outline"></ion-icon></span>
                            <span class="title">Dashboard</span>
@@ -130,21 +130,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                
                </div>
                
-<!--               ===============================Chart============================-->
-         
-               <div class="chartsBox">
-                   <div class="chart"><canvas id="myChart-1"></canvas></div>
-                   <div class="chart"><canvas id="myChart-2"></canvas></div>
-               </div> 
-               
+
 
 <!--======================================order List=====================================-->
 
          <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
-                        <h2>Recent Orders</h2>
-                        <a href="#" class="btn">View All</a>
+                        <h2>Total Orders</h2>
                     </div>
 
                     <table>
@@ -252,67 +245,12 @@ let main = document.querySelector(".main");
     </script>
     
     
-    =========================================chart Js============================
-<script>
-  const ctx1 = document.getElementById("myChart-1").getContext("2d");
-const myChart = new Chart(ctx1, {
-  type: "polarArea",
-  data: {
-    labels: ["Order complete", "Order Inprogress", "Unprocessed orders", "Total Order"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [600, 800, 1000, 1000],
-        backgroundColor: [
-          "rgba(127, 255, 0, 1 )",
-          "rgba(255, 206, 86, 1)",
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)"
-        ],
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-  },
-});
-
-const ctx2 = document.getElementById("myChart-2").getContext("2d");
-const myChart2 = new Chart(ctx2, {
-  type: "bar",
-  data: {
-    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    datasets: [
-      {
-        label: "Order complete folow by Day of the week ",
-        data: [600, 700, 450, 200, 100, 300, 100],
-        backgroundColor: [
-          "rgba(54, 162, 235, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(54, 162, 235, 1)"
-          
-        ],
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-  },
-});
-
-</script>
+   
 
     
     
     
-<!--    ==========================Chart===========================-->
 
-
-<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 
        <!--==========ionicons==========-->
        

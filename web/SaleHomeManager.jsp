@@ -5,12 +5,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>sale Home</title>
+        <title>sale Home Manager</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- =============Style css ======================== -->
-       <link rel="stylesheet" type="text/css" href="css/styleSale.css">
+       <link rel="stylesheet" type="text/css" href="css/styleSaleManager.css">
        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
       
@@ -30,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
                     
                     <li>
-                       <a href="SaleHome.jsp">
+                       <a href="SaleHomeManager.jsp">
                            <span class="icon">
                                <ion-icon name="pie-chart-outline"></ion-icon></span>
                            <span class="title">Dashboard</span>
@@ -38,7 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                    </li>
                    
                     <li>
-                       <a href="SaleOrder.jsp">
+                       <a href="SaleOrderManager.jsp">
                            <span class="icon">
                                <ion-icon name="pricetags-outline"></ion-icon></span>
                            <span class="title">Orders</span>
@@ -127,7 +127,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                </div> 
                </div>
                
-               
+                <div class="card">
+                   <div>
+                      <div class="numbers">1000</div>
+                      <div class="cardName">Total Order</div>
+               </div>
+               <div class="iconBox">
+                     <ion-icon name="cart-outline"></ion-icon>
+               </div> 
+               </div>
                </div>
                
 <!--               ===============================Chart============================-->
@@ -144,7 +152,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="recentOrders">
                     <div class="cardHeader">
                         <h2>Recent Orders</h2>
-                        <a href="#" class="btn">View All</a>
+                        <a href="SaleOrder.jsp" class="btn">View All</a>
                     </div>
 
                     <table>
@@ -252,7 +260,7 @@ let main = document.querySelector(".main");
     </script>
     
     
-    =========================================chart Js============================
+<!--    =========================================chart Js============================-->
 <script>
   const ctx1 = document.getElementById("myChart-1").getContext("2d");
 const myChart = new Chart(ctx1, {
