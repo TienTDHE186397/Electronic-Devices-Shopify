@@ -28,10 +28,10 @@ import javax.mail.internet.*;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 
-       protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if ("resend".equals(action)) {
             resendVerificationCode(request, response);
         } else {
@@ -70,12 +70,12 @@ public class RegisterServlet extends HttpServlet {
 
             if (age2 < 18) {
                 request.setAttribute("error", "Bạn chưa đủ 18 tuổi.");
-                request.getRequestDispatcher("signup.jsp").forward(request, response); 
+                request.getRequestDispatcher("signup.jsp").forward(request, response);
                 return;
             }
         } else {
             request.setAttribute("error", "Vui lòng nhập ngày sinh hợp lệ.");
-            request.getRequestDispatcher("signup.jsp").forward(request, response); 
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
 
@@ -87,7 +87,7 @@ public class RegisterServlet extends HttpServlet {
 
         // Store user info and verification code in session
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(120); 
+        session.setMaxInactiveInterval(120);
         session.setAttribute("tempName", name);
         session.setAttribute("tempAge", age);
         session.setAttribute("tempEmail", email);
@@ -100,32 +100,31 @@ public class RegisterServlet extends HttpServlet {
         response.sendRedirect("verifyEmail.jsp");
     }
 
-   private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    // Generate a new verification code
-    String newCode = generateVerificationCode();
-    
-    // Get the email from session
-    HttpSession session = request.getSession();
-    String email = (String) session.getAttribute("tempEmail");
+    private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Generate a new verification code
+        String newCode = generateVerificationCode();
 
-    // Ensure email is not null
-    if (email == null || email.isEmpty()) {
-        request.setAttribute("error", "Không tìm thấy địa chỉ email. Vui lòng thử lại.");
-        request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
-        return;
+        // Get the email from session
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+
+        // Ensure email is not null
+        if (email == null || email.isEmpty()) {
+            request.setAttribute("error", "Không tìm thấy địa chỉ email. Vui lòng thử lại.");
+            request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
+            return;
+        }
+
+        // Update the session with the new code
+        session.setAttribute("verificationCode", newCode);
+
+        // Send the new code to the user's email
+        MailSender.sendVerificationEmail(email, newCode);
+
+        // Redirect back to the verification page
+        response.sendRedirect("verifyEmail.jsp");
     }
-
-    // Update the session with the new code
-    session.setAttribute("verificationCode", newCode);
-
-    // Send the new code to the user's email
-    MailSender.sendVerificationEmail(email, newCode);
-
-    // Redirect back to the verification page
-    response.sendRedirect("verifyEmail.jsp");
-}
-
 
     private String generateVerificationCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -140,4 +139,3 @@ public class RegisterServlet extends HttpServlet {
         return code.toString();
     }
 }
-

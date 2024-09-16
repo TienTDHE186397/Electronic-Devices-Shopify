@@ -13,11 +13,11 @@
     </head>
     <body>
         <h1>HomePage</h1>
-        
-          
-             <button onclick="redirectToLogin()">Đăng Xuat</button> 
-        
-         <script>
+
+
+        <button onclick="redirectToLogin()">Đăng Xuat</button> 
+
+        <script>
             // Hàm chuyển hướng đến trang đăng nhập
             function redirectToLogin() {
                 window.location.href = "/WebDienTu/login.jsp"; // Thay đổi URL này theo trang đăng nhập của bạn

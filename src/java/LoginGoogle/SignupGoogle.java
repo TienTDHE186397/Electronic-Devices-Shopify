@@ -40,6 +40,7 @@ public class SignupGoogle extends HttpServlet {
             throws ServletException, IOException {
 
     }
+
     public static String getToken(String code) throws ClientProtocolException, IOException {
         // call api to get token
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
@@ -86,8 +87,8 @@ public class SignupGoogle extends HttpServlet {
             request.setAttribute("error", error);
             request.getRequestDispatcher("login").forward(request, response);
         } else {
-          request.setAttribute("user", user);
-          request.getRequestDispatcher("signupWithGG").forward(request, response);
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("signupWithGG").forward(request, response);
         }
     }
 
@@ -102,7 +103,7 @@ public class SignupGoogle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     /**

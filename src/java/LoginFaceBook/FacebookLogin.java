@@ -16,25 +16,27 @@ import org.apache.http.client.fluent.Request;
  * @author admin
  */
 public class FacebookLogin {
-    public  String getToken(String code) throws ClientProtocolException, IOException {
+
+    public String getToken(String code) throws ClientProtocolException, IOException {
         String response = Request.Post(IConstant.FACEBOOK_LINK_GET_TOKEN)
                 .bodyForm(
                         Form.form()
-       .add("client_id", IConstant.FACEBOOK_CLIENT_ID)
-                        .add("client_secret", IConstant.FACEBOOK_CLIENT_SECRET)
-                        .add("redirect_uri", IConstant.FACEBOOK_REDIRECT_URI)
-                        .add("code", code)
-                        .build()
+                                .add("client_id", IConstant.FACEBOOK_CLIENT_ID)
+                                .add("client_secret", IConstant.FACEBOOK_CLIENT_SECRET)
+                                .add("redirect_uri", IConstant.FACEBOOK_REDIRECT_URI)
+                                .add("code", code)
+                                .build()
                 )
                 .execute().returnContent().asString();
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
         return accessToken;
     }
-    public  Account getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+
+    public Account getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = IConstant.FACEBOOK_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
-        Account fbAccount= new Gson().fromJson(response, Account .class);
+        Account fbAccount = new Gson().fromJson(response, Account.class);
         return fbAccount;
     }
 }

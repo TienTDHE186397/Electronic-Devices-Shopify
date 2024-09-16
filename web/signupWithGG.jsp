@@ -31,7 +31,7 @@
                     <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" required>
                     <input name="phone" type="tel" id="user-phone" class="form-control" placeholder="Số điện thoại" required>
                     <h6>Số điện thoại để giao hàng</h6>
-                    
+
                     <div style="color: red"><b>${mess}</b></div>
 
                     <button type="submit">Đăng Kí</button>

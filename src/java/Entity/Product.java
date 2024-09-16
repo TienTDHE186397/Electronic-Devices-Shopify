@@ -9,6 +9,7 @@ package Entity;
  * @author Admin
  */
 public class Product {
+
     private int productId;
     private String productName;
     private String genre;
@@ -26,7 +27,7 @@ public class Product {
     private int categoryId;
     private int cinemaID;
     private int status;
-    
+
     public Product() {
     }
 
@@ -190,8 +191,5 @@ public class Product {
     public String toString() {
         return "Product{" + "productId=" + productId + ", productName=" + productName + ", genre=" + genre + ", director=" + director + ", performer=" + performer + ", price=" + price + ", age=" + age + ", image=" + image + ", imageBanner=" + imageBanner + ", description=" + description + ", view=" + view + ", time=" + time + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", categoryId=" + categoryId + ", cinemaID=" + cinemaID + ", status=" + status + '}';
     }
-    
-    
-    
-    
+
 }

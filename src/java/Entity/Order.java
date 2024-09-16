@@ -42,8 +42,6 @@ public class Order {
         this.method = method;
     }
 
-
-
     public int getOrderid() {
         return orderid;
     }

@@ -12,7 +12,8 @@ import com.google.gson.JsonObject;
  * @author admin
  */
 public class Account {
-    private String id,name,email;
+
+    private String id, name, email;
     private JsonObject picture;
 
     public Account() {
@@ -57,13 +58,9 @@ public class Account {
         this.picture = picture;
     }
 
-   
-
     @Override
     public String toString() {
         return "Account{" + "id=" + id + ", name=" + name + ", email=" + email + ", picture=" + picture + '}';
     }
 
-   
-    
 }

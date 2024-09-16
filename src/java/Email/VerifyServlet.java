@@ -73,7 +73,7 @@ public class VerifyServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy mã xác thực từ form
         String inputCode = request.getParameter("verificationCode2");
@@ -85,19 +85,18 @@ public class VerifyServlet extends HttpServlet {
         if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
             // Lấy thông tin người dùng từ session và lưu vào database
             String name = (String) session.getAttribute("tempName");
-            String age =  (String)session.getAttribute("tempAge");
-            String gender = (String)session.getAttribute("gender");
+            String age = (String) session.getAttribute("tempAge");
+            String gender = (String) session.getAttribute("gender");
             String email = (String) session.getAttribute("tempEmail");
             String phone = (String) session.getAttribute("tempPhone");
             String address = (String) session.getAttribute("tempAddress");
             String password = (String) session.getAttribute("tempPassword");
-            Person person = new Person( name,  gender,  age,  null,address,  email,phone,1,password);
+            Person person = new Person(name, gender, age, null, address, email, phone, 1, password);
             PersonDAO personDAO = new PersonDAO();
             boolean add = personDAO.addPerson(person);  // Thêm người dùng vào database
-            if(add){
+            if (add) {
                 System.out.println("in thanh cong");
-            }
-            else{
+            } else {
                 System.out.println("add loi");
             }
             // Xóa thông tin tạm thời trong session

@@ -89,7 +89,7 @@ public class VerifyRePass extends HttpServlet {
             boolean add = personDAO.updatePassword(email, password);  // Thêm người dùng vào database
             if (add) {
                 System.out.println("Cập Nhật Thành Công");
-               
+
             } else {
                 System.out.println("Cập Nhật Mật Khẩu Thất Bại");
             }

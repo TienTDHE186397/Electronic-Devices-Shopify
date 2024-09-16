@@ -21,7 +21,7 @@
                 margin-top: 45px;
             }
         }
-        
+
 
 
     </style>
@@ -60,10 +60,10 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                            <a class="menu-item " href="#" target="_blank">
-                                <div class="menu-icon"><i class="fa-solid fa-cart-plus"></i></div>
-                                <div class="menu-text">Giỏ hàng</div>
-                            </a>
+                        <a class="menu-item " href="#" target="_blank">
+                            <div class="menu-icon"><i class="fa-solid fa-cart-plus"></i></div>
+                            <div class="menu-text">Giỏ hàng</div>
+                        </a>
                     </li>
 
                     <li class="nav-item">

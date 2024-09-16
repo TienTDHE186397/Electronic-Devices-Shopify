@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <title>Modern Login Page | AsmrProg</title>
-        
+
     </head>
 
     <body>
@@ -43,12 +43,12 @@
                     <div class="social-icons">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=profile%20email&redirect_uri=http://localhost:9999/WebDienTu/LoginGoogleHandler&response_type=code&client_id=630598609264-9sp60ioal96seml048sl3946slk6eohr.apps.googleusercontent.com&approval_prompt=force" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                         <a href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=504057159000367&redirect_uri=http://localhost:9999/WebDienTu/LoginFaceBook&scope=email" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        
+
                     </div>
                     <span>Sử dụng tài khoản hiện có </span>
                     <input name="user" type="text" id="inputEmail" class="form-control" value="${cookie.cname.value}" placeholder="Email" required autofocus>
                     <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Mật khẩu" value="${cookie.cpass.value}" required>
-                    
+
                     <div class="all" style="width: 70%; display: flex; align-items: center; justify-content: space-between;">
 
                         <div  style="display: flex; align-items: center;">
@@ -71,10 +71,10 @@
                 </form>
             </div>
 
-            
+
         </div>
         </br><p style="text-decoration: underline; font-style: italic; font-size: 13px;"><a href="home">Return home page</a></p>
-       <script>
+        <script>
             // Hàm chuyển hướng đến trang đăng nhập
             function redirectToLogin() {
                 window.location.href = "/WebDienTu/signup.jsp"; // Thay đổi URL này theo trang đăng nhập của bạn

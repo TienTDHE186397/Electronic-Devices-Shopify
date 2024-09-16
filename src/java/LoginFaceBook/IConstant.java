@@ -9,6 +9,7 @@ package LoginFaceBook;
  * @author admin
  */
 public class IConstant {
+
     public static final String FACEBOOK_CLIENT_ID = "504057159000367";
     public static final String FACEBOOK_CLIENT_SECRET = "367a4f15476024aac658afe417fa1da6";
     public static final String FACEBOOK_REDIRECT_URI = "http://localhost:9999/WebDienTu/LoginFaceBook";
