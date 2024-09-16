@@ -2,11 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package LoginGoogle;
+package Email;
 
 import DAO.PersonDAO;
-import DAO.UserDAO;
-import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +12,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Random;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "SignupContent", urlPatterns = {"/signupWithGG"})
-public class SignupContent extends HttpServlet {
+@WebServlet(name = "ForgotPassword", urlPatterns = {"/ForgotPassword"})
+public class ForgotPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +41,10 @@ public class SignupContent extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignupContent</title>");
+            out.println("<title>Servlet ForgotPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignupContent at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ForgotPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,7 +62,7 @@ public class SignupContent extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
+        request.getRequestDispatcher("forgot.jsp").forward(request, response);
     }
 
     /**
@@ -76,37 +76,71 @@ public class SignupContent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String dateString = request.getParameter("date");
+        String action = request.getParameter("action");
+        
+        if ("resend".equals(action)) {
+            resendVerificationCode(request, response);
+        } else {
+            registerUser(request, response);
+        }
+    }
 
-        try {
-            LocalDate birthDate = LocalDate.parse(dateString);
-            LocalDate currentDate = LocalDate.now();
-            int age = Period.between(birthDate, currentDate).getYears();
-            if (age < 18) {
-                request.setAttribute("errorMessage", "Bạn phải lớn hơn 18 tuổi.");
-                request.getRequestDispatcher("SignupContent").forward(request, response);
-                return;
-            }
-        } catch (Exception e) {
-            request.setAttribute("errorMessage", "Ngày sinh không hợp lệ.");
-            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
+    private void registerUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("pass");
+        String repassword = request.getParameter("repass");
+      
+
+        if (!password.equals(repassword)) {
+            request.setAttribute("error", "Mật khẩu không khớp!");
+            request.getRequestDispatcher("forgot.jsp").forward(request, response);
             return;
         }
 
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        Person person = new Person(name, email, dateString, name, phone, email, phone, 0, phone);
         PersonDAO personDAO = new PersonDAO();
-        boolean personAdded = personDAO.addPerson(person);
-
-        if (personAdded) {
-            request.setAttribute("successMessage", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
-        } else {
-            request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo tài khoản.");
-            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
+        if (!personDAO.isEmailExists(email)) {
+            request.setAttribute("error", "Email not exist Please register account");
+            request.getRequestDispatcher("forgot.jsp").forward(request, response);
+            return;
         }
+        String verificationCode = generateVerificationCode();
+        
+        MailSender.sendVerificationEmail(email, verificationCode);
+
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(120); 
+        session.setAttribute("tempEmail", email);
+        session.setAttribute("tempPassword", password);
+        session.setAttribute("verificationCode", verificationCode);
+
+        // Redirect to verification page
+        response.sendRedirect("verifyRePass.jsp");
+    }
+
+   private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    // Generate a new verification code
+    String newCode = generateVerificationCode();
+    HttpSession session = request.getSession();
+    String email = (String) session.getAttribute("tempEmail");
+    session.setAttribute("verificationCode", newCode);
+    MailSender.sendVerificationEmail(email, newCode);
+    response.sendRedirect("verifyRePass.jsp");
+}
+
+
+    private String generateVerificationCode() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder code = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < 15; i++) {
+            int index = random.nextInt(characters.length());
+            code.append(characters.charAt(index));
+        }
+
+        return code.toString();
     }
 
     /**

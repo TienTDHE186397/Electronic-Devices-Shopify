@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package LoginGoogle;
+package Email;
 
 import DAO.PersonDAO;
-import DAO.UserDAO;
 import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,15 +13,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.Period;
+import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "SignupContent", urlPatterns = {"/signupWithGG"})
-public class SignupContent extends HttpServlet {
+@WebServlet(name = "VerifyServlet", urlPatterns = {"/VerifyServlet"})
+public class VerifyServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +40,10 @@ public class SignupContent extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignupContent</title>");
+            out.println("<title>Servlet VerifyServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignupContent at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,7 +61,7 @@ public class SignupContent extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -74,38 +73,49 @@ public class SignupContent extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String dateString = request.getParameter("date");
+        // Lấy mã xác thực từ form
+        String inputCode = request.getParameter("verificationCode2");
 
-        try {
-            LocalDate birthDate = LocalDate.parse(dateString);
-            LocalDate currentDate = LocalDate.now();
-            int age = Period.between(birthDate, currentDate).getYears();
-            if (age < 18) {
-                request.setAttribute("errorMessage", "Bạn phải lớn hơn 18 tuổi.");
-                request.getRequestDispatcher("SignupContent").forward(request, response);
-                return;
+        // Lấy mã xác thực lưu trữ trong session
+        HttpSession session = request.getSession();
+        String storedCode = (String) session.getAttribute("verificationCode");
+        // Kiểm tra mã xác thực
+        if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
+            // Lấy thông tin người dùng từ session và lưu vào database
+            String name = (String) session.getAttribute("tempName");
+            String age =  (String)session.getAttribute("tempAge");
+            String gender = (String)session.getAttribute("gender");
+            String email = (String) session.getAttribute("tempEmail");
+            String phone = (String) session.getAttribute("tempPhone");
+            String address = (String) session.getAttribute("tempAddress");
+            String password = (String) session.getAttribute("tempPassword");
+            Person person = new Person( name,  gender,  age,  null,address,  email,phone,1,password);
+            PersonDAO personDAO = new PersonDAO();
+            boolean add = personDAO.addPerson(person);  // Thêm người dùng vào database
+            if(add){
+                System.out.println("in thanh cong");
             }
-        } catch (Exception e) {
-            request.setAttribute("errorMessage", "Ngày sinh không hợp lệ.");
-            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
-            return;
-        }
+            else{
+                System.out.println("add loi");
+            }
+            // Xóa thông tin tạm thời trong session
+            session.removeAttribute("verificationCode");
+            session.removeAttribute("tempName");
+            session.removeAttribute("tempAge");
+            session.removeAttribute("tempEmail");
+            session.removeAttribute("tempPhone");
+            session.removeAttribute("tempAddress");
+            session.removeAttribute("tempPassword");
 
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        Person person = new Person(name, email, dateString, name, phone, email, phone, 0, phone);
-        PersonDAO personDAO = new PersonDAO();
-        boolean personAdded = personDAO.addPerson(person);
-
-        if (personAdded) {
-            request.setAttribute("successMessage", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
+            // Chuyển hướng tới trang thành công
+            request.setAttribute("message", "Xác thực thành công!");
             request.getRequestDispatcher("success.jsp").forward(request, response);
         } else {
-            request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo tài khoản.");
-            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
+            // Xác thực thất bại
+            request.setAttribute("errorMessage", "Mã xác thực không chính xác.");
+            request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
         }
     }
 

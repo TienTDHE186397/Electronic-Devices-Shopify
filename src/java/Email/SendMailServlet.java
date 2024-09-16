@@ -12,6 +12,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -63,7 +65,7 @@ public class SendMailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("checksendemail.jsp").forward(request, response);
+        request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
     }
 
     /**
@@ -75,43 +77,32 @@ public class SendMailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        final String username = "vuahaitac1543@gmail.com";
-        final String password = "asdc pyrk falq hcoa";
+        String recipient = request.getParameter("email");
 
-        Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587"); 
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true"); // Bật STARTTLS
-
-        Session session = Session.getInstance(prop, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-
-        String emailTo = request.getParameter("to");
-        String emailSubject = request.getParameter("subject");
-        String emailContent = request.getParameter("content");
-
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo)); // Sử dụng setRecipients
-            message.setSubject(emailSubject);
-            message.setText(emailContent);
-            Transport.send(message);
-
-            response.getWriter().println("Email sent successfully!");
-        } catch (Exception e) {
-            e.printStackTrace(); // In chi tiết lỗi ra console
-            response.getWriter().println("Failed to send email: " + e.getMessage());
+        if (recipient == null || recipient.isEmpty()) {
+            response.getWriter().println("Invalid email address");
+            return;
         }
-    }
 
+        // Tạo token ngẫu nhiên
+        SecureRandom random = new SecureRandom();
+        String token = new BigInteger(130, random).toString(32);
+
+        // Gửi email xác thực với token
+        MailSender.sendVerificationEmail(recipient, token);
+
+        // Phản hồi cho người dùng
+        request.setAttribute("message", "Verification email sent successfully to " + recipient);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("verifyEmail.jsp");
+        dispatcher.forward(request, response);
+    }
+    private boolean validateToken(String token) {
+        // Thực hiện kiểm tra token (ví dụ: kiểm tra trong cơ sở dữ liệu)
+        // Trả về true nếu token hợp lệ, false nếu không hợp lệ
+        return true; // Thay đổi theo cách bạn kiểm tra token
+    }
     /**
      * Returns a short description of the servlet.
      *

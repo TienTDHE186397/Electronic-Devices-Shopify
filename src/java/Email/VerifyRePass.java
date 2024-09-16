@@ -2,17 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Email;
 
 import DAO.PersonDAO;
-import DAO.UserDAO;
 import Entity.Person;
-import Entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,8 +19,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author admin
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "VerifyRePass", urlPatterns = {"/VerifyRePass"})
+public class VerifyRePass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +39,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet VerifyRePass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyRePass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +60,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -77,56 +74,38 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String remember = request.getParameter("remember");
-        Cookie cn = new Cookie("cname", username);
-        Cookie cp = new Cookie("cpass", password);
-        Cookie cr = new Cookie("crem", remember);
+        // Lấy mã xác thực từ form
+        String inputCode = request.getParameter("verificationCode2");
 
-        if (remember != null) {
-            cn.setMaxAge(60 * 60 * 24);
-            cp.setMaxAge(60 * 60 * 24);
-            cr.setMaxAge(60 * 60 * 24);
-        } else {
-            cn.setMaxAge(0);
-            cp.setMaxAge(0);
-            cr.setMaxAge(0);
-        }
-        response.addCookie(cr);
-        response.addCookie(cn);
-        response.addCookie(cp);
-        UserDAO u = new UserDAO();
-        User user = u.Login(username, password);
-
-        if (user == null) {
-            request.setAttribute("mess", "Username or Password incorrect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            if (user.getRoleID() == 5) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homeAdmin");
-            } else if (user.getRoleID() == 3) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("HomeSale");
-            } else if (user.getRoleID() == 4) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homeSaleMananger");
-            } else if (user.getRoleID() == 1) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("homepage.jsp");
+        // Lấy mã xác thực lưu trữ trong session
+        HttpSession session = request.getSession();
+        String storedCode = (String) session.getAttribute("verificationCode");
+        // Kiểm tra mã xác thực
+        if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
+            // Lấy thông tin người dùng từ session và lưu vào database
+            String email = (String) session.getAttribute("tempEmail");
+            String password = (String) session.getAttribute("tempPassword");
+            PersonDAO personDAO = new PersonDAO();
+            boolean add = personDAO.updatePassword(email, password);  // Thêm người dùng vào database
+            if (add) {
+                System.out.println("Cập Nhật Thành Công");
+               
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect("login.jsp");
+                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
             }
+            // Xóa thông tin tạm thời trong session
+            session.removeAttribute("verificationCode");
+            session.removeAttribute("tempEmail");
+            session.removeAttribute("tempPassword");
 
+            // Chuyển hướng tới trang thành công
+            request.setAttribute("message", "Cập Nhật Mật Khẩu Thành Công!");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+        } else {
+            // Xác thực thất bại
+            request.setAttribute("message", "Mã xác thực không chính xác.");
+            request.getRequestDispatcher("forgot.jsp").forward(request, response);
         }
-
     }
 
     /**
