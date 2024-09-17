@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SaleManagerController;
+package Controller;
 
+import Entity.Person;
+import Model.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,13 +13,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import org.apache.tomcat.jni.SSLContext;
 
 /**
  *
- * @author admin
+ * @author nghie
  */
-@WebServlet(name = "HomeSaleMananger", urlPatterns = {"/homeSaleMananger"})
-public class HomeSaleMananger extends HttpServlet {
+@WebServlet(name = "addUserServlet", urlPatterns = {"/addUser"})
+public class addUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +41,10 @@ public class HomeSaleMananger extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeSaleMananger</title>");
+            out.println("<title>Servlet addUserServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeSaleMananger at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addUserServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +62,10 @@ public class HomeSaleMananger extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("HomeSaleManager.jsp").forward(request, response);
+        DAOPerson dp = new DAOPerson();
+        List<Person> listP = dp.getAllPerson();
+        request.setAttribute("listP", listP);
+        request.getRequestDispatcher("addUser.jsp").forward(request, response);
     }
 
     /**
@@ -71,7 +79,26 @@ public class HomeSaleMananger extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        Person person = new Person();
+        session.setAttribute("person", person);
+        DAOPerson dp = new DAOPerson();
+        List<Person> listP = dp.getAllPerson();
+        request.setAttribute("listP", listP);
+        String name = request.getParameter("name");
+        String gender = request.getParameter("gender");
+        String dob = request.getParameter("dob");
+        String sd = request.getParameter("StartDate");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String pass = request.getParameter("Password");
+        Person p = (Person) session.getAttribute("person");
+        int nroleid = p.getRoleID();
+        
+        dp.addPerson(name, gender, dob, sd, address, email, phone, nroleid, pass);
+        response.sendRedirect("userList");
     }
 
     /**

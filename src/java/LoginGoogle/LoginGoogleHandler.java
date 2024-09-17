@@ -22,7 +22,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
-
 /**
  *
  * @author admin
@@ -87,13 +86,12 @@ public class LoginGoogleHandler extends HttpServlet {
         if (emailChecker.isEmailExists(gmail)) {
             // Nếu email đã tồn tại, chuyển hướng đến fontanh.jsp
             request.setAttribute("user", user);
-           request.getRequestDispatcher("fontanh.jsp").forward(request, response);
+            request.getRequestDispatcher("fontanh.jsp").forward(request, response);
         } else {
             // Nếu email không tồn tại, chuyển hướng đến signupWithGG.jsp
             request.setAttribute("user", user);
-          request.getRequestDispatcher("signupWithGG").forward(request, response);
+            request.getRequestDispatcher("signupWithGG").forward(request, response);
         }
-        
 
     }
 

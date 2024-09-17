@@ -42,7 +42,6 @@ public class PersonDAO extends DBContext {
 //        }
 //        return listReader;
 //    }
-
 //    public Person getPersonByUser(String user) {
 //        try {
 //            String sql = "select * from Person p\n"
@@ -72,7 +71,6 @@ public class PersonDAO extends DBContext {
 //        }
 //        return null;
 //    }
-
 //    public Person getPersonByCard(int cardid) {
 //        try {
 //            String sql = "  select * from Person p\n"
@@ -102,7 +100,6 @@ public class PersonDAO extends DBContext {
 //        }
 //        return null;
 //    }
-
     public int getLastInsertedBorrowID() {
         String sql = "SELECT MAX(BorrowID) AS BorrowID FROM Borrow";
         try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {

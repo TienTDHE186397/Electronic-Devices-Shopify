@@ -11,6 +11,7 @@ import Entity.*;
  * @author admin
  */
 public class UserGoogleDto {
+
     private String id;
     private String email;
     private String age;
@@ -19,12 +20,11 @@ public class UserGoogleDto {
     private String given_name;
     private String family_name;
     private String picture;
-    
 
     public UserGoogleDto() {
     }
 
-    public UserGoogleDto(String id, String age ,String email, boolean verified_email, String name, String given_name, String family_name, String picture) {
+    public UserGoogleDto(String id, String age, String email, boolean verified_email, String name, String given_name, String family_name, String picture) {
         this.id = id;
         this.email = email;
         this.age = age;
@@ -41,7 +41,6 @@ public class UserGoogleDto {
         this.name = name;
         this.picture = picture;
     }
-    
 
     public String getId() {
         return id;
@@ -109,9 +108,7 @@ public class UserGoogleDto {
 
     @Override
     public String toString() {
-        return "UserGoogleDto{"+ " picture=" + picture  + " , id=" + id + ", email=" + email + ", age=" + age + ", verified_email=" + verified_email + ", name=" + name + ", given_name=" + given_name + ", family_name=" + family_name + '}';
+        return "UserGoogleDto{" + " picture=" + picture + " , id=" + id + ", email=" + email + ", age=" + age + ", verified_email=" + verified_email + ", name=" + name + ", given_name=" + given_name + ", family_name=" + family_name + '}';
     }
 
-    
-    
 }

@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SaleManagerController;
+package Controller;
 
+import Entity.Person;
+import Model.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,13 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
- * @author admin
+ * @author nghie
  */
-@WebServlet(name = "HomeSaleMananger", urlPatterns = {"/homeSaleMananger"})
-public class HomeSaleMananger extends HttpServlet {
+@WebServlet(name = "UserControlServlet", urlPatterns = {"/userControl"})
+public class UserControlServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +39,10 @@ public class HomeSaleMananger extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeSaleMananger</title>");
+            out.println("<title>Servlet UserControlServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeSaleMananger at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserControlServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +60,16 @@ public class HomeSaleMananger extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("HomeSaleManager.jsp").forward(request, response);
+        DAOPerson dp = new DAOPerson();
+        String search = request.getParameter("search");
+        String gender = request.getParameter("gender");
+        String role = request.getParameter("roleid");
+        List<Person> pr = dp.getPersonByRole(role);
+        List<Person> pg = dp.getPersonByGender(gender);
+        System.out.println("Size: " + pr.size());
+        request.setAttribute("listP", pr);
+        request.setAttribute("listP", pg);
+        request.getRequestDispatcher("UserList.jsp").forward(request, response);
     }
 
     /**

@@ -14,10 +14,10 @@ public class Person {
     private String Phone;
     private int roleID;
     private String Pasword;
-    
+
     public Person() {
     }
-    
+
     public Person(int PersonID, String Name, String Gender, String DateOfBirth, String Address, String Email, String Phone, int roleID, String Pasword, String code) {
         this.PersonID = PersonID;
         this.Name = Name;
@@ -28,7 +28,7 @@ public class Person {
         this.Phone = Phone;
         this.roleID = roleID;
         this.Pasword = Pasword;
-        
+
     }
 
     public Person(String Name, String Gender, String DateOfBirth, String StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
@@ -41,10 +41,9 @@ public class Person {
         this.Phone = Phone;
         this.roleID = roleID;
         this.Pasword = Pasword;
-       
+
     }
 
-    
     public int getPersonID() {
         return PersonID;
     }
@@ -65,7 +64,6 @@ public class Person {
         return Gender;
     }
 
-  
     public void setGender(String Gender) {
         this.Gender = Gender;
     }

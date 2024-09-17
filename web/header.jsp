@@ -21,13 +21,13 @@
                 margin-top: 45px;
             }
         }
-        
+
 
 
     </style>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #d70018;box-shadow: #0000001a 0px 4px 6px -1px;color: #4a4a4a">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container-fluid">
             <!-- Navbar brand -->
             <a class="navbar-brand" target="_blank" href="#">
@@ -60,10 +60,10 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                            <a class="menu-item " href="#" target="_blank">
-                                <div class="menu-icon"><i class="fa-solid fa-cart-plus"></i></div>
-                                <div class="menu-text">Giỏ hàng</div>
-                            </a>
+                        <a class="menu-item " href="#" target="_blank">
+                            <div class="menu-icon"><i class="fa-solid fa-cart-plus"></i></div>
+                            <div class="menu-text">Giỏ hàng</div>
+                        </a>
                     </li>
 
                     <li class="nav-item">

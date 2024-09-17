@@ -20,6 +20,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 /**
  *
  * @author admin
@@ -77,7 +78,7 @@ public class SendMailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String recipient = request.getParameter("email");
 
@@ -98,11 +99,13 @@ public class SendMailServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("verifyEmail.jsp");
         dispatcher.forward(request, response);
     }
+
     private boolean validateToken(String token) {
         // Thực hiện kiểm tra token (ví dụ: kiểm tra trong cơ sở dữ liệu)
         // Trả về true nếu token hợp lệ, false nếu không hợp lệ
         return true; // Thay đổi theo cách bạn kiểm tra token
     }
+
     /**
      * Returns a short description of the servlet.
      *

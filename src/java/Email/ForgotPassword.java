@@ -77,7 +77,7 @@ public class ForgotPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if ("resend".equals(action)) {
             resendVerificationCode(request, response);
         } else {
@@ -90,7 +90,6 @@ public class ForgotPassword extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("pass");
         String repassword = request.getParameter("repass");
-      
 
         if (!password.equals(repassword)) {
             request.setAttribute("error", "Mật khẩu không khớp!");
@@ -105,11 +104,11 @@ public class ForgotPassword extends HttpServlet {
             return;
         }
         String verificationCode = generateVerificationCode();
-        
+
         MailSender.sendVerificationEmail(email, verificationCode);
 
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(120); 
+        session.setMaxInactiveInterval(120);
         session.setAttribute("tempEmail", email);
         session.setAttribute("tempPassword", password);
         session.setAttribute("verificationCode", verificationCode);
@@ -118,17 +117,16 @@ public class ForgotPassword extends HttpServlet {
         response.sendRedirect("verifyRePass.jsp");
     }
 
-   private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    // Generate a new verification code
-    String newCode = generateVerificationCode();
-    HttpSession session = request.getSession();
-    String email = (String) session.getAttribute("tempEmail");
-    session.setAttribute("verificationCode", newCode);
-    MailSender.sendVerificationEmail(email, newCode);
-    response.sendRedirect("verifyRePass.jsp");
-}
-
+    private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Generate a new verification code
+        String newCode = generateVerificationCode();
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+        session.setAttribute("verificationCode", newCode);
+        MailSender.sendVerificationEmail(email, newCode);
+        response.sendRedirect("verifyRePass.jsp");
+    }
 
     private String generateVerificationCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

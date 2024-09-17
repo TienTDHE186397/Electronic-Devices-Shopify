@@ -9,6 +9,7 @@ package Entity;
  * @author Admin
  */
 public class Deposit {
+
     private int id;
     private int userid;
     private String username;
