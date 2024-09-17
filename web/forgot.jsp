@@ -71,7 +71,7 @@
                 <input type="email" name="email" placeholder="Nhập email" required>
                 <input type="password" name="pass" placeholder="Mật khẩu mới" required>
                 <input type="password" name="repass" placeholder="Nhập lại mật khẩu" required>
-                <button type="submit" style="background-color:  #b22222" >Xác nhận</button>
+                <button type="submit" style="background-color:  #b22222" >Đặt Lại Mật Khẩu</button>
             </form>
             <% 
                 String errorMessage = (String) request.getAttribute("error");

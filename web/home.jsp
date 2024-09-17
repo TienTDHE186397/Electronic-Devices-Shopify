@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : May 18, 2024, 11:03:56 PM
-    Author     : Admin
+   Document   : index
+   Created on : May 18, 2024, 11:03:56 PM
+   Author     : Admin
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,7 +34,7 @@
                 overflow: hidden; /* Ẩn phần văn bản bị tràn */
                 text-overflow: ellipsis; /* Hiển thị dấu "..." khi văn bản tràn */
             }
-           
+
 
             .highlight-yellow {
                 color: #f7ba01;
@@ -53,7 +53,18 @@
                 padding: 20px;
                 color: white;
             }
-            
+            .custom-button {
+                background-color: #f7c33e;
+                color: #fff;
+                font-size: 12px;
+                padding: 10px 45px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+
+            }
 
             #subs {
                 background-color: #f7f7f7; /* Màu nền nhẹ */
@@ -168,15 +179,14 @@
     <body>
 
         <!-- Header start -->
-        <div class="header">
-            <%@include file="header.jsp" %>
-        </div>
+
+
         <!-- Header end -->
 
         <!-- Product start -->
 
         <!-- Phần banner lớn start-->
-        <section id="center" class="center_home container" style="padding-top: 70px">
+        <section id="center" class="center_home container">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
@@ -411,212 +421,10 @@
                         </div>    
                     </div>
             </div>
+
         </section>
-                
-         <section class="product-list container">
-                    <div class="row">
-                        <h2 class="col product-type-title">PC</h2>
-                        <div class="col-md-10 row product-type-select">
-                            <a href="#" class="col-auto mobile">Macbook</a>
-                            <a href="#" class="col-auto mobile">Asus</a>
-                            <a href="#" class="col-auto mobile">MSI</a>
-                            <a href="#" class="col-auto mobile">Lenovo</a>
-                            <a href="#" class="col-auto mobile">HP</a>
-                            <a href="#" class="col-auto mobile">Acer</a>
-                            <a href="#" class="col-auto mobile">Dell</a>
-                            <a href="#" class="col-auto mobile">Gigabyte</a>
-                            <a href="#" class="col-auto mobile">Xem tất cả</a>
-                        </div>    
-                    </div>
 
-                    <div class="container-product-item row container-fluid">
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 15%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="iPhone 15 128GB">
-                                <div class="card-body">
-                                    <h6 class="card-title">iPhone 15 128GB</h6>
-                                    <p class="price">19.590.000đ <span class="original-price">22.990.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>196.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product Card 2 -->
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 17%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Samsung Galaxy M55">
-                                <div class="card-body">
-                                    <h6 class="card-title">Samsung Galaxy M55 (12GB 256GB)</h6>
-                                    <p class="price">10.490.000đ <span class="original-price">12.690.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>105.000đ</b></p>
-                                    <p>S-Student giảm thêm đến <b>600.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product Card 3 -->
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 6%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
-                                <div class="card-body">
-                                    <h6 class="card-title">Xiaomi Redmi 14C</h6>
-                                    <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>31.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 6%</span> 
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
-                                <div class="card-body">
-                                    <h6 class="card-title">Xiaomi Redmi 14C</h6>
-                                    <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>31.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 6%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
-                                <div class="card-body">
-                                    <h6 class="card-title">Xiaomi Redmi 14C</h6>
-                                    <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>31.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                                <div class="rating-favorite">
-                                    <div>
-                                        <!-- Five star rating -->
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                    </div>
-
-                                    <!-- Favorite Icon Section -->
-                                    <div>
-                                        <!-- Heart Icon -->
-                                        <span style="color: red; font-size: 20px; cursor: pointer;">&#10084;</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>    
-                    </div>
-            </div>
-        </section>
-                
-         <section class="product-list container">
-                    <div class="row">
-                        <h2 class="col product-type-title">Màn hình</h2>
-                        <div class="col-md-10 row product-type-select">
-                            <a href="#" class="col-auto mobile">Macbook</a>
-                            <a href="#" class="col-auto mobile">Asus</a>
-                            <a href="#" class="col-auto mobile">MSI</a>
-                            <a href="#" class="col-auto mobile">Lenovo</a>
-                            <a href="#" class="col-auto mobile">HP</a>
-                            <a href="#" class="col-auto mobile">Acer</a>
-                            <a href="#" class="col-auto mobile">Dell</a>
-                            <a href="#" class="col-auto mobile">Gigabyte</a>
-                            <a href="#" class="col-auto mobile">Xem tất cả</a>
-                        </div>    
-                    </div>
-
-                    <div class="container-product-item row container-fluid">
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 15%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="iPhone 15 128GB">
-                                <div class="card-body">
-                                    <h6 class="card-title">iPhone 15 128GB</h6>
-                                    <p class="price">19.590.000đ <span class="original-price">22.990.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>196.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product Card 2 -->
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 17%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Samsung Galaxy M55">
-                                <div class="card-body">
-                                    <h6 class="card-title">Samsung Galaxy M55 (12GB 256GB)</h6>
-                                    <p class="price">10.490.000đ <span class="original-price">12.690.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>105.000đ</b></p>
-                                    <p>S-Student giảm thêm đến <b>600.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product Card 3 -->
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 6%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
-                                <div class="card-body">
-                                    <h6 class="card-title">Xiaomi Redmi 14C</h6>
-                                    <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>31.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 6%</span> 
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
-                                <div class="card-body">
-                                    <h6 class="card-title">Xiaomi Redmi 14C</h6>
-                                    <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>31.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-auto card-product">
-                            <div class="card position-relative">
-                                <span class="discount-badge">Giảm 6%</span>
-                                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="Xiaomi Redmi 14C">
-                                <div class="card-body">
-                                    <h6 class="card-title">Xiaomi Redmi 14C</h6>
-                                    <p class="price">3.090.000đ <span class="original-price">3.290.000đ</span></p>
-                                    <p>Smember giảm thêm đến <b>31.000đ</b></p>
-                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                                </div>
-                                <div class="rating-favorite">
-                                    <div>
-                                        <!-- Five star rating -->
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                        <span style="color: gold;">&#9733;</span>
-                                    </div>
-
-                                    <!-- Favorite Icon Section -->
-                                    <div>
-                                        <!-- Heart Icon -->
-                                        <span style="color: red; font-size: 20px; cursor: pointer;">&#10084;</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>    
-                    </div>
-            </div>
-        </section>        
-             
 
 
     </div>
