@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>%>
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
@@ -113,8 +114,8 @@
             <div class="popup">
                 <h2>Nhập mã xác thực</h2>
                 <div id="timer"></div> <!-- Countdown timer will display here -->
-
-                <form id="verifyForm" action="RegisterServlet" method="post">
+ 
+                <form id="verifyForm" action="VerifyServlet" method="post">
                     <input type="hidden" id="action" name="action" value="verify"> <!-- Default action -->
                     <label for="verificationCode">Mã xác thực:</label>
                     <input type="text" id="verificationCode" name="verificationCode2" required><br>

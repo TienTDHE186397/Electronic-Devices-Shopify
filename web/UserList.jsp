@@ -125,7 +125,7 @@
         <select name="gender" id="gender">
             <option value="">Chọn giới tính</option>
             <option value="Nam" ${param.gender == 'Nam' ? 'selected' : ''}>Nam</option>
-            <option value="Nữ" ${param.gender == 'Nam' ? 'selected' : ''}>Nữ</option>
+            <option value="Nữ" ${param.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
             <option value="Khác" ${param.gender == 'Khác' ? 'selected' : ''}>Khác</option>
         </select>
         <select name="roleid" id="roleid">

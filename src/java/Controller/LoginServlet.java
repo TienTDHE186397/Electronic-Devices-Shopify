@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.PersonDAO;
+import Email.PasswordUtils;
 
 import Entity.Person;
 import Entity.Person;
@@ -76,6 +77,11 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String remember = request.getParameter("remember");
+        PasswordUtils pw = new PasswordUtils();
+        String passHash = pw.shiftPassword(password);
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(passHash);
         Cookie cn = new Cookie("cname", username);
         Cookie cp = new Cookie("cpass", password);
         Cookie cr = new Cookie("crem", remember);
@@ -93,8 +99,8 @@ public class LoginServlet extends HttpServlet {
         response.addCookie(cn);
         response.addCookie(cp);
         PersonDAO u = new PersonDAO();
-        Person user = u.login(username, password);
-
+        Person user = u.login(username, passHash);
+        System.out.println("User: " + user);
         if (user == null) {
             request.setAttribute("mess", "Username or Password incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -106,7 +112,7 @@ public class LoginServlet extends HttpServlet {
             } else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("HomeSale");
+                response.sendRedirect("SaleHome.jsp");
             } else if (user.getRoleID() == 4) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
@@ -114,7 +120,9 @@ public class LoginServlet extends HttpServlet {
             } else if (user.getRoleID() == 1) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("homepage.jsp");
+                 response.sendRedirect("profile.jsp");
+                 System.out.println("Personn " +session.getAttribute("user"));
+                 
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);

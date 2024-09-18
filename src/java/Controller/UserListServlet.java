@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAO.PersonDAO;
 import Entity.Person;
 import Model.DAOPerson;
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
+        PersonDAO dp = new PersonDAO();
         
         List<Person> listP = dp.getAllPerson();
         request.setAttribute("listP", listP);

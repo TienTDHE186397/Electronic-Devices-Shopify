@@ -1,10 +1,9 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Email;
 
-import Entity.Person;
 import DAO.PersonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,14 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author nghie
+ * @author admin
  */
-@WebServlet(name = "UserControlServlet", urlPatterns = {"/userControl"})
-public class UserControlServlet extends HttpServlet {
+@WebServlet(name = "newPassword", urlPatterns = {"/newPassword"})
+public class newPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class UserControlServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserControlServlet</title>");
+            out.println("<title>Servlet newPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserControlServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet newPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,14 +59,7 @@ public class UserControlServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PersonDAO dp = new PersonDAO();
-        request.setCharacterEncoding("UTF-8");
-        String search = request.getParameter("search");
-        String gender = request.getParameter("gender");
-        String role = request.getParameter("roleid");
-        List<Person> pr = dp.searchPerson(search, role, gender);
-        request.setAttribute("listP", pr);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -81,7 +73,33 @@ public class UserControlServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String pass = (String) request.getParameter("pass");
+        String repass = (String) request.getParameter("repass");
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+        PasswordUtils pw = new PasswordUtils();
+        String passCom = pw.shiftPassword(pass);
+        System.out.println("pass " + pass);
+        System.out.println("repass " + repass);
+        if (pass == null  || repass == null || !pass.equals(repass)) {
+            request.setAttribute("error", "Mật khẩu không khớp!");
+            request.getRequestDispatcher("newPassword.jsp").forward(request, response);
+            return;
+        }
+        PersonDAO personDAO = new PersonDAO();
+        boolean add = personDAO.updatePassword(email, passCom);  // Thêm người dùng vào database
+        if (add) {
+            request.setAttribute("message", "Cập nhật mật khẩu thành công");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+            System.out.println("Cập Nhật Thành Công");
+
+        } else {
+            System.out.println("Cập Nhật Mật Khẩu Thất Bại");
+        }
+        // Xóa thông tin tạm thời trong session
+        session.removeAttribute("verificationCode");
+        session.removeAttribute("tempEmail");
+
     }
 
     /**

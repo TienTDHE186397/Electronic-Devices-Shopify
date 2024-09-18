@@ -53,7 +53,7 @@
                 padding: 20px;
                 color: white;
             }
-<<<<<<< HEAD
+>>>>>>> HEAD 
             .custom-button {
                 background-color: #f7c33e;
                 color: #fff;

@@ -14,13 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import javax.mail.Session;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "VerifyServlet", urlPatterns = {"/VerifyServlet"})
-public class VerifyServlet extends HttpServlet {
+@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class VerifyServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyRePass</title>");
+            out.println("<title>Servlet ChangePassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VerifyRePass at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +61,7 @@ public class VerifyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
     }
 
     /**
@@ -74,51 +75,49 @@ public class VerifyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy mã xác thực từ form
-        String inputCode = request.getParameter("verificationCode2");
-
         HttpSession session = request.getSession();
-        String storedCode = (String) session.getAttribute("verificationCode");
-        System.out.println(storedCode);
-        // Kiểm tra mã xác thực
-        if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
-            // Lấy thông tin người dùng từ session và lưu vào database
-            String name = (String ) session.getAttribute("tempName");
-            String age = (String ) session.getAttribute("tempAge");
-            String phone = (String ) session.getAttribute("tempPhone");
-            String address = (String ) session.getAttribute("tempAddress");
-            String password = (String ) session.getAttribute("tempPassword");
-            String email = (String) session.getAttribute("tempEmail");
-            String gender = (String) session.getAttribute("tempGender");
-            PersonDAO personDAO = new PersonDAO();
-//            "INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone, Password, RoleID"
-            Person person = new Person(name, gender, age, null, address, email, phone, 1, password);
-            boolean add = personDAO.addPerson(person);  // Thêm người dùng vào database
-            if (add) {
-                System.out.println("Cập Nhật Thành Công");
-
-            } else {
-                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
-            }
-            // Xóa thông tin tạm thời trong session
-            session.removeAttribute("verificationCode");
-            session.removeAttribute("tempEmail");
-            session.removeAttribute("tempAge");
-            session.removeAttribute("tempAddress");
-            session.removeAttribute("tempName");
-            session.removeAttribute("tempPassword");
-            session.removeAttribute("tempPhone");
-            session.removeAttribute("tempGender");
-            
-
-            // Chuyển hướng tới trang thành công
-            request.setAttribute("message", "Đăng kí tài khoản thành công!");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
+        System.out.println("Perasdasddasas " + session.getAttribute("user"));
+        if (session != null) {
+            System.out.println("Session ID: " + session.getId());
         } else {
-            // Xác thực thất bại
-            request.setAttribute("message", "Mã xác thực không chính xác.");
-            request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
+            System.out.println("No session found");
         }
+        Person person = (Person) session.getAttribute("user");
+        String oldpass = (String) request.getParameter("oldpass");
+        String newpass = (String) request.getParameter("pass");
+        String repass = (String) request.getParameter("repass");
+        PersonDAO pd = new PersonDAO();
+        if (!newpass.equals(repass)) {
+            request.setAttribute("error", "Mật khẩu không khớp");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        System.out.println("PersonInChange " + person);
+        if (person == null) {
+            request.setAttribute("error", "Vui long dang nhap lai");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response); // Nếu không có người dùng trong session, chuyển hướng về trang đăng nhập
+            return;
+        } else {
+            PasswordUtils pw = new PasswordUtils();
+            String reversePass = pw.ReverPassword(person.getPasword());
+            String passCom = pw.shiftPassword(newpass);
+            String email = person.getEmail();
+            System.out.println(email);
+            if (!reversePass.equals(oldpass)) {
+                request.setAttribute("error", "Mật khẩu đăng nhập sai ");
+                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            } else {
+                boolean update = pd.updatePassword(email, passCom);
+                if (update) {
+                    request.setAttribute("message", "Cập nhật thành công");
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("error", "Cập nhật thấy bại");
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                }
+            }
+
+        }
+
     }
 
     /**
