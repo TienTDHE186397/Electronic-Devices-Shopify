@@ -43,6 +43,23 @@
                 color: #333;
             }
 
+<<<<<<< HEAD
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Quên Mật Khẩu</h1>
+            <form action="ForgotPassword" method="post">
+                <input type="email" name="email" placeholder="Nhập email" required>
+                <input type="password" name="pass" placeholder="Mật khẩu mới" required>
+                <input type="password" name="repass" placeholder="Nhập lại mật khẩu" required>
+                <button type="submit" style="background-color:  #b22222" >Đặt Lại Mật Khẩu</button>
+            </form>
+            <% 
+                String errorMessage = (String) request.getAttribute("error");
+            %>
+            <div class="message">
+                <%= errorMessage != null ? errorMessage : "" %>
+=======
             button {
                 padding: 10px 20px;
                 background-color: #b22222;
@@ -79,6 +96,7 @@
                 <div class="message">
                     <%= errorMessage != null ? errorMessage : "" %>
                 </div>
+>>>>>>> 5df174f637e24d3e4e68b2f64790ed8afcec6e1c
             </div>
         </div>
     </body>

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : May 18, 2024, 11:03:56 PM
-    Author     : Admin
+   Document   : index
+   Created on : May 18, 2024, 11:03:56 PM
+   Author     : Admin
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -53,7 +53,22 @@
                 padding: 20px;
                 color: white;
             }
+<<<<<<< HEAD
+            .custom-button {
+                background-color: #f7c33e;
+                color: #fff;
+                font-size: 12px;
+                padding: 10px 45px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
 
+            }
+=======
+
+>>>>>>> 5df174f637e24d3e4e68b2f64790ed8afcec6e1c
 
             #subs {
                 background-color: #f7f7f7; /* Màu nền nhẹ */
@@ -168,15 +183,14 @@
     <body>
 
         <!-- Header start -->
-        <div class="header">
-            <%@include file="header.jsp" %>
-        </div>
+
+
         <!-- Header end -->
 
         <!-- Product start -->
 
         <!-- Phần banner lớn start-->
-        <section id="center" class="center_home container" style="padding-top: 70px">
+        <section id="center" class="center_home container">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
@@ -411,8 +425,12 @@
                         </div>    
                     </div>
             </div>
+
         </section>
 
+<<<<<<< HEAD
+
+=======
         <section class="product-list container">
             <div class="row">
                 <h2 class="col product-type-title">PC</h2>
@@ -514,6 +532,7 @@
             </div>
         </div>
     </section>
+>>>>>>> 5df174f637e24d3e4e68b2f64790ed8afcec6e1c
 
     <section class="product-list container">
         <div class="row">
