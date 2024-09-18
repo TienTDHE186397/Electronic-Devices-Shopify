@@ -27,8 +27,8 @@
     </style>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container-fluid">   
             <!-- Navbar brand -->
             <a class="navbar-brand" target="_blank" href="#">
                 <img src="https://drive.google.com/file/d/1YoYfvxlyzbUCz0kMZ0TufLcRpMxcubhW/view?usp=sharing" height="16" alt=""
@@ -67,7 +67,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="https://mdbootstrap.com/docs/standard/" target="_blank">Sign in</a>
+                        <a class="nav-link" href="./login" target="_blank">Sign in</a>
                     </li>
                 </ul>
             </div>
