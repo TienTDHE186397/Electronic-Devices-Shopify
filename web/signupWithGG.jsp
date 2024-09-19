@@ -42,7 +42,7 @@
                         String error = (String) request.getAttribute("error");
                     %>
                     <h4><%= error != null ? error : ""%></h4>
-                    <div style="color: red"><b>${mess}</b></div>
+                    
                     <button type="submit">Đăng Kí</button>
                 </form>
             </div>

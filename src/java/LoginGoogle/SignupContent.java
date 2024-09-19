@@ -107,10 +107,10 @@ public class SignupContent extends HttpServlet {
         boolean personAdded = personDAO.addPerson(person);
 
         if (personAdded) {
-            request.setAttribute("successMessage", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
+            request.setAttribute("message", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
             request.getRequestDispatcher("success.jsp").forward(request, response);
         } else {
-            request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo tài khoản.");
+            request.setAttribute("error", "Có lỗi xảy ra khi tạo tài khoản.");
             request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
         }
     }

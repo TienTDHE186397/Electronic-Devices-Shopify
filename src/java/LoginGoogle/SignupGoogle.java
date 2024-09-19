@@ -84,8 +84,8 @@ public class SignupGoogle extends HttpServlet {
         PersonDAO emailChecker = new PersonDAO();
         if (emailChecker.isEmailExists(gmail)) {
             String error = "Your account with email is existed Please Comeback login Page";
-            request.setAttribute("error", error);
-            request.getRequestDispatcher("login").forward(request, response);
+            request.setAttribute("message", "Tài khoản của bạn đã tồn tại vui lòng ấn nút phía đưới để quay lại trang login");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
         } else {
             request.setAttribute("user", user);
             request.getRequestDispatcher("signupWithGG").forward(request, response);
