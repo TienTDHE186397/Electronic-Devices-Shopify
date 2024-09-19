@@ -18,48 +18,20 @@ public class Product {
     private int views;
     private Date releaseDate;
     private int quantitySold;
-    private Categories categoryID;
+    private Categories category;
     private int quantity;
     private int sale;
 
     public Product() {
     }
 
-    public Product(int productID, int views, Date releaseDate, int quantitySold, Categories categoryID, int quantity, int sale) {
+    public Product(int productID, int views, Date releaseDate, int quantitySold, Categories category, int quantity, int sale) {
         this.productID = productID;
         this.views = views;
         this.releaseDate = releaseDate;
         this.quantitySold = quantitySold;
-        this.categoryID = categoryID;
+        this.category = category;
         this.quantity = quantity;
-        this.sale = sale;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setQuantitySold(int quantitySold) {
-        this.quantitySold = quantitySold;
-    }
-
-    public void setCategoryID(Categories categoryID) {
-        this.categoryID = categoryID;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setSale(int sale) {
         this.sale = sale;
     }
 
@@ -79,8 +51,8 @@ public class Product {
         return quantitySold;
     }
 
-    public Categories getCategoryID() {
-        return categoryID;
+    public Categories getCategory() {
+        return category;
     }
 
     public int getQuantity() {
@@ -91,6 +63,33 @@ public class Product {
         return sale;
     }
 
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setQuantitySold(int quantitySold) {
+        this.quantitySold = quantitySold;
+    }
+
+    public void setCategory(Categories category) {
+        this.category = category;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setSale(int sale) {
+        this.sale = sale;
+    }
     
     
     

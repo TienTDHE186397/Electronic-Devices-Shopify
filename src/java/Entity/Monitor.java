@@ -24,12 +24,12 @@ public class Monitor {
     private String monitorResolution;
     private String monitorFeature;
     private String monitorType;
-    private Product productId;
+    private Product product;
 
     public Monitor() {
     }
 
-    public Monitor(String monitorId, String monitorImage, String monitorName, String monitorBranch, double monitorPrice, int monitorFpsRate, int monitorResponseTime, double monitorAspectRatio, String monitorPortConnect, String monitorPanelType, String monitorSize, String monitorWeight, String monitorResolution, String monitorFeature, String monitorType, Product productId) {
+    public Monitor(String monitorId, String monitorImage, String monitorName, String monitorBranch, double monitorPrice, int monitorFpsRate, int monitorResponseTime, double monitorAspectRatio, String monitorPortConnect, String monitorPanelType, String monitorSize, String monitorWeight, String monitorResolution, String monitorFeature, String monitorType, Product product) {
         this.monitorId = monitorId;
         this.monitorImage = monitorImage;
         this.monitorName = monitorName;
@@ -45,7 +45,7 @@ public class Monitor {
         this.monitorResolution = monitorResolution;
         this.monitorFeature = monitorFeature;
         this.monitorType = monitorType;
-        this.productId = productId;
+        this.product = product;
     }
 
     public String getMonitorId() {
@@ -108,8 +108,8 @@ public class Monitor {
         return monitorType;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
     public void setMonitorId(String monitorId) {
@@ -172,10 +172,11 @@ public class Monitor {
         this.monitorType = monitorType;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
-    
+
+   
 
     
     

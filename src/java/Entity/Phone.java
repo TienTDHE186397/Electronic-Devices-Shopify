@@ -44,13 +44,13 @@ public class Phone {
     private int internalMemory;
     private String battery;
     private String screenResolution;
-    private Product productId;
+    private Product product;
     private String img;
 
     public Phone() {
     }
 
-    public Phone(String phoneID, String phoneName, int price, double screenSize, String displayTech, String rearCamera, String frontCamera, String chipSet, int ramCapicity, int internalMemory, String battery, String screenResolution, Product productId, String img) {
+    public Phone(String phoneID, String phoneName, int price, double screenSize, String displayTech, String rearCamera, String frontCamera, String chipSet, int ramCapicity, int internalMemory, String battery, String screenResolution, Product product, String img) {
         this.phoneID = phoneID;
         this.phoneName = phoneName;
         this.price = price;
@@ -63,7 +63,7 @@ public class Phone {
         this.internalMemory = internalMemory;
         this.battery = battery;
         this.screenResolution = screenResolution;
-        this.productId = productId;
+        this.product = product;
         this.img = img;
     }
 
@@ -115,8 +115,8 @@ public class Phone {
         return screenResolution;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
     public String getImg() {
@@ -171,13 +171,14 @@ public class Phone {
         this.screenResolution = screenResolution;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setImg(String img) {
         this.img = img;
     }
+
     
     
     

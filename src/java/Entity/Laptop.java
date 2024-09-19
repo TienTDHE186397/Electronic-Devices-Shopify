@@ -64,9 +64,12 @@ public class Laptop {
     private String size;
     private String img;
     private String description;
-    private Product productId;
+    private Product product;
 
-    public Laptop(String laptopId, int price, String lapName, String genre, String cpu, String ram, String graphicCard, String hard_drive, String monitor, String lan, String wifi, String blueTooth, String webCam, String operatingSystem, String pin, String lapWeight, String lapColor, String size, String img, String description, Product productId) {
+    public Laptop() {
+    }
+
+    public Laptop(String laptopId, int price, String lapName, String genre, String cpu, String ram, String graphicCard, String hard_drive, String monitor, String lan, String wifi, String blueTooth, String webCam, String operatingSystem, String pin, String lapWeight, String lapColor, String size, String img, String description, Product product) {
         this.laptopId = laptopId;
         this.price = price;
         this.lapName = lapName;
@@ -87,177 +90,178 @@ public class Laptop {
         this.size = size;
         this.img = img;
         this.description = description;
-        this.productId = productId;
-    }
-
-    public Laptop() {
+        this.product = product;
     }
 
     public String getLaptopId() {
         return laptopId;
     }
 
-    public void setLaptopId(String laptopId) {
-        this.laptopId = laptopId;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public String getLapName() {
         return lapName;
     }
 
-    public void setLapName(String lapName) {
-        this.lapName = lapName;
-    }
-
     public String getGenre() {
         return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public String getCpu() {
         return cpu;
     }
 
-    public void setCpu(String cpu) {
-        this.cpu = cpu;
-    }
-
     public String getRam() {
         return ram;
-    }
-
-    public void setRam(String ram) {
-        this.ram = ram;
     }
 
     public String getGraphicCard() {
         return graphicCard;
     }
 
-    public void setGraphicCard(String graphicCard) {
-        this.graphicCard = graphicCard;
-    }
-
     public String getHard_drive() {
         return hard_drive;
-    }
-
-    public void setHard_drive(String hard_drive) {
-        this.hard_drive = hard_drive;
     }
 
     public String getMonitor() {
         return monitor;
     }
 
-    public void setMonitor(String monitor) {
-        this.monitor = monitor;
-    }
-
     public String getLan() {
         return lan;
-    }
-
-    public void setLan(String lan) {
-        this.lan = lan;
     }
 
     public String getWifi() {
         return wifi;
     }
 
-    public void setWifi(String wifi) {
-        this.wifi = wifi;
-    }
-
     public String getBlueTooth() {
         return blueTooth;
-    }
-
-    public void setBlueTooth(String blueTooth) {
-        this.blueTooth = blueTooth;
     }
 
     public String getWebCam() {
         return webCam;
     }
 
-    public void setWebCam(String webCam) {
-        this.webCam = webCam;
-    }
-
     public String getOperatingSystem() {
         return operatingSystem;
-    }
-
-    public void setOperatingSystem(String operatingSystem) {
-        this.operatingSystem = operatingSystem;
     }
 
     public String getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-
     public String getLapWeight() {
         return lapWeight;
-    }
-
-    public void setLapWeight(String lapWeight) {
-        this.lapWeight = lapWeight;
     }
 
     public String getLapColor() {
         return lapColor;
     }
 
-    public void setLapColor(String lapColor) {
-        this.lapColor = lapColor;
-    }
-
     public String getSize() {
         return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public String getImg() {
         return img;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setLaptopId(String laptopId) {
+        this.laptopId = laptopId;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setLapName(String lapName) {
+        this.lapName = lapName;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setCpu(String cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
+    }
+
+    public void setGraphicCard(String graphicCard) {
+        this.graphicCard = graphicCard;
+    }
+
+    public void setHard_drive(String hard_drive) {
+        this.hard_drive = hard_drive;
+    }
+
+    public void setMonitor(String monitor) {
+        this.monitor = monitor;
+    }
+
+    public void setLan(String lan) {
+        this.lan = lan;
+    }
+
+    public void setWifi(String wifi) {
+        this.wifi = wifi;
+    }
+
+    public void setBlueTooth(String blueTooth) {
+        this.blueTooth = blueTooth;
+    }
+
+    public void setWebCam(String webCam) {
+        this.webCam = webCam;
+    }
+
+    public void setOperatingSystem(String operatingSystem) {
+        this.operatingSystem = operatingSystem;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public void setLapWeight(String lapWeight) {
+        this.lapWeight = lapWeight;
+    }
+
+    public void setLapColor(String lapColor) {
+        this.lapColor = lapColor;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Product getProductId() {
-        return productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
-    }
+   
+    
+    
 }

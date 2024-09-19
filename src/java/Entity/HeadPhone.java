@@ -30,12 +30,12 @@ public class HeadPhone {
     private int price;
     private String img;
     private String description;
-    private Product productId;
+    private Product product;
 
     public HeadPhone() {
     }
 
-    public HeadPhone(String headPhoneId, String headPhoneName, String brand, String model, String features, String connection, String batteryLife, String noiseCancel, int price, String img, String description, Product productId) {
+    public HeadPhone(String headPhoneId, String headPhoneName, String brand, String model, String features, String connection, String batteryLife, String noiseCancel, int price, String img, String description, Product product) {
         this.headPhoneId = headPhoneId;
         this.headPhoneName = headPhoneName;
         this.brand = brand;
@@ -47,7 +47,7 @@ public class HeadPhone {
         this.price = price;
         this.img = img;
         this.description = description;
-        this.productId = productId;
+        this.product = product;
     }
 
     public String getHeadPhoneId() {
@@ -94,8 +94,8 @@ public class HeadPhone {
         return description;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
     public void setHeadPhoneId(String headPhoneId) {
@@ -142,10 +142,11 @@ public class HeadPhone {
         this.description = description;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
-    
+
+   
     
     
     
