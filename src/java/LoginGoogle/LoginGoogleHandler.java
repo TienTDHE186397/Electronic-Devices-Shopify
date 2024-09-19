@@ -4,7 +4,6 @@
  */
 package LoginGoogle;
 
-
 import DAO.PersonDAO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

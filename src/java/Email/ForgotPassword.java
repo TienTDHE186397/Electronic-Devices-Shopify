@@ -113,7 +113,7 @@ public class ForgotPassword extends HttpServlet {
         // Redirect to verification page
         response.sendRedirect("verifyRePass.jsp");
     }
-    
+
     private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Generate a new verification code

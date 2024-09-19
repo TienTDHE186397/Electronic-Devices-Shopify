@@ -89,24 +89,22 @@ public class SaleDAO {
                 + "    DATEPART(WEEKDAY, OrderDate)\n"
                 + "ORDER BY \n"
                 + "    DATEPART(WEEKDAY, OrderDate)";
-         try {
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            
-                while (rs.next()) {
+
+            while (rs.next()) {
                 String dayOfWeek = rs.getString("DayOfWeek");
                 int completedOrders = rs.getInt("CompletedOrders");
                 ordersByDay.add(new OrderByDay(dayOfWeek, completedOrders));
             }
-            
 
         } catch (SQLException e) {
             System.out.println(e);
 
         }
         return ordersByDay;
-        
-        
+
     }
 
 //    public static void main(String[] args) {

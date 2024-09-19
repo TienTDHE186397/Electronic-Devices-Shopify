@@ -120,9 +120,9 @@ public class LoginServlet extends HttpServlet {
             } else if (user.getRoleID() == 1) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                 response.sendRedirect("profile.jsp");
-                 System.out.println("Personn " +session.getAttribute("user"));
-                 
+                response.sendRedirect("profile.jsp");
+                System.out.println("Personn " + session.getAttribute("user"));
+
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
@@ -144,4 +144,3 @@ public class LoginServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-

@@ -14,19 +14,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Intro settings -->
     <style>
-        #intro {
+        .navigation-custom{
             /* Margin to fix overlapping fixed navbar */
-            margin-top: 58px;
+            margin-bottom: 100px;
         }
-
-        
-
-
 
     </style>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top navigation-custom">
         <div class="container-fluid">   
             <!-- Navbar brand -->
             <a class="navbar-brand" target="_blank" href="#">
@@ -45,7 +41,7 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link" href="https://mdbootstrap.com/docs/standard/" target="_blank">
+                        <a class="nav-link" href="#" target="_blank">
                             <i class="fa-solid fa-list"></i> Danh mục
                         </a>
                     </li>

@@ -28,7 +28,8 @@ import javax.mail.internet.*;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -63,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if ("resend".equals(action)) {
             resendVerificationCode(request, response);
         } else {
@@ -115,7 +116,7 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
-        
+
         // Generate verification code
         String verificationCode = generateVerificationCode();
 
@@ -135,7 +136,7 @@ public class RegisterServlet extends HttpServlet {
         System.out.println(session.getAttribute("tempPassword"));
         System.out.println(session.getAttribute("tempAge"));
         System.out.println(session.getAttribute("verificationCode2"));
- 
+
         // Redirect to verification page
         response.sendRedirect("verifyEmail.jsp");
     }
@@ -152,7 +153,7 @@ public class RegisterServlet extends HttpServlet {
         }
         session.setAttribute("verificationCode", newCode);
         MailSender.sendVerificationEmail(email, newCode);
-         response.sendRedirect("verifyEmail.jsp");
+        response.sendRedirect("verifyEmail.jsp");
     }
 
     private String generateVerificationCode() {

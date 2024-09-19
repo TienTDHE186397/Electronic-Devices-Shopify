@@ -117,93 +117,93 @@
                 <div class="col-12 mb-3 mb-lg-"> 
                     <div class="position-relative card table-nowrap table-card ">
                         <div style="margin-bottom: 5px">
-        <h1>Danh sách người dùng</h1>
+                            <h1>Danh sách người dùng</h1>
 
-    <!-- Form tìm kiếm và lọc -->
-    <form method="GET" action="userControl">
-        <input type="text" name="search" placeholder="Tìm kiếm theo tên, email, di động" value="${param.search}" />
-        <select name="gender" id="gender">
-            <option value="">Chọn giới tính</option>
-            <option value="Nam" ${param.gender == 'Nam' ? 'selected' : ''}>Nam</option>
-            <option value="Nữ" ${param.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
-            <option value="Khác" ${param.gender == 'Khác' ? 'selected' : ''}>Khác</option>
-        </select>
-        <select name="roleid" id="roleid">
-            <option value="">Chọn vai trò</option>
-            <option value="1" ${param.roleid == '1' ? 'selected' : ''}>Customer</option>
-            <option value="2" ${param.roleid == '2' ? 'selected' : ''}>Marketing</option>
-            <option value="3" ${param.roleid == '3' ? 'selected' : ''}>Sale</option>
-            <option value="4" ${param.roleid == '4' ? 'selected' : ''}>SaleManager</option>
-            <option value="5" ${param.roleid == '5' ? 'selected' : ''}>Admin</option>
-        </select>
-        <input type="submit" value="Tìm kiếm" />
-    </form>
-         <!-- Bảng danh sách người dùng -->
-    
-    <table border="1" width = 100%>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Họ tên</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <th>Địa chỉ</th>
-                <th>Email</th>
-                <th>Di động</th>
-                <th>Vai trò</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        <c:forEach var="person" items="${listP}">
-                <tr>
-                    <td>${person.personID}</td>
-                    <td>${person.name}</td>
-                    <td>${person.gender}</td>
-                    <td>${person.dateOfBirth}</td>
-                    <td>${person.address}</td>
-                    <td>${person.email}</td>
-                    <td>${person.phone}</td>
-                <c:choose>
-                    <c:when test="${person.roleID == 1}">
-                        <td>Customer</td>
-                    </c:when>
-                        <c:when test="${person.roleID == 2}">
-                        <td>Marketing</td>
-                    </c:when>
-                        <c:when test="${person.roleID == 3}">
-                        <td>Sale</td>
-                    </c:when>
-                        <c:when test="${person.roleID == 4}">
-                        <td>SaleManager</td>
-                    </c:when>
-                        <c:when test="${person.roleID == 5}">
-                        <td>Admin</td>
-                    </c:when>
-                </c:choose>
-                    <c:if test="${person.roleID == 5}">
-                        <td>
-                        <a href="editUser?PersonID=${id}" style="">Chỉnh sửa</a>
-                    </td>
-                    </c:if>
-                    <c:if test="${person.roleID != 5}">
-                        <td></td>
-                    </c:if>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-         <div>
-    <c:forEach begin="1" end="${totalPages}" var="i">
-        <a href="userList?page=${i}${param.search != null ? '&search=' + param.search : ''}${param.gender != null ? '&gender=' + param.gender : ''}${param.role != null ? '&role=' + param.role : ''}">${i}</a>
-    </c:forEach>
-</div>
+                            <!-- Form tìm kiếm và lọc -->
+                            <form method="GET" action="userControl">
+                                <input type="text" name="search" placeholder="Tìm kiếm theo tên, email, di động" value="${param.search}" />
+                                <select name="gender" id="gender">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Nam" ${param.gender == 'Nam' ? 'selected' : ''}>Nam</option>
+                                    <option value="Nữ" ${param.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
+                                    <option value="Khác" ${param.gender == 'Khác' ? 'selected' : ''}>Khác</option>
+                                </select>
+                                <select name="roleid" id="roleid">
+                                    <option value="">Chọn vai trò</option>
+                                    <option value="1" ${param.roleid == '1' ? 'selected' : ''}>Customer</option>
+                                    <option value="2" ${param.roleid == '2' ? 'selected' : ''}>Marketing</option>
+                                    <option value="3" ${param.roleid == '3' ? 'selected' : ''}>Sale</option>
+                                    <option value="4" ${param.roleid == '4' ? 'selected' : ''}>SaleManager</option>
+                                    <option value="5" ${param.roleid == '5' ? 'selected' : ''}>Admin</option>
+                                </select>
+                                <input type="submit" value="Tìm kiếm" />
+                            </form>
+                            <!-- Bảng danh sách người dùng -->
+
+                            <table border="1" width = 100%>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Họ tên</th>
+                                        <th>Giới tính</th>
+                                        <th>Ngày sinh</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Email</th>
+                                        <th>Di động</th>
+                                        <th>Vai trò</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <c:forEach var="person" items="${listP}">
+                                        <tr>
+                                            <td>${person.personID}</td>
+                                            <td>${person.name}</td>
+                                            <td>${person.gender}</td>
+                                            <td>${person.dateOfBirth}</td>
+                                            <td>${person.address}</td>
+                                            <td>${person.email}</td>
+                                            <td>${person.phone}</td>
+                                            <c:choose>
+                                                <c:when test="${person.roleID == 1}">
+                                                    <td>Customer</td>
+                                                </c:when>
+                                                <c:when test="${person.roleID == 2}">
+                                                    <td>Marketing</td>
+                                                </c:when>
+                                                <c:when test="${person.roleID == 3}">
+                                                    <td>Sale</td>
+                                                </c:when>
+                                                <c:when test="${person.roleID == 4}">
+                                                    <td>SaleManager</td>
+                                                </c:when>
+                                                <c:when test="${person.roleID == 5}">
+                                                    <td>Admin</td>
+                                                </c:when>
+                                            </c:choose>
+                                            <c:if test="${person.roleID == 5}">
+                                                <td>
+                                                    <a href="editUser?PersonID=${id}" style="">Chỉnh sửa</a>
+                                                </td>
+                                            </c:if>
+                                            <c:if test="${person.roleID != 5}">
+                                                <td></td>
+                                            </c:if>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <div>
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <a href="userList?page=${i}${param.search != null ? '&search=' + param.search : ''}${param.gender != null ? '&gender=' + param.gender : ''}${param.role != null ? '&role=' + param.role : ''}">${i}</a>
+                                </c:forEach>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-        <center> <a href="addUser.jsp"><input type="button" value="Thêm người dùng mới"></a></center>
-    </body>
+    <center> <a href="addUser.jsp"><input type="button" value="Thêm người dùng mới"></a></center>
+</body>
 </html>

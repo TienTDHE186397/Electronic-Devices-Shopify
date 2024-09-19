@@ -42,13 +42,13 @@
                 margin-top:  20px;
                 color: #333;
             }
-</style>
+        </style>
     </head>
     <body>
         <div class="container">
             <div class="form-container">
                 <h1>Nhập lại mật khẩu </h1>
-                    <form action="newPassword" method="post">
+                <form action="newPassword" method="post">
                     <input type="password" name="pass" placeholder="Nhập mật khẩu mới" required>
                     <input type="password" name="repass" placeholder="Nhập lại mật khẩu mới" required>
                     <button type="submit" style="background-color:  #b22222" >Xác nhận</button>

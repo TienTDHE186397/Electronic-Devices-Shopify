@@ -133,55 +133,55 @@
                     <div style="margin-bottom: 5px">
                         <h1>Add User</h1>
                     </div>
-               <center>
+                    <center>
 
-        <div class="modal-body">
-        <form action="addUser" method="post">
-            <div class="form-group">
-            <label>PersonID</label>
-            <input type="text" class="form-control" id="centeredInput" name="id" value="${listP.size()}"/>
-        </div>
-            <div class="form-group">
-            <label>Họ và tên</label>
-            <input type="text" class="form-control" id="centeredInput"   name="name"/>
-        </div>
-            <div class="form-group">
-            <label>Giới tính</label>
-            <select id="centeredInput" name="gender" class="form-select">
-                <option value="Male">Nam</option>
-                <option value="Female">Nữ</option>
-                <option value="LGBT">Khác</option>
-            </select>
-        </div>
-            <div class="form-group">
-            <label>Ngày sinh</label>
-            <input type = "date" class="form-control" id="centeredInput" name="dob"/>
-        </div>
-            <div class="form-group">
-            <label>Địa chỉ</label>
-            <input type="text" class="form-control" id="centeredInput" name="address"/>
-        </div>
-            <div class="form-group">
-             <label>Email</label>
-            <input type="email" class="form-control" id="centeredInput" name="email"/>
-        </div>
-           <div class="form-group">
-            <label>Số điện thoại</label>
-            <input type="text" class="form-control" id="centeredInput" name="phone"/>
-        </div>
-        <div class="form-group">
-            <label>Vai trò</label>
-            <select id="centeredInput" name="gender" class="form-select">
-                <option value="admin">Admin</option>
-                <option value="saleM">SaleManager</option>
-                <option value="sale">Sale</option>
-                <option value="marketing">Marketing</option>
-                <option value="customer">Customer</option>
-            </select>
-        </div>
-        <input type="submit" class="form-control"/>
-        </form>
-        </div>
-               </center>
-    </body>
-</html>
+                        <div class="modal-body">
+                            <form action="addUser" method="post">
+                                <div class="form-group">
+                                    <label>PersonID</label>
+                                    <input type="text" class="form-control" id="centeredInput" name="id" value="${listP.size()}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ và tên</label>
+                                    <input type="text" class="form-control" id="centeredInput"   name="name"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Giới tính</label>
+                                    <select id="centeredInput" name="gender" class="form-select">
+                                        <option value="Male">Nam</option>
+                                        <option value="Female">Nữ</option>
+                                        <option value="LGBT">Khác</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày sinh</label>
+                                    <input type = "date" class="form-control" id="centeredInput" name="dob"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Địa chỉ</label>
+                                    <input type="text" class="form-control" id="centeredInput" name="address"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" id="centeredInput" name="email"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại</label>
+                                    <input type="text" class="form-control" id="centeredInput" name="phone"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Vai trò</label>
+                                    <select id="centeredInput" name="gender" class="form-select">
+                                        <option value="admin">Admin</option>
+                                        <option value="saleM">SaleManager</option>
+                                        <option value="sale">Sale</option>
+                                        <option value="marketing">Marketing</option>
+                                        <option value="customer">Customer</option>
+                                    </select>
+                                </div>
+                                <input type="submit" class="form-control"/>
+                            </form>
+                        </div>
+                    </center>
+                    </body>
+                    </html>

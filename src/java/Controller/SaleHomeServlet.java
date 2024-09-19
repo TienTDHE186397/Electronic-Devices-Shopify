@@ -64,14 +64,12 @@ public class SaleHomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SaleDAO saleDAO = new SaleDAO();
-        
+
         List<SaleOrder> list = saleDAO.getOrder();
         List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
-        
-        
+
         List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
 
-        
         String[] statusList = new String[orderStatusList.size()];
         Integer[] countList = new Integer[orderStatusList.size()];
 
@@ -79,7 +77,7 @@ public class SaleHomeServlet extends HttpServlet {
         for (OrderStatus orderStatus : orderStatusList) {
             statusList[i] = orderStatus.getStatus();
             countList[i] = orderStatus.getCount();
-            
+
             i++;
         }
 
@@ -88,10 +86,8 @@ public class SaleHomeServlet extends HttpServlet {
         request.setAttribute("countList", countList);
         request.setAttribute("ordersByDay", odbList);
 
-       
         RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHome.jsp");
         dispatcher.forward(request, response);
-
 
     }
 
@@ -119,5 +115,4 @@ public class SaleHomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    }
-
+}

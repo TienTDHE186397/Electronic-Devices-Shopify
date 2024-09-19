@@ -74,7 +74,7 @@
                 <tr>
                     <td>Password</td>
                     <td><input type="text" name="name" value="<%= pass %>" placeholder="Name"></td>
-                     <td><button type="button" id="changePasswordBtn" style="background-color: #b22222">Đổi mật khẩu</button></td>
+                    <td><button type="button" id="changePasswordBtn" style="background-color: #b22222">Đổi mật khẩu</button></td>
                 </tr>
             </tbody>
         </table>
@@ -84,7 +84,7 @@
         <%
             }
         %>
-         
+
     </body>
 </html>
 

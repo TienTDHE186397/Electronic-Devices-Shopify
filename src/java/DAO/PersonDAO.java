@@ -101,7 +101,7 @@ public class PersonDAO extends DBContext {
 //        }
 //        return null;
 //    }
-   
+
     public int getLastInsertedBorrowID() {
         String sql = "SELECT MAX(BorrowID) AS BorrowID FROM Borrow";
         try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {
@@ -197,16 +197,17 @@ public class PersonDAO extends DBContext {
             return false;
         }
     }
-    public List<Person> searchPerson(String search, String role, String gender){
+
+    public List<Person> searchPerson(String search, String role, String gender) {
         List<Person> list = new ArrayList<>();
         String sql = "select * from Person where 1=1 ";
-        if(search!=null&&!search.isEmpty()){
+        if (search != null && !search.isEmpty()) {
             sql += "and (Name like '%" + search + "'% or Email like '%" + search + "%' or Phone like '%" + search + "'%)";
         }
-        if(gender!=null&&!gender.isEmpty()){
+        if (gender != null && !gender.isEmpty()) {
             sql += "and Gender like '%" + gender + "%'";
         }
-        if(role!=null&&!role.isEmpty()){
+        if (role != null && !role.isEmpty()) {
             sql += "and RoleID = " + role;
         }
         try {
@@ -222,7 +223,7 @@ public class PersonDAO extends DBContext {
                 r.setAddress(rs.getString("Address"));
                 r.setEmail(rs.getString("Email"));
                 r.setPhone(rs.getString("Phone"));
-                 r.setRoleID(rs.getInt("RoleID"));
+                r.setRoleID(rs.getInt("RoleID"));
                 list.add(r);
             }
         } catch (Exception e) {

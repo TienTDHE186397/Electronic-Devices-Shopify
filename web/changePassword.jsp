@@ -51,7 +51,7 @@
                 setTimeout(function () {
                     window.location.href = "login.jsp";
                 }, 3000);
-                
+
             }
         </script>
     </head>
@@ -86,7 +86,7 @@
                     <input type="password" name="repass" placeholder="Nhập lại mật khẩu mới" required>
                     <button type="submit" style="background-color:  #b22222" >Xác nhận</button>
                 </form>
-               
+
 
             </div>
         </div>

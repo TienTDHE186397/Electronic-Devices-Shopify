@@ -1,4 +1,4 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
@@ -81,7 +81,7 @@ public class newPassword extends HttpServlet {
         String passCom = pw.shiftPassword(pass);
         System.out.println("pass " + pass);
         System.out.println("repass " + repass);
-        if (pass == null  || repass == null || !pass.equals(repass)) {
+        if (pass == null || repass == null || !pass.equals(repass)) {
             request.setAttribute("error", "Mật khẩu không khớp!");
             request.getRequestDispatcher("newPassword.jsp").forward(request, response);
             return;

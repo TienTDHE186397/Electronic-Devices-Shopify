@@ -114,7 +114,7 @@
             <div class="popup">
                 <h2>Nhập mã xác thực</h2>
                 <div id="timer"></div> <!-- Countdown timer will display here -->
- 
+
                 <form id="verifyForm" action="VerifyServlet" method="post">
                     <input type="hidden" id="action" name="action" value="verify"> <!-- Default action -->
                     <label for="verificationCode">Mã xác thực:</label>

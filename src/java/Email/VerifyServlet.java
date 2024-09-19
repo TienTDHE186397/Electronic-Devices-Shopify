@@ -83,11 +83,11 @@ public class VerifyServlet extends HttpServlet {
         // Kiểm tra mã xác thực
         if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
             // Lấy thông tin người dùng từ session và lưu vào database
-            String name = (String ) session.getAttribute("tempName");
-            String age = (String ) session.getAttribute("tempAge");
-            String phone = (String ) session.getAttribute("tempPhone");
-            String address = (String ) session.getAttribute("tempAddress");
-            String password = (String ) session.getAttribute("tempPassword");
+            String name = (String) session.getAttribute("tempName");
+            String age = (String) session.getAttribute("tempAge");
+            String phone = (String) session.getAttribute("tempPhone");
+            String address = (String) session.getAttribute("tempAddress");
+            String password = (String) session.getAttribute("tempPassword");
             String email = (String) session.getAttribute("tempEmail");
             String gender = (String) session.getAttribute("tempGender");
             PersonDAO personDAO = new PersonDAO();
@@ -109,7 +109,6 @@ public class VerifyServlet extends HttpServlet {
             session.removeAttribute("tempPassword");
             session.removeAttribute("tempPhone");
             session.removeAttribute("tempGender");
-            
 
             // Chuyển hướng tới trang thành công
             request.setAttribute("message", "Đăng kí tài khoản thành công!");

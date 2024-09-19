@@ -10,7 +10,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        
+
         <title>sale Home</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -195,7 +195,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
             list.forEach((item) => item.addEventListener("mouseover", activeLink));
 
- //menu toggle
+            //menu toggle
 
             let toggle = document.querySelector(".toggle");
             let navigation = document.querySelector(".navigation");
@@ -213,66 +213,66 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
 
         <script>
-    const statusList = <%= new Gson().toJson(request.getAttribute("statusList")) %>;
-    const countList = <%= new Gson().toJson(request.getAttribute("countList")) %>;
-    const ctx1 = document.getElementById("myChart-1").getContext("2d");
-    const myChart = new Chart(ctx1, {
-        type: "polarArea",
-        data: {
-            labels: statusList,
-            datasets: [
-                {
-                    label: "# of Votes",
-                    data: countList,
-                    backgroundColor: [
-                        "rgba(127, 255, 0, 1 )",
-                        "rgba(255, 206, 86, 1)",
-                        "rgba(255, 99, 132, 1)",
+            const statusList = <%= new Gson().toJson(request.getAttribute("statusList")) %>;
+            const countList = <%= new Gson().toJson(request.getAttribute("countList")) %>;
+            const ctx1 = document.getElementById("myChart-1").getContext("2d");
+            const myChart = new Chart(ctx1, {
+                type: "polarArea",
+                data: {
+                    labels: statusList,
+                    datasets: [
+                        {
+                            label: "# of Votes",
+                            data: countList,
+                            backgroundColor: [
+                                "rgba(127, 255, 0, 1 )",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(255, 99, 132, 1)",
+                            ],
+                        },
                     ],
                 },
-            ],
-        },
-        options: {
-            responsive: true,
-        },
-    });
+                options: {
+                    responsive: true,
+                },
+            });
 
-    const ctx2 = document.getElementById("myChart-2").getContext("2d");
-    const orderData = [
+            const ctx2 = document.getElementById("myChart-2").getContext("2d");
+            const orderData = [
             <c:forEach items="${ordersByDay}" var="order" varStatus="status">
-                ${order.completedOrders}<c:if test="${!status.last}">,</c:if>       
+                ${order.completedOrders}<c:if test="${!status.last}">,</c:if>
             </c:forEach>
-                ];
-        const dayLabels = [
+            ];
+            const dayLabels = [
             <c:forEach items="${ordersByDay}" var="order" varStatus="status">
-                "${order.dayOfWeek}"<c:if test="${!status.last}">,</c:if>
+            "${order.dayOfWeek}"<c:if test="${!status.last}">,</c:if>
             </c:forEach>
-        ];        
-    const myChart2 = new Chart(ctx2, {
-        type: "bar",
-        data: {
-            labels: dayLabels,
-            datasets: [
-                {
-                    label: "Order complete folow by Day of the week ",
-                    data: orderData,
-                    backgroundColor: [
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(54, 162, 235, 1)",
-                        "rgba(54, 162, 235, 1)"
+            ];
+            const myChart2 = new Chart(ctx2, {
+                type: "bar",
+                data: {
+                    labels: dayLabels,
+                    datasets: [
+                        {
+                            label: "Order complete folow by Day of the week ",
+                            data: orderData,
+                            backgroundColor: [
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(54, 162, 235, 1)"
 
+                            ],
+                        },
                     ],
                 },
-            ],
-        },
-        options: {
-            responsive: true,
-        },
-    });
+                options: {
+                    responsive: true,
+                },
+            });
 
         </script>
 
