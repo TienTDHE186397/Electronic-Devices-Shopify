@@ -9,8 +9,9 @@ package Entity;
  * @author admin
  */
 public class OrderByDay {
-     private String dayOfWeek;
-     private int completedOrders;
+
+    private String dayOfWeek;
+    private int completedOrders;
 
     public OrderByDay() {
     }
@@ -40,5 +41,5 @@ public class OrderByDay {
     public String toString() {
         return "OrderByDay{" + "dayOfWeek=" + dayOfWeek + ", completedOrders=" + completedOrders + '}';
     }
-    
+
 }

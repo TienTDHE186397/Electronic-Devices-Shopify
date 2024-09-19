@@ -140,7 +140,7 @@ public class RegisterServlet extends HttpServlet {
         System.out.println(session.getAttribute("tempPassword"));
         System.out.println(session.getAttribute("tempAge"));
         System.out.println(session.getAttribute("verificationCode2"));
-        System.out.println(session.getAttribute("tempAge"));
+
 
         // Redirect to verification page
         response.sendRedirect("verifyEmail.jsp");

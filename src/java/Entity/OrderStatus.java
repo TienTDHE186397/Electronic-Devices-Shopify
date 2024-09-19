@@ -9,6 +9,7 @@ package Entity;
  * @author admin
  */
 public class OrderStatus {
+
     private String status;
     private int count;
 
@@ -37,10 +38,9 @@ public class OrderStatus {
 
     @Override
     public String toString() {
-        return "OrderStatus{" +
-               "status='" + status + '\'' +
-               ", count=" + count +
-               '}';
+        return "OrderStatus{"
+                + "status='" + status + '\''
+                + ", count=" + count
+                + '}';
     }
 }
-

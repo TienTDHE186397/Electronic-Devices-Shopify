@@ -42,7 +42,7 @@
                 margin-top:  20px;
                 color: #333;
             }
-</style>
+        </style>
     </head>
     <body>
         <div class="container">

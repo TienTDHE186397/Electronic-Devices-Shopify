@@ -41,7 +41,7 @@ public class addUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addUserServlet</title>");            
+            out.println("<title>Servlet addUserServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet addUserServlet at " + request.getContextPath() + "</h1>");
@@ -96,7 +96,7 @@ public class addUserServlet extends HttpServlet {
         String pass = request.getParameter("Password");
         Person p = (Person) session.getAttribute("person");
         int nroleid = p.getRoleID();
-        
+
         dp.addPerson(name, gender, dob, sd, address, email, phone, nroleid, pass);
         response.sendRedirect("userList");
     }

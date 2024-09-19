@@ -47,7 +47,8 @@ public class PasswordUtils {
         }
         return str.toString();
     }
-     public String ReverPassword(String password) {
+
+    public String ReverPassword(String password) {
         if (password == null) {
             return "Loi pass"; // hoặc ném ra ngoại lệ tùy theo cách bạn muốn xử lý
         }

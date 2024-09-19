@@ -102,6 +102,10 @@ public class PersonDAO extends DBContext {
 //        }
 //        return null;
 //    }
+//<<<<<<< HEAD
+//=======
+//
+//>>>>>>> b25085dc49024defb9c639d283e3875ce53273ad
     public int getLastInsertedBorrowID() {
         String sql = "SELECT MAX(BorrowID) AS BorrowID FROM Borrow";
         try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {
@@ -197,6 +201,7 @@ public class PersonDAO extends DBContext {
             return false;
         }
     }
+
 //    public List<Person> searchPerson(String search, String role, String gender){
 //        List<Person> list = new ArrayList<>();
 //        String sql = "select * from Person where 1=1 ";
@@ -230,6 +235,42 @@ public class PersonDAO extends DBContext {
 //        }
 //        return list;
 //    }
+//=======
+//
+//    public List<Person> searchPerson(String search, String role, String gender) {
+//        List<Person> list = new ArrayList<>();
+//        String sql = "select * from Person where 1=1 ";
+//        if (search != null && !search.isEmpty()) {
+//            sql += "and (Name like '%" + search + "'% or Email like '%" + search + "%' or Phone like '%" + search + "'%)";
+//        }
+//        if (gender != null && !gender.isEmpty()) {
+//            sql += "and Gender like '%" + gender + "%'";
+//        }
+//        if (role != null && !role.isEmpty()) {
+//            sql += "and RoleID = " + role;
+//        }
+//        try {
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                Person r = new Person();
+//                r.setPersonID(rs.getInt("PersonID"));
+//                r.setName(rs.getString("Name"));
+//                r.setGender(rs.getString("Gender"));
+//                r.setDateOfBirth(rs.getString("DateOfBirth"));
+//                r.setStartDate(rs.getString("StartDate"));
+//                r.setAddress(rs.getString("Address"));
+//                r.setEmail(rs.getString("Email"));
+//                r.setPhone(rs.getString("Phone"));
+//                r.setRoleID(rs.getInt("RoleID"));
+//                list.add(r);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return list;
+//    }
+//>>>>>>> b25085dc49024defb9c639d283e3875ce53273ad
 
     public static void main(String[] args) {
         PersonDAO personDAO = new PersonDAO();

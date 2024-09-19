@@ -11,6 +11,7 @@ import java.util.Date;
  * @author admin
  */
 public class SaleOrder {
+
     private int orderID;
     private Date orderDate;
     private String cusName;
@@ -72,5 +73,5 @@ public class SaleOrder {
     public String toString() {
         return "SaleOrder{" + "orderID=" + orderID + ", orderDate=" + orderDate + ", cusName=" + cusName + ", total=" + total + ", status=" + status + '}';
     }
-    
+
 }
