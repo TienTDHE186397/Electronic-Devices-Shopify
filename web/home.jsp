@@ -187,14 +187,71 @@
 
     </head>
     <body>
-
+        <!-- Sidebar start -->
+        <aside class="sidebar">
+            <div class="latest-posts">
+                <h3>Bài viết mới nhất</h3>
+                <ul>
+                    <li><a href="#">Bài viết 1</a></li>
+                    <li><a href="#">Bài viết 2</a></li>
+                    <li><a href="#">Bài viết 3</a></li>
+                    <li><a href="#">Bài viết 4</a></li>
+                </ul>
+            </div>
+            <div class="contacts">
+                <h3>Liên hệ</h3>
+                <ul>
+                    <li><a href="mailto:contact@shopify.com">Email: contact@shopify.com</a></li>
+                    <li><a href="tel:+123456789">Điện thoại: +123456789</a></li>
+                    <li><a href="#">Địa chỉ: 123 Đường ABC, TP. XYZ</a></li>
+                </ul>
+            </div>
+            <div class="links">
+                <h3>Liên kết</h3>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+        </aside>
+        <!-- Sidebar end -->
         <!-- Header start -->
         <%@include file="header.jsp" %>
 
         <!-- Header end -->
 
         <!-- Product start -->
-
+        <!-- Sidebar start -->
+        <aside class="sidebar">
+            <div class="latest-posts">
+                <h3>Bài viết mới nhất</h3>
+                <ul>
+                    <li><a href="#">Bài viết 1</a></li>
+                    <li><a href="#">Bài viết 2</a></li>
+                    <li><a href="#">Bài viết 3</a></li>
+                    <li><a href="#">Bài viết 4</a></li>
+                </ul>
+            </div>
+            <div class="contacts">
+                <h3>Liên hệ</h3>
+                <ul>
+                    <li><a href="mailto:contact@shopify.com">Email: contact@shopify.com</a></li>
+                    <li><a href="tel:+123456789">Điện thoại: +123456789</a></li>
+                    <li><a href="#">Địa chỉ: 123 Đường ABC, TP. XYZ</a></li>
+                </ul>
+            </div>
+            <div class="links">
+                <h3>Liên kết</h3>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+        </aside>
         <!-- Phần banner lớn start-->
         <section id="center" class="center_home container">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
