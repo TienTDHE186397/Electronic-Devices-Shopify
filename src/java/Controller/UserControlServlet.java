@@ -5,7 +5,7 @@
 package Controller;
 
 import Entity.Person;
-import Model.DAOPerson;
+import DAO.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -61,15 +61,21 @@ public class UserControlServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOPerson dp = new DAOPerson();
+        request.setCharacterEncoding("UTF-8");
         String search = request.getParameter("search");
         String gender = request.getParameter("gender");
         String role = request.getParameter("roleid");
-        List<Person> pr = dp.getPersonByRole(role);
-        List<Person> pg = dp.getPersonByGender(gender);
-        System.out.println("Size: " + pr.size());
-        request.setAttribute("listP", pr);
-        request.setAttribute("listP", pg);
+        
+        List<Person> pr = dp.searchPerson(search, role, gender);
+        if(search==null&&gender==null&&role==null){
+        List<Person> listP = dp.getAllPerson();
+        request.setAttribute("listP", listP);
         request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        } else{
+        request.setAttribute("listP", pr);
+        request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        }
+        
     }
 
     /**

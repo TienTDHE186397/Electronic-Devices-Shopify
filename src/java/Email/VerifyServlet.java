@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -40,10 +43,10 @@ public class VerifyServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyServlet</title>");
+            out.println("<title>Servlet VerifyRePass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VerifyServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyRePass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -78,42 +81,52 @@ public class VerifyServlet extends HttpServlet {
         // Lấy mã xác thực từ form
         String inputCode = request.getParameter("verificationCode2");
 
-        // Lấy mã xác thực lưu trữ trong session
         HttpSession session = request.getSession();
         String storedCode = (String) session.getAttribute("verificationCode");
+        System.out.println(storedCode);
         // Kiểm tra mã xác thực
         if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
             // Lấy thông tin người dùng từ session và lưu vào database
             String name = (String) session.getAttribute("tempName");
             String age = (String) session.getAttribute("tempAge");
-            String gender = (String) session.getAttribute("gender");
-            String email = (String) session.getAttribute("tempEmail");
             String phone = (String) session.getAttribute("tempPhone");
             String address = (String) session.getAttribute("tempAddress");
             String password = (String) session.getAttribute("tempPassword");
-            Person person = new Person(name, gender, age, null, address, email, phone, 1, password);
+            String email = (String) session.getAttribute("tempEmail");
+            String gender = (String) session.getAttribute("tempGender");
             PersonDAO personDAO = new PersonDAO();
+            LocalDate startDate = LocalDate.now();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//           
+//            System.out.println(formattedTime);
+//            "INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone, Password, RoleID"
+            Person person = new Person(name, gender,age,startDate,address, email, phone, 1, password);
             boolean add = personDAO.addPerson(person);  // Thêm người dùng vào database
             if (add) {
-                System.out.println("in thanh cong");
+                System.out.println("Cập Nhật Thành Công");
+
             } else {
-                System.out.println("add loi");
+                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
             }
             // Xóa thông tin tạm thời trong session
             session.removeAttribute("verificationCode");
-            session.removeAttribute("tempName");
-            session.removeAttribute("tempAge");
             session.removeAttribute("tempEmail");
-            session.removeAttribute("tempPhone");
+            session.removeAttribute("tempAge");
             session.removeAttribute("tempAddress");
+            session.removeAttribute("tempName");
             session.removeAttribute("tempPassword");
+            session.removeAttribute("tempPhone");
+            session.removeAttribute("tempGender");
+            session.removeAttribute("tempTime");
+            
+
 
             // Chuyển hướng tới trang thành công
-            request.setAttribute("message", "Xác thực thành công!");
+            request.setAttribute("message", "Đăng kí tài khoản thành công!");
             request.getRequestDispatcher("success.jsp").forward(request, response);
         } else {
             // Xác thực thất bại
-            request.setAttribute("errorMessage", "Mã xác thực không chính xác.");
+            request.setAttribute("message", "Mã xác thực không chính xác.");
             request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
         }
     }

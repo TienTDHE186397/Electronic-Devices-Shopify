@@ -13,11 +13,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Date;
 import java.util.Properties;
@@ -27,6 +29,38 @@ import javax.mail.internet.*;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ForgotPassword</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ForgotPassword at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("signup.jsp").forward(request, response);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,13 +83,20 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
+        PasswordUtils pw = new PasswordUtils();
+        String passHash = pw.shiftPassword(password);
+        String rePassHash = pw.shiftPassword(repassword);
+        System.out.println(passHash);
+        System.out.println(rePassHash);
+        System.out.println("Password: " + password);
+        System.out.println("RePassword: " + repassword);
+        System.out.println("Gender: " + gender);
 
-        if (!password.equals(repassword)) {
+        if (!passHash.equals(rePassHash)) {
             request.setAttribute("error", "Mật khẩu không khớp!");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
-
         PersonDAO personDAO = new PersonDAO();
         if (personDAO.isEmailExists(email)) {
             request.setAttribute("error", "Email already exists. Please use a different email.");
@@ -91,10 +132,15 @@ public class RegisterServlet extends HttpServlet {
         session.setAttribute("tempName", name);
         session.setAttribute("tempAge", age);
         session.setAttribute("tempEmail", email);
+        session.setAttribute("tempGender", gender);
         session.setAttribute("tempPhone", phone);
         session.setAttribute("tempAddress", address);
-        session.setAttribute("tempPassword", password);
+        session.setAttribute("tempPassword", passHash);
         session.setAttribute("verificationCode", verificationCode);
+        System.out.println(session.getAttribute("tempPassword"));
+        System.out.println(session.getAttribute("tempAge"));
+        System.out.println(session.getAttribute("verificationCode2"));
+
 
         // Redirect to verification page
         response.sendRedirect("verifyEmail.jsp");
@@ -102,27 +148,16 @@ public class RegisterServlet extends HttpServlet {
 
     private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Generate a new verification code
         String newCode = generateVerificationCode();
-
-        // Get the email from session
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("tempEmail");
-
-        // Ensure email is not null
         if (email == null || email.isEmpty()) {
             request.setAttribute("error", "Không tìm thấy địa chỉ email. Vui lòng thử lại.");
             request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
             return;
         }
-
-        // Update the session with the new code
         session.setAttribute("verificationCode", newCode);
-
-        // Send the new code to the user's email
         MailSender.sendVerificationEmail(email, newCode);
-
-        // Redirect back to the verification page
         response.sendRedirect("verifyEmail.jsp");
     }
 

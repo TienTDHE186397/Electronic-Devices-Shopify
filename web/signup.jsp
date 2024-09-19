@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-        <link rel="stylesheet" href="loginform\style.css">
+        <link rel="stylesheet" href="./loginform/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <title>Modern Login Page | AsmrProg</title>
@@ -22,8 +22,8 @@
     <body>
 
         <div class="container" id="container">
-            <div class="form-container sign-in" style="height: 500px; max-height: 600px; overflow-y: scroll">
-                <form action="RegisterServlet" method="post">
+            <div class="form-container sign-in" style=" max-height: 700px; overflow-y: scroll;padding-top: 30px">
+                <form style="height: fit-content" action="RegisterServlet" method="post">
                     <h1>Đăng Kí</h1>
                     <div class="social-icons">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=profile%20email&redirect_uri=http://localhost:9999/WebDienTu/SignupGoogle&response_type=code&client_id=630598609264-9sp60ioal96seml048sl3946slk6eohr.apps.googleusercontent.com&approval_prompt=force" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -35,8 +35,8 @@
                     <input name="repass" type="password" placeholder="RePassword"  required>
                     <select name="gender" id="user-gender" class="form-control" required>
                         <option value="" disabled selected>Giới tính</option>
-                        <option value="Male" <%= "Male".equals(request.getParameter("gender")) ? "selected" : ""%>>Nam</option>
-                        <option value="Female" <%= "Female".equals(request.getParameter("gender")) ? "selected" : ""%>>Nữ</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
                     </select>
                     <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" value="<%= request.getParameter("date") != null ? request.getParameter("date") : ""%>" required>
                     <input type="email" id="email" name="email" " value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" placeholder="email" >

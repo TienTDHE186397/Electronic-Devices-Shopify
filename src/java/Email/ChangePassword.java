@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Email;
 
+import DAO.PersonDAO;
 import Entity.Person;
-import DAO.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,16 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.util.List;
-import org.apache.tomcat.jni.SSLContext;
+import javax.mail.Session;
 
 /**
  *
- * @author nghie
+ * @author admin
  */
-@WebServlet(name = "addUserServlet", urlPatterns = {"/addUser"})
-public class addUserServlet extends HttpServlet {
+@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +40,10 @@ public class addUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addUserServlet</title>");            
+            out.println("<title>Servlet ChangePassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,11 +61,7 @@ public class addUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      DAOPerson dp = new DAOPerson();
-        List<Person> listP = dp.getAllPerson();
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("addUser.jsp").forward(request, response);
-
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
     }
 
     /**
@@ -81,45 +75,51 @@ public class addUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
-     
-        PrintWriter out = response.getWriter();
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        String dob = request.getParameter("dob");
-       
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String roleid = request.getParameter("roleid");
-        String pass = request.getParameter("pass");
-        LocalDate startDate = LocalDate.now();
-        int nroleid = Integer.parseInt(roleid);
-        Person person = new Person(name, gender, dob, startDate, address, email, phone, nroleid  , pass);
-        dp.addPerson(person);
-        
-//        Boolean add =  dp.addPerson(new Person( "Duc", "Name", "2004-11-03", "2024-09-17", "Ha Noi", "duqweqwecdsfsdf@gmaisadadasdasdl.com", "0985407026", 5, "123")); 
-//        if(add){
-//            System.out.println("add thanh cong");
-//        }
-//        else{
-//            System.out.println("loi");
-//        }
-//        
-//     
-//        System.out.println(name);
-//        System.out.println(gender);
-//        System.out.println(dob);
-//        System.out.println(sd);
-//        System.out.println(address);
-//        System.out.println(email);
-//        System.out.println(roleid);
-        
-        
-             response.sendRedirect("userList");
+        HttpSession session = request.getSession();
+        System.out.println("Perasdasddasas " + session.getAttribute("user"));
+        if (session != null) {
+            System.out.println("Session ID: " + session.getId());
+        } else {
+            System.out.println("No session found");
+        }
+        Person person = (Person) session.getAttribute("user");
+        String oldpass = (String) request.getParameter("oldpass");
+        String newpass = (String) request.getParameter("pass");
+        String repass = (String) request.getParameter("repass");
+        PersonDAO pd = new PersonDAO();
+        if (!newpass.equals(repass)) {
+            request.setAttribute("error", "Mật khẩu không khớp");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        System.out.println("PersonInChange " + person);
+        if (person == null) {
+            request.setAttribute("error", "Vui long dang nhap lai");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response); // Nếu không có người dùng trong session, chuyển hướng về trang đăng nhập
+            return;
+        } else {
+            PasswordUtils pw = new PasswordUtils();
+            String reversePass = pw.ReverPassword(person.getPasword());
+            String passCom = pw.shiftPassword(newpass);
+            String email = person.getEmail();
+            System.out.println(email);
+            if (!reversePass.equals(oldpass)) {
+                request.setAttribute("error", "Mật khẩu đăng nhập sai ");
+                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            } else {
+                boolean update = pd.updatePassword(email, passCom);
+                if (update) {
+                    request.setAttribute("message", "Cập nhật thành công");
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("error", "Cập nhật thấy bại");
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                }
+            }
 
-        
+        }
+
     }
+
     /**
      * Returns a short description of the servlet.
      *

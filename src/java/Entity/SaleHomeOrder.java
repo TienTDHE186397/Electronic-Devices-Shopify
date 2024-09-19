@@ -27,6 +27,8 @@ public class SaleHomeOrder {
         this.total = total;
         this.status = status;
     }
+    
+ 
 
     public int getOrderID() {
         return orderID;

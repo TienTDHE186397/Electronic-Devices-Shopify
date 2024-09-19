@@ -1,3 +1,4 @@
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,22 +43,50 @@
                 margin-top:  20px;
                 color: #333;
             }
+
         </style>
+        <script>
+            // Function to redirect after a delay
+            function redirectToLogin() {
+                setTimeout(function () {
+                    window.location.href = "login.jsp";
+                }, 3000);
+
+            }
+        </script>
     </head>
     <body>
+
         <div class="container">
             <div class="form-container">
-                <h1>Quên Mật Khẩu</h1>
-                <form action="ForgotPassword" method="post">
-                    <input type="email" name="email" placeholder="Nhập email để xác thực" required>
+                <h1>Đổi Mật Khẩu</h1>
+                <%
+                    String error = (String) request.getAttribute("error");
+                    String message = (String) request.getAttribute("message");
+                    if (error != null) {
+                %>
+                <p style="color: red;"><%= error%></p>
+                <%
+                } else if (message != null && message.equals("Cập nhật thành công")) {
+                %>
+                <p style="color: green;"><%= message%></p>
+                <script>
+                    redirectToLogin(); // Call the function to redirect
+                </script>
+                <%
+                } else if (message != null) {
+                %>
+                <p><%= message%></p>
+                <%
+                    }
+                %>
+                <form action="ChangePassword" method="post">
+                    <input type="text" name="oldpass" placeholder="Nhập mật khẩu cũ" required>
+                    <input type="password" name="pass" placeholder="Nhập mật khẩu mới" required>
+                    <input type="password" name="repass" placeholder="Nhập lại mật khẩu mới" required>
                     <button type="submit" style="background-color:  #b22222" >Xác nhận</button>
                 </form>
-                <% 
-                    String errorMessage = (String) request.getAttribute("error");
-                %>
-                <div class="message">
-                    <%= errorMessage != null ? errorMessage : "" %>
-                </div>
+
 
             </div>
         </div>

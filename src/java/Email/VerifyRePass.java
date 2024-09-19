@@ -83,24 +83,24 @@ public class VerifyRePass extends HttpServlet {
         // Kiểm tra mã xác thực
         if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
             // Lấy thông tin người dùng từ session và lưu vào database
-            String email = (String) session.getAttribute("tempEmail");
-            String password = (String) session.getAttribute("tempPassword");
-            PersonDAO personDAO = new PersonDAO();
-            boolean add = personDAO.updatePassword(email, password);  // Thêm người dùng vào database
-            if (add) {
-                System.out.println("Cập Nhật Thành Công");
-
-            } else {
-                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
-            }
-            // Xóa thông tin tạm thời trong session
-            session.removeAttribute("verificationCode");
-            session.removeAttribute("tempEmail");
-            session.removeAttribute("tempPassword");
-
-            // Chuyển hướng tới trang thành công
-            request.setAttribute("message", "Cập Nhật Mật Khẩu Thành Công!");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
+//            String email = (String) session.getAttribute("tempEmail");
+//            String password = (String) session.getAttribute("tempPassword");
+//            PersonDAO personDAO = new PersonDAO();
+//            boolean add = personDAO.updatePassword(email, password);  // Thêm người dùng vào database
+//            if (add) {
+//                System.out.println("Cập Nhật Thành Công");
+//
+//            } else {
+//                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
+//            }
+//            // Xóa thông tin tạm thời trong session
+//            session.removeAttribute("verificationCode");
+//            session.removeAttribute("tempEmail");
+//            session.removeAttribute("tempPassword");
+//
+//            // Chuyển hướng tới trang thành công
+            request.setAttribute("message", "Xác thực thành công");
+            request.getRequestDispatcher("newPassword.jsp").forward(request, response);
         } else {
             // Xác thực thất bại
             request.setAttribute("message", "Mã xác thực không chính xác.");

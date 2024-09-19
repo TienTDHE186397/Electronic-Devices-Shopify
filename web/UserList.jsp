@@ -40,75 +40,118 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
-            body {
-                margin-top: 20px;
-                background: #eeecfd;
+            
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Search and Filter Form */
+        form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form input[type="text"], form select {
+            padding: 10px;
+            width: 30%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* User Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        thead th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody td {
+            padding: 15px;
+        }
+
+        /* Links and Actions */
+        tbody td a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        tbody td a:hover {
+            text-decoration: underline;
+        }
+            
+        /* Responsive Table */
+        @media screen and (max-width: 768px) {
+            form {
+                flex-direction: column;
             }
 
-            .card {
-                box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-                padding: 20px; /* Thêm padding ?? n?i dung không ch?m vào c?nh c?a card */
+            form input[type="text"], form select {
+                width: 100%;
+                margin-bottom: 10px;
             }
 
-            .avatar.sm {
-                width: 2.25rem;
-                height: 2.25rem;
-                font-size: .818125rem;
+            table {
+                font-size: 14px;
             }
 
-            .table-nowrap .table td,
-            .table-nowrap .table th {
-                white-space: nowrap;
+            thead th, tbody td {
+                padding: 10px;
             }
-
-            .table>:not(caption)>*>* {
-                padding: 0.75rem 1.25rem;
-                border-bottom-width: 1px;
-            }
-
-            table th {
-                font-weight: 600;
-                background-color: #eeecfd !important;
-            }
-
-            .fa-arrow-up {
-                color: #00CED1;
-            }
-
-            .fa-arrow-down {
-                color: #FF00FF;
-            }
-
-            .centered-table-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-
-
-            th, td {
-                border: 1px solid #dee2e6; /* ???ng vi?n gi?a các ô */
-                text-align: center;
-                margin-left: 5px; /* Áp d?ng margin-left cho các ô */
-
-            }
-
-
-
-
-
-            tbody td {
-
-                margin-left: 5px; /* Kho?ng cách gi?a các ô trong cùng m?t hàng */
-            }
-
-            h1 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-
-
+        }
         </style>
     </head>
     <body>
@@ -125,7 +168,7 @@
         <select name="gender" id="gender">
             <option value="">Chọn giới tính</option>
             <option value="Nam" ${param.gender == 'Nam' ? 'selected' : ''}>Nam</option>
-            <option value="Nữ" ${param.gender == 'Nam' ? 'selected' : ''}>Nữ</option>
+            <option value="Nữ" ${param.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
             <option value="Khác" ${param.gender == 'Khác' ? 'selected' : ''}>Khác</option>
         </select>
         <select name="roleid" id="roleid">
@@ -182,28 +225,21 @@
                         <td>Admin</td>
                     </c:when>
                 </c:choose>
-                    <c:if test="${person.roleID == 5}">
+                    
                         <td>
-                        <a href="editUser?PersonID=${id}" style="">Chỉnh sửa</a>
+                            <a href="userDetail?PersonID=${person.personID}" style="">Chỉnh sửa</a>
                     </td>
-                    </c:if>
-                    <c:if test="${person.roleID != 5}">
-                        <td></td>
-                    </c:if>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-         <div>
-    <c:forEach begin="1" end="${totalPages}" var="i">
-        <a href="userList?page=${i}${param.search != null ? '&search=' + param.search : ''}${param.gender != null ? '&gender=' + param.gender : ''}${param.role != null ? '&role=' + param.role : ''}">${i}</a>
-    </c:forEach>
-</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        <center> <a href="addUser.jsp"><input type="button" value="Thêm người dùng mới"></a></center>
+        <div style="text-align: center; margin-top: 15px;">
+    <center><h5> <a href="addUser"><input type="button" value="Thêm người dùng mới" id="addUser" style="border: none;padding: 20px;color: white;background-color: #007bff;border-radius: 8px;"></a></h5></center>
+        </div>
     </body>
 </html>

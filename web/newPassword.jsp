@@ -47,9 +47,10 @@
     <body>
         <div class="container">
             <div class="form-container">
-                <h1>Quên Mật Khẩu</h1>
-                <form action="ForgotPassword" method="post">
-                    <input type="email" name="email" placeholder="Nhập email để xác thực" required>
+                <h1>Nhập lại mật khẩu </h1>
+                <form action="newPassword" method="post">
+                    <input type="password" name="pass" placeholder="Nhập mật khẩu mới" required>
+                    <input type="password" name="repass" placeholder="Nhập lại mật khẩu mới" required>
                     <button type="submit" style="background-color:  #b22222" >Xác nhận</button>
                 </form>
                 <% 

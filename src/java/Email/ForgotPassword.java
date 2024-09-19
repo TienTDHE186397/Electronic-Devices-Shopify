@@ -88,14 +88,15 @@ public class ForgotPassword extends HttpServlet {
     private void registerUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
-        String password = request.getParameter("pass");
-        String repassword = request.getParameter("repass");
-
-        if (!password.equals(repassword)) {
-            request.setAttribute("error", "Mật khẩu không khớp!");
-            request.getRequestDispatcher("forgot.jsp").forward(request, response);
-            return;
-        }
+//        String password = request.getParameter("pass");
+//        String repassword = request.getParameter("repass");
+        PasswordUtils pw = new PasswordUtils();
+//        String passCom = pw.shiftPassword(password);
+//        if (!password.equals(repassword)) {
+//            request.setAttribute("error", "Mật khẩu không khớp!");
+//            request.getRequestDispatcher("forgot.jsp").forward(request, response);
+//            return;
+//        }
 
         PersonDAO personDAO = new PersonDAO();
         if (!personDAO.isEmailExists(email)) {
@@ -104,15 +105,11 @@ public class ForgotPassword extends HttpServlet {
             return;
         }
         String verificationCode = generateVerificationCode();
-
         MailSender.sendVerificationEmail(email, verificationCode);
-
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(120);
         session.setAttribute("tempEmail", email);
-        session.setAttribute("tempPassword", password);
         session.setAttribute("verificationCode", verificationCode);
-
         // Redirect to verification page
         response.sendRedirect("verifyRePass.jsp");
     }

@@ -28,12 +28,21 @@
                     <span>Đăng Kí Tài Khoản </span>
                     <input type="text" placeholder="Name" name="name" value="${user.name}" >
                     <input type="email" placeholder="Email" name="email" value="${user.email}" readonly required>
-                    <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" required>
-                    <input name="phone" type="tel" id="user-phone" class="form-control" placeholder="Số điện thoại" required>
-                    <h6>Số điện thoại để giao hàng</h6>
-
-                    <div style="color: red"><b>${mess}</b></div>
-
+                    <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" value="<%= request.getParameter("date") != null ? request.getParameter("date") : ""%>" required>
+                    <input name="pass" type="password" placeholder="Password"  required>
+                    <input name="repass" type="password" placeholder="RePassword"  required>
+                    <select name="gender" id="user-gender" class="form-control" required>
+                        <option value="" disabled selected>Giới tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                    <input name="phone" type="tel" id="user-phone" class="form-control" placeholder="Số điện thoại" value="<%= request.getParameter("phone") != null ? request.getParameter("phone") : ""%>" required>
+                    <input type="address" id="address" name="address" " value="<%= request.getParameter("address") != null ? request.getParameter("address") : ""%>" placeholder="address" >
+                    <%
+                        String error = (String) request.getAttribute("error");
+                    %>
+                    <h4><%= error != null ? error : ""%></h4>
+                    
                     <button type="submit">Đăng Kí</button>
                 </form>
             </div>
