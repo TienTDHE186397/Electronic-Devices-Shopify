@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
-import DAO.SaleDAO;
+import DAO.SaleEmpDAO;
 import Entity.OrderByDay;
 import Entity.OrderStatus;
 import Entity.SaleHomeOrder;
@@ -22,39 +23,36 @@ import java.util.List;
  *
  * @author admin
  */
-@WebServlet(name = "SaleHomeManager", urlPatterns = {"/SaleHomeManager"})
-public class SaleHomeServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="SaleHomeEmp", urlPatterns={"/SaleHomeEmp"})
+public class SaleHomeEmpServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");
+            out.println("<title>Servlet SaleHomeEmpServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SaleHomeEmpServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -62,16 +60,21 @@ public class SaleHomeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        SaleDAO saleDAO = new SaleDAO();
+    throws ServletException, IOException {
+         SaleEmpDAO saleEmpDAO = new SaleEmpDAO();
+       
+         
+         
+        int SaleID = Integer.parseInt(request.getParameter("SaleID"));
+       
+        int totalCount = saleEmpDAO.getTotalOrderCount(SaleID);
         
-        int totalCount = saleDAO.getTotalOrderCount();
+        List<SaleHomeOrder> list = saleEmpDAO.getOrderS(SaleID);
         
-        List<SaleHomeOrder> list = saleDAO.getOrder();
-        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
+        List<OrderByDay> odbList = saleEmpDAO.getCompletedOrdersByDayOfWeekS(SaleID);
         
         
-        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
+        List<OrderStatus> orderStatusList = saleEmpDAO.getOrderCountByStatusS(SaleID);
 
         
         String[] statusList = new String[orderStatusList.size()];
@@ -92,15 +95,12 @@ public class SaleHomeServlet extends HttpServlet {
         request.setAttribute("totalCount", totalCount);
 
        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeManager.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeEmp.jsp");
         dispatcher.forward(request, response);
+    } 
 
-
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -108,19 +108,32 @@ public class SaleHomeServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    }
-
+//public static void main(String[] args){
+//    
+//    SaleEmpDAO s = new SaleEmpDAO();
+//    int testId = 6;
+//    
+//    List<OrderByDay> o = s.getCompletedOrdersByDayOfWeekS(testId);
+//    System.out.println("Orders by Day of Week:");
+//    if(o.isEmpty()){
+//        System.out.println("not found");
+//    }else{
+//        for(OrderByDay order : o){
+//            System.out.println(order.getDayOfWeek() + ": " + order.getCompletedOrders());
+//    }
+//    
+//}
+//}
+}

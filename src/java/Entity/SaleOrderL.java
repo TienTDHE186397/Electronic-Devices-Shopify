@@ -10,21 +10,27 @@ import java.util.Date;
  *
  * @author admin
  */
-public class SaleHomeOrder {
+public class SaleOrderL {
     private int orderID;
     private Date orderDate;
     private String cusName;
+    private String showRoomName;
     private double total;
+    private String method;
+    private String saleName;
     private String status;
 
-    public SaleHomeOrder() {
+    public SaleOrderL() {
     }
 
-    public SaleHomeOrder(int orderID, Date orderDate, String cusName, double total, String status) {
+    public SaleOrderL(int orderID, Date orderDate, String cusName, String showRoomName, double total, String method, String saleName, String status) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.cusName = cusName;
+        this.showRoomName = showRoomName;
         this.total = total;
+        this.method = method;
+        this.saleName = saleName;
         this.status = status;
     }
 
@@ -52,12 +58,36 @@ public class SaleHomeOrder {
         this.cusName = cusName;
     }
 
+    public String getShowRoomID() {
+        return showRoomName;
+    }
+
+    public void setShowRoomID(String showRoomName) {
+        this.showRoomName = showRoomName;
+    }
+
     public double getTotal() {
         return total;
     }
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getSaleName() {
+        return saleName;
+    }
+
+    public void setSaleName(String saleName) {
+        this.saleName = saleName;
     }
 
     public String getStatus() {
@@ -70,7 +100,9 @@ public class SaleHomeOrder {
 
     @Override
     public String toString() {
-        return "SaleOrder{" + "orderID=" + orderID + ", orderDate=" + orderDate + ", cusName=" + cusName + ", total=" + total + ", status=" + status + '}';
+        return "SaleOrderList{" + "orderID=" + orderID + ", orderDate=" + orderDate + ", cusName=" + cusName + ", showRoomName=" + showRoomName + ", total=" + total + ", method=" + method + ", saleName=" + saleName + ", status=" + status + '}';
     }
+    
+    
     
 }

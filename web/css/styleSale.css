@@ -247,7 +247,12 @@ body {
 .cardBox .card:hover .cardName,
 .cardBox .card:hover .iconBox {
     color: var(--white);
+    
+
 } 
+.cardBox .btn{   
+text-decoration: none;
+}
 
 /*===============================chart====================================*/
 .chartsBox{
@@ -349,7 +354,7 @@ body {
     text-align: center;
 }
 
-.status.delivered{
+.status.Complete{
     background: green;
     padding: 2px 4px;
     color: var(--white);
@@ -358,31 +363,38 @@ body {
     font-weight: 500;
 }
 
-.status.pending{
-    background: yellow;
+.status.inProgress{
+    background: yellow ;
     padding: 2px 4px;
     color: var(--black1);
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
 }
-
-.status.unprocessed{
-    background: red;
+.btn-details, .btn-submit {
+    padding: 5px 10px;
+    margin: 2px;
     padding: 2px 4px;
-    color: var(--white);
     border-radius: 4px;
-    font-size: 14px;
+    text-decoration: none;
+    font-size: 20px;
     font-weight: 500;
 }
-
-.status.inProgress{
-    background: lightskyblue ;
-    padding: 2px 4px;
-    color: var(--white);
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
+.btn-details {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-submit {
+    background-color: #008CBA;
+    color: white;
+}
+.btn-details:hover{
+    background: yellow;
+    color: black;
+}
+.btn-submit:hover {
+    background:orange;
+    color: white;
 }
 /*============================responsive================================*/
 @media (max-width: 991px){
