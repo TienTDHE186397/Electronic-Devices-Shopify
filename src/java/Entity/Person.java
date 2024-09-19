@@ -1,108 +1,132 @@
 package Entity;
 
-import java.util.*;
-import java.lang.*;
+import java.sql.Date;
 
 public class Person {
-    
-    private int person;
-    private String name;
-    private String gender;
-    private Date DateOfBirth;
-    private String address;
-    private String email;
-    private String phone;
-    private int RoleId;
-    private String password;
+
+    private int PersonID;
+    private String Name;
+    private String Gender;
+    private String DateOfBirth;
+    private String StartDate;
+    private String Address;
+    private String Email;
+    private String Phone;
+    private int roleID;
+    private String Pasword;
 
     public Person() {
     }
 
-    public Person(int person, String name, String gender, Date DateOfBirth, String address, String email, String phone, int RoleId, String password) {
-        this.person = person;
-        this.name = name;
-        this.gender = gender;
+    public Person(int PersonID, String Name, String Gender, String DateOfBirth, String Address, String Email, String Phone, int roleID, String Pasword, String code) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.Gender = Gender;
         this.DateOfBirth = DateOfBirth;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-        this.RoleId = RoleId;
-        this.password = password;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
+
     }
 
-    public int getPerson() {
-        return person;
+    public Person(String Name, String Gender, String DateOfBirth, String StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
+
+    }
+
+    public int getPersonID() {
+        return PersonID;
+    }
+
+    public void setPersonID(int PersonID) {
+        this.PersonID = PersonID;
     }
 
     public String getName() {
-        return name;
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     public String getGender() {
-        return gender;
+        return Gender;
     }
 
-    public Date getDateOfBirth() {
+    public void setGender(String Gender) {
+        this.Gender = Gender;
+    }
+
+    public String getDateOfBirth() {
         return DateOfBirth;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public int getRoleId() {
-        return RoleId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPerson(int person) {
-        this.person = person;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setDateOfBirth(Date DateOfBirth) {
+    public void setDateOfBirth(String DateOfBirth) {
         this.DateOfBirth = DateOfBirth;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getStartDate() {
+        return StartDate;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setStartDate(String StartDate) {
+        this.StartDate = StartDate;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getAddress() {
+        return Address;
     }
 
-    public void setRoleId(int RoleId) {
-        this.RoleId = RoleId;
+    public void setAddress(String Address) {
+        this.Address = Address;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getEmail() {
+        return Email;
     }
-    
-    
 
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
+    }
+
+    public int getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
+    }
+
+    public String getPasword() {
+        return Pasword;
+    }
+
+    public void setPasword(String Pasword) {
+        this.Pasword = Pasword;
+    }
+
+    @Override
+    public String toString() {
+return "Person{" + "PersonID=" + PersonID + ", Name=" + Name + ", Gender=" + Gender + ", DateOfBirth=" + DateOfBirth + ", StartDate=" + StartDate + ", Address=" + Address + ", Email=" + Email + ", Phone=" + Phone + ", roleID=" + roleID + ", Pasword=" + Pasword + '}';
+    }
 
 }

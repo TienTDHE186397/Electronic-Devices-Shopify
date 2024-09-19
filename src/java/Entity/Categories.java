@@ -9,17 +9,18 @@ import java.lang.*;
 
 public class Categories {
 
-    private String CategoryID;
+    private int CategoryID;
     private String CategoryName;
-    private String Description;
 
-    public Categories(String CategoryID, String CategoryName, String Description) {
-        this.CategoryID = CategoryID;
-        this.CategoryName = CategoryName;
-        this.Description = Description;
+    public Categories() {
     }
 
-    public String getCategoryID() {
+    public Categories(int CategoryID, String CategoryName) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+    }
+
+    public int getCategoryID() {
         return CategoryID;
     }
 
@@ -27,11 +28,7 @@ public class Categories {
         return CategoryName;
     }
 
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setCategoryID(String CategoryID) {
+    public void setCategoryID(int CategoryID) {
         this.CategoryID = CategoryID;
     }
 
@@ -39,12 +36,11 @@ public class Categories {
         this.CategoryName = CategoryName;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
-    }
+    
+    
+    
 
-    
-    
+  
     
     
 }
