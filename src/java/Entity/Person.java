@@ -1,6 +1,7 @@
 package Entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Person {
 
@@ -8,35 +9,19 @@ public class Person {
     private String Name;
     private String Gender;
     private String DateOfBirth;
-    private String StartDate;
+    private LocalDate StartDate;
     private String Address;
     private String Email;
     private String Phone;
     private int roleID;
     private String Pasword;
 
-    public Person() {
-    }
-
-    public Person(int PersonID, String Name, String Gender, String DateOfBirth, String Address, String Email, String Phone, int roleID, String Pasword, String code) {
-        this.PersonID = PersonID;
-        this.Name = Name;
-        this.Gender = Gender;
-        this.DateOfBirth = DateOfBirth;
-        this.Address = Address;
-        this.Email = Email;
-        this.Phone = Phone;
-        this.roleID = roleID;
-        this.Pasword = Pasword;
-
-    }
-
-    public Person(String Name, String Gender, String DateOfBirth, String StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+    public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Name = Name;
         this.Gender = Gender;
         this.DateOfBirth = DateOfBirth;
         this.StartDate = StartDate;
-        this.Address = Address;
+        this.Address= Address;
         this.Email = Email;
         this.Phone = Phone;
         this.roleID = roleID;
@@ -76,11 +61,11 @@ public class Person {
         this.DateOfBirth = DateOfBirth;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return StartDate;
     }
 
-    public void setStartDate(String StartDate) {
+    public void setStartDate(LocalDate StartDate) {
         this.StartDate = StartDate;
     }
 

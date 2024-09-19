@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Date;
 import java.util.Properties;
@@ -28,7 +29,8 @@ import javax.mail.internet.*;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -63,7 +65,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if ("resend".equals(action)) {
             resendVerificationCode(request, response);
         } else {
@@ -88,6 +90,8 @@ public class RegisterServlet extends HttpServlet {
         System.out.println(rePassHash);
         System.out.println("Password: " + password);
         System.out.println("RePassword: " + repassword);
+        System.out.println("Gender: " + gender);
+
         if (!passHash.equals(rePassHash)) {
             request.setAttribute("error", "Mật khẩu không khớp!");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
@@ -115,7 +119,7 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
-        
+
         // Generate verification code
         String verificationCode = generateVerificationCode();
 
@@ -128,6 +132,7 @@ public class RegisterServlet extends HttpServlet {
         session.setAttribute("tempName", name);
         session.setAttribute("tempAge", age);
         session.setAttribute("tempEmail", email);
+        session.setAttribute("tempGender", gender);
         session.setAttribute("tempPhone", phone);
         session.setAttribute("tempAddress", address);
         session.setAttribute("tempPassword", passHash);
@@ -135,7 +140,8 @@ public class RegisterServlet extends HttpServlet {
         System.out.println(session.getAttribute("tempPassword"));
         System.out.println(session.getAttribute("tempAge"));
         System.out.println(session.getAttribute("verificationCode2"));
- 
+        System.out.println(session.getAttribute("tempAge"));
+
         // Redirect to verification page
         response.sendRedirect("verifyEmail.jsp");
     }
@@ -152,7 +158,7 @@ public class RegisterServlet extends HttpServlet {
         }
         session.setAttribute("verificationCode", newCode);
         MailSender.sendVerificationEmail(email, newCode);
-         response.sendRedirect("verifyEmail.jsp");
+        response.sendRedirect("verifyEmail.jsp");
     }
 
     private String generateVerificationCode() {

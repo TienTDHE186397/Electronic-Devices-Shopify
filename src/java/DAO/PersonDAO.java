@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,30 +20,30 @@ import java.util.List;
  */
 public class PersonDAO extends DBContext {
 
-    public List<Person> getAllPerson() {
-        List<Person> listReader = new ArrayList<>();
-        try {
-            String sql = "select * from Person";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                Person r = new Person();
-                r.setPersonID(rs.getInt("PersonID"));
-                r.setName(rs.getString("Name"));
-                r.setGender(rs.getString("Gender"));
-                r.setDateOfBirth(rs.getString("DateOfBirth"));
-                r.setStartDate(rs.getString("StartDate"));
-                r.setAddress(rs.getString("Address"));
-                r.setEmail(rs.getString("Email"));
-                r.setPhone(rs.getString("Phone"));
-                r.setRoleID(rs.getInt("RoleID"));
-                listReader.add(r);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return listReader;
-    }
+//    public List<Person> getAllPerson() {
+//        List<Person> listReader = new ArrayList<>();
+//        try {
+//            String sql = "select * from Person";
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                Person r = new Person(name, gender, age, startDate, address, email, phone, 1, password);
+//                r.setPersonID(rs.getInt("PersonID"));
+//                r.setName(rs.getString("Name"));
+//                r.setGender(rs.getString("Gender"));
+//                r.setDateOfBirth(rs.getString("DateOfBirth"));
+//                r.setStartDate(rs.getObject("StartDate",)));
+//                r.setAddress(rs.getString("Address"));
+//                r.setEmail(rs.getString("Email"));
+//                r.setPhone(rs.getString("Phone"));
+//                r.setRoleID(rs.getInt("RoleID"));
+//                listReader.add(r);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return listReader;
+//    }
 //    public Person getPersonByUser(String user) {
 //        try {
 //            String sql = "select * from Person p\n"
@@ -101,7 +102,6 @@ public class PersonDAO extends DBContext {
 //        }
 //        return null;
 //    }
-   
     public int getLastInsertedBorrowID() {
         String sql = "SELECT MAX(BorrowID) AS BorrowID FROM Borrow";
         try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {
@@ -155,19 +155,19 @@ public class PersonDAO extends DBContext {
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                // Lấy dữ liệu từ ResultSet và tạo đối tượng Person
-                int personID = rs.getInt("PersonID");  // Lấy PersonID từ database
+                int personID = rs.getInt("PersonID");
                 String name = rs.getString("Name");
                 String gender = rs.getString("Gender");
                 String age = rs.getString("DateOfbirth");
-                String startDate = rs.getString("StartDate");
+                java.sql.Date sqlDate = rs.getDate("startdate");
+                LocalDate localDate = sqlDate.toLocalDate();
                 String address = rs.getString("Address");
                 String phone = rs.getString("Phone");
                 int roleID = rs.getInt("RoleID");
                 String passwordFromDB = rs.getString("Password");
 
                 // Tạo đối tượng Person từ dữ liệu lấy được
-                return new Person(name, gender, age, null, address, email, phone, roleID, password);
+                return new Person(name, gender, age, localDate, address, email, phone, roleID, password);
             }
 
         } catch (SQLException e) {
@@ -183,8 +183,8 @@ public class PersonDAO extends DBContext {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, person.getName());
             stmt.setString(2, person.getGender());
-            stmt.setString(3, person.getDateOfBirth());
-            stmt.setString(4, person.getStartDate());
+            stmt.setObject(3, person.getDateOfBirth());
+            stmt.setObject(4, person.getStartDate());
             stmt.setString(5, person.getAddress());
             stmt.setString(6, person.getEmail());
             stmt.setString(7, person.getPhone());
@@ -197,39 +197,39 @@ public class PersonDAO extends DBContext {
             return false;
         }
     }
-    public List<Person> searchPerson(String search, String role, String gender){
-        List<Person> list = new ArrayList<>();
-        String sql = "select * from Person where 1=1 ";
-        if(search!=null&&!search.isEmpty()){
-            sql += "and (Name like '%" + search + "'% or Email like '%" + search + "%' or Phone like '%" + search + "'%)";
-        }
-        if(gender!=null&&!gender.isEmpty()){
-            sql += "and Gender like '%" + gender + "%'";
-        }
-        if(role!=null&&!role.isEmpty()){
-            sql += "and RoleID = " + role;
-        }
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                Person r = new Person();
-                r.setPersonID(rs.getInt("PersonID"));
-                r.setName(rs.getString("Name"));
-                r.setGender(rs.getString("Gender"));
-                r.setDateOfBirth(rs.getString("DateOfBirth"));
-                r.setStartDate(rs.getString("StartDate"));
-                r.setAddress(rs.getString("Address"));
-                r.setEmail(rs.getString("Email"));
-                r.setPhone(rs.getString("Phone"));
-                 r.setRoleID(rs.getInt("RoleID"));
-                list.add(r);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return list;
-    }
+//    public List<Person> searchPerson(String search, String role, String gender){
+//        List<Person> list = new ArrayList<>();
+//        String sql = "select * from Person where 1=1 ";
+//        if(search!=null&&!search.isEmpty()){
+//            sql += "and (Name like '%" + search + "'% or Email like '%" + search + "%' or Phone like '%" + search + "'%)";
+//        }
+//        if(gender!=null&&!gender.isEmpty()){
+//            sql += "and Gender like '%" + gender + "%'";
+//        }
+//        if(role!=null&&!role.isEmpty()){
+//            sql += "and RoleID = " + role;
+//        }
+//        try {
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                Person r = new Person(name, gender, age, startDate, address, email, phone, 1, password);
+//                r.setPersonID(rs.getInt("PersonID"));
+//                r.setName(rs.getString("Name"));
+//                r.setGender(rs.getString("Gender"));
+//                r.setDateOfBirth(rs.getString("DateOfBirth"));
+//                r.setStartDate(rs.getDate("StartDate"));
+//                r.setAddress(rs.getString("Address"));
+//                r.setEmail(rs.getString("Email"));
+//                r.setPhone(rs.getString("Phone"));
+//                 r.setRoleID(rs.getInt("RoleID"));
+//                list.add(r);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return list;
+//    }
 
     public static void main(String[] args) {
         PersonDAO personDAO = new PersonDAO();

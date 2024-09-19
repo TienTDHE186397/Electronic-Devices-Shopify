@@ -30,18 +30,19 @@ public class MailSender {
 
         // Thiết lập cấu hình SMTP
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");//SMTP HOST
+        properties.put("mail.smtp.port", "587");//TLS587 SSL465
+        properties.put("mail.smtp.auth", "true");//Phai dang nhap = gmail khi ma dang nhap bang host thi phai dang nhap la true
+        properties.put("mail.smtp.starttls.enable", "true"); // giao thuc can dung la smpt.starttls  true
 
         // Tạo session email
+        // lay ra 1 cai authenticator de dang nhap vao email
         Session session = Session.getInstance(properties, new Authenticator() {
+            // tao mot cai phien dang nhap
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("vuahaitac1543@gmail.com", "asdc pyrk falq hcoa"); // Thay bằng email và mật khẩu của bạn
             }
         });
-
         try {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("vuahaitac1543@gmail.com"));

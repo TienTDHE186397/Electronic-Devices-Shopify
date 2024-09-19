@@ -81,7 +81,7 @@ public class addUserServlet extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
-        Person person = new Person();
+        Person person = new Person(name, gender, age, startDate, address, email, phone, 1, password);
         session.setAttribute("person", person);
         DAOPerson dp = new DAOPerson();
         List<Person> listP = dp.getAllPerson();
