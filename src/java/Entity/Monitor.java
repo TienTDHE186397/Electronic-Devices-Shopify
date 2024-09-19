@@ -13,10 +13,10 @@ public class Monitor {
     private String monitorImage;
     private String monitorName;
     private String monitorBranch;
-    private double monitorPrice;
+    private int monitorPrice;
     private int monitorFpsRate;
     private int monitorResponseTime;
-    private double monitorAspectRatio;
+    private String monitorAspectRatio;
     private String monitorPortConnect;
     private String monitorPanelType;
     private String monitorSize;
@@ -29,7 +29,7 @@ public class Monitor {
     public Monitor() {
     }
 
-    public Monitor(String monitorId, String monitorImage, String monitorName, String monitorBranch, double monitorPrice, int monitorFpsRate, int monitorResponseTime, double monitorAspectRatio, String monitorPortConnect, String monitorPanelType, String monitorSize, String monitorWeight, String monitorResolution, String monitorFeature, String monitorType, Product product) {
+    public Monitor(String monitorId, String monitorImage, String monitorName, String monitorBranch, int monitorPrice, int monitorFpsRate, int monitorResponseTime, String monitorAspectRatio, String monitorPortConnect, String monitorPanelType, String monitorSize, String monitorWeight, String monitorResolution, String monitorFeature, String monitorType, Product product) {
         this.monitorId = monitorId;
         this.monitorImage = monitorImage;
         this.monitorName = monitorName;
@@ -64,7 +64,7 @@ public class Monitor {
         return monitorBranch;
     }
 
-    public double getMonitorPrice() {
+    public int getMonitorPrice() {
         return monitorPrice;
     }
 
@@ -76,7 +76,7 @@ public class Monitor {
         return monitorResponseTime;
     }
 
-    public double getMonitorAspectRatio() {
+    public String getMonitorAspectRatio() {
         return monitorAspectRatio;
     }
 
@@ -128,7 +128,7 @@ public class Monitor {
         this.monitorBranch = monitorBranch;
     }
 
-    public void setMonitorPrice(double monitorPrice) {
+    public void setMonitorPrice(int monitorPrice) {
         this.monitorPrice = monitorPrice;
     }
 
@@ -140,7 +140,7 @@ public class Monitor {
         this.monitorResponseTime = monitorResponseTime;
     }
 
-    public void setMonitorAspectRatio(double monitorAspectRatio) {
+    public void setMonitorAspectRatio(String monitorAspectRatio) {
         this.monitorAspectRatio = monitorAspectRatio;
     }
 
@@ -176,12 +176,6 @@ public class Monitor {
         this.product = product;
     }
 
-   
-
-    
-    
-    
-    
     
     
     

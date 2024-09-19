@@ -180,6 +180,10 @@
         </style>
 
     </head>
+    
+            <c:set value="${requestScope.listC}" var="listC"/>
+
+            <c:set value="${requestScope.listP}" var="p" />
     <body>
 
         <section id="subs" class="pt-5 pb-5 bg_light_1">
@@ -205,6 +209,19 @@
                             <center>
 
                                 <div>
+
+                                    <label for="filter"><b>Number Of Seats:</b></label>
+
+                                    <!-- number of seat -->
+                                    <select id="dropdown" name="filter" class="form-select" style="width:10% ;margin: 5px" onchange="document.getElementById('f1').submit()" >
+                                        <option value="0">All</option>
+
+                                        <c:forEach var="c" begin="0" end="${p.size() -1}" step ="1">
+                                            <option value="${listp.get(c)}" ${(p.get(c) == param.filter) ? "selected" : ""} >${p.get(c)}</option>
+                                        </c:forEach>
+
+                                    </select>
+                                    
                                     <div class="row ">
                                         <a href="#" class="col-auto mobile">Apple</a>
                                         <a href="#" class="col-auto mobile">Samsung</a>
@@ -224,6 +241,7 @@
                                     <thead class="text-uppercase bg-body text-muted">
                                         <tr>
                                             <th>ProductID</th>
+                                            <th>Image</th>
                                             <th>Views</th>
                                             <th>Release Date</th>
                                             <th>Quantity Sold</th>
@@ -233,18 +251,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${requestScope.listP}" var="p">
-                                        <tr class="align-content-between">
-                                            <td>${p.productID}</td>
-                                            <td>${p.views}</td>
-                                            <td>${p.releaseDate}</td>
-                                            <td>${p.quantitySold}</td>
-                                            <td>${p.categoryID}</td>
-                                            <td>${p.quantity}</td>
-                                            <td>${p.sale} %</td>
-                                        </tr>
+                                        <c:forEach items="${requestScope.listP}" var="p">
+                                            <tr class="align-content-between">
+                                                <td>${p.productID}</td>
+                                                <td>${p.views}</td>
+                                                <td>${p.releaseDate}</td>
+                                                <td>${p.quantitySold}</td>
+                                                <td>${p.category.getCategoryName()}</td>
+                                                <td>${p.quantity}</td>
+                                                <td>${p.sale} %</td>
+                                            </tr>
 
-                                    </c:forEach>
+                                        </c:forEach>
 
 
                                     </tbody>

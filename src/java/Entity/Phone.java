@@ -2,17 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-
 package Entity;
 
 import java.util.*;
 import java.lang.*;
 
-
 public class Phone {
-    
-    
+
     /*
      PhoneID nvarchar(50) not null primary key,--Mã d?nh danh duy nh?t cho m?i di?n tho?i
        PhoneName nvarchar(255) not null,--Tên s?n ph?m
@@ -30,11 +26,10 @@ public class Phone {
 	   ProductID int not null,
 	   img nvarchar(255) not null,
 	   FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
-    */
-    
+     */
     private String phoneID;
     private String phoneName;
-    private int price;   
+    private int price;
     private double screenSize;
     private String displayTech;
     private String rearCamera;
@@ -43,6 +38,7 @@ public class Phone {
     private int ramCapicity;
     private int internalMemory;
     private String battery;
+    private String operatingSystem;
     private String screenResolution;
     private Product product;
     private String img;
@@ -50,7 +46,9 @@ public class Phone {
     public Phone() {
     }
 
-    public Phone(String phoneID, String phoneName, int price, double screenSize, String displayTech, String rearCamera, String frontCamera, String chipSet, int ramCapicity, int internalMemory, String battery, String screenResolution, Product product, String img) {
+   
+
+    public Phone(String phoneID, String phoneName, int price, double screenSize, String displayTech, String rearCamera, String frontCamera, String chipSet, int ramCapicity, int internalMemory, String battery, String operatingSystem, String screenResolution, Product product, String img) {
         this.phoneID = phoneID;
         this.phoneName = phoneName;
         this.price = price;
@@ -62,9 +60,18 @@ public class Phone {
         this.ramCapicity = ramCapicity;
         this.internalMemory = internalMemory;
         this.battery = battery;
+        this.operatingSystem = operatingSystem;
         this.screenResolution = screenResolution;
         this.product = product;
         this.img = img;
+    }
+
+   public String getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public void setOperatingSystem(String operatingSystem) {
+        this.operatingSystem = operatingSystem;
     }
 
     public String getPhoneID() {
@@ -178,14 +185,5 @@ public class Phone {
     public void setImg(String img) {
         this.img = img;
     }
-
-    
-    
-    
-    
-    
-    
-    
-
 
 }

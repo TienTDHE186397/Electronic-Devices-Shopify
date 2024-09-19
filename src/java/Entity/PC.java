@@ -57,13 +57,13 @@ public class PC {
     private Double pcWeight;
     private String pcFrontPort;
     private String pcBackPort;
-    private String pcGuarantee;
+    private int pcGuarantee;
     private Product product;
 
     public PC() {
     }
 
-    public PC(String pcId, String pcImage, String pcName, String pcBranch, int pcPrice, String pcCPU, String pcMemory, String pcDiskMemory, String pcVga, String pcNetworkLan, int pcPower, String pcSize, Double pcWeight, String pcFrontPort, String pcBackPort, String pcGuarantee, Product product) {
+    public PC(String pcId, String pcImage, String pcName, String pcBranch, int pcPrice, String pcCPU, String pcMemory, String pcDiskMemory, String pcVga, String pcNetworkLan, int pcPower, String pcSize, Double pcWeight, String pcFrontPort, String pcBackPort, int pcGuarantee, Product product) {
         this.pcId = pcId;
         this.pcImage = pcImage;
         this.pcName = pcName;
@@ -143,7 +143,7 @@ public class PC {
         return pcBackPort;
     }
 
-    public String getPcGuarantee() {
+    public int getPcGuarantee() {
         return pcGuarantee;
     }
 
@@ -211,7 +211,7 @@ public class PC {
         this.pcBackPort = pcBackPort;
     }
 
-    public void setPcGuarantee(String pcGuarantee) {
+    public void setPcGuarantee(int pcGuarantee) {
         this.pcGuarantee = pcGuarantee;
     }
 
@@ -220,7 +220,6 @@ public class PC {
     }
 
    
-    
     
     
 

@@ -27,8 +27,6 @@ public class ProductListDAO extends DBContext {
                 + "      ,[Quantity]\n"
                 + "      ,[Sale]\n"
                 + "  FROM [dbo].[Products]";
-        
-        
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -56,15 +54,45 @@ public class ProductListDAO extends DBContext {
 
     }
 
+    public Product getProductById(int id) {
+
+        String sql = "select *\n"
+                + "from Products\n"
+                + "where ProductID = ? ";
+
+        try {
+
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getInt("Views"),
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"));
+
+                return p;
+            }
+
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) {
 
         ProductListDAO p = new ProductListDAO();
-        List<Product> pl = p.getAllProduct();
+        Product pl = p.getProductById(11);
 
-        for (Product p1 : pl) {
 
-            System.out.println(p1.getCategory().getCategoryID());
-        }
+            System.out.println(pl.getCategory().getCategoryName());
 
     }
 
