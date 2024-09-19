@@ -4,118 +4,108 @@
  */
 package Entity;
 
-import java.util.Date;
+import java.util.*;
+import java.lang.*;
 
-/**
- *
- * @author admin
- */
 public class Person {
-    
-//     [PersonID] [int] IDENTITY(1,1) NOT NULL,
-//	[Name ] [nvarchar](50) NULL,
-//	[Gender] [nvarchar](6) NULL,
-//	[DateOfBirth] [date] NULL,
-//	[Email] [varchar](100) NULL,
-//	[Phone] [varchar](15) NULL,
-    
-    private int PersonID;
+
+    private int person;
     private String name;
     private String gender;
-    private Date birth;
+    private Date DateOfBirth;
+    private String address;
     private String email;
-    private int roleID;
-    private String roleName;
-    private String username;
+    private String phone;
+    private Role RoleId;
+    private String password;
 
     public Person() {
     }
 
-    public Person(int PersonID, String name, String gender, Date birth, String email,int roleID, String roleName, String username) {
-        this.PersonID = PersonID;
+    public Person(int person, String name, String gender, Date DateOfBirth, String address, String email, String phone, Role RoleId, String password) {
+        this.person = person;
         this.name = name;
         this.gender = gender;
-        this.birth = birth;
+        this.DateOfBirth = DateOfBirth;
+        this.address = address;
         this.email = email;
-        this.roleID = roleID;
-        this.roleName = roleName;
-        this.username = username;
+        this.phone = phone;
+        this.RoleId = RoleId;
+        this.password = password;
     }
 
-    
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    
-    
-    public int getPersonID() {
-        return PersonID;
-    }
-
-    public void setPersonID(int PersonID) {
-        this.PersonID = PersonID;
+    public int getPerson() {
+        return person;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public Date getDateOfBirth() {
+        return DateOfBirth;
     }
 
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public String getAddress() {
+        return address;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public Role getRoleId() {
+        return RoleId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPerson(int person) {
+        this.person = person;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setDateOfBirth(Date DateOfBirth) {
+        this.DateOfBirth = DateOfBirth;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-  
-    public int getRoleID() {
-        return roleID;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
+    public void setRoleId(Role RoleId) {
+        this.RoleId = RoleId;
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" + "PersonID=" + PersonID + ", name=" + name + ", gender=" + gender + ", birth=" + birth +  ", roleID=" + roleID + ", roleName=" + roleName + ", username=" + username + '}';
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     
-    
-    
+
 }

@@ -1,55 +1,50 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Entity;
 
-/**
- *
- * @author Admin
- */
+import java.util.*;
+import java.lang.*;
+
 public class Categories {
-    private int categoryId;
-    private String categoryName;
-    private String description;
 
-    public Categories() {
+    private String CategoryID;
+    private String CategoryName;
+    private String Description;
+
+    public Categories(String CategoryID, String CategoryName, String Description) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+        this.Description = Description;
     }
 
-    public Categories(int categoryId, String categoryName, String description) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.description = description;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public String getCategoryID() {
+        return CategoryID;
     }
 
     public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        return CategoryName;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategoryID(String CategoryID) {
+        this.CategoryID = CategoryID;
     }
 
-    @Override
-    public String toString() {
-        return "Categories{" + "categoryId=" + categoryId + ", categoryName=" + categoryName + ", description=" + description + '}';
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
     }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
+    
+    
     
     
 }

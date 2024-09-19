@@ -183,7 +183,7 @@
     <body>
 
         <!-- Header start -->
-        <%@include file="header.jsp" %>
+     
 
         <!-- Header end -->
 
