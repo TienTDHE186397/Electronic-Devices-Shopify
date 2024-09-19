@@ -57,7 +57,7 @@ public class HomeSaleMananger extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.getRequestDispatcher("HomeSaleManager.jsp").forward(request, response);
+        request.getRequestDispatcher("HomeSaleManager.jsp").forward(request, response);
     }
 
     /**

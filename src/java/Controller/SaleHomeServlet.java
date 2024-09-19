@@ -4,12 +4,15 @@
  */
 package Controller;
 
-import DAO.CalendarDAO;
-import DAO.DAO;
-import Entity.Calendar;
-import Entity.Product;
+import DAO.SaleDAO;
+import Entity.OrderByDay;
+import Entity.OrderStatus;
+import Entity.SaleOrder;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +20,10 @@ import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author admin
  */
-public class ProductDetailController extends HttpServlet {
+@WebServlet(name = "SaleHome", urlPatterns = {"/SaleHome"})
+public class SaleHomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,21 +36,18 @@ public class ProductDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        String check = request.getParameter("checkid");
-        DAO dao = new DAO();
-        CalendarDAO cdao = new CalendarDAO();
-        List<Calendar> listca = cdao.getCalendarBypid(pid);
-        List<Product> listp = dao.getProductBypid(pid);
-        
-        request.setAttribute("listca", listca);
-        request.setAttribute("listp", listp);
-        if (!check.equalsIgnoreCase("1")) {
-            request.getRequestDispatcher("ProductDetailwInValidCheck.jsp").forward(request, response);
-
-        } else {
-            request.getRequestDispatcher("ProductDetailwValidCheck.jsp").forward(request, response);
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SaleDashboard</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -62,7 +63,32 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        SaleDAO saleDAO = new SaleDAO();
+
+        List<SaleOrder> list = saleDAO.getOrder();
+        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
+
+        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
+
+        String[] statusList = new String[orderStatusList.size()];
+        Integer[] countList = new Integer[orderStatusList.size()];
+
+        int i = 0;
+        for (OrderStatus orderStatus : orderStatusList) {
+            statusList[i] = orderStatus.getStatus();
+            countList[i] = orderStatus.getCount();
+
+            i++;
+        }
+
+        request.setAttribute("data", list);
+        request.setAttribute("statusList", statusList);
+        request.setAttribute("countList", countList);
+        request.setAttribute("ordersByDay", odbList);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHome.jsp");
+        dispatcher.forward(request, response);
+
     }
 
     /**

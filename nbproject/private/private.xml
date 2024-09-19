@@ -3,12 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Phone.java</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/DBContext.java</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/ProductListDAO.java</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/web/productList.jsp</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/userDAO.java</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/web/home.jsp</file>
+=======
+            <file>file:/E:/PRJ301/webdientu/web/SaleHome.jsp</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/DAO/SaleDAO.java</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/Entity/OrderStatus.java</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/Controller/SaleHomeServlet.java</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/Entity/SaleOrder.java</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/Controller/UserControlServlet.java</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/Entity/Order.java</file>
+            <file>file:/E:/PRJ301/webdientu/web/WEB-INF/web.xml</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/LoginGoogle/SignupContent.java</file>
+            <file>file:/E:/PRJ301/webdientu/src/java/Entity/OrderByDay.java</file>
+>>>>>>> 73bfbee9d457f695ae4defefabbc3ceffb151c11
         </group>
     </open-files>
 </project-private>

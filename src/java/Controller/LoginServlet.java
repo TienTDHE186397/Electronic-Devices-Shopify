@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
-import DAO.UserDAO;
-import Entity.User;
+import DAO.PersonDAO;
+import Email.PasswordUtils;
+
+import Entity.Person;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -78,6 +77,11 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String remember = request.getParameter("remember");
+        PasswordUtils pw = new PasswordUtils();
+        String passHash = pw.shiftPassword(password);
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(passHash);
         Cookie cn = new Cookie("cname", username);
         Cookie cp = new Cookie("cpass", password);
         Cookie cr = new Cookie("crem", remember);
@@ -94,9 +98,9 @@ public class LoginServlet extends HttpServlet {
         response.addCookie(cr);
         response.addCookie(cn);
         response.addCookie(cp);
-
-        UserDAO u = new UserDAO();
-        User user = u.Login(username, password);
+        PersonDAO u = new PersonDAO();
+        Person user = u.login(username, passHash);
+        System.out.println("User: " + user);
         if (user == null) {
             request.setAttribute("mess", "Username or Password incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -105,23 +109,25 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("homeAdmin");
-            }
-            else if (user.getRoleID() == 3) {
+            } else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("HomeSale");
-            } 
-            else if (user.getRoleID() == 4) {
+                response.sendRedirect("SaleHome.jsp");
+            } else if (user.getRoleID() == 4) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("homeSaleMananger");
-            } 
-            else {
+            } else if (user.getRoleID() == 1) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("home");
-            }
+                response.sendRedirect("profile.jsp");
+                System.out.println("Personn " + session.getAttribute("user"));
 
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                response.sendRedirect("login.jsp");
+            }
 
         }
 

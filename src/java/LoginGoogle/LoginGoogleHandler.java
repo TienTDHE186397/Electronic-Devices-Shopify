@@ -4,7 +4,7 @@
  */
 package LoginGoogle;
 
-import Controller.*;
+import DAO.PersonDAO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -20,7 +20,6 @@ import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
-
 
 /**
  *
@@ -80,9 +79,18 @@ public class LoginGoogleHandler extends HttpServlet {
         String accessToken = getToken(code);
         UserGoogleDto user = getUserInfo(accessToken);
         System.out.println(user);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("fontanh.jsp").forward(request, response);
-        
+        String gmail = user.getEmail();
+        // Kiểm tra sự tồn tại của email
+        PersonDAO emailChecker = new PersonDAO();
+        if (emailChecker.isEmailExists(gmail)) {
+            // Nếu email đã tồn tại, chuyển hướng đến fontanh.jsp
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("fontanh.jsp").forward(request, response);
+        } else {
+            // Nếu email không tồn tại, chuyển hướng đến signupWithGG.jsp
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("signupWithGG").forward(request, response);
+        }
 
     }
 

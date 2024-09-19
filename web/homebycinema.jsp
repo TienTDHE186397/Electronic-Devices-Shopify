@@ -69,11 +69,11 @@
                 text-transform: uppercase;
 
             }
-#subs {
-    background-color: #f7f7f7; /* Màu nền nhẹ */
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-}
+            #subs {
+                background-color: #f7f7f7; /* Màu nền nhẹ */
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+            }
 
             .brand-name {
                 font-size: 4rem; /* Kích thước chữ lớn hơn */
@@ -283,7 +283,7 @@
                                                             <h6 class="fw-normal font_14 mt-2 mb-0"style="text-align: left;">Giá Vé <span class="me-2 ms-2">:</span><span class="fw-bold col_yell"> ${d.price}vnd</span></h6></h6>
                                                         </div>
                                                         <div class="deal_1r2im2">
-                                  
+
                                                             <h6 class="mt-3 text-center col_light"><span class="col_yell"></span>Đang Chiếu</h6>
 
                                                         </div>

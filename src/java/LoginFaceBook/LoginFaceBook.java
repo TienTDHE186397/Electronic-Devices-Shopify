@@ -32,16 +32,16 @@ public class LoginFaceBook extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String code = request.getParameter("code");
         System.out.println(code);
         FacebookLogin FB = new FacebookLogin();
         String accessToken = FB.getToken(code);
         System.out.println(accessToken);
         Account acc = FB.getUserInfo(accessToken);
-         Object Picture = acc.getPicture();
+        Object Picture = acc.getPicture();
 
-         if (Picture instanceof JsonObject) {
+        if (Picture instanceof JsonObject) {
             JsonObject jsonObject = (JsonObject) Picture;
 
             try {
@@ -58,8 +58,6 @@ public class LoginFaceBook extends HttpServlet {
             System.out.println("Picture is not a JsonObject.");
         }
     }
-        
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
