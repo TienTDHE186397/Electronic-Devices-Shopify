@@ -4,8 +4,11 @@
  */
 package Controller;
 
-import Entity.Person;
-import DAO.DAOPerson;
+import DAO.SaleDAO;
+import Entity.OrderByDay;
+import Entity.OrderStatus;
+import Entity.SaleOrder;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,10 +20,10 @@ import java.util.List;
 
 /**
  *
- * @author nghie
+ * @author admin
  */
-@WebServlet(name = "UserListServlet", urlPatterns = {"/userList"})
-public class UserListServlet extends HttpServlet {
+@WebServlet(name = "SaleHome", urlPatterns = {"/SaleHome"})
+public class SaleHomeServlet_1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +42,10 @@ public class UserListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserListServlet</title>");
+            out.println("<title>Servlet SaleDashboard</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +63,32 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
-        
-        List<Person> listP = dp.getAllPerson();
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        SaleDAO saleDAO = new SaleDAO();
+
+        List<SaleOrder> list = saleDAO.getOrder();
+        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
+
+        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
+
+        String[] statusList = new String[orderStatusList.size()];
+        Integer[] countList = new Integer[orderStatusList.size()];
+
+        int i = 0;
+        for (OrderStatus orderStatus : orderStatusList) {
+            statusList[i] = orderStatus.getStatus();
+            countList[i] = orderStatus.getCount();
+
+            i++;
+        }
+
+        request.setAttribute("data", list);
+        request.setAttribute("statusList", statusList);
+        request.setAttribute("countList", countList);
+        request.setAttribute("ordersByDay", odbList);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHome.jsp");
+        dispatcher.forward(request, response);
+
     }
 
     /**
@@ -78,7 +102,7 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**

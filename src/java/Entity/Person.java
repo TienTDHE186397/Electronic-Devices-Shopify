@@ -15,18 +15,50 @@ public class Person {
     private String Phone;
     private int roleID;
     private String Pasword;
+//cua son
 
     public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Name = Name;
         this.Gender = Gender;
         this.DateOfBirth = DateOfBirth;
         this.StartDate = StartDate;
-        this.Address= Address;
+        this.Address = Address;
         this.Email = Email;
         this.Phone = Phone;
         this.roleID = roleID;
         this.Pasword = Pasword;
 
+    }
+
+    //cua duc
+    public Person(int PersonID, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int RoleID, String Password) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = RoleID;
+        this.Pasword = Password;
+    }
+
+    public Person(String Name, String Gender, String Address, String Email, String Phone, int RoleID, String Password) {
+        this.Name = Name;
+        this.Gender = Gender;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = RoleID;
+        this.Pasword = Password;
+    }
+
+    public Person(String Name, String Address, String Phone, String Password) {
+        this.Name = Name;
+        this.Address = Address;
+        this.Phone = Phone;
+        this.Pasword = Password;
     }
 
     public int getPersonID() {
@@ -109,9 +141,10 @@ public class Person {
         this.Pasword = Pasword;
     }
 
+
     @Override
     public String toString() {
-return "Person{" + "PersonID=" + PersonID + ", Name=" + Name + ", Gender=" + Gender + ", DateOfBirth=" + DateOfBirth + ", StartDate=" + StartDate + ", Address=" + Address + ", Email=" + Email + ", Phone=" + Phone + ", roleID=" + roleID + ", Pasword=" + Pasword + '}';
+        return "Person{" + "PersonID=" + PersonID + ", Name=" + Name + ", Gender=" + Gender + ", DateOfBirth=" + DateOfBirth + ", StartDate=" + StartDate + ", Address=" + Address + ", Email=" + Email + ", Phone=" + Phone + ", roleID=" + roleID + ", Pasword=" + Pasword + '}';
     }
 
 }

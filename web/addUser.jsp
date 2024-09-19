@@ -39,73 +39,6 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
-            body {
-                margin-top: 20px;
-                background: #eeecfd;
-            }
-
-            .card {
-                box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-                padding: 20px; /* Thêm padding ?? n?i dung không ch?m vào c?nh c?a card */
-            }
-
-            .avatar.sm {
-                width: 2.25rem;
-                height: 2.25rem;
-                font-size: .818125rem;
-            }
-
-            .table-nowrap .table td,
-            .table-nowrap .table th {
-                white-space: nowrap;
-            }
-
-            .table>:not(caption)>*>* {
-                padding: 0.75rem 1.25rem;
-                border-bottom-width: 1px;
-            }
-
-            table th {
-                font-weight: 600;
-                background-color: #eeecfd !important;
-            }
-
-            .fa-arrow-up {
-                color: #00CED1;
-            }
-
-            .fa-arrow-down {
-                color: #FF00FF;
-            }
-
-            .centered-table-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-
-
-            th, td {
-                border: 1px solid #dee2e6; /* ???ng vi?n gi?a các ô */
-                text-align: center;
-                margin-left: 5px; /* Áp d?ng margin-left cho các ô */
-
-            }
-
-
-
-
-
-            tbody td {
-
-                margin-left: 5px; /* Kho?ng cách gi?a các ô trong cùng m?t hàng */
-            }
-
-            h1 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
 
 
             #centeredInput {
@@ -138,24 +71,24 @@
                         <div class="modal-body">
                             <form action="addUser" method="post">
                                 <div class="form-group">
-                                    <label>PersonID</label>
-                                    <input type="text" class="form-control" id="centeredInput" name="id" value="${listP.size()}"/>
-                                </div>
-                                <div class="form-group">
                                     <label>Họ và tên</label>
-                                    <input type="text" class="form-control" id="centeredInput"   name="name"/>
+                                    <input type="text" class="form-control" id="centeredInput" name="name"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Giới tính</label>
                                     <select id="centeredInput" name="gender" class="form-select">
-                                        <option value="Male">Nam</option>
-                                        <option value="Female">Nữ</option>
-                                        <option value="LGBT">Khác</option>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                        <option value="Khác">Khác</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Ngày sinh</label>
                                     <input type = "date" class="form-control" id="centeredInput" name="dob"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày bắt đầu</label>
+                                    <input type = "date" class="form-control" id="centeredInput" name="sd"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Địa chỉ</label>
@@ -171,17 +104,27 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Vai trò</label>
-                                    <select id="centeredInput" name="gender" class="form-select">
-                                        <option value="admin">Admin</option>
-                                        <option value="saleM">SaleManager</option>
-                                        <option value="sale">Sale</option>
-                                        <option value="marketing">Marketing</option>
-                                        <option value="customer">Customer</option>
+                                    <select id="centeredInput" name="roleid" class="form-select">
+                                        <option value="2">Marketing</option>
+                                        <option value="3">Sale</option>
+                                        <option value="4">SaleManager</option>
+                                        <option value="5">Admin</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật khẩu</label>
+                                    <input type="text" class="form-control" id="centeredInput" name="pass"/>
                                 </div>
                                 <input type="submit" class="form-control"/>
                             </form>
                         </div>
-                    </center>
-                    </body>
-                    </html>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </center>
+</body>
+</html>
