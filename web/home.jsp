@@ -218,7 +218,7 @@
         </aside>
         <!-- Sidebar end -->
         <!-- Header start -->
-        <%@include file="header.jsp" %>
+     
 
         <!-- Header end -->
 
