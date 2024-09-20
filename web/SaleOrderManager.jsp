@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -5,13 +9,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>sale Home Manager</title>
-        <meta charset="UTF-8">
+        <title>sale Order Manager</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- =============Style css ======================== -->
         <link rel="stylesheet" type="text/css" href="css/styleSaleManager.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
 
     <body>
@@ -30,7 +35,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="SaleHomeManager.jsp">
+                        <a href="SaleHomeManager">
                             <span class="icon">
                                 <ion-icon name="pie-chart-outline"></ion-icon></span>
                             <span class="title">Dashboard</span>
@@ -38,7 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="SaleOrderManager.jsp">
+                        <a href="SaleOrderManager">
                             <span class="icon">
                                 <ion-icon name="pricetags-outline"></ion-icon></span>
                             <span class="title">Orders</span>
@@ -83,10 +88,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </div>
 
                     <div class="search">
-                        <label>
-                            <input type="text" placeholder="search here">
-                            <ion-icon name="search-outline"></ion-icon>
-                        </label>
+                        <form action="SaleOrderManager" method="GET">
+                            <label> 
+                                <input type="text" name="searchQuery" placeholder="search here">
+                                <ion-icon name="search-outline"></ion-icon>
+                            </label>
+                        </form>
                     </div>
 
                     <div class="user">
@@ -97,46 +104,37 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                 <!--==================Card==================-->
                 <div class="cardBox">
-                    <div class="card">
-                        <div>
-                            <div class="numbers">1000</div>
-                            <div class="cardName">Order complete</div>
-                        </div>
-                        <div class="iconBox">
-                            <ion-icon name="checkmark-outline"></ion-icon>
-                        </div> 
-                    </div>
+                    <a href="SaleOrderManager" class="btn">
+                        <div a href="SaleOrderManager" class="card">
 
-                    <div class="card">
-                        <div>
-                            <div class="numbers">1000</div>
-                            <div class="cardName">Order Inprogress</div>
-                        </div>
-                        <div class="iconBox">
-                            <ion-icon name="reload-outline"></ion-icon>
-                        </div> 
-                    </div>
+                            <div>
+                                <div class="numbers">${totalOrderCount}</div>
+                                <div class="cardName">Total Orders</div>
+                            </div>
 
-                    <div class="card">
-                        <div>
-                            <div class="numbers">1000</div>
-                            <div class="cardName">Unprocessed orders</div>
+                            <div class="iconBox">
+                                <ion-icon name="pricetags-outline"></ion-icon>
+                            </div>
                         </div>
-                        <div class="iconBox">
-                            <ion-icon name="close-circle-outline"></ion-icon>
-                        </div> 
-                    </div>
+                    </a>
 
-                    <div class="card">
-                        <div>
-                            <div class="numbers">1000</div>
-                            <div class="cardName">Total Order</div>
-                        </div>
-                        <div class="iconBox">
-                            <ion-icon name="cart-outline"></ion-icon>
-                        </div> 
-                    </div>
+                    <c:forEach var="status" items="${statusOrderList}" varStatus="loop">
+                        <a href="SaleOrderManager?status=${status}" class="btn">
+                            <div class="card">
+                                <div>
+                                    <div class="numbers">${countOrderList[loop.index]}</div>
+                                    <div class="cardName">${status}</div>
+                                </div>
+                                <div class="iconBox">
+                                    <ion-icon name="${status == 'Complete' ? 'checkmark-outline' : 
+                                                      status == 'In Progress' ? 'reload-outline' : 
+                                                      status == 'In Line' ? 'close-circle-outline' : ''}"></ion-icon>
+                                </div> 
+                            </div>
+                        </a>
+                    </c:forEach>               
                 </div>
+
 
 
 
@@ -145,130 +143,127 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="details">
                     <div class="recentOrders">
                         <div class="cardHeader">
-                            <h2>Total Orders</h2>
+                            <h2>Recent Orders</h2>
+                            <!--                            <a href="SaleOrderManager" class="btn">View All</a>-->
                         </div>
 
                         <table>
                             <thead>
                                 <tr>
-                                    <td>Name</td>
-                                    <td>Price</td>
-                                    <td>Payment</td>
+                                    <td>OrderID</td>
+                                    <td>Order Date</td>
+                                    <td>Customer Name</td>
+                                    <td>ShowRoomName</td>
+                                    <td>Total Money</td>
+                                    <td>Method</td>
+                                    <td>SaleName</td>
                                     <td>Status</td>
-                                    <td>Status</td>
-                                    <td>Status</td>
-                                    <td>Status</td>
-                                    <td>Status</td>
-                                    <td>Status</td>
-
+                                    <td>Actions</td>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>Star Refrigerator</td>
-                                    <td>$1200</td>
-                                    <td>Paid</td>
-                                    <td><span class="status delivered">Delivered</span></td>
-                                </tr>
+                                <c:forEach items="${requestScope.dataList}" var="c">
+                                    <tr>
+                                        <td>${c.orderID}</td>
+                                        <td>${c.orderDate}</td>
+                                        <td>${c.cusName}</td>
+                                        <td>${c.showRoomID}</td>
+                                        <td><fmt:formatNumber value="${c.total}" type="number" pattern="#,##0"/></td>
+                                        <td>${c.method}</td>
+                                        <td>${c.saleName}</td>
+                                        <td> <c:choose>
+                                                <c:when test="${c.status == 'Complete'}">
+                                                    <span class="status Complete">${c.status}</span>
+                                                </c:when>
+                                                <c:when test="${c.status == 'In Line'}">
+                                                    <span class="status inline">${c.status}</span>
+                                                </c:when>
+                                                <c:when test="${c.status == 'In Progress'}">
+                                                    <span class="status inProgress">${c.status}</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="status unknown">${c.status}</span> 
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <a href="OrderDetails?orderID=${c.orderID}" class="btn-details">Details</a>
+                                            <button onclick="showAssignPopup(${c.orderID})" class="btn-assign">Assign</button>
+                                            <button class="btn-submit">Submit</button>
 
-                                <tr>
-                                    <td>Dell Laptop</td>
-                                    <td>$110</td>
-                                    <td>Due</td>
-                                    <td><span class="status pending">Pending</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Apple Watch</td>
-                                    <td>$1200</td>
-                                    <td>Paid</td>
-                                    <td><span class="status unprocessed">unprocessed</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Addidas Shoes</td>
-                                    <td>$620</td>
-                                    <td>Due</td>
-                                    <td><span class="status inProgress">In Progress</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Star Refrigerator</td>
-                                    <td>$1200</td>
-                                    <td>Paid</td>
-                                    <td><span class="status delivered">Delivered</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Dell Laptop</td>
-                                    <td>$110</td>
-                                    <td>Due</td>
-                                    <td><span class="status pending">Pending</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Apple Watch</td>
-                                    <td>$1200</td>
-                                    <td>Paid</td>
-                                    <td><span class="status return">Return</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Addidas Shoes</td>
-                                    <td>$620</td>
-                                    <td>Due</td>
-                                    <td><span class="status inProgress">In Progress</span></td>
-                                </tr>
+                                            
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div> 
                 </div>
-            </div>
+                <div id="assignPopup" class="popup">
+                    <div class="popup-content">
+                        <span class="close" onclick="closeAssignPopup()">&times;</span>
+                        <h2>Assign Order to Sales Representative</h2>
+                        <table id="salesTable">
+                            <thead>
+                                <tr>
+                                    <th>Sale ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+                </div>
+
+
+
+                <!--=========================Script navigation=======================-->
+                <script>
+                    let list = document.querySelectorAll(".navigation li");
+
+                    function activeLink() {
+                        list.forEach((item) => {
+                            item.classList.remove("hovered");
+                        });
+                        this.classList.add("hovered");
+                    }
+
+                    list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+                    //menu toggle
+
+                    let toggle = document.querySelector(".toggle");
+                    let navigation = document.querySelector(".navigation");
+                    let main = document.querySelector(".main");
+
+                    toggle.onclick = function () {
+                        navigation.classList.toggle("active");
+                        main.classList.toggle("active");
+                    };
+
+                </script>
 
 
 
 
-        </div>
-
-
-        <!--=========================Script navigation=======================-->
-        <script>
-            let list = document.querySelectorAll(".navigation li");
-
-            function activeLink() {
-                list.forEach((item) => {
-                    item.classList.remove("hovered");
-                });
-                this.classList.add("hovered");
-            }
-
-            list.forEach((item) => item.addEventListener("mouseover", activeLink));
-
-            //menu toggle
-
-            let toggle = document.querySelector(".toggle");
-            let navigation = document.querySelector(".navigation");
-            let main = document.querySelector(".main");
-
-            toggle.onclick = function () {
-                navigation.classList.toggle("active");
-                main.classList.toggle("active");
-            };
-
-        </script>
 
 
 
 
 
+                <!--==========ionicons==========-->
 
+                <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+                <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-
-        <!--==========ionicons==========-->
-
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    </body>
-</html>
+                </body>
+                </html>

@@ -14,6 +14,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
@@ -91,8 +95,12 @@ public class VerifyServlet extends HttpServlet {
             String email = (String) session.getAttribute("tempEmail");
             String gender = (String) session.getAttribute("tempGender");
             PersonDAO personDAO = new PersonDAO();
+            LocalDate startDate = LocalDate.now();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//           
+//            System.out.println(formattedTime);
 //            "INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone, Password, RoleID"
-            Person person = new Person(name, gender, age, null, address, email, phone, 1, password);
+            Person person = new Person(name, gender,age,startDate,address, email, phone, 1, password);
             boolean add = personDAO.addPerson(person);  // Thêm người dùng vào database
             if (add) {
                 System.out.println("Cập Nhật Thành Công");
@@ -109,6 +117,9 @@ public class VerifyServlet extends HttpServlet {
             session.removeAttribute("tempPassword");
             session.removeAttribute("tempPhone");
             session.removeAttribute("tempGender");
+            session.removeAttribute("tempTime");
+            
+
 
             // Chuyển hướng tới trang thành công
             request.setAttribute("message", "Đăng kí tài khoản thành công!");

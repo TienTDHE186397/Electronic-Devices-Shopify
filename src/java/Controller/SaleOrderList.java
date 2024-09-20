@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+
+package Controller;
 
 import DAO.SaleDAO;
-import Entity.OrderByDay;
 import Entity.OrderStatus;
-import Entity.SaleHomeOrder;
+import Entity.SaleOrderL;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,39 +22,37 @@ import java.util.List;
  *
  * @author admin
  */
-@WebServlet(name = "SaleHomeManager", urlPatterns = {"/SaleHomeManager"})
-public class SaleHomeServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="SaleOrderManager", urlPatterns={"/SaleOrderManager"})
+public class SaleOrderList extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");
+            out.println("<title>Servlet SaleOrderList</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SaleOrderList at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -62,21 +60,35 @@ public class SaleHomeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         SaleDAO saleDAO = new SaleDAO();
         
-        int totalCount = saleDAO.getTotalOrderCount();
+        int totalOrderCount = saleDAO.getTotalOrderCount();
         
-        List<SaleHomeOrder> list = saleDAO.getOrder();
-        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
+        String status = request.getParameter("status");
+        // Lấy giá trị tìm kiếm từ request
+        String searchQuery = request.getParameter("searchQuery");
+        // Nếu không có tìm kiếm, redirect về trang SaleOrder.jsp
         
+        List<SaleOrderL> list;
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            // Nếu có searchQuery, lấy danh sách đơn hàng dựa trên tìm kiếm
+            list = saleDAO.searchOrders(searchQuery);
+        } else if (status != null && !status.isEmpty()) {
+            // Nếu có status, lấy danh sách đơn hàng theo status
+            list = saleDAO.getOrderLByStatus(status);
+        } else {
+            // Nếu không có searchQuery và status, lấy toàn bộ danh sách đơn hàng
+            list = saleDAO.getOrderL();
+        }
         
         List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
+          // Gọi SaleDAO để tìm kiếm đơn hàng dựa trên OrderID hoặc CustomerName
+        
 
         
         String[] statusList = new String[orderStatusList.size()];
         Integer[] countList = new Integer[orderStatusList.size()];
-
         int i = 0;
         for (OrderStatus orderStatus : orderStatusList) {
             statusList[i] = orderStatus.getStatus();
@@ -84,23 +96,22 @@ public class SaleHomeServlet extends HttpServlet {
             
             i++;
         }
-
-        request.setAttribute("data", list);
-        request.setAttribute("statusList", statusList);
-        request.setAttribute("countList", countList);
-        request.setAttribute("ordersByDay", odbList);
-        request.setAttribute("totalCount", totalCount);
-
+        
+        
+        request.setAttribute("dataList", list);
+        request.setAttribute("statusOrderList", statusList);
+        request.setAttribute("countOrderList", countList);
+        request.setAttribute("totalOrderCount", totalOrderCount);
+        
+        
        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeManager.jsp");
+      
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleOrderManager.jsp");
         dispatcher.forward(request, response);
+    } 
 
-
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -108,13 +119,12 @@ public class SaleHomeServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
@@ -122,5 +132,6 @@ public class SaleHomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    }
+
+}
 

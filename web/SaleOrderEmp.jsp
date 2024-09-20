@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page import="com.google.gson.Gson" %>
-
+<c:set var="saleID" value="${param.SaleID}" />
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -10,9 +9,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-
-        <title>sale Home</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>sale Order Employee</title>
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- =============Style css ======================== -->
@@ -36,7 +34,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="SaleHome">
+                        <a href="SaleHomeEmp?SaleID=${param.SaleID}">
                             <span class="icon">
                                 <ion-icon name="pie-chart-outline"></ion-icon></span>
                             <span class="title">Dashboard</span>
@@ -44,7 +42,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="SaleOrder">
+                        <a href="SaleOrderEmp?SaleID=${param.SaleID}">
                             <span class="icon">
                                 <ion-icon name="pricetags-outline"></ion-icon></span>
                             <span class="title">Orders</span>
@@ -80,7 +78,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
                 </ul>
             </div>
-
+            
+                            
             <!--====================Main=========================-->
             <div class="main">
                 <div class="topbar">
@@ -89,10 +88,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </div>
 
                     <div class="search">
-                        <label>
-                            <input type="text" placeholder="search here">
-                            <ion-icon name="search-outline"></ion-icon>
-                        </label>
+
+                      
+                        <c:if test="${saleID != null}">
+                            
+                        <form action="SaleOrderEmp" method="GET">
+                            <input type="hidden" name="SaleID" value="${SaleID}" />
+                            <label> 
+                                
+                                <input type="text" name="searchQuery" placeholder="search here">
+                                <ion-icon name="search-outline"></ion-icon>
+                            </label>
+                        </form>
+                     </c:if>
                     </div>
 
                     <div class="user">
@@ -100,31 +108,40 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </div>
                 </div>   
 
-
                 <!--==================Card==================-->
-
-                <div class="cardBox">
-                    <c:forEach var="status" items="${statusList}" varStatus="loop">
+                 <div class="cardBox">
+                    <a href="SaleOrderEmp?SaleID=${param.SaleID}" class="btn">
                         <div class="card">
                             <div>
-                                <div class="numbers">${countList[loop.index]}</div>
-                                <div class="cardName">${status}</div>
+                                <div class="numbers">${totalOrderCount}</div>
+                                <div class="cardName">Total Orders</div>
                             </div>
+
                             <div class="iconBox">
-                                <ion-icon name="${status == 'Complete' ? 'checkmark-outline' : 
-                                                  status == 'In Progress' ? 'reload-outline' : 
-                                                  status == 'In Line' ? 'close-circle-outline' : ''}"></ion-icon>
-                            </div> 
+                                <ion-icon name="pricetags-outline"></ion-icon>
+                            </div>
                         </div>
+                    </a>
+                
+                
+                    <c:forEach var="status" items="${statusOrderList}" varStatus="loop">
+                        <a href="SaleOrderEmp?status=${status}&SaleID=${param.SaleID}" class="btn">
+                            <div class="card">
+                                <div>
+                                    <div class="numbers">
+                                        ${countOrderList[loop.index]}
+                                    </div>
+                                    <div class="cardName">${status}</div>
+                                </div>
+                                <div class="iconBox">
+                                    <ion-icon name="${status == 'Complete' ? 'checkmark-outline' : 
+                                                      status == 'In Progress' ? 'reload-outline' : ''}"></ion-icon>
+                                </div> 
+                            </div>
+                        </a>
                     </c:forEach>               
                 </div>
 
-                <!--               ===============================Chart============================-->
-
-                <div class="chartsBox">
-                    <div class="chart"><canvas id="myChart-1"></canvas></div>
-                    <div class="chart"><canvas id="myChart-2"></canvas></div>
-                </div> 
 
 
                 <!--======================================order List=====================================-->
@@ -133,7 +150,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="recentOrders">
                         <div class="cardHeader">
                             <h2>Recent Orders</h2>
-                            <a href="SaleOrder" class="btn">View All</a>
+                            <!--                            <a href="SaleOrderManager" class="btn">View All</a>-->
                         </div>
 
                         <table>
@@ -142,34 +159,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                     <td>OrderID</td>
                                     <td>Order Date</td>
                                     <td>Customer Name</td>
+                                    <td>ShowRoomName</td>
                                     <td>Total Money</td>
+                                    <td>Method</td>
+                                    <td>SaleName</td>
                                     <td>Status</td>
+                                    <td>Actions</td>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <c:forEach items="${requestScope.data}" var="c">
+                                <c:forEach items="${requestScope.dataList}" var="c">
                                     <tr>
                                         <td>${c.orderID}</td>
                                         <td>${c.orderDate}</td>
                                         <td>${c.cusName}</td>
+                                        <td>${c.showRoomID}</td>
                                         <td><fmt:formatNumber value="${c.total}" type="number" pattern="#,##0"/></td>
-                                        <td> <c:choose>
-                                                <c:when test="${c.status == 'Complete'}">
-                                                    <span class="status Complete">${c.status}</span>
-                                                </c:when>
-                                                <c:when test="${c.status == 'In Line'}">
-                                                    <span class="status inline">${c.status}</span>
-                                                </c:when>
-                                                <c:when test="${c.status == 'In Progress'}">
-                                                    <span class="status inProgress">${c.status}</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="status unknown">${c.status}</span> 
-                                                </c:otherwise>
-                                            </c:choose></td>
-                                    </tr>
-                                </c:forEach>
+                                <td>${c.method}</td>
+                                <td>${c.saleName}</td>
+                                <td> <c:choose>
+                                        <c:when test="${c.status == 'Complete'}">
+                                            <span class="status Complete">${c.status}</span>
+                                        </c:when>
+                                        <c:when test="${c.status == 'In Line'}">
+                                            <span class="status inline">${c.status}</span>
+                                        </c:when>
+                                        <c:when test="${c.status == 'In Progress'}">
+                                            <span class="status inProgress">${c.status}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="status unknown">${c.status}</span> 
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <a href="OrderDetails?orderID=${c.orderID}" class="btn-details">Details</a>
+                                    <button class="btn-submit">Submit</button>
+                                </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div> 
@@ -209,80 +238,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </script>
 
 
-        <!--    =========================================chart Js============================-->
-
-
-        <script>
-            const statusList = <%= new Gson().toJson(request.getAttribute("statusList")) %>;
-            const countList = <%= new Gson().toJson(request.getAttribute("countList")) %>;
-            const ctx1 = document.getElementById("myChart-1").getContext("2d");
-            const myChart = new Chart(ctx1, {
-                type: "polarArea",
-                data: {
-                    labels: statusList,
-                    datasets: [
-                        {
-                            label: "# of Votes",
-                            data: countList,
-                            backgroundColor: [
-                                "rgba(127, 255, 0, 1 )",
-                                "rgba(255, 206, 86, 1)",
-                                "rgba(255, 99, 132, 1)",
-                            ],
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                },
-            });
-
-            const ctx2 = document.getElementById("myChart-2").getContext("2d");
-            const orderData = [
-            <c:forEach items="${ordersByDay}" var="order" varStatus="status">
-                ${order.completedOrders}<c:if test="${!status.last}">,</c:if>
-            </c:forEach>
-            ];
-            const dayLabels = [
-            <c:forEach items="${ordersByDay}" var="order" varStatus="status">
-            "${order.dayOfWeek}"<c:if test="${!status.last}">,</c:if>
-            </c:forEach>
-            ];
-            const myChart2 = new Chart(ctx2, {
-                type: "bar",
-                data: {
-                    labels: dayLabels,
-                    datasets: [
-                        {
-                            label: "Order complete folow by Day of the week ",
-                            data: orderData,
-                            backgroundColor: [
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(54, 162, 235, 1)"
-
-                            ],
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                },
-            });
-
-        </script>
 
 
 
 
-        <!--    ==========================Chart===========================-->
 
-
-        <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 
         <!--==========ionicons==========-->
 

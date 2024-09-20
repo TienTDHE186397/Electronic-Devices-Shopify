@@ -22,7 +22,7 @@
     <body>
 
         <div class="container" id="container">
-            <div class="form-container sign-in" style=" max-height: 700px; overflow-y: scroll">
+            <div class="form-container sign-in" style=" max-height: 700px; overflow-y: scroll;padding-top: 30px">
                 <form style="height: fit-content" action="RegisterServlet" method="post">
                     <h1>Đăng Kí</h1>
                     <div class="social-icons">
@@ -35,8 +35,8 @@
                     <input name="repass" type="password" placeholder="RePassword"  required>
                     <select name="gender" id="user-gender" class="form-control" required>
                         <option value="" disabled selected>Giới tính</option>
-                        <option value="Male" <%= "Male".equals(request.getParameter("gender")) ? "selected" : ""%>>Nam</option>
-                        <option value="Female" <%= "Female".equals(request.getParameter("gender")) ? "selected" : ""%>>Nữ</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
                     </select>
                     <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" value="<%= request.getParameter("date") != null ? request.getParameter("date") : ""%>" required>
                     <input type="email" id="email" name="email" " value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" placeholder="email" >

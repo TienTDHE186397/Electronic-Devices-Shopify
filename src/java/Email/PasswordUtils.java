@@ -38,9 +38,9 @@ public class PasswordUtils {
             if (ch >= 'a' && ch <= 'z') {
                 str.append((char) ((ch - 'a' + 1) % 26 + 'a'));
             } else if (ch >= 'A' && ch <= 'Z') {
-                str.append((char) ((ch - 'A' + 1) % 26 + 'A'));
+                str.append((char) ((ch - 'A' + 2) % 26 + 'A'));
             } else if (ch >= '0' && ch <= '9') {
-                str.append((char) ((ch - '0' + 1) % 10 + '0'));
+                str.append((char) ((ch - '0' + 3) % 10 + '0'));
             } else {
                 str.append(ch);
             }
@@ -58,9 +58,9 @@ public class PasswordUtils {
             if (ch >= 'a' && ch <= 'z') {
                 str.append((char) ((ch - 'a' - 1) % 26 + 'a'));
             } else if (ch >= 'A' && ch <= 'Z') {
-                str.append((char) ((ch - 'A' - 1) % 26 + 'A'));
+                str.append((char) ((ch - 'A' - 2) % 26 + 'A'));
             } else if (ch >= '0' && ch <= '9') {
-                str.append((char) ((ch - '0' - 1) % 10 + '0'));
+                str.append((char) ((ch - '0' - 3) % 10 + '0'));
             } else {
                 str.append(ch);
             }

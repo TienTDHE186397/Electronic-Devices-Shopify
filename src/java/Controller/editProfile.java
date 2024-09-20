@@ -13,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author nghie
  */
-@WebServlet(name = "UserListServlet", urlPatterns = {"/userList"})
-public class UserListServlet extends HttpServlet {
+@WebServlet(name = "editProfile", urlPatterns = {"/editProfile"})
+public class editProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +33,22 @@ public class UserListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserListServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserListServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String id = request.getParameter("PersonID");
+        String name = request.getParameter("name");
+
+        String phone = request.getParameter("phone");
+        String pass = request.getParameter("password");
+//        out.println(id);
+//        out.println(name);
+//        out.println(gender);
+//        out.println(address);
+//        out.println(email);
+//        out.println(phone);
+//        out.println(roleid);
+//        out.println(pass);
+        DAOPerson dp = new DAOPerson();
+        dp.updateCustomer(name, phone, pass, id);
+        response.sendRedirect("profile?PersonID="+id);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,11 +63,14 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id");
         DAOPerson dp = new DAOPerson();
-        
-        List<Person> listP = dp.getAllPerson();
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        String newpass = request.getParameter("newPassword");
+        Person p = dp.getPersonById(id);
+        dp.editPassById(id, newpass);
+        request.setAttribute("detail", p);
+        response.sendRedirect("profile");
+            
     }
 
     /**
@@ -78,7 +84,7 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**

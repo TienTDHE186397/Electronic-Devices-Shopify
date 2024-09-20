@@ -5,7 +5,7 @@
 package Controller;
 
 import Entity.Person;
-import Model.DAOPerson;
+import DAO.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 import org.apache.tomcat.jni.SSLContext;
 
@@ -41,7 +42,7 @@ public class addUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addUserServlet</title>");
+            out.println("<title>Servlet addUserServlet</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet addUserServlet at " + request.getContextPath() + "</h1>");
@@ -62,10 +63,11 @@ public class addUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
+      DAOPerson dp = new DAOPerson();
         List<Person> listP = dp.getAllPerson();
         request.setAttribute("listP", listP);
         request.getRequestDispatcher("addUser.jsp").forward(request, response);
+
     }
 
     /**
@@ -79,28 +81,45 @@ public class addUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        Person person = new Person();
-        session.setAttribute("person", person);
         DAOPerson dp = new DAOPerson();
-        List<Person> listP = dp.getAllPerson();
-        request.setAttribute("listP", listP);
+     
+        PrintWriter out = response.getWriter();
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
         String dob = request.getParameter("dob");
-        String sd = request.getParameter("StartDate");
+       
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        String pass = request.getParameter("Password");
-        Person p = (Person) session.getAttribute("person");
-        int nroleid = p.getRoleID();
+        String roleid = request.getParameter("roleid");
+        String pass = request.getParameter("pass");
+        LocalDate startDate = LocalDate.now();
+        int nroleid = Integer.parseInt(roleid);
+        Person person = new Person(name, gender, dob, startDate, address, email, phone, nroleid  , pass);
+        dp.addPerson(person);
+        
+//        Boolean add =  dp.addPerson(new Person( "Duc", "Name", "2004-11-03", "2024-09-17", "Ha Noi", "duqweqwecdsfsdf@gmaisadadasdasdl.com", "0985407026", 5, "123")); 
+//        if(add){
+//            System.out.println("add thanh cong");
+//        }
+//        else{
+//            System.out.println("loi");
+//        }
+//        
+//     
+//        System.out.println(name);
+//        System.out.println(gender);
+//        System.out.println(dob);
+//        System.out.println(sd);
+//        System.out.println(address);
+//        System.out.println(email);
+//        System.out.println(roleid);
+        
+        
+             response.sendRedirect("userList");
 
-        dp.addPerson(name, gender, dob, sd, address, email, phone, nroleid, pass);
-        response.sendRedirect("userList");
+        
     }
-
     /**
      * Returns a short description of the servlet.
      *

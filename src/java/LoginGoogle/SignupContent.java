@@ -5,7 +5,6 @@
 package LoginGoogle;
 
 import DAO.PersonDAO;
-import DAO.UserDAO;
 import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,17 +93,24 @@ public class SignupContent extends HttpServlet {
         }
 
         String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
+        String password = request.getParameter("pass");
+        String repassword = request.getParameter("repass");
+        String gender = request.getParameter("gender");
+        String age = request.getParameter("date");
         String email = request.getParameter("email");
-        Person person = new Person(name, email, dateString, name, phone, email, phone, 0, phone);
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+         LocalDate startDate = LocalDate.now();
+//      public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+        Person person = new Person(name, gender, age, startDate, address, email, phone,1, password);
         PersonDAO personDAO = new PersonDAO();
         boolean personAdded = personDAO.addPerson(person);
 
         if (personAdded) {
-            request.setAttribute("successMessage", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
+            request.setAttribute("message", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
             request.getRequestDispatcher("success.jsp").forward(request, response);
         } else {
-            request.setAttribute("errorMessage", "Có lỗi xảy ra khi tạo tài khoản.");
+            request.setAttribute("error", "Có lỗi xảy ra khi tạo tài khoản.");
             request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
         }
     }

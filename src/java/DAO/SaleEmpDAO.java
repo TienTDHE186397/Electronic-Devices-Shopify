@@ -19,22 +19,24 @@ import java.sql.SQLException;
  *
  * @author admin
  */
-public class SaleDAO {
+public class SaleEmpDAO {
 
     private Connection connection;
 
-    public SaleDAO() {
+    public SaleEmpDAO() {
         DBContext dbContext = new DBContext();
         this.connection = dbContext.connection;
     }
 
-    public List<OrderStatus> getOrderCountByStatus() {
+    public List<OrderStatus> getOrderCountByStatusS(Integer SaleID) {
         List<OrderStatus> orderStatusList = new ArrayList<>();
 
-        String query = "SELECT [Status], COUNT(*) AS total_orders FROM Orders GROUP BY [Status]";
+        String query = "SELECT [Status], COUNT(*) AS total_orders FROM Orders WHERE SaleID = ? GROUP BY [Status]";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+            if (SaleID != null) {
+                preparedStatement.setInt(1, SaleID);
+            }
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -53,15 +55,20 @@ public class SaleDAO {
         return orderStatusList;
     }
 
-    public List<SaleHomeOrder> getOrder() {
+    public List<SaleHomeOrder> getOrderS(Integer SaleID) {
         List<SaleHomeOrder> saleOrder = new ArrayList<>();
         String sql = "Select o.OrderID, o.OrderDate, p.Name as CustomerName, o.TotalMoney, o.[Status]\n"
                 + "From Orders o\n"
                 + "JOIN Person p ON o.PersonID = p.PersonID\n"
+                + "WHERE\n"
+                + "o.SaleID = ?\n"
                 + "ORDER BY o.OrderID";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            if (SaleID != null) {
+                st.setInt(1, SaleID);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 SaleHomeOrder s = new SaleHomeOrder(rs.getInt("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getInt("TotalMoney"), rs.getString("Status"));
@@ -75,7 +82,7 @@ public class SaleDAO {
         return saleOrder;
     }
 
-    public List<SaleOrderL> getOrderL() {
+    public List<SaleOrderL> getOrderLS(Integer SaleID) {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT \n"
                 + "    o.OrderID, \n"
@@ -94,11 +101,16 @@ public class SaleDAO {
                 + "    ShowRoom sr ON o.ShowRoomID = sr.ShowRoomID  \n"
                 + "LEFT JOIN \n"
                 + "    Person s ON o.SaleID = s.PersonID\n"
+                + "WHERE \n"
+                + "o.SaleID = ? \n"
                 + "ORDER BY\n"
                 + "o.OrderDate DESC";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            if (SaleID != null) {
+                st.setInt(1, SaleID);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 SaleOrderL s = new SaleOrderL(rs.getInt("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
@@ -112,18 +124,22 @@ public class SaleDAO {
         return saleOrder;
     }
 
-    public List<SaleOrderL> getOrderLByStatus(String status) {
+    public List<SaleOrderL> getOrderLByStatusS(String status, Integer SaleID) {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status "
                 + "FROM Orders o "
                 + "JOIN Person p ON o.PersonID = p.PersonID "
                 + "LEFT JOIN Person s ON o.SaleID = s.PersonID "
                 + "JOIN ShowRoom r ON o.ShowRoomID = r.ShowRoomID "
-                + "WHERE o.Status = ?";
+                + "WHERE o.Status = ?\n"
+                + "AND(o.SaleID is null or o.SaleID = ?)";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, status);
+            if (SaleID != null) {
+                st.setInt(2, SaleID);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 SaleOrderL s = new SaleOrderL(rs.getInt("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
@@ -137,21 +153,24 @@ public class SaleDAO {
         return saleOrder;
     }
 
-    public List<SaleOrderL> searchOrders(String searchQuery) {
+    public List<SaleOrderL> searchOrdersS(String searchQuery, Integer SaleID) {
         List<SaleOrderL> orders = new ArrayList<>();
-        String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status "
-                + "FROM Orders o "
-                + "JOIN Person p ON o.PersonID = p.PersonID "
-                + "LEFT JOIN Person s ON o.SaleID = s.PersonID "
-                + "JOIN ShowRoom r ON o.ShowRoomID = r.ShowRoomID "
-                + "WHERE o.OrderID LIKE ? OR p.Name LIKE ?";
+        String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status \n"
+                + "FROM Orders o \n"
+                + "JOIN Person p ON o.PersonID = p.PersonID \n"
+                + "LEFT JOIN Person s ON o.SaleID = s.PersonID \n"
+                + "JOIN ShowRoom r ON o.ShowRoomID = r.ShowRoomID \n"
+                + " WHERE (o.OrderID LIKE ? OR p.Name LIKE ?)\n"
+                + " AND o.SaleID = ?";
 
         try (PreparedStatement st = connection.prepareStatement(sql)) {
 
             String query = "%" + searchQuery + "%";
             st.setString(1, query);
             st.setString(2, query);
-
+            if (SaleID != null) {
+                st.setInt(3, SaleID);
+            }
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     SaleOrderL order = new SaleOrderL(
@@ -168,13 +187,55 @@ public class SaleDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return orders;
     }
 
-    public List<OrderByDay> getCompletedOrdersByDayOfWeek() {
+//    public List<OrderByDay> getCompletedOrdersByDayOfWeekS(int SaleID) {
+//    List<OrderByDay> ordersByDay = new ArrayList<>();
+//    String sql = "SELECT \n"
+//        + " DATENAME(WEEKDAY, OrderDate) AS DayOfWeek,\n"
+//        + " COUNT(*) AS CompletedOrders\n"
+//        + "FROM \n"
+//        + " Orders\n"
+//        + "WHERE \n"
+//        + " [Status] = 'Complete'\n"
+//        + " AND OrderDate >= DATEADD(DAY, -7, GETDATE())\n"
+//        + " AND SaleID = ?\n"
+//        + "GROUP BY \n"
+//        + " DATENAME(WEEKDAY, OrderDate),\n"
+//        + " DATEPART(WEEKDAY, OrderDate)\n"
+//        + "ORDER BY \n"
+//        + " DATEPART(WEEKDAY, OrderDate)";
+//    
+//    try (PreparedStatement st = connection.prepareStatement(sql)) {
+//        st.setInt(1, SaleID);
+//        
+//        System.out.println("Executing query for SaleID: " + SaleID);
+//        
+//        try (ResultSet rs = st.executeQuery()) {
+//            while (rs.next()) {
+//                String dayOfWeek = rs.getString("DayOfWeek");
+//                int completedOrders = rs.getInt("CompletedOrders");
+//                ordersByDay.add(new OrderByDay(dayOfWeek, completedOrders));
+//                
+//                System.out.println("Day: " + dayOfWeek + ", Completed Orders: " + completedOrders);
+//            }
+//        }
+//        
+//        if (ordersByDay.isEmpty()) {
+//            System.out.println("No data found for the given criteria.");
+//        }
+//    } catch (SQLException e) {
+//        System.out.println("Error executing query: " + e.getMessage());
+//        e.printStackTrace();
+//    }
+//    
+//    return ordersByDay;
+//}
+    public List<OrderByDay> getCompletedOrdersByDayOfWeekS(Integer SaleID) {
         List<OrderByDay> ordersByDay = new ArrayList<>();
         String sql = "SELECT \n"
                 + "    DATENAME(WEEKDAY, OrderDate) AS DayOfWeek,\n"
@@ -182,8 +243,9 @@ public class SaleDAO {
                 + "FROM \n"
                 + "    Orders\n"
                 + "WHERE \n"
-                + "    [Status] = 'Complete' -- Assume 'Completed' is the status for successful orders\n"
-                + "    AND OrderDate >= DATEADD(DAY, -7, GETDATE()) -- Only consider the last 7 days\n"
+                + "    [Status] = 'Complete'\n"
+                + "    AND OrderDate >= DATEADD(DAY, -7, GETDATE())\n"
+                + "    AND SaleID = ?\n"
                 + "GROUP BY \n"
                 + "    DATENAME(WEEKDAY, OrderDate),\n"
                 + "    DATEPART(WEEKDAY, OrderDate)\n"
@@ -191,6 +253,9 @@ public class SaleDAO {
                 + "    DATEPART(WEEKDAY, OrderDate)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            if (SaleID != null) {
+                st.setInt(1, SaleID);
+            }
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -207,13 +272,16 @@ public class SaleDAO {
 
     }
 
-    public int getTotalOrderCount() {
+    public int getTotalOrderCount(Integer SaleID) {
         int totalCount = 0;
-        String query = "SELECT COUNT(*) AS total FROM Orders";
+        String query = "SELECT COUNT(*) AS total FROM Orders Where SaleID = ?";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement st = connection.prepareStatement(query);
+            if (SaleID != null) {
+                st.setInt(1, SaleID);
+            }
+            ResultSet rs = st.executeQuery();
             {
 
                 while (rs.next()) {
@@ -226,14 +294,15 @@ public class SaleDAO {
 
         return totalCount;
     }
+}
 
 //    public static void main(String[] args) {
-////
+//
 //        SaleDAO saleDAO = new SaleDAO();
 //        String status = "Complete";
 //        List<SaleOrderL> l = saleDAO.getOrderLByStatus(status);
-////        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
-////        List<SaleOrder> orderSale = saleDAO.getOrder();
+//        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
+//        List<SaleOrder> orderSale = saleDAO.getOrder();
 //        System.out.println(l.get(0).getTotal());
 //
 //        
@@ -245,5 +314,21 @@ public class SaleDAO {
 //                System.out.println("Trạng thái: " + orderStatus.getStatus() + " - Tổng số đơn hàng: " + orderStatus.getCount());
 //            }
 //        }
-}
+//}
+//}
+//public static void main(String[] args) {
+//        SaleEmpDAO saleEmpDAO = new SaleEmpDAO();
+//        int testSaleID = 6; // Thay đổi giá trị này theo SaleID bạn muốn test
+//
+//        // Test getCompletedOrdersByDayOfWeekS
+//        List<OrderByDay> ordersByDay = saleEmpDAO.getCompletedOrdersByDayOfWeekS(testSaleID);
+//        System.out.println("Orders by Day of Week:");
+//        if (ordersByDay.isEmpty()) {
+//            System.out.println("No data found for completed orders by day of week.");
+//        } else {
+//            for (OrderByDay order : ordersByDay) {
+//                System.out.println(order.getDayOfWeek() + ": " + order.getCompletedOrders());
+//            }
+//        }
+//}
 //}
