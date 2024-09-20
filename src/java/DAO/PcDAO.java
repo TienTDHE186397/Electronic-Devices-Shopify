@@ -25,7 +25,7 @@ public class PcDAO extends DBContext {
         ProductListDAO pLDAO = new ProductListDAO();
 
     
-     public List<PC> getAllMonitor() {
+     public List<PC> getAllPC() {
 
         List<PC> list = new ArrayList<>();
 
@@ -62,22 +62,22 @@ public class PcDAO extends DBContext {
 
                 
                 PC pc = new PC(
-                        sql,
-                        sql,
-                        sql,
-                        sql,
-                        0, 
-                        sql,
-                        sql,
-                        sql,
-                        sql,
-                        sql,
-                        0, 
-                        sql,
-                        Double.NaN,
-                        sql,
-                        sql,
-                        sql,
+                        rs.getString("pcId"),
+                        rs.getString("pcImage"),
+                        rs.getString("pcName"),
+                        rs.getString("pcBranch"),
+                        rs.getInt("pcPrice"), 
+                        rs.getString("pcCPU"),
+                        rs.getString("pcMemory"),
+                        rs.getString("pcDiskMemory"),
+                        rs.getString("pcVga"),
+                        rs.getString("pcNetworkLan"),
+                        rs.getInt("pcPower"), 
+                        rs.getString("pcSize"),
+                        rs.getDouble("pcWeight"),
+                        rs.getString("pcFrontPort"),
+                        rs.getString("pcBackPort"),
+                        rs.getInt("pcGuarantee"),
                         product);
                
 
@@ -90,6 +90,19 @@ public class PcDAO extends DBContext {
         }
 
         return list;
+    }
+     
+     
+       public static void main(String[] args) {
+
+           PcDAO pl = new PcDAO();
+           
+        List<PC> ls = pl.getAllPC();
+
+        for(PC c : ls) {
+            System.out.println(c.getPcId());
+        }
+
     }
 
 

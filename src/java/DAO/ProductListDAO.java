@@ -5,6 +5,7 @@
 package DAO;
 
 import Entity.Categories;
+import Entity.Phone;
 import Entity.Product;
 import java.util.*;
 import java.lang.*;
@@ -86,13 +87,81 @@ public class ProductListDAO extends DBContext {
         return null;
     }
 
+    public List<String> getListImgByProduct(Phone phone) {
+
+        List<String> listImg = new ArrayList<>();
+
+        String sql = "select ph.img\n"
+                + "from Products p , Phone ph\n"
+                + "where p.ProductID = ph.ProductID";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                
+                
+                
+
+                listImg.add(p);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return listImg;
+
+    }
+
+    public List<Product> getProductByCategory(Categories c) {
+
+        List<Product> listP = new ArrayList<>();
+
+        String sql = "SELECT [ProductID]\n"
+                + "      ,[Views]\n"
+                + "      ,[releaseDate]\n"
+                + "      ,[QuantitySold]\n"
+                + "      ,[CategoryID]\n"
+                + "      ,[Quantity]\n"
+                + "      ,[Sale]\n"
+                + "  FROM [dbo].[Products]"
+                + "Where CategoryID = ? ";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, c.getCategoryID());
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getInt("Views"),
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"));
+
+                listP.add(p);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return listP;
+
+    }
+
     public static void main(String[] args) {
 
         ProductListDAO p = new ProductListDAO();
         Product pl = p.getProductById(11);
 
-
-            System.out.println(pl.getCategory().getCategoryName());
+        System.out.println(pl.getCategory().getCategoryName());
 
     }
 

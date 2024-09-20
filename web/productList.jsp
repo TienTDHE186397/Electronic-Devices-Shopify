@@ -177,13 +177,36 @@
             .product-list{
                 padding: 0;
             }
+
+
+            #customSelect {
+                background-color: black;
+                border: 1px solid #555;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-family: 'Arial', sans-serif;
+                font-size: 14px;
+                text-align: center;
+                width: 150px;
+                height: 30px;
+                margin-left: 10px;
+                display: inline-block;
+            }
+
+            #customSelect option {
+                background-color: white;
+                color: black;
+                padding: 10px;
+                font-family: 'Arial', sans-serif;
+            }
+
         </style>
 
     </head>
-    
-            <c:set value="${requestScope.listC}" var="listC"/>
 
-            <c:set value="${requestScope.listP}" var="p" />
+
+    <c:set value="${requestScope.listP}" var="p" />
     <body>
 
         <section id="subs" class="pt-5 pb-5 bg_light_1">
@@ -206,35 +229,39 @@
                                 <span style="background-color: #eeecfd; padding:5px;">TOTAL Product: <b>${requestScope.listP.size()}</b></span>
                             </div>
 
-                            <center>
-
+                            <form id="f1" action="filterServlet">
                                 <div>
 
-                                    <label for="filter"><b>Number Of Seats:</b></label>
 
-                                    <!-- number of seat -->
-                                    <select id="dropdown" name="filter" class="form-select" style="width:10% ;margin: 5px" onchange="document.getElementById('f1').submit()" >
-                                        <option value="0">All</option>
-
-                                        <c:forEach var="c" begin="0" end="${p.size() -1}" step ="1">
-                                            <option value="${listp.get(c)}" ${(p.get(c) == param.filter) ? "selected" : ""} >${p.get(c)}</option>
-                                        </c:forEach>
-
-                                    </select>
-                                    
+                              
+                                    <c:set value="${requestScope.listCategory}" var="cate" />
                                     <div class="row ">
-                                        <a href="#" class="col-auto mobile">Apple</a>
-                                        <a href="#" class="col-auto mobile">Samsung</a>
-                                        <a href="#" class="col-auto mobile">Xiaomi</a>
-                                        <a href="#" class="col-auto mobile">Oppo</a>
-                                        <a href="#" class="col-auto mobile">Vivo</a>
-                                        <a href="#" class="col-auto mobile">Realme</a>
-                                        <a href="#" class="col-auto mobile">Xem tất cả</a>
+                                        <select name="category" id="customSelect" onchange="document.getElementById('f1').submit()">
+                                            <option value="0">All</option>
+                                            <c:forEach var="c" begin="0" end="${cate.size() -1}" step ="1">
+                                                <option value="${cate.get(c).getCategoryName()}" ${(cate.get(c).getCategoryName() == param.category) ? "selected" : ""} >${cate.get(c).getCategoryName()}</option>
+                                            </c:forEach>
+
+                                        </select>
+
+                                        <select id="customSelect">
+                                            <option class="col-auto mobile">a</option>
+                                            <option class="col-auto mobile">a</option>
+                                            <option class="col-auto mobile">a</option>
+
+                                        </select>
+
+
+                                        <select id="customSelect">
+                                            <option class="col-auto mobile">a</option>
+                                            <option class="col-auto mobile">a</option>
+                                            <option class="col-auto mobile">a</option>
+
+                                        </select>
+
                                     </div>    
                                 </div>
-
-                            </center>
-
+              </form>
 
                             <div class="table-responsive">  
                                 <table class="table mb-0"> <!-- comment -->
@@ -247,22 +274,153 @@
                                             <th>Quantity Sold</th>
                                             <th>CategoryID</th>
                                             <th>Quantity</th>
+                                            <th>Posted Price</th>
+                                            <th>Selling Price</th>
                                             <th>Sale</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${requestScope.listP}" var="p">
+
+                                        <c:forEach items="${requestScope.listPhone}" var="phone">
                                             <tr class="align-content-between">
-                                                <td>${p.productID}</td>
-                                                <td>${p.views}</td>
-                                                <td>${p.releaseDate}</td>
-                                                <td>${p.quantitySold}</td>
-                                                <td>${p.category.getCategoryName()}</td>
-                                                <td>${p.quantity}</td>
-                                                <td>${p.sale} %</td>
+                                                <td>${phone.product.productID}</td>
+                                                <td> 
+                                                    <img src="${phone.img}" class="card-img-top" alt="iPhone 15 128GB"> </td>
+                                                <td>${phone.product.views}</td>
+                                                <td>${phone.product.releaseDate}</td>
+                                                <td>${phone.product.quantitySold}</td>
+                                                <td>${phone.product.category.getCategoryName()}</td>
+                                                <td>${phone.product.quantity}</td>
+                                                <td>${phone.price}.00 VND</td>
+                                                <td>${phone.price - (phone.price*phone.product.sale /100)}VND</td>
+                                                <td>${phone.product.sale} %</td>
+                                                <c:if test="${phone.product.quantitySold > 0}">
+                                                    <td>Available</th>
+                                                    </c:if>
+
+                                                    <c:if test="${phone.product.quantitySold <= 0}">
+                                                    <td>Sold Out</th>
+                                                    </c:if>
+
+
                                             </tr>
 
                                         </c:forEach>
+                                        <c:forEach items="${requestScope.listLaptop}" var="lap">
+                                            <tr class="align-content-between">
+                                                <td>${lap.product.productID}</td>
+                                                <td> 
+
+                                                    <img src="${lap.img}" class="card-img-top" alt="iPhone 15 128GB"> </td>
+
+                                                <td>${lap.product.views}</td>
+
+                                                <td>${lap.product.releaseDate}</td>
+                                                <td>${lap.product.quantitySold}</td>
+                                                <td>${lap.product.category.getCategoryName()}</td>
+                                                <td>${lap.product.quantity}</td>
+                                                <td>${lap.price}.00 VND</td>
+                                                <td>${lap.price - (lap.price*(lap.product.sale /100))}VND</td>
+                                                <td>${lap.product.sale} %</td>
+                                            
+                                                  <c:if test="${lap.product.quantitySold > 0}">
+                                                    <td>Available</th>
+                                                    </c:if>
+
+                                                    <c:if test="${lap.product.quantitySold <= 0}">
+                                                    <td>Sold Out</th>
+                                                    </c:if>
+                                            
+                                            </tr>
+                                        </c:forEach>
+                                        <c:forEach items="${requestScope.listPc}" var="pc">
+                                            <tr class="align-content-between">
+                                                <td>${pc.product.productID}</td>
+                                                <td> 
+
+                                                    <img src="${pc.pcImage}" class="card-img-top" alt="iPhone 15 128GB"> </td>
+
+                                                <td>${pc.product.views}</td>
+
+                                                <td>${pc.product.releaseDate}</td>
+                                                <td>${pc.product.quantitySold}</td>
+                                                <td>${pc.product.category.getCategoryName()}</td>
+                                                <td>${pc.product.quantity}</td>
+                                                <td>${pc.pcPrice}.00 VND</td>
+                                                <td>${pc.pcPrice - (pc.pcPrice*pc.product.sale /100)}VND</td>
+                                                <td>${pc.product.sale} %</td>
+                                                
+                                                  <c:if test="${pc.product.quantitySold > 0}">
+                                                    <td>Available</th>
+                                                    </c:if>
+
+                                                    <c:if test="${pc.product.quantitySold <= 0}">
+                                                    <td>Sold Out</th>
+                                                    </c:if>
+                                            </tr>
+
+                                        </c:forEach>
+
+                                        <c:forEach items="${requestScope.listMonitor}" var="mo">
+                                            <tr class="align-content-between">
+                                                <td>${mo.product.productID}</td>
+                                                <td> 
+
+                                                    <img src="${mo.monitorImage}" class="card-img-top" alt="iPhone 15 128GB"> </td>
+
+                                                <td>${mo.product.views}</td>
+
+                                                <td>${mo.product.releaseDate}</td>
+                                                <td>${mo.product.quantitySold}</td>
+                                                <td>${mo.product.category.getCategoryName()}</td>
+                                                <td>${mo.product.quantity}</td>
+                                                <td>${mo.monitorPrice}.00 VND</td>
+                                                <td>${mo.monitorPrice - (mo.monitorPrice*mo.product.sale /100)}VND</td>
+                                                <td>${mo.product.sale} %</td>
+                                                
+                                                  <c:if test="${mo.product.quantitySold > 0}">
+                                                    <td>Available</th>
+                                                    </c:if>
+
+                                                    <c:if test="${mo.product.quantitySold <= 0}">
+                                                    <td>Sold Out</th>
+                                                    </c:if>
+                                            </tr>
+
+                                        </c:forEach>
+
+
+                                        <c:forEach items="${requestScope.listHeadPhone}" var="head">
+                                            <tr class="align-content-between">
+                                                <td>${head.product.productID}</td>
+                                                <td> 
+
+                                                    <img src="${head.img}" class="card-img-top" alt="iPhone 15 128GB"> </td>
+
+                                                <td>${head.product.views}</td>
+
+                                                <td>${head.product.releaseDate}</td>
+                                                <td>${head.product.quantitySold}</td>
+                                                <td>${head.product.category.getCategoryName()}</td>
+                                                <td>${head.product.quantity}</td>
+                                                <td>${head.price}.00 VND</td>
+                                                <td>${head.price - (head.price*head.product.sale /100)}VND</td>
+                                                <td>${head.product.sale} %</td>
+                                                
+                                                  <c:if test="${head.product.quantitySold > 0}">
+                                                    <td>Available</th>
+                                                    </c:if>
+
+                                                    <c:if test="${head.product.quantitySold <= 0}">
+                                                    <td>Sold Out</th>
+                                                    </c:if>
+                                            </tr>
+
+                                        </c:forEach>
+
+
+
 
 
                                     </tbody>
@@ -274,15 +432,7 @@
             </div>
 
 
-
-
-
-
-
-
-
         </section>
-
 
 
 
@@ -298,5 +448,11 @@
 <%@include file="footer.jsp" %>
 <!-- Footer end -->
 </body>
+
+
+<script>
+
+
+</script>
 
 </html>

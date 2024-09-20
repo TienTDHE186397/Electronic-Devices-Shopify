@@ -69,21 +69,60 @@ public class PhoneDAO extends DBContext {
 
         return list;
     }
-    
-    
-    
+
+    public Phone getPhoneByProductId(int id) {
+        String sql = "select * "
+                + "from Phone where ProductID = ? ";
+
+        try {
+
+            PreparedStatement st = connection.prepareCall(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Product product = pLDAO.getProductById(rs.getInt("ProductID"));
+
+                Phone p = new Phone(
+                        rs.getString("PhoneID"),
+                        rs.getString("PhoneName"),
+                        rs.getInt("Price"),
+                        rs.getDouble("ScreenSize"),
+                        rs.getString("DisplayTech"),
+                        rs.getString("RearCamera"),
+                        rs.getString("FrontCamera"),
+                        rs.getString("Chipset"),
+                        rs.getInt("RAMCapicity"),
+                        rs.getInt("InternalMemory"),
+                        rs.getString("Battery"),
+                        rs.getString("OperatingSystem"),
+                        rs.getString("ScreenResolution"),
+                        product,
+                        rs.getString("img"));
+
+                return p;
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return null;
+
+    }
+
     public static void main(String[] args) {
-        
-    PhoneDAO p = new PhoneDAO();
-        
+
+        PhoneDAO p = new PhoneDAO();
+
         List<Phone> listP = p.getAllPhone();
-        
-        for(Phone m : listP) {
-            
-            System.out.println(m.getPhoneID());
+
+        for (Phone m : listP) {
+
+            System.out.println(m.getImg());
         }
         
-        
+        System.out.println(p.getPhoneByProductId(1));
+
     }
 
 }
