@@ -261,6 +261,11 @@ public class Laptop {
         this.product = product;
     }
 
+    @Override
+    public String toString() {
+        return "Laptop{" + "laptopId=" + laptopId + ", price=" + price + ", lapName=" + lapName + ", genre=" + genre + ", cpu=" + cpu + ", ram=" + ram + ", graphicCard=" + graphicCard + ", hard_drive=" + hard_drive + ", monitor=" + monitor + ", lan=" + lan + ", wifi=" + wifi + ", blueTooth=" + blueTooth + ", webCam=" + webCam + ", operatingSystem=" + operatingSystem + ", pin=" + pin + ", lapWeight=" + lapWeight + ", lapColor=" + lapColor + ", size=" + size + ", img=" + img + ", description=" + description + ", product=" + product + '}';
+    }
+
    
     
     

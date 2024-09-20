@@ -28,6 +28,12 @@ public class Categories {
         return CategoryName;
     }
 
+    @Override
+    public String toString() {
+        return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + '}';
+    }
+
+    
     
     
     

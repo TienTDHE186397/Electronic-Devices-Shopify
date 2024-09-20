@@ -219,6 +219,11 @@ public class PC {
         this.product = product;
     }
 
+    @Override
+    public String toString() {
+        return "PC{" + "pcId=" + pcId + ", pcImage=" + pcImage + ", pcName=" + pcName + ", pcBranch=" + pcBranch + ", pcPrice=" + pcPrice + ", pcCPU=" + pcCPU + ", pcMemory=" + pcMemory + ", pcDiskMemory=" + pcDiskMemory + ", pcVga=" + pcVga + ", pcNetworkLan=" + pcNetworkLan + ", pcPower=" + pcPower + ", pcSize=" + pcSize + ", pcWeight=" + pcWeight + ", pcFrontPort=" + pcFrontPort + ", pcBackPort=" + pcBackPort + ", pcGuarantee=" + pcGuarantee + ", product=" + product + '}';
+    }
+
    
     
     

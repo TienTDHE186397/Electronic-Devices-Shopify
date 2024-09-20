@@ -90,6 +90,11 @@ public class Product {
     public void setSale(int sale) {
         this.sale = sale;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" + "productID=" + productID + ", views=" + views + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", category=" + category + ", quantity=" + quantity + ", sale=" + sale + '}';
+    }
     
     
     
