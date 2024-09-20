@@ -70,8 +70,6 @@ public class HomeServlet extends HttpServlet{
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Product> list= new  
-        ProductDAO pDao = new ProductDAO();
         
     }
     

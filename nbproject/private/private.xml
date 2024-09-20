@@ -3,16 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Phone.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/HeadPhone.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Laptop.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Role.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Categories.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/PC.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Product.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/ProductListDAO.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Monitor.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Person.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/ProductDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/HomeServlet.java</file>
+            <file>file:/D:/SWP391/webdientu/web/home.jsp</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/Product.java</file>
+            <file>file:/D:/SWP391/webdientu/web/SaleHome.jsp</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/LoginServlet.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/addUserServlet.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/Laptop.java</file>
+            <file>file:/D:/SWP391/webdientu/web/header.jsp</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/Categories.java</file>
+            <file>file:/D:/SWP391/webdientu/web/homepage.jsp</file>
         </group>
     </open-files>
 </project-private>
