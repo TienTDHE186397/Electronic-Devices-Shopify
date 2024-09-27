@@ -10,7 +10,7 @@ import java.util.*;
 import java.lang.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+//Trung
 public class ProductListDAO extends DBContext {
 
     CategoryDAO cDAO = new CategoryDAO();

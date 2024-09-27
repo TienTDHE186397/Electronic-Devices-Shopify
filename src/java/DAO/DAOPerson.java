@@ -99,7 +99,7 @@ public class DAOPerson extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 java.sql.Date sqlDate = rs.getDate("startdate");
-                LocalDate localDate = sqlDate.toLocalDate();
+                LocalDate localDate = (sqlDate != null) ? sqlDate.toLocalDate() : null; // Check for null
                 Person p = new Person(
                         rs.getInt("PersonID"),
                         rs.getString("Name"),
