@@ -54,18 +54,18 @@
                 color: white;
             }
 
-/*            .custom-button {
-                background-color: #f7c33e;
-                color: #fff;
-                font-size: 12px;
-                padding: 10px 45px;
-                border: 1px solid transparent;
-                border-radius: 8px;
-                font-weight: 600;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-
-            }*/
+            /*            .custom-button {
+                            background-color: #f7c33e;
+                            color: #fff;
+                            font-size: 12px;
+                            padding: 10px 45px;
+                            border: 1px solid transparent;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            letter-spacing: 0.5px;
+                            text-transform: uppercase;
+            
+                        }*/
 
             #subs {
                 background-color: #f7f7f7; /* Màu nền nhẹ */
@@ -110,10 +110,10 @@
                 text-align: center;
                 margin: 10px;
                 background-color: #f3f4f6;
-/*                display: inline-block;*/
+                /*                display: inline-block;*/
                 padding: 5px 10px;
-/*                justify-content: center;
-                font-family: Roboto;*/
+                /*                justify-content: center;
+                                font-family: Roboto;*/
                 text-decoration: none;
                 color: #444;
             }
@@ -154,7 +154,7 @@
                 display: inline;
                 line-height: 24px;
             }
-            
+
             .product-image{
                 width: 205px;
                 height: 177px;
@@ -183,75 +183,32 @@
             .product-list{
                 padding: 0;
             }
+
+            .slider-title {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #fff;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .slider-description {
+                font-size: 1.2rem;
+                color: #fff;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
         </style>
 
     </head>
     <body>
         <!-- Sidebar start -->
-        <aside class="sidebar">
-            <div class="latest-posts">
-                <h3>Bài viết mới nhất</h3>
-                <ul>
-                    <li><a href="#">Bài viết 1</a></li>
-                    <li><a href="#">Bài viết 2</a></li>
-                    <li><a href="#">Bài viết 3</a></li>
-                    <li><a href="#">Bài viết 4</a></li>
-                </ul>
-            </div>
-            <div class="contacts">
-                <h3>Liên hệ</h3>
-                <ul>
-                    <li><a href="mailto:contact@shopify.com">Email: contact@shopify.com</a></li>
-                    <li><a href="tel:+123456789">Điện thoại: +123456789</a></li>
-                    <li><a href="#">Địa chỉ: 123 Đường ABC, TP. XYZ</a></li>
-                </ul>
-            </div>
-            <div class="links">
-                <h3>Liên kết</h3>
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Giới thiệu</a></li>
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li><a href="#">Liên hệ</a></li>
-                </ul>
-            </div>
-        </aside>
+
         <!-- Sidebar end -->
         <!-- Header start -->
-     
-
+        <%@include file="header.jsp" %>
         <!-- Header end -->
 
         <!-- Product start -->
         <!-- Sidebar start -->
-        <aside class="sidebar">
-            <div class="latest-posts">
-                <h3>Bài viết mới nhất</h3>
-                <ul>
-                    <li><a href="#">Bài viết 1</a></li>
-                    <li><a href="#">Bài viết 2</a></li>
-                    <li><a href="#">Bài viết 3</a></li>
-                    <li><a href="#">Bài viết 4</a></li>
-                </ul>
-            </div>
-            <div class="contacts">
-                <h3>Liên hệ</h3>
-                <ul>
-                    <li><a href="mailto:contact@shopify.com">Email: contact@shopify.com</a></li>
-                    <li><a href="tel:+123456789">Điện thoại: +123456789</a></li>
-                    <li><a href="#">Địa chỉ: 123 Đường ABC, TP. XYZ</a></li>
-                </ul>
-            </div>
-            <div class="links">
-                <h3>Liên kết</h3>
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Giới thiệu</a></li>
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li><a href="#">Liên hệ</a></li>
-                </ul>
-            </div>
-        </aside>
+
         <!-- Phần banner lớn start-->
         <section id="center" class="center_home container">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -263,7 +220,14 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/thang-oppo-muon-van-uu-dai-home.jpg" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="slider-title">Ưu đãi tháng Oppo</h5>
+                            <p class="slider-description">Nhiều ưu đãi hấp dẫn đang chờ bạn</p>
+                            <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
+                        </div>
+                        <style>
 
+                        </style>
                     </div>
                     <div class="carousel-item">
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/fold-6-km-moi-home-30-8.png" class="d-block w-100" alt="...">
@@ -322,9 +286,9 @@
                 </div>
             </div>    
         </section> 
-<!-- Footer start -->
-<%@include file="footer.jsp" %>
-<!-- Footer end -->
-</body>
+        <!-- Footer start -->
+        <%@include file="footer.jsp" %>
+        <!-- Footer end -->
+    </body>
 
 </html>

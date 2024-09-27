@@ -227,10 +227,9 @@
                         <div class="col-12 mb-3 mb-lg-"> 
                             <div>
                                 <div style="margin-bottom: 5px">
-                                    <h1>Product List</h1>
-                                    <a href="#">Add new product </a>
+                                    <h1>Post List</h1>
 
-                                    <span style="background-color: #eeecfd; padding:5px;">TOTAL Product: <b>${requestScope.listP.size()}</b></span>
+                                    <span style="background-color: #eeecfd; padding:5px;">TOTAL POST: <b>${requestScope.listB.size()}</b></span>
 
                                 </div>
 
@@ -263,12 +262,7 @@
                                     <b>Search:</b>
 
                                     <div class="row ">
-                                        <select name="category" id="customSelect" onchange="document.getElementById('f1').submit()">
-                                            <option value="0">All</option>
-                                            <c:forEach var="c" begin="0" end="${cate.size() -1}" step ="1">
-                                                <option value="${cate.get(c).getCategoryName()}" ${(cate.get(c).getCategoryName() == param.category) ? "selected" : ""} >${cate.get(c).getCategoryName()}</option>
-                                            </c:forEach>
-                                        </select>
+
                                         <select id="customSelect" name="status">
                                             <option class="col-auto mobile">Available</option>
                                             <option class="col-auto mobile">Sold Out</option>
@@ -285,40 +279,44 @@
                                 <table class="table mb-0"> <!-- comment -->
                                     <thead class="text-uppercase bg-body text-muted">
                                         <tr>
-                                            <th>ProductID</th>
-                                            <th>Image</th>
+                                            <th>PostID</th>
+                                            <th>Blog Image</th>
+                                            <th>Blog Tittle</th>
+                                            <th>Blog Type</th>
+                                            <th>Author</th>
                                             <th>Views</th>
-                                            <th>Release Date</th>
-                                            <th>Quantity Sold</th>
-                                            <th>CategoryID</th>
-                                            <th>Quantity</th>
-                                            <th>Posted Price</th>
-                                            <th>Selling Price</th>
-                                            <th>Sale</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${requestScope.listP}" var="p">
-                                            <tr class="align-content-between">
-                                                <td>${p.productID}</td>
+
+                                        <c:forEach items="${requestScope.listB}" var="blog">
+
+                                            <tr>
+
+                                                <td>${blog.blogID}</td>
+
                                                 <td>
 
-                                                    <img src="${p.img}" class="img-radius" alt="${p.productName}" width="80px" height="80px">
+                                                    <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="80px" height="80px">
 
                                                 </td>
-                                                <td>${p.views}</td>
-                                                <td>${p.releaseDate}</td>
-                                                <td>${p.quantitySold}</td>
-                                                <td>${p.category.categoryName}</td>
-                                                <td>${p.quantity}</td>
-                                                <td>${p.price}</td>
-                                                <td>${p.price - ((p.sale)*(p.price))/100}</td>
-                                                <td>${p.sale}</td>
-                                                <td>${p.status}</td>
+                                                <td>${blog.blog_tittle}</td>
+                                                <td>${blog.blog_type}</td>
+                                                <td>${blog.person.name}</td>
+                                                <td>${blog.blog_views}</td>
+                                                <td>${blog.blog_status}</td>
+
 
                                             </tr>
+
+
+
+
                                         </c:forEach>
+
+
+
 
 
 

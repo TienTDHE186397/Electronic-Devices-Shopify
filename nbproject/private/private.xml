@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/LaptopDAO.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/filterServlet.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Product.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/ProductListDAO.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostList.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/BlogListDAO.java</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/web/productList.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/ProductMKT.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/home.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Blog.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostListServlet.java</file>
         </group>
     </open-files>
 </project-private>

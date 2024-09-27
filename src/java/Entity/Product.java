@@ -15,28 +15,54 @@ public class Product {
 
     
     private int productID;
+    private String title;
+    private String productName;
     private int views;
     private Date releaseDate;
     private int quantitySold;
     private Categories category;
     private int quantity;
     private int sale;
-
+    private String img;
+    private double price;
+    private String publisher;
+    private String sortDescription;
+    private String description;
+    private String status;
+    
+    
+    
     public Product() {
     }
 
-    public Product(int productID, int views, Date releaseDate, int quantitySold, Categories category, int quantity, int sale) {
+    public Product(int productID, String title, String productName, int views, Date releaseDate, int quantitySold, Categories category, int quantity, int sale, String img, double price, String publisher, String sortDescription, String description, String status) {
         this.productID = productID;
+        this.title = title;
+        this.productName = productName;
         this.views = views;
         this.releaseDate = releaseDate;
         this.quantitySold = quantitySold;
         this.category = category;
         this.quantity = quantity;
         this.sale = sale;
+        this.img = img;
+        this.price = price;
+        this.publisher = publisher;
+        this.sortDescription = sortDescription;
+        this.description = description;
+        this.status = status;
     }
 
     public int getProductID() {
         return productID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getProductName() {
+        return productName;
     }
 
     public int getViews() {
@@ -63,8 +89,40 @@ public class Product {
         return sale;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public String getSortDescription() {
+        return sortDescription;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public void setViews(int views) {
@@ -90,10 +148,32 @@ public class Product {
     public void setSale(int sale) {
         this.sale = sale;
     }
-    
-    
-    
-    
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setSortDescription(String sortDescription) {
+        this.sortDescription = sortDescription;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+    
 
 }

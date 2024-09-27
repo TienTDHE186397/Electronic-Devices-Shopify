@@ -1,22 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.CategoryDAO;
-import DAO.HeadPhoneDAO;
-import DAO.LaptopDAO;
-import DAO.MonitorDAO;
-import DAO.PcDAO;
-import DAO.PhoneDAO;
+
 import DAO.ProductListDAO;
 import Entity.Categories;
-import Entity.HeadPhone;
-import Entity.Laptop;
-import Entity.Monitor;
-import Entity.PC;
-import Entity.Phone;
+
 import Entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,27 +40,12 @@ public class ProductMKT extends HttpServlet {
             throws ServletException, IOException {
 
         ProductListDAO plDao = new ProductListDAO();
-        PhoneDAO phoneDao = new PhoneDAO();
-        PcDAO pcDao = new PcDAO();
-        MonitorDAO monitorDao = new MonitorDAO();
-        LaptopDAO laptopDao = new LaptopDAO();
-        HeadPhoneDAO headPhoneDAO = new HeadPhoneDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
 
         List<Product> listP = plDao.getAllProduct();
-        List<Phone> listPhone = phoneDao.getAllPhone();
-        List<PC> listPc = pcDao.getAllPC();
-        List<Monitor> listMonitor = monitorDao.getAllMonitor();
-        List<Laptop> listLaptop = laptopDao.getAllLaptop();
-        List<HeadPhone> listHeadPhone = headPhoneDAO.getAllHeadPhone();
         List<Categories> listCategory = categoryDAO.getAllCategory();
 
         request.setAttribute("listP", listP);
-        request.setAttribute("listPhone", listPhone);
-        request.setAttribute("listPc", listPc);
-        request.setAttribute("listMonitor", listMonitor);
-        request.setAttribute("listLaptop", listLaptop);
-        request.setAttribute("listHeadPhone", listHeadPhone);
         request.setAttribute("listCategory", listCategory);
 
         request.getRequestDispatcher("productList.jsp").forward(request, response);

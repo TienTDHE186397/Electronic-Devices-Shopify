@@ -29,11 +29,11 @@ public class ProductDAO extends DBContext {
             ResultSet rs = st.executeQuery(sql);//
             while (rs.next()) {
                 Product p = new Product();
-                p.setProductId(rs.getInt("ProductID"));
+                p.setProductID(rs.getInt("ProductID"));
                 p.setViews(rs.getInt("Views"));
                 p.setReleaseDate(rs.getDate("releaseDate"));
                 p.setQuantitySold(rs.getInt("QuantitySold"));
-                p.setCategoryId(rs.getInt("CategoryID"));
+                p.setCategoryID(categoryID);
                 p.setQuantity(rs.getInt("Quantity"));
                 p.setSale(rs.getInt("Sale"));
                 listProducts.add(p);
@@ -54,7 +54,6 @@ public class ProductDAO extends DBContext {
             ResultSet rs = st.executeQuery(sql);//
             while (rs.next()) {
                 Laptop l = new Laptop();
-                l.setProductID(rs.getInt("ProductID"));
                 l.setLaptopID(rs.getNString(""));
                 listLaptops.add(l);
             }
@@ -63,7 +62,7 @@ public class ProductDAO extends DBContext {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return listProducts;
+        return listLaptops;
     }
 
     public static void main(String[] args) {

@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO;
 
 import Entity.Categories;
-import Entity.Phone;
+
 import Entity.Product;
 import java.util.*;
 import java.lang.*;
@@ -15,154 +12,62 @@ import java.sql.ResultSet;
 public class ProductListDAO extends DBContext {
 
     CategoryDAO cDAO = new CategoryDAO();
+    
 
     public List<Product> getAllProduct() {
 
         List<Product> listP = new ArrayList<>();
 
-        String sql = "SELECT [ProductID]\n"
-                + "      ,[Views]\n"
-                + "      ,[releaseDate]\n"
-                + "      ,[QuantitySold]\n"
-                + "      ,[CategoryID]\n"
-                + "      ,[Quantity]\n"
-                + "      ,[Sale]\n"
-                + "  FROM [dbo].[Products]";
+        String sql = "Select * from Products";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
+          
 
             while (rs.next()) {
                 Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
-                Product p = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getInt("Views"),
-                        rs.getDate("releaseDate"),
+
+                Product p = new Product(rs.getInt("ProductID"),rs.getString("title"), rs.getString("ProductName"),
+                        rs.getInt("Views"), rs.getDate("releaseDate"),
                         rs.getInt("QuantitySold"),
                         cate,
                         rs.getInt("Quantity"),
-                        rs.getInt("Sale"));
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"));
+              
 
                 listP.add(p);
+            
             }
 
         } catch (Exception e) {
-
+                e.printStackTrace();
         }
 
         return listP;
 
     }
 
-    public Product getProductById(int id) {
-
-        String sql = "select *\n"
-                + "from Products\n"
-                + "where ProductID = ? ";
-
-        try {
-
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
-                Product p = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getInt("Views"),
-                        rs.getDate("releaseDate"),
-                        rs.getInt("QuantitySold"),
-                        cate,
-                        rs.getInt("Quantity"),
-                        rs.getInt("Sale"));
-
-                return p;
-            }
-
-        } catch (Exception e) {
-        }
-
-        return null;
-    }
-
-    public List<String> getListImgByProduct(Phone phone) {
-
-        List<String> listImg = new ArrayList<>();
-
-        String sql = "select ph.img\n"
-                + "from Products p , Phone ph\n"
-                + "where p.ProductID = ph.ProductID";
-
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                
-                
-                
-
-                listImg.add(p);
-            }
-
-        } catch (Exception e) {
-
-        }
-
-        return listImg;
-
-    }
-
-    public List<Product> getProductByCategory(Categories c) {
-
-        List<Product> listP = new ArrayList<>();
-
-        String sql = "SELECT [ProductID]\n"
-                + "      ,[Views]\n"
-                + "      ,[releaseDate]\n"
-                + "      ,[QuantitySold]\n"
-                + "      ,[CategoryID]\n"
-                + "      ,[Quantity]\n"
-                + "      ,[Sale]\n"
-                + "  FROM [dbo].[Products]"
-                + "Where CategoryID = ? ";
-
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, c.getCategoryID());
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
-                Product p = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getInt("Views"),
-                        rs.getDate("releaseDate"),
-                        rs.getInt("QuantitySold"),
-                        cate,
-                        rs.getInt("Quantity"),
-                        rs.getInt("Sale"));
-
-                listP.add(p);
-            }
-
-        } catch (Exception e) {
-
-        }
-
-        return listP;
-
-    }
+   
 
     public static void main(String[] args) {
 
         ProductListDAO p = new ProductListDAO();
-        Product pl = p.getProductById(11);
 
-        System.out.println(pl.getCategory().getCategoryName());
+        List<Product> list = p.getAllProduct();
+        
+        for(Product l : list) {
+            
+            System.out.println(l);
+        }
 
+        
     }
 
 }
