@@ -40,14 +40,41 @@ public class PostListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         BlogListDAO blogDAO = new BlogListDAO();
-        
-        
-        List<Blog> listB = blogDAO.getAllBlog();
-        
-        request.setAttribute("listB", listB);
-        
-        request.getRequestDispatcher("PostList.jsp").forward(request, response);
-        
+
+        PrintWriter out = response.getWriter();
+        String tittlewrite = request.getParameter("tittlewrite");
+        String authorwrite = request.getParameter("authorwrite");
+        String type = request.getParameter("type");
+        String statusf = request.getParameter("statusf");
+        String sort = request.getParameter("sort");
+        String statuss = request.getParameter("statuss");
+
+        if (tittlewrite == null && authorwrite == null && type == null && statusf == null && sort == null && statuss == null) {
+
+            List<Blog> listB = blogDAO.getAllBlog();
+            List<String> listBlogType = blogDAO.getDistinctOfBlogType();
+
+            request.setAttribute("listB", listB);
+            request.setAttribute("listBlogType", listBlogType);
+
+            request.getRequestDispatcher("PostList.jsp").forward(request, response);
+
+        } else {
+            try {
+
+                List<Blog> listB = blogDAO.searchBlogList(tittlewrite, authorwrite, type, statusf,sort);
+                List<String> listBlogType = blogDAO.getDistinctOfBlogType();
+
+                request.setAttribute("listB", listB);
+                request.setAttribute("listBlogType", listBlogType);
+
+            
+                 request.getRequestDispatcher("PostList.jsp").forward(request, response);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
 
     }
 
@@ -55,6 +82,7 @@ public class PostListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     @Override

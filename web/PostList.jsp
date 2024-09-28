@@ -17,6 +17,8 @@
         <link href="css/global.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="js/bootstrap.bundle.min.js"></script>
         <style>
             body {
@@ -219,138 +221,165 @@
 
         <section class="product-list container">
 
+            <c:set value="${requestScope.listBlogType}" var="listType"/>
 
             <div>
 
                 <div  style="margin-top: 15px">
                     <div class="row">
                         <div class="col-12 mb-3 mb-lg-"> 
-                            <div>
-                                <div style="margin-bottom: 5px">
-                                    <h1>Post List</h1>
-
-                                    <span style="background-color: #eeecfd; padding:5px;">TOTAL POST: <b>${requestScope.listB.size()}</b></span>
-
-                                </div>
-
-                                <br/>
-                                <br/>
-
-                                <span style="margin: 2px;" >        
-                                    <!-- search -->
-                                    <label for="filter"><b>Search:</b></label>
-                                    <input name="search" type="text" class="form-control" placeholder="Name,Brand,Model" value="${param.search == null ? "":param.search}">
-                                    <div class="row" >
-                                        <!-- from price -->
-                                        <div class="col-md-6">
-                                            <label for="filter"><b>Post Price:</b></label>
-                                            <input name="postedprice" type="number" class="form-control" placeholder="Posted Price" value="${param.postedprice == null ? "":param.postedprice}">
-                                        </div>
-                                        <!-- to price -->
-                                        <div class="col-md-6">
-                                            <label for="filter"><b>Selling Price:</b></label>
-                                            <input name="sellingprice" type="number" class="form-control" placeholder="Selling Price" value="${param.sellingprice == null ? "":param.sellingprice}">
-                                        </div>  
-
-                                    </div>
-                                    <label for="filter"><b>Short Description:</b></label>
-                                    <input name="postedprice" type="text" class="form-control" placeholder="Short Description" value="${param.postedprice == null ? "":param.postedprice}">
-
-                                </span>
+                            <form id="f1" action="PostListMKT" method="get">
 
                                 <div>
-                                    <b>Search:</b>
+                                    <div style="margin-bottom: 5px">
+                                        <center>   <h1>POST LIST</h1> <center>
 
-                                    <div class="row ">
+                                                <span style="background-color: #eeecfd; padding:5px;">TOTAL POST: <b>${requestScope.listB.size()}</b></span>
 
-                                        <select id="customSelect" name="status">
-                                            <option class="col-auto mobile">Available</option>
-                                            <option class="col-auto mobile">Sold Out</option>
-                                            <option class="col-auto mobile">Maintaince</option>
-                                        </select>
-                                    </div>    
-                                </div> 
-                            </div>
+                                                </div>
 
+                                                <br/>
 
+                                                <span style="margin: 2px;" >        
+                                                    <!-- search -->
+                                                    <div class="row" >
+                                                        <div class="col-md-6">
+                                                            <label><b>Tittle:</b></label>
+                                                            <input style="background: orange;" name="tittlewrite" type="text" class="form-control" placeholder="Enter your Tittle" value="${param.tittlewrite == null ? "":param.tittlewrite}">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label><b>Author:</b></label>
+                                                            <input style="background: orange;" name="authorwrite" type="text" class="form-control" placeholder="Enter your Author" value="${param.authorwrite == null ? "":param.authorwrite}">
+                                                        </div>  
 
+                                                    </div>
 
-                            <div class="table-responsive">  
-                                <table class="table mb-0"> <!-- comment -->
-                                    <thead class="text-uppercase bg-body text-muted">
-                                        <tr>
-                                            <th>PostID</th>
-                                            <th>Blog Image</th>
-                                            <th>Blog Tittle</th>
-                                            <th>Blog Type</th>
-                                            <th>Author</th>
-                                            <th>Views</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                                </span>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <b>Filter :</b>
+                                                            <div>
+                                                                <select name="type" id="customSelect" onchange="document.getElementById('f1').submit()">
+                                                                    <option value="">All</option>
+                                                                    <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
+                                                                        <option value="${listType.get(c)}" ${(listType.get(c) == param.type) ? "selected" : ""} >${listType.get(c)}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                                <select id="customSelect" name="statusf" onchange="document.getElementById('f1').submit()">
+                                                                    <option value="">Status</option>
+                                                                    <option value="published" ${(param.statusf == "published")? "selected" : ""}>Published</option>
+                                                                    <option value="hide" ${(param.statusf == "hided")? "selected" : ""} >Hided</option>
+                                                                </select>
+                                                            </div>   
+                                                        </div> 
 
-                                        <c:forEach items="${requestScope.listB}" var="blog">
+                                                        <div>
+                                                            <b>Sort By :</b>
+                                                            <div>
+                                                                <select id="customSelect" name="sort" onchange="document.getElementById('f1').submit()">
+                                                                    <option value="" class="col-auto mobile">List Default</option>
+                                                                    <option value="tittleu" ${(param.sort == "tittleu")? "selected" : ""} class="col-auto mobile">Tittle(A - Z)</option>
+                                                                    <option value="tittled" ${(param.sort == "tittled")? "selected" : ""} class="col-auto mobile">Tittle(Z - A)</option>
 
-                                            <tr>
+                                                                    <option value="typeu" ${(param.sort == "typeu")? "selected" : ""} class="col-auto mobile">Type(A - Z)</option>
+                                                                    <option value="typed" ${(param.sort == "typed")? "selected" : ""}  class="col-auto mobile">Type(Z - A)</option>
 
-                                                <td>${blog.blogID}</td>
+                                                                    <option value="authoru" ${(param.sort == "authoru")? "selected" : ""} class="col-auto mobile">Author(A - Z)</option>
+                                                                     <option value="authord" ${(param.sort == "authord")? "selected" : ""} class="col-auto mobile">Author(Z - A)</option>
 
-                                                <td>
+                                                                    <option value="viewsu" ${(param.sort == "viewsu")? "selected" : ""} class="col-auto mobile">Views(Increase)</option>
+                                                                   <option value="viewsd" ${(param.sort == "viewsd")? "selected" : ""} class="col-auto mobile">Views(Decrease)</option>
 
-                                                    <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="80px" height="80px">
+                                                                </select>
+                                                                <select name="" id="customSelect" onchange="document.getElementById('f1').submit()">
+                                                                    <option value="">Status</option>
+                                                                    <option value="published"  ${(param.statuss == "published")? "selected" : ""}>Available</option>
+                                                                    <option value="hide" ${(param.statuss == "hided")? "selected" : ""}>Hided</option>
+                                                                </select>
+                                                            </div> 
+                                                        </div> 
+                                                    </div>
 
-                                                </td>
-                                                <td>${blog.blog_tittle}</td>
-                                                <td>${blog.blog_type}</td>
-                                                <td>${blog.person.name}</td>
-                                                <td>${blog.blog_views}</td>
-                                                <td>${blog.blog_status}</td>
+                                                    <div class="col-md-6">
+                                                        <button style="float: right; position: relative;top: 47px;"><a href="addPost">ADD NEW POST <i class="fa-solid fa-circle-plus"> </i></a></button>
+                                                    </div>
+                                                </div>
 
-
-                                            </tr>
-
-
-
-
-                                        </c:forEach>
-
-
-
-
-
-
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-
-
-
-    </div>
-</div>
-
-</section>
+                                                </div>
 
 
 
+                                                </form>
 
-<!-- Footer start -->
-<%@include file="footer.jsp" %>
-<!-- Footer end -->
-</body>
+                                                <div class="table-responsive">  
+                                                    <table class="table mb-0"> <!-- comment -->
+                                                        <thead class="text-uppercase bg-body text-muted">
+                                                            <tr>
+                                                                <th>PostID</th>
+                                                                <th>Blog Image</th>
+                                                                <th>Blog Tittle</th>
+                                                                <th>Blog Type</th>
+                                                                <th>Author</th>
+                                                                <th>Views</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <c:forEach items="${requestScope.listB}" var="blog">
+                                                                <tr>
+                                                                    <td>${blog.blogID}</td>
+                                                                    <td>
+                                                                        <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
+                                                                    </td>
+                                                                    <td>${blog.blog_tittle}</td>
+                                                                    <td>${blog.blog_type}</td>
+                                                                    <td>${blog.person.name}</td>
+                                                                    <td>${blog.blog_views}</td>
+                                                                    <td>${blog.blog_status}</td>
+                                                                    <td><a href="#"><i class="fa-regular fa-eye"></i></a>
+                                                                        &nbsp;
+                                                                        <a href="#"><i class="fa-solid fa-pen"></i></a>
+                                                                         &nbsp; 
+                                                                         <a href="#"><i class="fa-regular fa-flag"></i></a></td>
+
+                                                                </tr>
+
+                                                            </c:forEach>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div>
 
 
-<script>
+                                                </section>
 
 
-</script>
 
-</html>
+                                                </div>
+                                                </div>
+
+                                                </section>
+
+
+
+
+                                                <!-- Footer start -->
+                                                <%@include file="footer.jsp" %>
+                                                <!-- Footer end -->
+                                                </body>
+
+
+                                                <script>
+
+
+                                                </script>
+
+                                                </html>
+     

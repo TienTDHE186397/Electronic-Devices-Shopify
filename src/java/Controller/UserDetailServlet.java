@@ -66,11 +66,8 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-<<<<<<< HEAD:src/java/Controller/HomeServlet.java
         
-=======
         processRequest(request, response);
->>>>>>> 4ec49b1953eaa66452b74968c5a0b5fd7bcf3ca4:src/java/Controller/UserDetailServlet.java
     }
 
     /**
