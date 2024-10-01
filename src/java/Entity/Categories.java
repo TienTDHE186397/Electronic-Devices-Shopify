@@ -28,17 +28,25 @@ public class Categories {
         return CategoryName;
     }
 
+    public void setCategoryID(int CategoryID) {
+        this.CategoryID = CategoryID;
+    }
+
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + '}';
     }
 
-    
-    
-    
-    
 
-  
-    
-    
+
+
 }
+
+
+

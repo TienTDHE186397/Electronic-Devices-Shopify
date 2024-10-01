@@ -105,7 +105,7 @@
             }
 
             .bg_light_1 {
-                background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
+                background-color: transparent; 
             }
 
             .mobile{
@@ -286,17 +286,13 @@
                                                                     <option value="typed" ${(param.sort == "typed")? "selected" : ""}  class="col-auto mobile">Type(Z - A)</option>
 
                                                                     <option value="authoru" ${(param.sort == "authoru")? "selected" : ""} class="col-auto mobile">Author(A - Z)</option>
-                                                                     <option value="authord" ${(param.sort == "authord")? "selected" : ""} class="col-auto mobile">Author(Z - A)</option>
+                                                                    <option value="authord" ${(param.sort == "authord")? "selected" : ""} class="col-auto mobile">Author(Z - A)</option>
 
                                                                     <option value="viewsu" ${(param.sort == "viewsu")? "selected" : ""} class="col-auto mobile">Views(Increase)</option>
-                                                                   <option value="viewsd" ${(param.sort == "viewsd")? "selected" : ""} class="col-auto mobile">Views(Decrease)</option>
+                                                                    <option value="viewsd" ${(param.sort == "viewsd")? "selected" : ""} class="col-auto mobile">Views(Decrease)</option>
 
                                                                 </select>
-                                                                <select name="" id="customSelect" onchange="document.getElementById('f1').submit()">
-                                                                    <option value="">Status</option>
-                                                                    <option value="published"  ${(param.statuss == "published")? "selected" : ""}>Available</option>
-                                                                    <option value="hide" ${(param.statuss == "hided")? "selected" : ""}>Hided</option>
-                                                                </select>
+                                                                
                                                             </div> 
                                                         </div> 
                                                     </div>
@@ -321,6 +317,7 @@
                                                                 <th>Blog Tittle</th>
                                                                 <th>Blog Type</th>
                                                                 <th>Author</th>
+                                                                <th>Update Time</th>
                                                                 <th>Views</th>
                                                                 <th>Status</th>
                                                             </tr>
@@ -336,13 +333,14 @@
                                                                     <td>${blog.blog_tittle}</td>
                                                                     <td>${blog.blog_type}</td>
                                                                     <td>${blog.person.name}</td>
+                                                                    <td>${blog.blog_update_time}</td>
                                                                     <td>${blog.blog_views}</td>
                                                                     <td>${blog.blog_status}</td>
-                                                                    <td><a href="#"><i class="fa-regular fa-eye"></i></a>
+                                                                    <td><a href="PostDetail?id=${blog.blogID}"><i class="fa-regular fa-eye"></i></a>
                                                                         &nbsp;
                                                                         <a href="#"><i class="fa-solid fa-pen"></i></a>
-                                                                         &nbsp; 
-                                                                         <a href="#"><i class="fa-regular fa-flag"></i></a></td>
+                                                                        &nbsp; 
+                                                                        <a href="#"><i class="fa-regular fa-flag"></i></a></td>
 
                                                                 </tr>
 
@@ -382,4 +380,3 @@
                                                 </script>
 
                                                 </html>
-     

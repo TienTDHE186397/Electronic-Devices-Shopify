@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
-
+import Entity.Categories;
 import DAO.BlogListDAO;
 import Entity.Blog;
 import java.io.IOException;
@@ -40,8 +40,6 @@ public class PostListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         BlogListDAO blogDAO = new BlogListDAO();
-
-        PrintWriter out = response.getWriter();
         String tittlewrite = request.getParameter("tittlewrite");
         String authorwrite = request.getParameter("authorwrite");
         String type = request.getParameter("type");
