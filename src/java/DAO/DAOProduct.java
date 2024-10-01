@@ -55,10 +55,71 @@ public class DAOProduct extends DBContext {
         return isUpdated; // Trả về trạng thái cập nhật
     }
 
+    public boolean isValidCategory(String categoryId) {
+        String sql = "SELECT * FROM Categories WHERE CategoryID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, categoryId);
+            try (ResultSet rs = st.executeQuery()) {
+                return rs.next();  // Trả về true nếu CategoryID tồn tại
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateProduct(int productId, String title, String ProductName, int view, Date releaseDate, int QuantitySold, int category,
+            int Quantity, int Sale, String img, double price, String publisher, String sortDescription, String description, String status) {
+
+        // Kiểm tra nếu CategoryID hợp lệ
+       
+        String sql = "UPDATE [dbo].[Products]\n"
+                + "   SET [title] = ?\n" //1
+                + "      ,[ProductName] = ?\n" //2
+                + "      ,[Views] = ?\n" //3
+                + "      ,[releaseDate] = ?\n" //4
+                + "      ,[QuantitySold] = ?\n" //5
+                + "      ,[CategoryID] = ? \n" //6
+                + "      ,[Quantity] = ?\n" //7
+                + "      ,[Sale] = ?\n" //8
+                + "      ,[img] = ?\n" //9
+                + "      ,[price] = ?\n" // 10
+                + "      ,[publisher] = ?\n"//11
+                + "      ,[sortDescription] = ?\n" //12
+                + "      ,[description] = ?\n" //13
+                + "      ,[status] = ?\n" //14
+                + " WHERE Products.ProductID = ?";  //15
+
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+           st.setString(1, title);
+            st.setString(2, ProductName);
+            st.setInt(3, view);
+            st.setDate(4, (java.sql.Date) releaseDate);
+            st.setInt(5, QuantitySold);
+            st.setInt(6, category);
+            st.setInt(7, Quantity);
+            st.setInt(8, Sale);
+            st.setString(9, img);
+            st.setDouble(10, price);
+            st.setString(11, publisher);
+            st.setString(12, sortDescription);
+            st.setString(13, description);
+            st.setString(14, status);
+            st.setInt(15, productId);
+            int rowsAffected = st.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+        return true; // Trả về trạng thái cập nhật
+    }
+
     public Product getProductById(int productId) {
         Product product = null;
 
-        String sql = "SELECT p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, "
+        String sql = "SELECT p.title,p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, "
                 + "p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status, "
                 + "pa.AttributeID, pa.AttributeName, pa.AttributeValue "
                 + "FROM Products p "
@@ -75,7 +136,8 @@ public class DAOProduct extends DBContext {
                 Categories cate = cDao.getCategoriesById(rs.getInt("CategoryID"));
                 // Tạo một đối tượng Product mới và thiết lập tất cả các trường
                 product = new Product(
-                        rs.getString("ProductName"),
+                      
+                        rs.getString("title"),
                         rs.getInt("ProductID"),
                         rs.getString("ProductName"),
                         rs.getInt("Views"),
@@ -170,6 +232,7 @@ public class DAOProduct extends DBContext {
                         rs.getString("description"),
                         rs.getString("status")
                 );
+                System.out.println("Description: " + rs.getString("description")); // Debugging
                 listP.add(p);
             }
         } catch (Exception e) {
@@ -181,8 +244,10 @@ public class DAOProduct extends DBContext {
 
     public static void main(String[] args) {
         DAOProduct p = new DAOProduct();
-//        List<Product> list = p.getAllProduct();
-//
+        List<Product> list = p.getAllProduct();
+         for (Product product : list) {
+             System.out.println(product);
+        }
 //        if (list != null && !list.isEmpty()) {
 //            System.out.println("There are products in the list.");
 //            for (Product o : list) {
@@ -216,21 +281,21 @@ public class DAOProduct extends DBContext {
 //                System.out.println("Cập nhật thuộc tính thất bại!");
 //            }
 //        }
-        int productId = 1; // Change this to an actual product ID
-//        String attributeName = "Color"; // Example attribute name
-//        String attributeValue = "Red"; // Example attribute value
-        String[] attributeName = {"RED", "RED"};
-        String[] attributeValue = {"Blue", "Blue"};
-        for (int i = 0; i < attributeName.length; i++) {
-            String newName = attributeName[i]; // Tên thuộc tính mới từ input
-            String value = attributeValue[i]; // Giá trị thuộc tính mới từ input
-
-            Boolean check = p.addProductAttribute(productId, newName, value);
-            if (check) {
-                System.out.println("Cập nhật thuộc tính thành công!");
-            } else {
-                System.out.println("Cập nhật thuộc tính thất bại!");
-            }
-        }
+//        int productId = 1; // Change this to an actual product ID
+////        String attributeName = "Color"; // Example attribute name
+////        String attributeValue = "Red"; // Example attribute value
+//        String[] attributeName = {"RED", "RED"};
+//        String[] attributeValue = {"Blue", "Blue"};
+//        for (int i = 0; i < attributeName.length; i++) {
+//            String newName = attributeName[i]; // Tên thuộc tính mới từ input
+//            String value = attributeValue[i]; // Giá trị thuộc tính mới từ input
+//
+//            Boolean check = p.addProductAttribute(productId, newName, value);
+//            if (check) {
+//                System.out.println("Cập nhật thuộc tính thành công!");
+//            } else {
+//                System.out.println("Cập nhật thuộc tính thất bại!");
+//            }
+//        }
     }
 }

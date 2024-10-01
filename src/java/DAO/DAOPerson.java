@@ -127,7 +127,7 @@ public class DAOPerson extends DBContext {
             stmt.setString(1, person.getName());
             stmt.setString(2, person.getGender());
             stmt.setString(3, person.getDateOfBirth());
-            stmt.setObject(4, (LocalDate) person.getStartDate());
+            stmt.setObject(4, (LocalDate)person.getStartDate());
             stmt.setString(5, person.getAddress());
             stmt.setString(6, person.getEmail());
             stmt.setString(7, person.getPhone());

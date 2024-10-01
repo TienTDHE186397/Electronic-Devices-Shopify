@@ -22,7 +22,7 @@ public class Product {
     private double price;
     private String publisher;
     private String sortDescription;
-    private String Description;
+    private String description;
     private String status;
     
 
@@ -46,7 +46,7 @@ public class Product {
         this.price = price;
         this.publisher = publisher;
         this.sortDescription = sortDescription;
-        this.Description = Description;
+        this.description = description;
         this.status = status;
         
     }
@@ -156,11 +156,11 @@ public class Product {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String Description) {
-        this.Description = Description;
+        this.description = Description;
     }
 
     public String getStatus() {
@@ -172,7 +172,7 @@ public class Product {
     }
     @Override
     public String toString() {
-        return "Product{" + "title=" + title + ", productID=" + productID + ", productName=" + productName + ", views=" + views + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", category=" + category + ", quantity=" + quantity + ", sale=" + sale + ", img=" + img + ", price=" + price + ", publisher=" + publisher + ", sortDescription=" + sortDescription + ", Description=" + Description + ", status=" + status + ", attributes=" + '}';
+        return "Product{" + "title=" + title + ", productID=" + productID + ", productName=" + productName + ", views=" + views + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", category=" + category + ", quantity=" + quantity + ", sale=" + sale + ", img=" + img + ", price=" + price + ", publisher=" + publisher + ", sortDescription=" + sortDescription + ", Description=" + description + ", status=" + status + ", attributes=" + '}';
     }
 
     

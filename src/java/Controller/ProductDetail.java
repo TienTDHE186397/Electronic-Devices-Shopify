@@ -6,25 +6,38 @@ package Controller;
 
 import DAO.CategoryDAO;
 import DAO.DAOProduct;
+import DAO.DAOimgVideo;
+import Entity.Categories;
+import Entity.ImageVideo;
 import Entity.Product;
 import Entity.ProductAttribute;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale.Category;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.Date;
 
 /**
  *
  * @author admin
  */
 @WebServlet(name = "ProductDetail", urlPatterns = {"/ProductDetail"})
+@MultipartConfig()
 public class ProductDetail extends HttpServlet {
 
     /**
@@ -71,9 +84,12 @@ public class ProductDetail extends HttpServlet {
         List attribute = pd.getProductAttributesById(id);
         CategoryDAO cd = new CategoryDAO();
         List category = cd.getAllCategory();
+        DAOimgVideo imdao = new DAOimgVideo();
+        List<ImageVideo> video = imdao.getImByProductID(id);
         request.setAttribute("pro", product);
         request.setAttribute("attribute", attribute);
         request.setAttribute("category", category);
+        request.setAttribute("video", video);
         request.getRequestDispatcher("ProductDetail.jsp").forward(request, response);
     }
 
@@ -88,77 +104,145 @@ public class ProductDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         int id = Integer.parseInt(request.getParameter("idhi"));
         String title = request.getParameter("title");
         String productName = request.getParameter("productName");
-        String img = request.getParameter("image");
-        String views = request.getParameter("views");
-        String publisher = request.getParameter("publisher");
-        String releaseDate = request.getParameter("releaseDate");
-        String category = request.getParameter("category");
-        String sale = request.getParameter("sale");
-        String quantity = request.getParameter("quantity");
-        String newAttributeName = request.getParameter("");
-        boolean updateSuccessful = true; // Cờ để kiểm tra thành công
-        DAOProduct productAttributesDAO = new DAOProduct();
-        String[] newAttributeNames2 = request.getParameterValues("attributeName2");
-        String[] newAttributeValues2 = request.getParameterValues("attributeValue2");
-        String[] newAttributeNames = request.getParameterValues("attributeName");
-        String[] newAttributeValues = request.getParameterValues("attributeValue");
-        String[] oldAttributeNames = request.getParameterValues("oldAttributeName");
+        Part imagePart = request.getPart("image");
 
-        if (oldAttributeNames != null) {
-            for (int i = 0; i < oldAttributeNames.length; i++) {
-                String oldName = oldAttributeNames[i];
-                String newName = newAttributeNames[i];
-                String value = newAttributeValues[i];
+        String image = "img/default-phone.jpg";
 
-                if (newName != null && value != null) {
-                    boolean check = productAttributesDAO.updateProductAttributes(id, oldName, newName, value);
-                    if (!check) {
-                        updateSuccessful = false;
-                    } else {
-                        System.out.println("cap nhat thanh cong");
-                    }
-                }
+        String realImagePath = request.getServletContext().getRealPath("/img");
+        String realVideoPath = request.getServletContext().getRealPath("/video"); // Đường dẫn cho video
+        ////////////////////////////////
+
+// Xử lý hình ảnh
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String imageFilename = Path.of(imagePart.getSubmittedFileName()).getFileName().toString();
+            if (!Files.exists(Path.of(realImagePath))) {
+                Files.createDirectory(Path.of(realImagePath));
+            }
+            imagePart.write(realImagePath + File.separator + imageFilename);
+
+            if (!imageFilename.endsWith(".jpg")) {
+                image = "img/default-phone.jpg";
+            } else {
+                image = "img/" + imageFilename; // Giả sử bạn lưu trong thư mục img
             }
         }
 
-        if (newAttributeNames2 != null && newAttributeValues2 != null) {
-            for (int i = 0; i < newAttributeNames2.length; i++) {
-                boolean exists = false;
-                String newName2 = newAttributeNames2[i];
-                String value2 = newAttributeValues2[i];
-                if (oldAttributeNames != null) {
-                    for (String oldName : oldAttributeNames) {
-                        if (oldName.equals(newName2)) {
-                            exists = true;
-                            break;
+// Xử lý video
+// In ra đường dẫn để kiểm tra
+        int views = Integer.parseInt(request.getParameter("views"));
+        String publisher = request.getParameter("publisher");
+        String releaseDateStr = request.getParameter("releaseDate");
+        java.sql.Date releaseDate = null;
+        if (releaseDateStr != null && !releaseDateStr.isEmpty()) {
+            releaseDate = java.sql.Date.valueOf(releaseDateStr);
+        }
+//        ------------------------------------------------------------
+
+            int category = Integer.parseInt(request.getParameter("category"));
+            int sale = Integer.parseInt(request.getParameter("sale"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            double price = Double.parseDouble(request.getParameter("price"));
+            String sortDescription = request.getParameter("sortDescription");
+            String description = request.getParameter("description");
+            String status = request.getParameter("status");
+            System.out.println(description);
+            boolean updateSuccessful = true; // Cờ để kiểm tra thành công
+            DAOProduct productAttributesDAO = new DAOProduct();
+            DAOimgVideo imageDAO = new DAOimgVideo();
+            String[] newAttributeNames2 = request.getParameterValues("attributeName2");
+            String[] newAttributeValues2 = request.getParameterValues("attributeValue2");
+            
+            String[] newAttributeNames = request.getParameterValues("attributeName");
+            String[] newAttributeValues = request.getParameterValues("attributeValue");
+            String[] oldAttributeNames = request.getParameterValues("oldAttributeName");
+            DAOProduct productDAO = new DAOProduct();
+//        int productId, String title, String ProductName, int view, Date releaseDate, int QuantitySold, int category,
+//            int Quantity, int Sale, String img, double price, String publisher, String sortDescription, String description, String status
+            boolean insertSuccessful = productDAO.updateProduct(id, title, productName, views, releaseDate, quantity, category, quantity, sale, image, price, publisher, sortDescription, description, status);
+            if (oldAttributeNames != null) {
+                for (int i = 0; i < oldAttributeNames.length; i++) {
+                    String oldName = oldAttributeNames[i];
+                    String newName = newAttributeNames[i];
+                    String value = newAttributeValues[i];
+
+                    if (newName != null && value != null) {
+                        boolean check = productAttributesDAO.updateProductAttributes(id, oldName, newName, value);
+                        if (!check) {
+                            updateSuccessful = false;
+                        } else {
+                            System.out.println("cap nhat thanh cong");
                         }
                     }
                 }
+            }
 
-                if (!exists && value2 != null) {
-                    productAttributesDAO.addProductAttribute(id, newName2, value2);
+            if (newAttributeNames2 != null && newAttributeValues2 != null) {
+                for (int i = 0; i < newAttributeNames2.length; i++) {
+                    boolean exists = false;
+                    String newName2 = newAttributeNames2[i];
+                    String value2 = newAttributeValues2[i];
+                    if (oldAttributeNames != null) {
+                        for (String oldName : oldAttributeNames) {
+                            if (oldName.equals(newName2)) {
+                                exists = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!exists && value2 != null) {
+                        productAttributesDAO.addProductAttribute(id, newName2, value2);
+                    }
                 }
             }
+//------------------------------------------------------------------------------------------------------------------//
+            Part videoPart = request.getPart("vidImgValue");
+            String vid = "img/default-vid.mp4";
+            String newVidName = request.getParameter("vidImgName");
+            // XU LY VIDEO
+            if (videoPart != null && videoPart.getSize() > 0) {
+                String videoFilename = Path.of(videoPart.getSubmittedFileName()).getFileName().toString();
+                if (!Files.exists(Path.of(realVideoPath))) {
+                    Files.createDirectory(Path.of(realVideoPath));
+                }
+                videoPart.write(realVideoPath + File.separator + videoFilename);
+
+                if (!videoFilename.endsWith(".mp4")) {
+                    vid = "img/default-vid.mp4";
+                } else {
+                    vid = "img/" + videoFilename;
+                }
+            }
+            boolean a = true;
+            //ADD VIDEO VAO DATABASE
+            if (newVidName != null && vid != null) {
+                a = imageDAO.addImageVi(id, vid, newVidName);
+                if (a) {
+                    System.out.println("add thanh cong");
+                } else {
+                    System.out.println("add that bai");
+                }
+            }
+            if (a || insertSuccessful) {
+                response.sendRedirect("ListProduct");
+            } else {
+                response.sendRedirect("error.jsp");
+            }
+            System.out.println("Image path: " + realImagePath);
+            System.out.println("Video path: " + realVideoPath);
+            System.out.println("Video path: " + vid);
         }
-        if (updateSuccessful) {
-            response.sendRedirect("ListProduct");
-        } else {
-            response.sendRedirect("error.jsp");
-        }
+
     }
 
-    // Gọi phương thức update để cập nhật thuộc tính sản phẩm
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
-}
+// Gọi phương thức update để cập nhật thuộc tính sản phẩm
+/**
+ * Returns a short description of the servlet.
+ *
+ * @return a String containing servlet description
+ */

@@ -31,14 +31,14 @@
                 margin-bottom: 1rem;
             }
             body {
-                background-color: #f0f0f0; /* Nền nhẹ để các phần khác nổi bật */
+                background-color: red; /* Nền nhẹ để các phần khác nổi bật */
                 font-family: 'Roboto', sans-serif;
                 ;
             }
 
             /* Tiêu đề chính */
             .modal-title {
-                color: #ff5722; /* Màu cam đậm */
+                color: red; /* Màu cam đậm */
                 font-weight: 700;
                 font-size: 24px;
             }
@@ -56,12 +56,6 @@
             }
 
             /* Cải thiện form input */
-            .form-control {
-                border: 2px solid #4CAF50; /* Viền xanh đậm */
-                padding: 10px;
-                font-size: 16px;
-                border-radius: 5px;
-            }
 
             /* Label cho các form */
             label {
@@ -82,6 +76,8 @@
             .btn-success:hover, .btn-default:hover {
                 opacity: 0.8;
             }
+
+
 
         </style>
 
@@ -104,84 +100,125 @@
             <div class="container mt-5">
                 <div class="main">
                     <section class="hero">
-                        <form action="ProductDetail" method="post" class="p-4 border rounded">
-                            <input type="hidden" name="idhi" value="${pro.getProductID()}"> 
+                        <form action="ProductDetail" method="post" class="p-4 border rounded" enctype="multipart/form-data">
+                            <input style="background-color: #ddd" type="hidden" name="idhi" value="${pro.getProductID()}"> 
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Product</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button style="background-color: #ddd" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Title</label>
-                                    <input name="title" value="${pro.getTitle()}" type="text" class="form-control" required>
+                                    <input style="background-color: #ddd" name="title" value="${pro.getTitle()}" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Product Name</label>
-                                    <input name="productName" value="${pro.getProductName()}" type="text" class="form-control" required>
+                                    <input style="background-color: #ddd" name="productName" value="${pro.getProductName()}" type="text" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>IMG</label><br/>
                                 <img src="${pro.getImg()}" alt="Product Image" style="max-width: 200px; max-height: 200px;">
-                                <input name="image" type="file" class="form-control mt-2" >
+                                <input  style="background-color: #ddd" name="image" type="file" class="form-control mt-2" >
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Views</label>
-                                    <input name="views" value="${pro.getViews()}" type="text" class="form-control" required>
+                                    <input  style="background-color: #ddd" name="views" value="${pro.getViews()}" type="text" class="form-control" required>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-">
                                     <label>Publisher</label>
-                                    <input name="publisher" value="${pro.getPublisher()}" type="text" class="form-control" required>
+                                    <input  style="background-color: #ddd" name="publisher" value="${pro.getPublisher()}" type="text" class="form-control" required>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div>
+                                    <c:forEach var="video" items="${video}" varStatus="status">
+                                        <label>Video ${status.index + 1}</label><br/>
+                                        <video width="320" height="240" controls>
+                                            <source src="${pageContext.request.contextPath}/${video.img_video_url}" type="video/mp4">
+                                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                                        </video>
+                                        <input  style="background-color: #ddd" name="vid${status.index}" type="file" class="form-control mt-2" >
+                                        <input  style="background-color: #ddd" name="vidTitle${status.index}" type="text" value="${video.alt_text}" class="form-control mt-2" >
+                                    </c:forEach>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Release Date</label>
-                                    <input name="releaseDate" value="${pro.getReleaseDate()}" type="text" class="form-control" required>
+                                    <input name="releaseDate"  style="background-color: #ddd" value="${pro.getReleaseDate()}" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Category</label>
-                                    <input name="category" value="${pro.getCategory()}" type="text" class="form-control" required>
+                                    <select id="id" class="form-control" name="category">
+                                        <c:forEach items="${category}" var="c">
+                                            <option  style="background-color: #ddd" value="${c.categoryID}" ${(c.categoryID == pro.category.categoryID) ? "selected" : "" } >${c.categoryName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Sale</label>
-                                    <input name="sale" value="${pro.getSale()}" type="number" class="form-control" required>
+                                    <input name="sale" style="background-color: #ddd" value="${pro.getSale()}" type="number" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Quantity</label>
-                                    <input name="quantity" value="${pro.getQuantity()}" type="text" class="form-control" required>
+                                    <input name="quantity" style="background-color: #ddd" value="${pro.getQuantity()}" type="text" class="form-control" required>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>Price</label>
+                                    <input name="price"  style="background-color: #ddd" value="${pro.getPrice()}" type="text" class="form-control" required>
+                                </div>
+
+                                <div class="form-group col-md-6"> 
+                                    <label>Status</label>
+                                    <input name="status"  style="background-color: #ddd" value="${pro.getStatus()}" type="text" class="form-control" required>
+                                </div> 
+
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-md-6"">
                                 <label>Publisher</label>
-                                <input name="publisher" value="${pro.getPublisher()}" type="text" class="form-control" required>
+                                <input name="publisher"  style="background-color: #ddd"  value="${pro.getPublisher()}" type="text" class="form-control" required>
                             </div>
+                            <c:forEach items="${ivideo}" var="i">
+                                <option value="${c.categoryID}" ${(c.categoryID == pro.category.categoryID) ? "selected" : "" } >${c.categoryName}</option>
+                            </c:forEach>
                             <c:forEach items="${attribute}" var="a">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input type="text" placeholder="Enter attribute name" style="font-weight: bold;"value="${a.getAttributeName()}" 
+                                        <input type="text" style="background-color: #ddd"  placeholder="Enter attribute name" style="font-weight: bold;"value="${a.getAttributeName()}" 
                                                name="attributeName" class="form-control" required>
                                         <input type="hidden" name="oldAttributeName" value="${a.getAttributeName()}"/>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="text" placeholder="Enter value"  style="color: #003eff;"   value="${a.getAttributeValue()}" 
+                                        <input type="text"  style="background-color: #ddd" placeholder="Enter value"  style="color: #003eff;"   value="${a.getAttributeValue()}" 
                                                name="attributeValue" class="form-control" required>
-                                        <input type="hidden" name="oldAttributeValue" value="${a.getAttributeValue()}"/>
+                                        <input type="hidden"  style="background-color: #ddd"name="oldAttributeValue" value="${a.getAttributeValue()}"/>
                                     </div>
                                 </div>
                             </c:forEach>
                             <button type="button" class="btn btn-primary" onclick="addAttribute()">Thêm thuộc tính</button>
+                            <button type="button" class="btn btn-primary" onclick="addVideoImage()">Thêm Video,ảnh</button>
+                            <div class="form-group col-md-3">
+                                <label>Sort Description</label>
+                                <textarea name="sortDescription" class="form-control" rows="3" required>${pro.getSortDescription()}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea style="background-color: #ddd" name="description" class="form-control" rows="3" required>${pro.getDescription()}</textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div id="attributeContainer" class="mt-3"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-success" value="Save">
+                            </div>
 
-                            <div id="attributeContainer" class="mt-3"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
-                        </div>
 
                     </form>
                 </section>
@@ -194,7 +231,7 @@
                     const attributeContainer = document.getElementById('attributeContainer');
                     const newRow = document.createElement('div');
                     newRow.classList.add('form-row', 'mb-2');
-
+                    ////////////////////////////////////////////////////////
                     // Tạo ô nhập liệu cho thuộc tính mới
                     const attributeNameField = `
         <div class="form-group col-md-5">
@@ -211,11 +248,36 @@
             <button type="button" class="btn btn-danger" onclick="removeAttribute(this)">Xóa</button>
         </div>
     `;
-
                     // Gắn tất cả các trường vào hàng mới
                     newRow.innerHTML = attributeNameField + attributeValueField + deleteButton;
                     attributeContainer.appendChild(newRow);
-
+                    // Tăng số lượng thuộc tính
+                    attributeCount++;
+                }
+                function addVideoImage() {
+                    const attributeContainer = document.getElementById('attributeContainer');
+                    const newRow = document.createElement('div');
+                    newRow.classList.add('form-row', 'mb-2');
+                    ////////////////////////////////////////////////////////
+                    // Tạo ô nhập liệu cho thuộc tính mới
+                    const attributeNameField = `
+        <div class="form-group col-md-5">
+            <input type="text" placeholder="Nhập Tên Ảnh or Video" style="font-weight: bold;" name="vidImgName" class="form-control" required>
+        </div>
+    `;
+                    const attributeValueField = `
+        <div class="form-group col-md-5">
+         <input id="vidImgValue" name="vidImgValue" type="file" accept="video/*" class="form-control" required>
+        </div>
+    `;
+                    const deleteButton = `
+        <div class="form-group col-md-2">
+            <button type="button" class="btn btn-danger" onclick="removeAttribute(this)">Xóa</button>
+        </div>
+    `;
+                    // Gắn tất cả các trường vào hàng mới
+                    newRow.innerHTML = attributeNameField + attributeValueField + deleteButton;
+                    attributeContainer.appendChild(newRow);
                     // Tăng số lượng thuộc tính
                     attributeCount++;
                 }
