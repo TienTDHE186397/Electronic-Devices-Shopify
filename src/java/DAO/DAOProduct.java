@@ -72,7 +72,6 @@ public class DAOProduct extends DBContext {
             int Quantity, int Sale, String img, double price, String publisher, String sortDescription, String description, String status) {
 
         // Kiểm tra nếu CategoryID hợp lệ
-       
         String sql = "UPDATE [dbo].[Products]\n"
                 + "   SET [title] = ?\n" //1
                 + "      ,[ProductName] = ?\n" //2
@@ -91,7 +90,7 @@ public class DAOProduct extends DBContext {
                 + " WHERE Products.ProductID = ?";  //15
 
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-           st.setString(1, title);
+            st.setString(1, title);
             st.setString(2, ProductName);
             st.setInt(3, view);
             st.setDate(4, (java.sql.Date) releaseDate);
@@ -136,7 +135,6 @@ public class DAOProduct extends DBContext {
                 Categories cate = cDao.getCategoriesById(rs.getInt("CategoryID"));
                 // Tạo một đối tượng Product mới và thiết lập tất cả các trường
                 product = new Product(
-                      
                         rs.getString("title"),
                         rs.getInt("ProductID"),
                         rs.getString("ProductName"),
@@ -196,15 +194,13 @@ public class DAOProduct extends DBContext {
 
     public List<Product> getAllProduct() {
         List<Product> listP = new ArrayList<>();
-        String sql = "SELECT \n"
-                + "    p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID,  p.Quantity, \n"
-                + "    p.Sale,  p.img, p.price, p.publisher, p.sortDescription, p.description, p.status, \n"
-                + "    STRING_AGG(CONCAT(pa.AttributeName, ': ', pa.AttributeValue), ', ') AS Attributes\n"
-                + "    FROM Products p\n"
-                + "    JOIN ProductAttributes pa ON p.ProductID = pa.ProductID\n"
-                + "    GROUP BY \n"
-                + "    p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, \n"
-                + "    p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status;";
+        String sql = "SELECT  p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID,  p.Quantity, \n"
+                + "p.Sale,  p.img, p.price, p.publisher, p.sortDescription, p.description, p.status\n"
+                + "FROM Products p\n"
+                + "JOIN ProductAttributes pa ON p.ProductID = pa.ProductID\n"
+                + "GROUP BY\n"
+                + "p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, \n"
+                + "p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status;";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -245,8 +241,8 @@ public class DAOProduct extends DBContext {
     public static void main(String[] args) {
         DAOProduct p = new DAOProduct();
         List<Product> list = p.getAllProduct();
-         for (Product product : list) {
-             System.out.println(product);
+        for (Product product : list) {
+            System.out.println(product);
         }
 //        if (list != null && !list.isEmpty()) {
 //            System.out.println("There are products in the list.");

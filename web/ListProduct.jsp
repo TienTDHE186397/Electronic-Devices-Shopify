@@ -46,17 +46,17 @@
     </script>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-            <!-- Hero Section Begin -->
-            <section class="hero">
-                <div class="container">
-                    <div class="row">
+        <!-- Hero Section Begin -->
+        <section class="hero">
+            <div class="container">
+                <div class="row">
 
-                        <div class="col-lg-9">
-                            <h3><strong>Nhà Xuất Bản</strong></h3>
-                            <div>
-                                <a href="#addModal" class="btn btn-success" data-toggle="modal"> <span>Add</span></a>
-                            </div>
-                            <h6 id="message">${requestScope.mess}</h6>
+                    <div class="col-lg-9">
+                        <h3><strong>Nhà Xuất Bản</strong></h3>
+                        <div>
+                            <a href="#addModal" class="btn btn-success" data-toggle="modal"> <span>Add</span></a>
+                        </div>
+                        <h6 id="message">${requestScope.mess}</h6>
                         <form action="listPublisher" method="post">
                             <div class="menu_box_2">
                                 <input required name="txt" class="form_1" type="text" value="${requestScope.txt}" placeholder="Search by username">
