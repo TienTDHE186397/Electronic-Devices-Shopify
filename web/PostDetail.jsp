@@ -31,7 +31,7 @@
         }
 
         .main-content {
-            width: 65%;
+            width: 100%;
         }
 
         .post-image {
@@ -249,6 +249,25 @@
             color: yellow; /* Màu chữ khi hover */
         }
 
+
+        .related-posts-wrapper {
+            display: block; /* Đảm bảo các phần tử con xếp theo chiều dọc (mặc định của block) */
+        }
+
+        .related-posts {
+            width: 112%; /* Đặt độ rộng 100% để phần này chiếm toàn bộ chiều ngang */
+            background-color: #222;
+            margin-left: 37px;
+            padding: 20px;
+            border-radius: 8px;
+            max-height: 345px; /* Giới hạn chiều cao tối đa */
+            overflow: hidden; /* Ẩn phần nội dung vượt quá chiều cao */
+            margin-bottom: 20px; /* Tạo khoảng cách giữa hai phần */
+        }
+
+
+
+
     </style>
     <head>
         <meta charset="UTF-8">
@@ -256,7 +275,6 @@
         <title>The Impact of Technology on Modern Society</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 
     </head>
     <body>
@@ -269,6 +287,8 @@
 
         <div class="container row">
 
+
+
             <div>
                 <button id="backButton"> 
                     <a href="PostListMKT">Back</a>
@@ -277,6 +297,7 @@
             <!-- Main Content Section -->
             <div class="main-content ">
                 <img src="${B.blog_img}" alt="Laptop with code" class="post-image">
+                <center><h3 style="color: gray; font-style: italic;">Hình ảnh chỉ mang tính chất minh họa</h3><center>
                 <h1>The Impact of Technology on Modern Society</h1>
                 <div class="meta">
                     <img src="https://via.placeholder.com/50" alt="Author Image">
@@ -296,23 +317,48 @@
                 </div>
             </div>
 
-            <!-- Related Posts Section -->
-            <div class="related-posts">
-                <h2>Related Posts</h2>
 
-                <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
-                    <a href="PostDetail?id=${RB.get(c).blogID}">  
-                        <div class="related-post">
-                            <img src="${RB.get(c).blog_img}" alt="Related Post Image">
-                            <h4>${RB.get(c).blog_tittle}</h4>
-                        </div>
-                    </a>
-                </c:forEach>
+
+
+
+
+
+
+
+            <!-- Wrapper for both Related Posts sections -->
+            <div class="related-posts-wrapper">
+                <div class="related-posts">
+                    <h2>Related Posts</h2>
+                    <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
+                        <a href="PostDetail?id=${RB.get(c).blogID}">  
+                            <div class="related-post">
+                                <img src="${RB.get(c).blog_img}" alt="Related Post Image">
+                                <h4>${RB.get(c).blog_tittle}</h4>
+                            </div>
+                        </a>
+                    </c:forEach>
+                </div>
+
+                <div class="related-posts">
+                    <h2 style="color: red;">Edit For MKT Manager</h2>
+                    
+                    <a href="#"><i class="fa-solid fa-pen"></i> Edit this Blog<a> 
+                            <br/>
+                            <br/>
+                             <a href="#"><i class="fa-regular fa-flag"></i> Give flag <a>
+                                                                 <br/>
+                                                                 <br/>
+                             <a href="#"><i class="fa-solid fa-flag"></i> Remove flag <a>
+                                     
+                    
+                    
+                </div>
+
 
 
             </div>
-            
-            
+
+
 
         </div>
 

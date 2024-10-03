@@ -20,6 +20,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="js/bootstrap.bundle.min.js"></script>
+
+
         <style>
             body {
                 font-family: Roboto;
@@ -105,7 +107,7 @@
             }
 
             .bg_light_1 {
-                background-color: transparent; 
+                background-color: transparent;
             }
 
             .mobile{
@@ -203,6 +205,46 @@
                 font-family: 'Arial', sans-serif;
             }
 
+            /*Phan trang*/
+            .pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px; /* Tạo khoảng cách đều giữa các button */
+                margin-top: 20px; /* Khoảng cách giữa pagination và nội dung phía trên */
+            }
+
+            .pagination button {
+                padding: 10px 20px;
+                background-color: #007bff; /* Màu nền xanh */
+                color: white; /* Màu chữ */
+                border: none; /* Bỏ viền */
+                border-radius: 5px; /* Góc bo tròn */
+                cursor: pointer; /* Thay đổi con trỏ khi hover */
+                font-size: 16px;
+                transition: background-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+            }
+
+            .pagination button:hover {
+                background-color: #0056b3; /* Màu nền khi hover */
+            }
+
+            .pagination button:focus {
+                outline: none; /* Bỏ khung viền mặc định khi button được focus */
+                box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Hiệu ứng khi focus */
+            }
+
+            .pagination button:disabled {
+                background-color: #ccc; /* Màu nền khi button bị disable */
+                cursor: not-allowed; /* Thay đổi con trỏ khi button bị disable */
+            }
+
+            button.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+
         </style>
 
     </head>
@@ -219,15 +261,20 @@
             </div>
         </section>
 
+
+
         <section class="product-list container">
 
             <c:set value="${requestScope.listBlogType}" var="listType"/>
+            <c:set value="${requestScope.totalP}" var="totalpage"/>
+
 
             <div>
 
                 <div  style="margin-top: 15px">
                     <div class="row">
                         <div class="col-12 mb-3 mb-lg-"> 
+                            
                             <form id="f1" action="PostListMKT" method="get">
 
                                 <div>
@@ -256,6 +303,8 @@
 
                                                 </span>
                                                 <div class="row">
+                                                    
+                                                    
                                                     <div class="col-md-6">
                                                         <div>
                                                             <b>Filter :</b>
@@ -271,11 +320,18 @@
                                                                     <option value="published" ${(param.statusf == "published")? "selected" : ""}>Published</option>
                                                                     <option value="hide" ${(param.statusf == "hided")? "selected" : ""} >Hided</option>
                                                                 </select>
-                                                            </div>   
+                                                            </div>  
+
+
+
+
                                                         </div> 
 
                                                         <div>
-                                                            <b>Sort By :</b>
+                                                            <b>Sort By :</b>                                                                              
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <b>Event :</b>
+
                                                             <div>
                                                                 <select id="customSelect" name="sort" onchange="document.getElementById('f1').submit()">
                                                                     <option value="" class="col-auto mobile">List Default</option>
@@ -292,21 +348,30 @@
                                                                     <option value="viewsd" ${(param.sort == "viewsd")? "selected" : ""} class="col-auto mobile">Views(Decrease)</option>
 
                                                                 </select>
-                                                                
+
+
+                                                                <select style="width: 293px;" id="customSelect" name="event" onchange="document.getElementById('f1').submit()">
+                                                                    <option value="" class="col-auto mobile">Event</option>
+                                                                    <option value="phunu" ${(param.event == "phunu")? "selected" : ""} class="col-auto mobile">Ngày Quốc tế Phụ nữ</option>
+                                                                    <option value="quockhanh" ${(param.event == "quockhanh")? "selected" : ""} class="col-auto mobile">Ngày Quốc Khánh 2-9</option>
+                                                                    <option value="giangsinh" ${(param.event == "giangsinh")? "selected" : ""} class="col-auto mobile">Lễ Giáng Sinh</option>
+                                                                    <option value="namgioi" ${(param.event == "namgioi")? "selected" : ""} class="col-auto mobile">Ngày Quốc Tế Nam Giới 19-11</option>
+                                                                    <option value="thieunhi" ${(param.event == "thieunhi")? "selected" : ""} class="col-auto mobile">Ngày Quốc tế Thiếu nhi 1-6</option>
+                                                                </select>
+
                                                             </div> 
                                                         </div> 
                                                     </div>
 
                                                     <div class="col-md-6">
-                                                        <button style="float: right; position: relative;top: 47px;"><a href="addPost">ADD NEW POST <i class="fa-solid fa-circle-plus"> </i></a></button>
+                                                        <button style="float: right; position: relative;"><a href="addPost">ADD NEW POST <i class="fa-solid fa-circle-plus"> </i></a></button>
                                                     </div>
+
+
                                                 </div>
 
                                                 </div>
 
-
-
-                                                </form>
 
                                                 <div class="table-responsive">  
                                                     <table class="table mb-0"> <!-- comment -->
@@ -324,7 +389,7 @@
                                                         </thead>
                                                         <tbody>
 
-                                                            <c:forEach items="${requestScope.listB}" var="blog">
+                                                            <c:forEach items="${requestScope.listBp}" var="blog">
                                                                 <tr>
                                                                     <td>${blog.blogID}</td>
                                                                     <td>
@@ -340,8 +405,8 @@
                                                                         &nbsp;
                                                                         <a href="#"><i class="fa-solid fa-pen"></i></a>
                                                                         &nbsp; 
-                                                                        <a href="#"><i class="fa-regular fa-flag"></i></a></td>
-
+                                                                        <a href="#"><i class="fa-regular fa-flag"></i></a>
+                                                                    </td>
                                                                 </tr>
 
                                                             </c:forEach>
@@ -350,6 +415,26 @@
 
                                                     </table>
                                                 </div>
+                                                <br/> 
+
+
+                                                <div class="pagination">
+
+
+
+                                                    <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
+
+                                                        <button type="submit" name="page" value="${c}" }>${c}</button>
+
+                                                    </c:forEach>
+
+
+
+                                                </div>
+
+                                                </form>
+
+
                                                 </div>
                                                 </div>
                                                 </div>
@@ -357,16 +442,6 @@
 
 
                                                 </section>
-
-
-
-                                                </div>
-                                                </div>
-
-                                                </section>
-
-
-
 
                                                 <!-- Footer start -->
                                                 <%@include file="footer.jsp" %>

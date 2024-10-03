@@ -47,6 +47,56 @@ public class BlogListDAO extends DBContext {
         return list;
     }
 
+    public List<Blog> getBlogPerPage(int page, int perpage) {
+
+        List<Blog> list = new ArrayList<>();
+
+        int pageget = (page * perpage - perpage);
+
+        String sql = "SELECT b.[BlogID]\n"
+                + "      ,b.[Blog_Type]\n"
+                + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_Tittle]\n"
+                + "      ,b.[Blog_Summary_Information]\n"
+                + "      ,b.[Blog_Update_Time]\n"
+                + "      ,b.[Blog_Detail]\n"
+                + "      ,b.[Blog_Views]\n"
+                + "      ,b.[Blog_Status]\n"
+                + "      ,b.[PersonID]\n"
+                + "FROM Blog b, Person p\n"
+                + "WHERE b.PersonID = p.PersonID\n"
+                + "ORDER BY b.BlogID \n"
+                + "OFFSET ? ROWS\n"
+                + "FETCH NEXT 4 ROWS ONLY";
+
+        try {
+
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pageget);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getDate("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), person);
+
+                list.add(blog);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+
+    }
+
+    // Khong su dung !!!
     public List<Blog> sortBlogList(String sort) {
 
         List<Blog> list = new ArrayList<>();
@@ -204,11 +254,13 @@ public class BlogListDAO extends DBContext {
 
     }
 
-    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort) {
+    public List<Blog> searchBlogList2(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page) {
 
         List<Blog> list = new ArrayList<>();
 
-        String sql = "  select b.[BlogID]\n"
+        int pageget = (Integer.parseInt(page) * 4 - 4);
+
+        String sql = "SELECT b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
                 + "      ,b.[Blog_img]\n"
                 + "      ,b.[Blog_Tittle]\n"
@@ -218,8 +270,8 @@ public class BlogListDAO extends DBContext {
                 + "      ,b.[Blog_Views]\n"
                 + "      ,b.[Blog_Status]\n"
                 + "      ,b.[PersonID]\n"
-                + " from Blog b , Person p\n"
-                + " where b.PersonID = p.PersonID ";
+                + "FROM Blog b, Person p\n"
+                + "WHERE b.PersonID = p.PersonID\n";
 
         if (tittlewrite != null) {
 
@@ -239,6 +291,51 @@ public class BlogListDAO extends DBContext {
         if (statusf != null) {
 
             sql += "AND b.Blog_Status like N'%" + statusf + "%' ";
+        }
+
+        if (event != null) {
+
+            if (event.equals("phunu")) {
+
+                sql += " AND MONTH(b.Blog_Update_Time) = 3\n"
+                        + "  AND DAY(b.Blog_Update_Time) BETWEEN 01 AND 08 ";
+
+            }
+
+            if (event.equals("quockhanh")) {
+
+                sql += "AND (\n"
+                        + "        (MONTH(b.Blog_Update_Time) = 8 AND DAY(b.Blog_Update_Time) = 31) \n"
+                        + "        OR \n"
+                        + "        (MONTH(b.Blog_Update_Time) = 9 AND DAY(b.Blog_Update_Time) BETWEEN 1 AND 2)\n"
+                        + "      )";
+
+            }
+
+            if (event.equals("giangsinh")) {
+
+                sql += " AND MONTH(b.Blog_Update_Time) = 12\n"
+                        + "  AND DAY(b.Blog_Update_Time) BETWEEN 20 AND 25 ";
+
+            }
+
+            if (event.equals("namgioi")) {
+
+                sql += " AND MONTH(b.Blog_Update_Time) = 11\n"
+                        + "  AND DAY(b.Blog_Update_Time) BETWEEN 15 AND 19 ";
+
+            }
+
+            if (event.equals("thieunhi")) {
+
+                sql += "AND (\n"
+                        + "        (MONTH(b.Blog_Update_Time) = 5 AND DAY(b.Blog_Update_Time) BETWEEN 30 AND 31) \n"
+                        + "        OR \n"
+                        + "        (MONTH(b.Blog_Update_Time) = 6 AND DAY(b.Blog_Update_Time) BETWEEN 1 AND 2))\n"
+                        + "     ";
+
+            }
+
         }
 
         // sort
@@ -299,6 +396,157 @@ public class BlogListDAO extends DBContext {
         return list;
     }
 
+    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page) {
+
+        List<Blog> list = new ArrayList<>();
+
+        int pageget = (Integer.parseInt(page) * 4 - 4);
+
+        String sql = "SELECT b.[BlogID]\n"
+                + "      ,b.[Blog_Type]\n"
+                + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_Tittle]\n"
+                + "      ,b.[Blog_Summary_Information]\n"
+                + "      ,b.[Blog_Update_Time]\n"
+                + "      ,b.[Blog_Detail]\n"
+                + "      ,b.[Blog_Views]\n"
+                + "      ,b.[Blog_Status]\n"
+                + "      ,b.[PersonID]\n"
+                + "FROM Blog b, Person p\n"
+                + "WHERE b.PersonID = p.PersonID\n";
+
+        if (tittlewrite != null) {
+
+            sql += "AND b.Blog_Tittle Like N'%" + tittlewrite + "%' ";
+        }
+
+        if (authorwrite != null) {
+
+            sql += "AND p.Name like N'%" + authorwrite + "%' ";
+        }
+
+        if (type != null) {
+
+            sql += "AND b.Blog_Type like N'%" + type + "%' ";
+        }
+
+        if (statusf != null) {
+
+            sql += "AND b.Blog_Status like N'%" + statusf + "%' ";
+        }
+
+        if (event != null) {
+
+            if (event.equals("phunu")) {
+
+                sql += " AND MONTH(b.Blog_Update_Time) = 3\n"
+                        + "  AND DAY(b.Blog_Update_Time) BETWEEN 01 AND 08 ";
+
+            }
+
+            if (event.equals("quockhanh")) {
+
+                sql += "AND (\n"
+                        + "        (MONTH(b.Blog_Update_Time) = 8 AND DAY(b.Blog_Update_Time) = 31) \n"
+                        + "        OR \n"
+                        + "        (MONTH(b.Blog_Update_Time) = 9 AND DAY(b.Blog_Update_Time) BETWEEN 1 AND 2)\n"
+                        + "      )";
+
+            }
+
+            if (event.equals("giangsinh")) {
+
+                sql += " AND MONTH(b.Blog_Update_Time) = 12\n"
+                        + "  AND DAY(b.Blog_Update_Time) BETWEEN 20 AND 25 ";
+
+            }
+
+            if (event.equals("namgioi")) {
+
+                sql += " AND MONTH(b.Blog_Update_Time) = 11\n"
+                        + "  AND DAY(b.Blog_Update_Time) BETWEEN 15 AND 19 ";
+
+            }
+
+            if (event.equals("thieunhi")) {
+
+                sql += "AND (\n"
+                        + "        (MONTH(b.Blog_Update_Time) = 5 AND DAY(b.Blog_Update_Time) BETWEEN 30 AND 31) \n"
+                        + "        OR \n"
+                        + "        (MONTH(b.Blog_Update_Time) = 6 AND DAY(b.Blog_Update_Time) BETWEEN 1 AND 2))\n"
+                        + "     ";
+
+            }
+
+        }
+
+        // sort
+        if (sort == null || sort.equals("")) {
+
+            sql += " ORDER BY b.BlogID";
+
+        }
+
+        if (sort.equals("tittleu")) {
+            sql += "ORDER BY b.Blog_Tittle ASC";
+        }
+
+        if (sort.equals("tittled")) {
+            sql += "ORDER BY b.Blog_Tittle DESC";
+        }
+
+        if (sort.equals("typeu")) {
+            sql += "ORDER BY b.Blog_Type ASC";
+        }
+
+        if (sort.equals("typed")) {
+            sql += "ORDER BY b.Blog_Type DESC";
+        }
+
+        if (sort.equals("authoru")) {
+            sql += "ORDER BY p.Name ASC";
+        }
+
+        if (sort.equals("authord")) {
+            sql += "ORDER BY p.Name DESC";
+        }
+
+        if (sort.equals("viewsu")) {
+            sql += "ORDER BY b.Blog_Views ASC";
+        }
+
+        if (sort.equals("viewsd")) {
+            sql += "ORDER BY b.Blog_Views DESC";
+        }
+
+        sql += "\n OFFSET " + pageget + " ROWS\n"
+                + "FETCH NEXT 4 ROWS ONLY";
+
+        try {
+
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getDate("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), person);
+
+                list.add(blog);
+
+            }
+
+        } catch (Exception e) {
+        }
+
+        return list;
+    }
+
     public List<String> getDistinctOfBlogType() {
 
         List<String> list = new ArrayList();
@@ -333,14 +581,16 @@ public class BlogListDAO extends DBContext {
                 + "from Blog\n"
                 + "Where (Blog_Type = N'"
                 + b.getBlog_type() + "' OR PersonID = " + b.getPerson().getPersonID() + ")";
-
+        int count = 0;
         try {
 
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-
+                if (count == 3) {
+                    break;
+                }
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
                 Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
@@ -354,7 +604,7 @@ public class BlogListDAO extends DBContext {
                 }
 
                 list.add(blog);
-
+                count++;
             }
 
         } catch (Exception e) {
@@ -369,14 +619,14 @@ public class BlogListDAO extends DBContext {
         BlogListDAO bl = new BlogListDAO();
 //        List<Blog> b = bl.sortBlogList("viewsd");
         Blog b1 = bl.getBlogById(1);
-        List<Blog> b = bl.getRelatedBlog(b1);
-        
-       for (Blog m : b) {
-
-           System.out.println(m.getBlogID());
-
-        }
-
+        //   String b = bl.searchBlogList(null, null, null, "Published", "", "thieunhi", "1");
+        //   System.out.println(b);
+        // System.out.println(b);
+//        List<Blog> list = bl.getBlogPerPage(2, 4);
+        //  for (Blog m : b) {
+        //      System.out.println(m.getBlogID());
+        // }
+//
     }
 
 }

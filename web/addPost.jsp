@@ -87,9 +87,9 @@
         <div class="container">
             <h2>Add New Blog</h2>
             <form action="addPost" method="post" enctype="multipart/form-data">
-                
-                
-                <label for="blogType">Blog Type:</label>
+
+
+                <label for="blogType">Blog Type: <a href="#">(ADD NEW BLOG TYPE +)</a></label>
                 <select name="blogtype" id="customSelect" onchange="document.getElementById('f1').submit()">
                     <option value="">Select Blog Type</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
@@ -104,10 +104,24 @@
                 <input type="text" id="blogTitle" name="blogtittle" required>
 
                 <label for="blogSummary">Blog Summary Information:</label>
-                <textarea id="blogSummary" name="blogsummary" rows="4" required></textarea>
+                <textarea id="blogSummary" name="blogsummary" rows="4" required>
+                    
+
+                </textarea>
+
+
 
                 <label for="blogDetail">Blog Detail:</label>
-                <textarea style="height: 200px;" id="blogDetail" name="blogdetail" rows="6" required></textarea>
+                <textarea style="height: 200px;" id="blogDetail" name="blogdetail" rows="6" required >
+                    
+
+                </textarea>
+                <label for="blogImg">Blog Image: (.JPG)</label>
+                <input type="file" id="blogImg" name="blogimg" accept=".jpg" required>
+
+                <button>+</button>
+                
+                <br/>
 
                 <label for="blogStatus">Blog Status:</label>
                 <select id="blogStatus" name="blogstatus" required>
