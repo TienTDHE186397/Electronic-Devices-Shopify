@@ -235,10 +235,10 @@
                         
                     </div>
                     <div class="carousel-item">
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/fold-6-km-moi-home-30-8.png" class="d-block w-100" alt="...">
+                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sliding-home-iphone-16-pro-km-moi.jpg" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slider-title">Ưu đãi tháng Samsung</h5>
-                            <p class="slider-description">Khuyến mãi đặc biệt cho các dòng Samsung</p>
+                            <h5 class="slider-title">Ưu đãi tháng Iphone 16</h5>
+                            <p class="slider-description">Khuyến mãi đặc biệt cho các dòng Iphone Series</p>
                             <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
                         </div>
                     </div>
@@ -267,44 +267,44 @@
                 <h1 class="brand-name">Shopify</h1>
             </div>
         </section>
-
+        
+<!-------------------------------- comment --------------------------------->     
+        
         <section class="product-list container">
             <div class="row">
-                <h2 class="col product-type-title">Màn hình</h2>
+                <h2 class="col product-type-title">Điện Thoại</h2>
+                
                 <div class="col-md-10 row product-type-select">
-                    <a href="#" class="col-auto mobile">Apple</a>
-                    <a href="#" class="col-auto mobile">Samsung</a>
-                    <a href="#" class="col-auto mobile">Xiaomi</a>
-                    <a href="#" class="col-auto mobile">Oppo</a>
-                    <a href="#" class="col-auto mobile">Vivo</a>
-                    <a href="#" class="col-auto mobile">Realme</a>
+                    <c:forEach items="${brand_phone_and_tablet}" var="brand">
+                        <a href="#" class="col-auto mobile">${brand}</a>
+                    </c:forEach>
                     <a href="#" class="col-auto mobile">Xem tất cả</a>
-                </div>    
+                </div>
+                
             </div>
 
             <div id="productList" class="product-list">
                 <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <c:forEach items="${listLaptop}" var="l" varStatus="status">
+                        <c:forEach items="${list_phone_and_tablet}" var="list1" varStatus="status">
                             <c:if test="${status.index % 4 == 0}">
                                 <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
                                     <ul class="list-unstyled d-flex flex-wrap justify-content-center">
                             </c:if>
                                         <li class="container-product-item col-md-3">
                                             <div class="card position-relative">
-                                                <span class="discount-badge">Giảm ${l.getProduct().getSale()}%</span>
+                                                <span class="discount-badge">Giảm ${list1.getSale()}%</span>
                                                 <div class="product-image">
-                                                    <img src="${l.getImg()}" class="card-img-top" alt="none">
+                                                    <img src="${list1.getImg()}" class="card-img-top" alt="none">
                                                 </div>   
                                                 <div class="card-body">
-                                                    <h6 class="card-title">${l.getLapName()}</h6>
-                                                    <p class="price">${l.getPrice()} <span class="original-price">${l.getPrice() * (1 - l.getProduct().getSale() / 100)}đ</span></p>
-                                                    <p>Smember giảm thêm đến <b>196.000đ</b></p>
-                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                    <h6 class="card-title">${list1.getProductName()}</h6>
+                                                    <p class="price">${list1.getPrice()} <span class="original-price">${list1.getPrice() * (1 - list1.getSale() / 100)}đ</span></p>                            
+                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
                                                 </div>
                                             </div>
                                         </li>
-                            <c:if test="${status.index % 4 == 3 || status.index == listLaptop.size() - 1}">
+                            <c:if test="${status.index % 4 == 3 || status.index == list_phone_and_tablet.size() - 1}">
                                     </ul>
                                 </div>
                             </c:if>
@@ -320,8 +320,215 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-            </div>
         </section> 
+        
+<!-------------------------------- comment --------------------------------->             
+        
+        <section class="product-list container">
+            <div class="row">
+                <h2 class="col product-type-title">Laptop</h2>
+                
+                <div class="col-md-10 row product-type-select">
+                    <c:forEach items="${brand_laptop}" var="brand_laptop">
+                        <a href="#" class="col-auto mobile">${brand_laptop}</a>
+                    </c:forEach>
+                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                </div>
+                
+            </div>
+
+            <div id="productList" class="product-list">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <c:forEach items="${list_laptop}" var="list2" varStatus="status">
+                            <c:if test="${status.index % 4 == 0}">
+                                <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                    <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                            </c:if>
+                                        <li class="container-product-item col-md-3">
+                                            <div class="card position-relative">
+                                                <span class="discount-badge">Giảm ${list2.getSale()}%</span>
+                                                <div class="product-image">
+                                                    <img src="${list2.getImg()}" class="card-img-top" alt="none">
+                                                </div>   
+                                                <div class="card-body">
+                                                    <h6 class="card-title">${list2.getProductName()}</h6>
+                                                    <p class="price">${list2.getPrice()} <span class="original-price">${list2.getPrice() * (1 - list2.getSale() / 100)}đ</span></p>                            
+                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                </div>
+                                            </div>
+                                        </li>
+                            <c:if test="${status.index % 4 == 3 || status.index == list_laptop.size() - 1}">
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+        </section> 
+        
+ <!-------------------------------- comment --------------------------------->           
+        
+        <section class="product-list container">
+            <div class="row">
+                <h2 class="col product-type-title">PC</h2>              
+                <div class="col-md-10 row product-type-select">
+                    <c:forEach items="${brand_pc}" var="brand_pc">
+                        <a href="#" class="col-auto mobile">${brand_pc}</a>
+                    </c:forEach>
+                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                </div>
+            </div>
+
+            <div id="productList" class="product-list">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <c:forEach items="${list_pc}" var="list3" varStatus="status">
+                            <c:if test="${status.index % 4 == 0}">
+                                <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                    <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                            </c:if>
+                                        <li class="container-product-item col-md-3">
+                                            <div class="card position-relative">
+                                                <span class="discount-badge">Giảm ${list3.getSale()}%</span>
+                                                <div class="product-image">
+                                                    <img src="${list3.getImg()}" class="card-img-top" alt="none">
+                                                </div>   
+                                                <div class="card-body">
+                                                    <h6 class="card-title">${list3.getProductName()}</h6>
+                                                    <p class="price">${list3.getPrice()} <span class="original-price">${list3.getPrice() * (1 - list3.getSale() / 100)}đ</span></p>                            
+                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                </div>
+                                            </div>
+                                        </li>
+                            <c:if test="${status.index % 4 == 3 || status.index == list_pc.size() - 1}">
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+        </section>
+        
+ <!-------------------------------- comment --------------------------------->     
+        
+        <section class="product-list container">
+            <div class="row">
+                <h2 class="col product-type-title">Màn Hình</h2>              
+                <div class="col-md-10 row product-type-select">
+                    <c:forEach items="${brand_monitor}" var="brand_monitor">
+                        <a href="#" class="col-auto mobile">${brand_monitor}</a>
+                    </c:forEach>
+                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                </div>
+            </div>
+
+            <div id="productList" class="product-list">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <c:forEach items="${list_monitor}" var="list4" varStatus="status">
+                            <c:if test="${status.index % 4 == 0}">
+                                <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                    <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                            </c:if>
+                                        <li class="container-product-item col-md-3">
+                                            <div class="card position-relative">
+                                                <span class="discount-badge">Giảm ${list4.getSale()}%</span>
+                                                <div class="product-image">
+                                                    <img src="${list4.getImg()}" class="card-img-top" alt="none">
+                                                </div>   
+                                                <div class="card-body">
+                                                    <h6 class="card-title">${list4.getProductName()}</h6>
+                                                    <p class="price">${list4.getPrice()} <span class="original-price">${list4.getPrice() * (1 - list4.getSale() / 100)}đ</span></p>                            
+                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                </div>
+                                            </div>
+                                        </li>
+                            <c:if test="${status.index % 4 == 3 || status.index == list_monitor.size() - 1}">
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+        </section>
+<!-------------------------------- comment --------------------------------->       
+        <section class="product-list container">
+            <div class="row">
+                <h2 class="col product-type-title">Tai nghe</h2>              
+                <div class="col-md-10 row product-type-select">
+                    <c:forEach items="${brand_headphone}" var="brand_headphone">
+                        <a href="#" class="col-auto mobile">${brand_headphone}</a>
+                    </c:forEach>
+                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                </div>
+            </div>
+
+            <div id="productList" class="product-list">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <c:forEach items="${list_headphone}" var="list5" varStatus="status">
+                            <c:if test="${status.index % 4 == 0}">
+                                <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                    <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                            </c:if>
+                                        <li class="container-product-item col-md-3">
+                                            <div class="card position-relative">
+                                                <span class="discount-badge">Giảm ${list5.getSale()}%</span>
+                                                <div class="product-image">
+                                                    <img src="${list5.getImg()}" class="card-img-top" alt="none">
+                                                </div>   
+                                                <div class="card-body">
+                                                    <h6 class="card-title">${list5.getProductName()}</h6>
+                                                    <p class="price">${list5.getPrice()} <span class="original-price">${list5.getPrice() * (1 - list5.getSale() / 100)}đ</span></p>                            
+                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                </div>
+                                            </div>
+                                        </li>
+                            <c:if test="${status.index % 4 == 3 || status.index == list_headphone.size() - 1}">
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+        </section>
         <!-- Footer start -->
         <%@include file="footer.jsp" %>
         <!-- Footer end -->

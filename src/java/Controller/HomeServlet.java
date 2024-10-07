@@ -5,7 +5,7 @@
 package Controller;
 
 import DAO.ProductDAO;
-import Entity.Laptop;
+import Entity.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -60,8 +60,47 @@ public class HomeServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO pDao = new ProductDAO();
-        List<Laptop> listLaptop= pDao.getAllLaptops();
-        request.setAttribute("listLaptop",listLaptop);
+       
+        
+//==============================================================================\
+
+    /* Session or any other servlet please write here */
+        
+//==============================================================================
+/*____________ ProductDAO ----> Homeservlet -----> Home.jsp _________________ */
+        List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
+        List<Product> listPhoneAndTablet = pDao.getProductByCategory(1);
+        request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
+        request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBLaptop = pDao.getBrandByCategory(2);
+        List<Product> listLaptop = pDao.getProductByCategory(2);   
+        request.setAttribute("list_laptop", listLaptop);
+        request.setAttribute("brand_laptop", listBLaptop);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBPc = pDao.getBrandByCategory(3);
+        List<Product> listPc = pDao.getProductByCategory(3);   
+        request.setAttribute("list_pc", listPc);
+        request.setAttribute("brand_pc", listBPc);
+        
+//------------------------------------------------------------------------------
+        List<String> listBMonitor = pDao.getBrandByCategory(4);
+        List<Product> listMonitor = pDao.getProductByCategory(4);   
+        request.setAttribute("list_monitor", listMonitor);
+        request.setAttribute("brand_monitor", listBMonitor);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBHeadphone = pDao.getBrandByCategory(5);
+        List<Product> listHeadphone = pDao.getProductByCategory(5);   
+        request.setAttribute("list_headphone", listHeadphone);
+        request.setAttribute("brand_headphone", listBHeadphone);
+
+//==============================================================================
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 

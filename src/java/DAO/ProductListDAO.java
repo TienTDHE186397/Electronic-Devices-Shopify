@@ -39,6 +39,7 @@ public class ProductListDAO extends DBContext {
                         rs.getString("publisher"),
                         rs.getString("sortDescription"),
                         rs.getString("description"),
+                        rs.getString("brand"),
                         rs.getString("status"));
               
 
