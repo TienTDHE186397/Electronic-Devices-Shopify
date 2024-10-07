@@ -50,7 +50,6 @@ public class addPostServlet extends HttpServlet {
 
         List<String> listBlogType = blogDAO.getDistinctOfBlogType();
 
-
         request.setAttribute("listType", listBlogType);
 
         request.getRequestDispatcher("addPost.jsp").forward(request, response);
@@ -60,39 +59,50 @@ public class addPostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+                PrintWriter out = response.getWriter();
 
-            String blog_type = request.getParameter("blogtype");
-            String blog_image = request.getParameter("blogimage");
-            String blog_tittle = request.getParameter("blogtype");
-            String blog_summary = request.getParameter("blogsummary");
-            String blog_detail = request.getParameter("blogdetail");
-            String blog_status = request.getParameter("blogtype");
-                
-            
-            LocalDate currentDate = LocalDate.now();
-             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = currentDate.format(formatter);
-             
-//        HttpSession session = request.getSession();
-            PersonDAO perDAO = new PersonDAO();
-                BlogListDAO blogDAO = new BlogListDAO();
-                List<Blog> list = blogDAO.getAllBlog();
-            Blog b = new Blog(list.size() + 1,
-                    blog_image, 
-                    blog_tittle,
-                    blog_type,
-                    blog_summary,
-                    formattedDate,
-                    blog_detail,
-                    0 ,
-                    blog_status,
-                    person);
+        String blog_type = request.getParameter("blogtype");
+        String blog_image = request.getParameter("blogimg");
+        String blog_tittle = request.getParameter("blogtittle");
+        String blog_summary = request.getParameter("blogsummary");
+        String blog_detail = request.getParameter("blogdetail");
+        String blog_status = request.getParameter("blogstatus");
         
         
-    
-    
-    
-    
+
+                   Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String paramName = parameterNames.nextElement();
+            out.println(paramName + ": " + request.getParameter(paramName) + "<br>");
+        }
+        
+        
+
+
+        out.println("Blog Type: " + blog_type);
+        out.println("Blog Title: " + blog_tittle);
+        out.println("Blog Summary: " + blog_summary);
+        out.println("Blog Detail: " + blog_detail);
+        out.println("Blog Status: " + blog_status);
+
+//            LocalDate currentDate = LocalDate.now();
+//             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        String formattedDate = currentDate.format(formatter);
+//             
+////        HttpSession session = request.getSession();
+//            PersonDAO perDAO = new PersonDAO();
+//                BlogListDAO blogDAO = new BlogListDAO();
+//                List<Blog> list = blogDAO.getAllBlog();
+//            Blog b = new Blog(list.size() + 1,
+//                    blog_image, 
+//                    blog_tittle,
+//                    blog_type,
+//                    blog_summary,
+//                    formattedDate,
+//                    blog_detail,
+//                    0 ,
+//                    blog_status,
+//                    person);
     }
 
     @Override
