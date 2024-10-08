@@ -274,7 +274,7 @@
                 <div  style="margin-top: 15px">
                     <div class="row">
                         <div class="col-12 mb-3 mb-lg-"> 
-                            
+
                             <form id="f1" action="PostListMKT" method="get">
 
                                 <div>
@@ -292,19 +292,19 @@
                                                     <div class="row" >
                                                         <div class="col-md-6">
                                                             <label><b>Tittle:</b></label>
-                                                            <input style="background: orange;" name="tittlewrite" type="text" class="form-control" placeholder="Enter your Tittle" value="${param.tittlewrite == null ? "":param.tittlewrite}">
+                                                            <input style="background: orange;" id ="myInput" name="tittlewrite" type="text" class="form-control" placeholder="Enter your Tittle" value="${param.tittlewrite == null ? "":param.tittlewrite}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label><b>Author:</b></label>
-                                                            <input style="background: orange;" name="authorwrite" type="text" class="form-control" placeholder="Enter your Author" value="${param.authorwrite == null ? "":param.authorwrite}">
+                                                            <input style="background: orange;" id ="myInput" name="authorwrite" type="text" class="form-control" placeholder="Enter your Author" value="${param.authorwrite == null ? "":param.authorwrite}">
                                                         </div>  
 
                                                     </div>
 
                                                 </span>
                                                 <div class="row">
-                                                    
-                                                    
+
+
                                                     <div class="col-md-6">
                                                         <div>
                                                             <b>Filter :</b>
@@ -405,7 +405,12 @@
                                                                         &nbsp;
                                                                         <a href="#"><i class="fa-solid fa-pen"></i></a>
                                                                         &nbsp; 
-                                                                        <a href="#"><i class="fa-regular fa-flag"></i></a>
+                                                                        <c:if test="${blog.blog_flag == 0}">
+                                                                            <a href="#"><i class="fa-regular fa-flag"></i></a>
+                                                                            </c:if>
+                                                                            <c:if test="${blog.blog_flag == 1}">
+                                                                            <a><i class="fa-solid fa-flag"></i></a>
+                                                                            </c:if>
                                                                     </td>
                                                                 </tr>
 
@@ -419,16 +424,9 @@
 
 
                                                 <div class="pagination">
-
-
-
                                                     <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
-
                                                         <button type="submit" name="page" value="${c}" }>${c}</button>
-
                                                     </c:forEach>
-
-
 
                                                 </div>
 
@@ -450,7 +448,6 @@
 
 
                                                 <script>
-
 
                                                 </script>
 

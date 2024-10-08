@@ -30,11 +30,11 @@ public class BlogListDAO extends DBContext {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"), person);
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 list.add(blog);
 
@@ -56,12 +56,14 @@ public class BlogListDAO extends DBContext {
         String sql = "SELECT b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
                 + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_img_tittle]\n"
                 + "      ,b.[Blog_Tittle]\n"
                 + "      ,b.[Blog_Summary_Information]\n"
                 + "      ,b.[Blog_Update_Time]\n"
                 + "      ,b.[Blog_Detail]\n"
                 + "      ,b.[Blog_Views]\n"
                 + "      ,b.[Blog_Status]\n"
+                + "      ,b.[Blog_Flag]\n"
                 + "      ,b.[PersonID]\n"
                 + "FROM Blog b, Person p\n"
                 + "WHERE b.PersonID = p.PersonID\n"
@@ -78,11 +80,11 @@ public class BlogListDAO extends DBContext {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"), person);
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 list.add(blog);
 
@@ -104,12 +106,14 @@ public class BlogListDAO extends DBContext {
         String sql = "select b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
                 + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_img_tittle]\n"
                 + "      ,b.[Blog_Tittle]\n"
                 + "      ,b.[Blog_Summary_Information]\n"
                 + "      ,b.[Blog_Update_Time]\n"
                 + "      ,b.[Blog_Detail]\n"
                 + "      ,b.[Blog_Views]\n"
                 + "      ,b.[Blog_Status]\n"
+                + "      ,b.[Blog_Flag]\n"
                 + "      ,b.[PersonID]\n"
                 + " from Blog b , Person p\n"
                 + " where b.PersonID = p.PersonID "
@@ -156,11 +160,11 @@ public class BlogListDAO extends DBContext {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"), person);
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 list.add(blog);
 
@@ -184,16 +188,11 @@ public class BlogListDAO extends DBContext {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"),
-                        rs.getString("Blog_img"),
-                        rs.getString("Blog_Tittle"),
-                        rs.getString("Blog_Type"),
-                        rs.getString("Blog_Summary_Information"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
-                        rs.getString("Blog_Detail"),
-                        rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"),
-                        person);
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 return blog;
 
@@ -212,15 +211,19 @@ public class BlogListDAO extends DBContext {
         String sql = "INSERT INTO [dbo].[Blog]\n"
                 + "           ([Blog_Type]\n"
                 + "           ,[Blog_img]\n"
+                + "           ,[Blog_img_tittle]\n"
                 + "           ,[Blog_Tittle]\n"
                 + "           ,[Blog_Summary_Information]\n"
                 + "           ,[Blog_Update_Time]\n"
                 + "           ,[Blog_Detail]\n"
                 + "           ,[Blog_Views]\n"
                 + "           ,[Blog_Status]\n"
+                + "           ,[Blog_Flag]\n"
                 + "           ,[PersonID])\n"
                 + "     VALUES\n"
                 + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
@@ -238,13 +241,15 @@ public class BlogListDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, b.getBlog_type());
             st.setString(2, b.getBlog_img());
-            st.setString(3, b.getBlog_tittle());
-            st.setString(4, b.getBlog_summary_information());
-            st.setDate(5, (java.sql.Date) b.getBlog_update_time());
-            st.setString(6, b.getBlog_detail());
-            st.setInt(7, b.getBlog_views());
-            st.setString(8, b.getBlog_status());
-            st.setString(9, o.getName());
+            st.setString(3, b.getBlog_img_tittle());
+            st.setString(4, b.getBlog_tittle());
+            st.setString(5, b.getBlog_summary_information());
+            st.setDate(6, (java.sql.Date) b.getBlog_update_time());
+            st.setString(7, b.getBlog_detail());
+            st.setInt(8, b.getBlog_views());
+            st.setString(9, b.getBlog_status());
+            st.setInt(10, b.getBlog_flag());
+            st.setString(11, o.getName());
             st.executeUpdate();
         } catch (Exception e) {
 
@@ -263,12 +268,14 @@ public class BlogListDAO extends DBContext {
         String sql = "SELECT b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
                 + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_img_tittle]\n"
                 + "      ,b.[Blog_Tittle]\n"
                 + "      ,b.[Blog_Summary_Information]\n"
                 + "      ,b.[Blog_Update_Time]\n"
                 + "      ,b.[Blog_Detail]\n"
                 + "      ,b.[Blog_Views]\n"
                 + "      ,b.[Blog_Status]\n"
+                + "      ,b.[Blog_Flag]\n"
                 + "      ,b.[PersonID]\n"
                 + "FROM Blog b, Person p\n"
                 + "WHERE b.PersonID = p.PersonID\n";
@@ -380,11 +387,11 @@ public class BlogListDAO extends DBContext {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"), person);
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 list.add(blog);
 
@@ -405,12 +412,14 @@ public class BlogListDAO extends DBContext {
         String sql = "SELECT b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
                 + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_img_tittle]\n"
                 + "      ,b.[Blog_Tittle]\n"
                 + "      ,b.[Blog_Summary_Information]\n"
                 + "      ,b.[Blog_Update_Time]\n"
                 + "      ,b.[Blog_Detail]\n"
                 + "      ,b.[Blog_Views]\n"
                 + "      ,b.[Blog_Status]\n"
+                + "      ,b.[Blog_Flag]\n"
                 + "      ,b.[PersonID]\n"
                 + "FROM Blog b, Person p\n"
                 + "WHERE b.PersonID = p.PersonID\n";
@@ -531,11 +540,11 @@ public class BlogListDAO extends DBContext {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"), person);
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 list.add(blog);
 
@@ -593,11 +602,11 @@ public class BlogListDAO extends DBContext {
                 }
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
 
-                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_Tittle"),
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getDate("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
-                        rs.getString("Blog_Status"), person);
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
 
                 if (blog.getBlogID() == b.getBlogID()) {
                     continue;
@@ -619,7 +628,7 @@ public class BlogListDAO extends DBContext {
         BlogListDAO bl = new BlogListDAO();
 //        List<Blog> b = bl.sortBlogList("viewsd");
         Blog b1 = bl.getBlogById(1);
-        //   String b = bl.searchBlogList(null, null, null, "Published", "", "thieunhi", "1");
+//           String b = bl.searchBlogList(null, null, null, "Published", "", "thieunhi", "1");
         //   System.out.println(b);
         // System.out.println(b);
 //        List<Blog> list = bl.getBlogPerPage(2, 4);
@@ -627,6 +636,15 @@ public class BlogListDAO extends DBContext {
         //      System.out.println(m.getBlogID());
         // }
 //
+
+        List<Blog> b2 = bl.searchBlogList("", "","","","","", "2");
+        
+        for(Blog m1 : b2) {
+            
+            System.out.println(m1.getBlogID());
+            
+        }
+
     }
 
 }

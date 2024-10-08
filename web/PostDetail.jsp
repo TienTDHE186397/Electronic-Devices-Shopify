@@ -297,107 +297,102 @@
             <!-- Main Content Section -->
             <div class="main-content ">
                 <img src="${B.blog_img}" alt="Laptop with code" class="post-image">
-                <center><h3 style="color: gray; font-style: italic;">Hình ảnh chỉ mang tính chất minh họa</h3><center>
-                <h1>The Impact of Technology on Modern Society</h1>
-                <div class="meta">
-                    <img src="https://via.placeholder.com/50" alt="Author Image">
-                    <span>${B.person.name}</span>
-                    <span>${B.blog_update_time}</span>
-                </div>
-                <br/>
-                <h3>Summary Information:  </h3> <p>${B.blog_summary_information}</p>
-                <br/>
-                <h3>Blog Detail:</h3>
-                <p>${B.blog_detail}</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
+                <center><h3 style="color: gray; font-style: italic;">${B.blog_img_tittle}</h3><center>
+                        <h1>The Impact of Technology on Modern Society</h1>
+                        <div class="meta">
+                            <img src="https://via.placeholder.com/50" alt="Author Image">
+                            <span>${B.person.name}</span>
+                            <span>${B.blog_update_time}</span>
+                        </div>
+                        <br/>
+                        <h3>Summary Information:  </h3> <p>${B.blog_summary_information}</p>
+                        <br/>
+                        <h3>Blog Detail:</h3>
+                        <p>${B.blog_detail}</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                        </div>
 
-
-
-
-
-
-
-
-
-            <!-- Wrapper for both Related Posts sections -->
-            <div class="related-posts-wrapper">
-                <div class="related-posts">
-                    <h2>Related Posts</h2>
-                    <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
-                        <a href="PostDetail?id=${RB.get(c).blogID}">  
-                            <div class="related-post">
-                                <img src="${RB.get(c).blog_img}" alt="Related Post Image">
-                                <h4>${RB.get(c).blog_tittle}</h4>
+                        <!-- Wrapper for both Related Posts sections -->
+                        <div class="related-posts-wrapper">
+                            <div class="related-posts">
+                                <h2>Related Posts</h2>
+                                <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
+                                    <a href="PostDetail?id=${RB.get(c).blogID}">  
+                                        <div class="related-post">
+                                            <img src="${RB.get(c).blog_img}" alt="Related Post Image">
+                                            <h4>${RB.get(c).blog_tittle}</h4>
+                                        </div>
+                                    </a>
+                                </c:forEach>
                             </div>
-                        </a>
-                    </c:forEach>
-                </div>
 
-                <div class="related-posts">
-                    <h2 style="color: red;">Edit For MKT Manager</h2>
-                    
-                    <a href="#"><i class="fa-solid fa-pen"></i> Edit this Blog<a> 
-                            <br/>
-                            <br/>
-                             <a href="#"><i class="fa-regular fa-flag"></i> Give flag <a>
-                                                                 <br/>
-                                                                 <br/>
-                             <a href="#"><i class="fa-solid fa-flag"></i> Remove flag <a>
-                                     
-                    
-                    
-                </div>
+                            <div class="related-posts">
+                                <h2 style="color: red;">Edit For MKT Manager</h2>
+
+                                <a href="#"><i class="fa-solid fa-pen"></i> Edit this Blog<a> 
+                                        <br/>
+                                        <br/>
+                                        <c:if test="${B.blog_flag == 0}">
+                                            <a href="#"><i class="fa-regular fa-flag"></i> Give flag <a>
+                                                </c:if>
+
+                                                <c:if test="${B.blog_flag == 1}">
+                                                    <a href="#"><i class="fa-solid fa-flag"></i> Remove flag <a>
+
+                                                        </c:if>
 
 
+                                                        </div>
+                                                        <div class="related-posts">
+                                                            <video height="250px" width="400px" controls>
+                                                                <source src="blogimages\iot cuoi ki.mp4" type="video/mp4" autoplay controls>
+                                                            </video>
+                                                        </div>
 
-            </div>
+                                                        </div>
+
+                                                        </div>
 
 
-
-        </div>
-
+                                                        <%
+                                                        /*
                 
-                <%
-                /*
-                
-                 <!-- Comment Section -->
-        <div class="comments-section">
-            <h2>Comments</h2>
+                                                         <!-- Comment Section -->
+                                                <div class="comments-section">
+                                                    <h2>Comments</h2>
 
-            <!-- Form nhập bình luận mới -->
-            <form action="#" method="POST">
-                <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..."></textarea>
-                <button type="submit">Post Comment</button>
-            </form>
+                                                    <!-- Form nhập bình luận mới -->
+                                                    <form action="#" method="POST">
+                                                        <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..."></textarea>
+                                                        <button type="submit">Post Comment</button>
+                                                    </form>
 
-            <!-- Bình luận đã có -->
-            <div class="posted-comments">
-                <h3>Previous Comments</h3>
-                <div class="comment">
-                    <img src="https://via.placeholder.com/50" alt="User Image">
-                    <p><strong>Jane Doe:</strong> This article really opened my eyes about the impact of technology. Thanks for sharing!</p>
-                </div>
-                <div class="comment">
-                    <img src="https://via.placeholder.com/50" alt="User Image">
-                    <p><strong>John Smith:</strong> Great insights! I think we need to focus more on the ethical aspects of technology too.</p>
-                </div>
-                <div class="comment">
-                    <img src="https://via.placeholder.com/50" alt="User Image">
-                    <p><strong>Emily Johnson:</strong> Very informative and well-written. Looking forward to more articles like this.</p>
-                </div>
-            </div>
-        </div>
+                                                    <!-- Bình luận đã có -->
+                                                    <div class="posted-comments">
+                                                        <h3>Previous Comments</h3>
+                                                        <div class="comment">
+                                                            <img src="https://via.placeholder.com/50" alt="User Image">
+                                                            <p><strong>Jane Doe:</strong> This article really opened my eyes about the impact of technology. Thanks for sharing!</p>
+                                                        </div>
+                                                        <div class="comment">
+                                                            <img src="https://via.placeholder.com/50" alt="User Image">
+                                                            <p><strong>John Smith:</strong> Great insights! I think we need to focus more on the ethical aspects of technology too.</p>
+                                                        </div>
+                                                        <div class="comment">
+                                                            <img src="https://via.placeholder.com/50" alt="User Image">
+                                                            <p><strong>Emily Johnson:</strong> Very informative and well-written. Looking forward to more articles like this.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                 
                 
                 
-                */ %>
-       
+                                                        */ %>
 
 
 
@@ -405,5 +400,6 @@
 
 
 
-    </body>
-</html>
+
+                                                        </body>
+                                                        </html>
