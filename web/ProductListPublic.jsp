@@ -152,7 +152,12 @@
                 border: none;
                 padding: 5px 10px;
                 border-radius: 5px;
+                
                 text-transform: uppercase;
+            }
+            
+            .btn .btn-primary{
+                font-size: 16px;
             }
 
             .btn-primary:hover {
@@ -191,7 +196,7 @@
                             <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
                             <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px; background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
                         </div>
                     </div>
 
@@ -202,7 +207,7 @@
                             <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
                             <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
                         </div>
                     </div>
 
@@ -213,7 +218,7 @@
                             <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
                             <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
                         </div>
                     </div>
 
@@ -223,7 +228,7 @@
                             <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
                             <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
                         </div>
                     </div>
                 </div>
@@ -237,14 +242,69 @@
             
             <div class="container background-container">
                 <div class="product-card">
+                    <div class="card">
+                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="card">
+                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="card">
+                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    
 
                     <div class="card">
                         <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
                         <div class="card-body">
                             <h5 class="card-title">Product Name</h5>
                             <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
                         </div>
                     </div>
                     
@@ -254,53 +314,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Product Name</h5>
                             <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-
-
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-
-
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    
-
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
                         </div>
                     </div>
                     
@@ -310,19 +325,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Product Name</h5>
                             <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary">Feedback</a>
-                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
                         </div>
                     </div>  
             </div>
