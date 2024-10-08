@@ -16,8 +16,10 @@ import java.io.PrintWriter;
 import java.util.List;
 
 /**
- *
- * @author Dokkuhai
+ * Date: 
+ * @author Vu Duc Hai
+ * 
+ * This Servlet resolve request on homepage, include session of user........
  */
 @WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
 public class HomeServlet extends HttpServlet{

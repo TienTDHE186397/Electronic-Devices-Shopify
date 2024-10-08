@@ -3,7 +3,7 @@
     Created on : Sep 14, 2024, 10:35:21 AM
     Author     : Vu Duc Hai (HE181844)
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header>
     <!--Link to library file-->
@@ -14,53 +14,185 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Intro settings -->
     <style>
-        .navigation-custom{
-            /* Margin to fix overlapping fixed navbar */
-            margin-bottom: 100px;
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body{
+            min-height: 100%;
+            
         }
 
+        nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }   
+        
+        nav .logo{
+            display: flex;
+            align-items: center;
+            margin: 0 24px;
+        }
+        
+        .logo .menu-icon{
+            color: #333;
+            font-size: 24px;
+            margin-right: 14px;
+            cursor: pointer;
+        }
+        
+        .logo .logo-name{
+            color: #333;
+            font-size: 22px;
+            font-weight: 500;
+        }
+        
+        nav .sidebar{
+            position: fixed;
+            top: 0;
+            left: -100%;
+            padding: 20px 0;
+            height: 100%;
+            width: 260px;
+            background-color: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: all 1s ease;
+        }
+        
+        
+        nav.open .sidebar{
+            left: 0;
+        }
+        
+        .sidebar .sidebar-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 16px;
+            height: 100%;
+        }
+        
+        .sidebar-content .list{
+            list-style: none;
+        }
+        
+        .list .nav-link{
+            display: flex;
+            align-items: center;
+            padding: 14px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+           
+        }
+        
+        .nav-link:hover{
+            background-color: #4070f4;
+        }
+        
+        .nav-link .icon{
+            margin-right: 14px;
+            font-size:  20px;
+            color: #707070;
+            
+        }
+        
+        .nav-link .link{
+            font-size:  16px;
+            color: #707070;
+            font-weight: 400;
+        }
+        
+        .nav-link:hover .icon, .nav-link:hover .link{
+            color: #fff;
+        }
+        
+        .overlay{
+            position: fixed;
+            top: 0;
+            left: 260px;
+            height: 1000vh;
+            width: 100%;
+            
+        }
     </style>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top navigation-custom">
-        <div class="container-fluid">   
+        <div class="container-fluid">
+            <div class="logo">
+                <i class='bx bx-menu menu-icon'></i>
+                <span class="logo-name">Shopify</span> 
+            </div>
+            
+            <div class="sidebar">
+                <div class="logo">
+                    <i class='bx bx-menu menu-icon'></i>
+                    <span class="logo-name">Shopify</span> 
+                </div>
+                <div class="sidebar-content">
+                    <ul class="lists">
+                        <li class="list">
+                            <a href="./home" class="nav-link">
+                                <i class="bx bx-home-alt icon"></i>
+                                <span class="link">Home</span>
+                            </a>
+                        </li>
+                        
+                        <li class="list">
+                            <a href="./PostListMKT" class="nav-link">
+                                <i class='bx bx-news icon'></i>
+                                <span class="link">Posts</span>
+                            </a>
+                        </li>
+                        
+                        <li class="list">
+                            <a href="#" class="nav-link">
+                                <i class='bx bx-box icon'></i>
+                                <span class="link">Products</span>
+                            </a>
+                        </li>
+                    </ul>
+                        <div class="bottom-content"> 
+                            <li class="list">
+                                <a href="#" class="nav-link">
+                                    <i class='bx bx-cog icon'></i>
+                                    <span class="link">Setting</span>
+                                </a>
+                            </li>
+
+                            <li class="list">
+                                <a href="./login" class="nav-link">
+                                    <i class='bx bx-user icon'></i>
+                                    <span class="link">Sign in</span>
+                                </a>
+                            </li>
+                        </div>           
+                </div>
+            </div>
             <!-- Navbar brand -->
-            <a class="navbar-brand" target="_blank" href="#">
+                <a class="navbar-brand" target="_blank" href="#">
                 <img src="https://drive.google.com/uc?export=view&id=1YoYfvxlyzbUCz0kMZ0TufLcRpMxcubhW" height="16" alt=""
                      loading="lazy" style="margin-top: -3px;" />
             </a>
-            <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#navbarExample01"
-                    aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse">
+            
+                <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" aria-current="page" href="#">
-                            <i class="fa-solid fa-house"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown active">
-                        <a class="nav-link" href="#" target="_blank">
-                            <i class="fa-solid fa-list"></i> Danh mục
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Xem giá tại
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Hồ Chí Minh</a>
-                            <a class="dropdown-item" href="#">Hà Nội</a>
-                        </div>
-                    </li>
+
                 </ul>
 
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
                         <a class="nav-link" href="#" target="_blank">
-                            <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="link">Giỏ hàng</span>
                         </a>
                     </li>
 
@@ -73,6 +205,19 @@
             </div>
         </div>
     </nav>
+   
+    <script>
+        const navBar = document.querySelector("nav"),
+              menuBtns = document.querySelectorAll(".menu-icon"),
+              overlay = document.querySelectorAll(".overlay");
+        menuBtns.forEach(menuBtn => {
+          menuBtn.addEventListener("click", () => {
+              navBar.classList.toggle("open");
+          })  
+        })
+        
+        
+    </script>
     <!-- Navbar -->
 </header>
 <!--Main Navigation-->
