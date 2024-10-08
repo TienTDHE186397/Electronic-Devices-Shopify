@@ -183,7 +183,10 @@
             .product-list{
                 padding: 0;
             }
-
+            .center-custom {
+                
+            }
+            /* <!-- Slider css --> */
             .slider-title {
                 font-size: 2rem;
                 font-weight: bold;
@@ -194,6 +197,10 @@
                 font-size: 1.2rem;
                 color: #fff;
                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
+            /* CSS Slider Product List */
+            .product-list{
+                margin: 20px;
             }
         </style>
 
@@ -210,7 +217,7 @@
         <!-- Sidebar start -->
 
         <!-- Phần banner lớn start-->
-        <section id="center" class="center_home container">
+        <section id="center" class="center_home container center-custom">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
@@ -225,17 +232,23 @@
                             <p class="slider-description">Nhiều ưu đãi hấp dẫn đang chờ bạn</p>
                             <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
                         </div>
-                        <style>
-
-                        </style>
+                        
                     </div>
                     <div class="carousel-item">
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/fold-6-km-moi-home-30-8.png" class="d-block w-100" alt="...">
-
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="slider-title">Ưu đãi tháng Samsung</h5>
+                            <p class="slider-description">Khuyến mãi đặc biệt cho các dòng Samsung</p>
+                            <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
+                        </div>
                     </div>
                     <div class="carousel-item">
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-ai-banner-chung-slide.png" class="d-block w-100" alt="...">
-
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="slider-title">Ưu đãi tháng Laptop</h5>
+                            <p class="slider-description">Khuyến mãi đặc biệt cho các dòng laptop</p>
+                            <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
+                        </div>
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -257,7 +270,7 @@
 
         <section class="product-list container">
             <div class="row">
-                <h2 class="col product-type-title">ĐIỆN THOẠI</h2>
+                <h2 class="col product-type-title">Màn hình</h2>
                 <div class="col-md-10 row product-type-select">
                     <a href="#" class="col-auto mobile">Apple</a>
                     <a href="#" class="col-auto mobile">Samsung</a>
@@ -269,22 +282,45 @@
                 </div>    
             </div>
 
-            <div class="container-product-item row container-fluid">
-                <div class="col-auto card-product">
-                    <div class="card position-relative">
-                        <span class="discount-badge">Giảm 15%</span>
-                        <div class="product-image">
-                            <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png" class="card-img-top" alt="iPhone 15 128GB">
-                        </div>   
-                        <div class="card-body">
-                            <h6 class="card-title">iPhone 15 128GB</h6>
-                            <p class="price">19.590.000đ <span class="original-price">22.990.000đ</span></p>
-                            <p>Smember giảm thêm đến <b>196.000đ</b></p>
-                            <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
-                        </div>
+            <div id="productList" class="product-list">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <c:forEach items="${listLaptop}" var="l" varStatus="status">
+                            <c:if test="${status.index % 4 == 0}">
+                                <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                    <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                            </c:if>
+                                        <li class="container-product-item col-md-3">
+                                            <div class="card position-relative">
+                                                <span class="discount-badge">Giảm ${l.getProduct().getSale()}%</span>
+                                                <div class="product-image">
+                                                    <img src="${l.getImg()}" class="card-img-top" alt="none">
+                                                </div>   
+                                                <div class="card-body">
+                                                    <h6 class="card-title">${l.getLapName()}</h6>
+                                                    <p class="price">${l.getPrice()} <span class="original-price">${l.getPrice() * (1 - l.getProduct().getSale() / 100)}đ</span></p>
+                                                    <p>Smember giảm thêm đến <b>196.000đ</b></p>
+                                                    <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                            <c:if test="${status.index % 4 == 3 || status.index == listLaptop.size() - 1}">
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </c:forEach>
                     </div>
                 </div>
-            </div>    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
         </section> 
         <!-- Footer start -->
         <%@include file="footer.jsp" %>

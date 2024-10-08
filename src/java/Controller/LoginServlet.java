@@ -107,20 +107,24 @@ public class LoginServlet extends HttpServlet {
         } else {
             if (user.getRoleID() == 5) {
                 HttpSession session = request.getSession();
+                session.setMaxInactiveInterval(1200);
                 session.setAttribute("user", user);
                 response.sendRedirect("homeAdmin");
             } else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
+                 session.setMaxInactiveInterval(1200);
                 session.setAttribute("user", user);
-                response.sendRedirect("SaleHome.jsp");
+                response.sendRedirect("ProductMKT");
             } else if (user.getRoleID() == 4) {
                 HttpSession session = request.getSession();
+                 session.setMaxInactiveInterval(1200);
                 session.setAttribute("user", user);
-                response.sendRedirect("homeSaleMananger");
+                response.sendRedirect("ProductMKT");
             } else if (user.getRoleID() == 1) {
                 HttpSession session = request.getSession();
+                session.setMaxInactiveInterval(1200);
                 session.setAttribute("user", user);
-                response.sendRedirect("profile.jsp");
+                response.sendRedirect("home.jsp");
                 System.out.println("Personn " + session.getAttribute("user"));
 
             } else {

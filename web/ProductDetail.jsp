@@ -122,6 +122,11 @@
                                 <img src="${pro.getImg()}" alt="Product Image" style="max-width: 200px; max-height: 200px;">
                                 <input  style="background-color: #ddd" name="image" type="file" class="form-control mt-2" >
                             </div>
+                                 <div class="form-group">
+                                <label>Brand</label><br/>
+                                <img src="${pro.getBrand()}" alt="Product Image" style="max-width: 200px; max-height: 200px;">
+                                <input  style="background-color: #ddd" name="image" type="file" class="form-control mt-2" >
+                            </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Views</label>

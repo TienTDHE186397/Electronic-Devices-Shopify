@@ -119,7 +119,7 @@ public class DAOProduct extends DBContext {
         Product product = null;
 
         String sql = "SELECT p.title,p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, "
-                + "p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status, "
+                + "p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status,p.brand"
                 + "pa.AttributeID, pa.AttributeName, pa.AttributeValue "
                 + "FROM Products p "
                 + "LEFT JOIN ProductAttributes pa ON p.ProductID = pa.ProductID "
@@ -149,7 +149,8 @@ public class DAOProduct extends DBContext {
                         rs.getString("publisher"),
                         rs.getString("sortDescription"),
                         rs.getString("description"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("brand")
                 );
 
                 // Giả sử bạn có một phương thức trong lớp Product để thiết lập các thuộc tính
@@ -195,7 +196,7 @@ public class DAOProduct extends DBContext {
     public List<Product> getAllProduct() {
         List<Product> listP = new ArrayList<>();
         String sql = "SELECT  p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID,  p.Quantity, \n"
-                + "p.Sale,  p.img, p.price, p.publisher, p.sortDescription, p.description, p.status\n"
+                + "p.Sale,  p.img, p.price, p.publisher, p.sortDescription, p.description, p.status,p.brand\n"
                 + "FROM Products p\n"
                 + "JOIN ProductAttributes pa ON p.ProductID = pa.ProductID\n"
                 + "GROUP BY\n"
@@ -226,7 +227,8 @@ public class DAOProduct extends DBContext {
                         rs.getString("publisher"),
                         rs.getString("sortDescription"),
                         rs.getString("description"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("brand")
                 );
                 System.out.println("Description: " + rs.getString("description")); // Debugging
                 listP.add(p);

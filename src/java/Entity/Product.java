@@ -24,15 +24,15 @@ public class Product {
     private String sortDescription;
     private String description;
     private String status;
-    
+    private String brand;
 
     public Product() {
     }
 
     public Product(String title, int productID, String productName, int views, Date releaseDate,
-                   int quantitySold, Categories category, int quantity, int sale,
-                   String img, double price, String publisher, String sortDescription,
-                   String description, String status) {
+            int quantitySold, Categories category, int quantity, int sale,
+            String img, double price, String publisher, String sortDescription,
+            String description, String status, String brand) {
         this.title = title;
         this.productID = productID;
         this.productName = productName;
@@ -48,7 +48,27 @@ public class Product {
         this.sortDescription = sortDescription;
         this.description = description;
         this.status = status;
-        
+        this.brand = brand;
+
+    }
+
+    public Product(int productID, String title, String productName, int views, Date releaseDate, int quantitySold, Categories category, int quantity, int sale, String img, double price, String publisher, String sortDescription, String description, String status, String brand) {
+        this.productID = productID;
+        this.title = title;
+        this.productName = productName;
+        this.views = views;
+        this.releaseDate = releaseDate;
+        this.quantitySold = quantitySold;
+        this.category = category;
+        this.quantity = quantity;
+        this.sale = sale;
+        this.img = img;
+        this.price = price;
+        this.publisher = publisher;
+        this.sortDescription = sortDescription;
+        this.description = description;
+        this.status = status;
+        this.brand = brand;
     }
 
     public String getTitle() {
@@ -170,13 +190,18 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     @Override
     public String toString() {
         return "Product{" + "title=" + title + ", productID=" + productID + ", productName=" + productName + ", views=" + views + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", category=" + category + ", quantity=" + quantity + ", sale=" + sale + ", img=" + img + ", price=" + price + ", publisher=" + publisher + ", sortDescription=" + sortDescription + ", Description=" + description + ", status=" + status + ", attributes=" + '}';
     }
-
-    
-
-    
 
 }

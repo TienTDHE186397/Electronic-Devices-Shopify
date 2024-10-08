@@ -4,8 +4,6 @@
  */
 package Controller;
 
-import Entity.Person;
-import DAO.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,13 +11,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author nghie
+ * @author admin
  */
-@WebServlet(name = "UserDetailServlet", urlPatterns = {"/userDetail"})
-public class UserDetailServlet extends HttpServlet {
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,11 +32,9 @@ public class UserDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                DAOPerson dp = new DAOPerson();
-        String id = request.getParameter("PersonID");
-        Person p = dp.getPersonById(id);
-        request.setAttribute("detail", p);
-        request.getRequestDispatcher("UserDetail.jsp").forward(request, response);
+       HttpSession session = request.getSession();
+       session.removeAttribute("user");
+       response.sendRedirect("home.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,9 +63,7 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-             processRequest(request, response);
-
+        processRequest(request, response);
     }
 
     /**
