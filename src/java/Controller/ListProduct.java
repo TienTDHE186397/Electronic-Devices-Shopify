@@ -1,11 +1,11 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
 
-import Entity.Person;
-import DAO.DAOPerson;
+import DAO.DAOProduct;
+import Entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,10 +17,10 @@ import java.util.List;
 
 /**
  *
- * @author nghie
+ * @author admin
  */
-@WebServlet(name = "UserControlServlet", urlPatterns = {"/userControl"})
-public class UserControlServlet extends HttpServlet {
+@WebServlet(name = "ListProduct", urlPatterns = {"/ListProduct"})
+public class ListProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class UserControlServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserControlServlet</title>");
+            out.println("<title>Servlet ListProduct</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserControlServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListProduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,22 +60,11 @@ public class UserControlServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
-        request.setCharacterEncoding("UTF-8");
-        String search = request.getParameter("search");
-        String gender = request.getParameter("gender");
-        String role = request.getParameter("roleid");
-        
-        List<Person> pr = dp.searchPerson(search, role, gender);
-        if(search==null&&gender==null&&role==null){
-        List<Person> listP = dp.getAllPerson();
+        DAOProduct pd = new DAOProduct();
+        List<Product> listP = pd.getAllProduct();
+        System.out.println(listP);
         request.setAttribute("listP", listP);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
-        } else{
-        request.setAttribute("listP", pr);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
-        }
-        
+        request.getRequestDispatcher("ListProduct.jsp").forward(request, response);
     }
 
     /**
