@@ -98,29 +98,6 @@ public class addPostServlet extends HttpServlet {
         
         }
         
-        
-        //-------------------------------------------image--------------------------------------------------------
-        Part part[] = request.getPartV("blogimage");
-        String image = "";
-        String realPath = "";
-        if (part != null && part.getSize() > 0) {
-            realPath = request.getServletContext().getRealPath("blogimages");
-            String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
-            if (!Files.exists(Path.of(realPath))) {
-                Files.createDirectory(Path.of(realPath));
-            }
-            part.write(realPath + "\\" + filename);
-//            if (!filename.endsWith(".jpg")) {
-  //              err = "File ảnh phải kết thúc với đuôi .jpg";
-    //            check = false;
-      //          out.println("Blog Img: " + filename + "<br>");
-        //    } else {
-                image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
-                out.println("Blog Img: " + filename + "<br>");
-          //  }
-        
-        
-        }
 //--------------------------------------------video-------------------------------------------------
         Part part2 = request.getPart("blogvideo");
         String video = "";

@@ -78,16 +78,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add New Blog</title>
         <link rel="stylesheet" href="styles.css">
+
+        <script src="https://cdn.tiny.cloud/1/qnmf6c0u3j7wk6wsljsqwke06htozhifzb9v9fs3pw2ed7vx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+       
+
     </head>
 
     <body>
-
+        
+       
         <c:set value="${requestScope.listType}" var="listType" />
 
         <div class="container">
             <h2>Add New Blog</h2>
             <form action="addPost" method="post"  enctype="multipart/form-data">
-
 
                 <label for="blogtype">Blog Type: <a href="#">(ADD NEW BLOG TYPE +)</a></label>
                 <select name="blogtype" id="customSelect" onchange="document.getElementById('f1').submit()">
@@ -97,26 +102,18 @@
                     </c:forEach>
                 </select>
 
-
                 <label for="blogTitle">Blog Title:</label>
                 <input type="text" id="blogTitle" name="blogtittle" placeholder="Tittle Blog....." required>
 
                 <label for="blogSummary">Blog Summary Information:</label>
-                <textarea id="blogSummary" name="blogsummary" placeholder="Summary Blog......" rows="4" required></textarea>
+                <input type="text" id="blogTitle" name="blogsummary" placeholder="Summary Blog......" required>
 
+                <!-- comment -->
                 <label for="blogDetail">Blog Detail:</label>
-                <textarea style="height: 200px;" id="blogDetail" placeholder="Write A Blog......." name="blogdetail" rows="6" required ></textarea>
+                <textarea style="height: 200px;"  class="tinymce" placeholder="Write A Blog......." name="blogdetail" rows="6" required ></textarea>
                 <br/>
+                <!-- comment -->
 
-
-                <div class="form-group">
-                    <label>Blog Detail Image</label>
-                    <input type="file" class="form-control" id="centeredInput" accept=".jpg" name="blogdetailimage">
-                    <input type="text" class="form-control" id="centeredInput" name="blogimagetittle" style="width: 171px; height: 23px;" placeholder="Tittle Image...">
-                </div>
-                <div id="additionalSections"></div>
-
-                <button type="button" id="addMore" style="margin-bottom: 15px;">Add More Blog Detail & Image</button>
 
                 <label for="blogStatus">Blog Status:</label>
                 <select id="blogStatus" name="blogstatus" required>
@@ -135,8 +132,7 @@
                 <input type="file" class="form-control" id="centeredInput" accept=".mp4" name="blogvideo">
 
 
-
-                <button type="submit">Add Blog</button>
+                <input type="submit">
 
             </form>
         </div>
@@ -144,30 +140,16 @@
 
 
     </body>
+    
+    
+      <script>
+            tinymce.init({
+                selector: '.tinymce',
+                plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                toolbar_mode: 'floating'
+                });
+        </script>
 
 
-    <script>
-
-
-        document.getElementById('addMore').addEventListener('click', function () {
-
-            var newSection = `
-             <label for="blogDetail">Blog Detail:</label>
-                <textarea style="height: 200px; width: 579px;;" id="blogDetail" placeholder="Write A Blog......." name="blogdetail" rows="6"></textarea>
-                <br/>
-
-
-                <div class="form-group">
-                    <label>Blog Detail Image</label>
-                    <input type="file" class="form-control" id="centeredInput" accept=".jpg" name="blogdetailimage">
-                    <input type="text" class="form-control" id="centeredInput" name="blogimagetittle" style="width: 171px; height: 23px;" placeholder="Tittle Image...">
-                </div>
-        `;
-
-            document.getElementById('additionalSections').insertAdjacentHTML('beforeend', newSection);
-
-        });
-
-    </script>
 
 </html>
