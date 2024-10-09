@@ -9,7 +9,6 @@ import java.lang.*;
 
 public class Product {
 
-    private String title;
     private int productID;
     private String title;
     private String productName;
@@ -136,41 +135,6 @@ public class Product {
         this.views = views;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public int getQuantitySold() {
-        return quantitySold;
-    }
-
-    public void setQuantitySold(int quantitySold) {
-        this.quantitySold = quantitySold;
-    }
-
-    public Categories getCategory() {
-        return category;
-    }
-
-    public void setCategory(Categories category) {
-        this.category = category;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getSale() {
-        return sale;
-    }
 
     public void setSale(int sale) {
         this.sale = sale;
@@ -199,6 +163,8 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    
 
     @Override
     public String toString() {
