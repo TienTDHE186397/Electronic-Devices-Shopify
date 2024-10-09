@@ -183,11 +183,6 @@
                 </div>
             </div>
             <!-- Navbar brand -->
-                <a class="navbar-brand" target="_blank" href="#">
-                <img src="https://drive.google.com/uc?export=view&id=1YoYfvxlyzbUCz0kMZ0TufLcRpMxcubhW" height="16" alt=""
-                     loading="lazy" style="margin-top: -3px;" />
-            </a>
-            
                 <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
