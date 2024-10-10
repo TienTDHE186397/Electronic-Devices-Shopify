@@ -296,6 +296,7 @@
                                             <th>Selling Price</th>
                                             <th>Sale</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -316,12 +317,10 @@
                                                 <td>${p.price - ((p.sale)*(p.price))/100}</td>
                                                 <td>${p.sale}</td>
                                                 <td>${p.status}</td>
-
+                                                <td><a style="color: red" href="ProductDetail?ID=${p.getProductID()}">Edit</a></td>
+                                                
                                             </tr>
                                         </c:forEach>
-
-
-
                                     </tbody>
 
                                 </table>

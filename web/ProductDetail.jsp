@@ -96,16 +96,19 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-
+                
             <div class="container mt-5">
                 <div class="main">
+                   
                     <section class="hero">
+                       
                         <form action="ProductDetail" method="post" class="p-4 border rounded" enctype="multipart/form-data">
                             <input style="background-color: #ddd" type="hidden" name="idhi" value="${pro.getProductID()}"> 
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Product</h4>
                             <button style="background-color: #ddd" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
+                            <h3>${mess}</h3>
                         <div class="modal-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -120,7 +123,7 @@
                             <div class="form-group">
                                 <label>IMG</label><br/>
                                 <img src="${pro.getImg()}" alt="Product Image" style="max-width: 200px; max-height: 200px;">
-                                <input  style="background-color: #ddd" name="image" type="file" class="form-control mt-2" >
+                                <input  style="background-color: #ddd" name="image" type="file" class="form-control mt-2" value="${pro.getImg()}">
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -187,20 +190,29 @@
                             <c:forEach items="${ivideo}" var="i">
                                 <option value="${c.categoryID}" ${(c.categoryID == pro.category.categoryID) ? "selected" : "" } >${c.categoryName}</option>
                             </c:forEach>
+                               
                             <c:forEach items="${attribute}" var="a">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <input type="text" style="background-color: #ddd"  placeholder="Enter attribute name" style="font-weight: bold;"value="${a.getAttributeName()}" 
+                                <div class="form-row" id="row-${a.getAttributeID()}">
+
+                                    <div class="form-group col-md-5">
+                                        <input type="text" style="background-color: #ddd" placeholder="Enter attribute name" value="${a.getAttributeName()}" 
                                                name="attributeName" class="form-control" required>
-                                        <input type="hidden" name="oldAttributeName" value="${a.getAttributeName()}"/>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="text"  style="background-color: #ddd" placeholder="Enter value"  style="color: #003eff;"   value="${a.getAttributeValue()}" 
+                                        <input type="text" style="background-color: #ddd" placeholder="Enter value" value="${a.getAttributeValue()}" 
                                                name="attributeValue" class="form-control" required>
-                                        <input type="hidden"  style="background-color: #ddd"name="oldAttributeValue" value="${a.getAttributeValue()}"/>
+                                    </div>
+                                    <div class="form-group col-md-1">
+
+                                        <form action="DeleteAttributeServlet" method="post" onsubmit="return confirmDelete();">
+                                        <input type="hidden" name="idhi" value="${pro.getProductID()}"> 
+                                            <input type="hidden" name="attributeID" value="${a.getAttributeID()}">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirmDelete();">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </c:forEach>
+
                             <button type="button" class="btn btn-primary" onclick="addAttribute()">Thêm thuộc tính</button>
                             <button type="button" class="btn btn-primary" onclick="addVideoImage()">Thêm Video,ảnh</button>
                             <div class="form-group col-md-3">
@@ -226,6 +238,10 @@
 
             <script>
                 let attributeCount = 0; // Khởi tạo attributeCount bên ngoài hàm
+                function confirmDelete() {
+                    console.log('Confirm delete called');
+                    return confirm('Are you sure you want to delete this attribute?');
+                }
 
                 function addAttribute() {
                     const attributeContainer = document.getElementById('attributeContainer');

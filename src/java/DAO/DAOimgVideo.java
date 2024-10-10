@@ -20,10 +20,11 @@ public class DAOimgVideo extends DBContext {
 
     public List<ImageVideo> getImByProductID(int productID) {
         List<ImageVideo> listP = new ArrayList<>();
-        String sql = "Select pim.img_video_id, pim.img_video_url, pim.alt_text\n"
-                + "from ProductImgVideo pim \n"
-                + "LEFT JOIN Products p ON p.ProductID = pim.ProductID \n"
-                + "where p.ProductID = ?";
+
+        String sql = "Select pim.image_id, pim.image_url, pim.alt_text\n"
+                + "                from ProductImages pim \n"
+                + "                LEFT JOIN Products p ON p.ProductID = pim.ProductID \n"
+                + "                where p.ProductID = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -33,8 +34,8 @@ public class DAOimgVideo extends DBContext {
             // Sử dụng while để lấy tất cả các bản ghi
             while (rs.next()) {
                 ImageVideo proImgVi = new ImageVideo(productID,
-                        rs.getInt("img_video_id"),
-                        rs.getString("img_video_url"),
+                        rs.getInt("image_id"),
+                        rs.getString("image_url"),
                         rs.getString("alt_text"));
                 listP.add(proImgVi);
             }
@@ -46,9 +47,10 @@ public class DAOimgVideo extends DBContext {
     }
 
     public boolean addImageVi(int productId, String img_video_url, String alt_text) {
-        String sql = "INSERT INTO ProductImgVideo (ProductID, img_video_url,alt_text)\n"
-                + "VALUES \n"
-                + "(?, ?, ?);";
+       
+        String sql = "INSERT INTO [ProductImages] (ProductID, [image_url],[alt_text])\n"
+                + " VALUES (?,?,?);";
+        
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, productId);
             st.setString(2, img_video_url);
@@ -66,14 +68,12 @@ public class DAOimgVideo extends DBContext {
         for (Object ob : pa) {
             System.out.println(ob);
         }
-        boolean a =  d.addImageVi(2, "img/default-vid.mp4", "Check ADD");
-        if(a)
-        {
+         boolean a = d.addImageVi(2, "img/default-vid.mp4", "Check ADD");
+        if (a) {
             System.out.println("add thanh cong");
+        } else {
+            System.out.println("add that bai");
         }
-        else{
-            System.out.println("add that bai" );
-        }
-
+         
     }
 }

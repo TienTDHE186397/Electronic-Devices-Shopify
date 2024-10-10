@@ -109,35 +109,34 @@ public class ProductDetail extends HttpServlet {
         String title = request.getParameter("title");
         String productName = request.getParameter("productName");
         Part imagePart = request.getPart("image");
-
         String image = "img/default-phone.jpg";
-
         String realImagePath = request.getServletContext().getRealPath("/img");
-        String realVideoPath = request.getServletContext().getRealPath("/img"); 
-
+        String realVideoPath = request.getServletContext().getRealPath("/img");
+        DAOProduct dp = new DAOProduct();
 // Xử lý hình ảnh
-        if (imagePart != null && imagePart.getSize() > 0) {
-
-            realImagePath = request.getServletContext().getRealPath("/img");
+        if (imagePart != null && imagePart.getSize() > 0) { // Chỉ xử lý khi có ảnh mới được upload
             String filename = Path.of(imagePart.getSubmittedFileName()).getFileName().toString();
 
             if (!Files.exists(Path.of(realImagePath))) {
-
                 Files.createDirectory(Path.of(realImagePath));
-                System.out.println( "aaaaa" + Files.createDirectory(Path.of(realImagePath)));
             }
 
-            imagePart.write(realVideoPath + File.separator + filename);
-  
+            imagePart.write(realImagePath + File.separator + filename);
+
+            // Chỉ chấp nhận file ảnh có đuôi .jpg, nếu không sẽ gán ảnh mặc định
             if (!filename.endsWith(".jpg")) {
-
-                image = "img/default-phone.jpg";
-
+                image = "img/default-phone.jpg"; // Ảnh mặc định
             } else {
-                image = realImagePath.substring(realImagePath.length() - 3, realImagePath.length()) + "/" + filename;
+                image = "img/" + filename;
             }
-
+        } else {
+            // Không có ảnh mới, giữ nguyên ảnh cũ
+            // Giả sử ảnh cũ được lưu trữ trong một biến khác từ cơ sở dữ liệu
+            image = dp.getImageById(id); // Lấy ảnh cũ từ cơ sở dữ liệu
         }
+        System.out.println(image);
+        System.out.println(imagePart);
+
 // Xử lý video
 // In ra đường dẫn để kiểm tra
         int views = Integer.parseInt(request.getParameter("views"));
@@ -156,7 +155,6 @@ public class ProductDetail extends HttpServlet {
         String sortDescription = request.getParameter("sortDescription");
         String description = request.getParameter("description");
         String status = request.getParameter("status");
-        System.out.println(description);
         boolean updateSuccessful = true; // Cờ để kiểm tra thành công
         DAOProduct productAttributesDAO = new DAOProduct();
         DAOimgVideo imageDAO = new DAOimgVideo();
@@ -186,6 +184,7 @@ public class ProductDetail extends HttpServlet {
                 }
             }
         }
+        boolean addattri = true;
 
         if (newAttributeNames2 != null && newAttributeValues2 != null) {
             for (int i = 0; i < newAttributeNames2.length; i++) {
@@ -202,7 +201,8 @@ public class ProductDetail extends HttpServlet {
                 }
 
                 if (!exists && value2 != null) {
-                    productAttributesDAO.addProductAttribute(id, newName2, value2);
+                    addattri = productAttributesDAO.addProductAttribute(id, newName2, value2);
+                     
                 }
             }
         }
@@ -234,14 +234,19 @@ public class ProductDetail extends HttpServlet {
                 System.out.println("add that bai");
             }
         }
+        
+        
         if (a || insertSuccessful) {
-            response.sendRedirect("ListProduct");
+            response.sendRedirect("ProductMKT");
         } else {
             response.sendRedirect("error.jsp");
         }
+
         System.out.println("Image path: " + realImagePath);
         System.out.println("Video path: " + realVideoPath);
         System.out.println("Video path: " + vid);
+        System.out.println("--------------------------------------------------------------------------------");
+        
     }
 
 }

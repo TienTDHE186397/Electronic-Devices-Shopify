@@ -111,16 +111,17 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("homeAdmin");
             } else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
+                
                 session.setAttribute("user", user);
-                response.sendRedirect("SaleHome.jsp");
+                response.sendRedirect("SaleHomeEmp?SaleID=" + user.getPersonID());
             } else if (user.getRoleID() == 4) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("homeSaleMananger");
+                response.sendRedirect("SaleHomeManager");
             } else if (user.getRoleID() == 1) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("profile.jsp");
+                response.sendRedirect("home");
                 System.out.println("Personn " + session.getAttribute("user"));
 
             } else {
@@ -128,7 +129,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("user", user);
                 response.sendRedirect("login.jsp");
             }
-
+            System.out.println(user.getPersonID());
         }
 
     }

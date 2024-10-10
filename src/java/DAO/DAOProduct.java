@@ -6,7 +6,6 @@ package DAO;
 
 import Entity.Categories;
 import Entity.Product;
-import Entity.Product2;
 import Entity.ProductAttribute;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -118,13 +117,7 @@ public class DAOProduct extends DBContext {
     public Product getProductById(int productId) {
         Product product = null;
 
-        String sql = "SELECT p.title,p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, "
-                + "p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status, "
-                + "pa.AttributeID, pa.AttributeName, pa.AttributeValue "
-                + "FROM Products p "
-                + "LEFT JOIN ProductAttributes pa ON p.ProductID = pa.ProductID "
-                + "WHERE p.ProductID = ?;";
-
+        String sql = "SELECT * FROM Products WHERE ProductID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, productId);
@@ -135,8 +128,8 @@ public class DAOProduct extends DBContext {
                 Categories cate = cDao.getCategoriesById(rs.getInt("CategoryID"));
                 // Tạo một đối tượng Product mới và thiết lập tất cả các trường
                 product = new Product(
-                        rs.getString("title"),
                         rs.getInt("ProductID"),
+                        rs.getString("title"),
                         rs.getString("ProductName"),
                         rs.getInt("Views"),
                         rs.getDate("releaseDate"),
@@ -149,7 +142,8 @@ public class DAOProduct extends DBContext {
                         rs.getString("publisher"),
                         rs.getString("sortDescription"),
                         rs.getString("description"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("brand")
                 );
 
                 // Giả sử bạn có một phương thức trong lớp Product để thiết lập các thuộc tính
@@ -192,16 +186,19 @@ public class DAOProduct extends DBContext {
         return attributeList; // Return the list of attributes
     }
 
+//int productID, String title, String productName,
+//            int views, Date releaseDate, int quantitySold, Categories category, int quantity, 
+//            int sale, String img, double price, String publisher, String sortDescription,
+//            String description, String status, String brand
     public List<Product> getAllProduct() {
         List<Product> listP = new ArrayList<>();
-        String sql = "SELECT  p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID,  p.Quantity, \n"
-                + "p.Sale,  p.img, p.price, p.publisher, p.sortDescription, p.description, p.status\n"
-                + "FROM Products p\n"
-                + "JOIN ProductAttributes pa ON p.ProductID = pa.ProductID\n"
-                + "GROUP BY\n"
-                + "p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, \n"
-                + "p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status;";
-
+        String sql = "SELECT  p.ProductID,p.title, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID,  p.Quantity, \n"
+                + "                p.Sale,  p.img, p.price, p.publisher, p.sortDescription, p.description, p.status,p.brand\n"
+                + "                FROM Products p\n"
+                + "                JOIN ProductAttributes pa ON p.ProductID = pa.ProductID\n"
+                + "                GROUP BY\n"
+                + "                p.ProductID, p.Views, p.ProductName, p.releaseDate, p.QuantitySold, p.CategoryID, \n"
+                + "                p.Quantity, p.Sale, p.img, p.price, p.publisher, p.sortDescription, p.description, p.status , p.title,p.brand;";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -212,8 +209,8 @@ public class DAOProduct extends DBContext {
 
                 // Create the Product object with aggregated attributes
                 Product p = new Product(
-                        rs.getString("ProductName"),
                         rs.getInt("ProductID"),
+                        rs.getString("title"),
                         rs.getString("ProductName"),
                         rs.getInt("Views"),
                         rs.getDate("releaseDate"),
@@ -226,9 +223,12 @@ public class DAOProduct extends DBContext {
                         rs.getString("publisher"),
                         rs.getString("sortDescription"),
                         rs.getString("description"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("brand")
                 );
+
                 System.out.println("Description: " + rs.getString("description")); // Debugging
+
                 listP.add(p);
             }
         } catch (Exception e) {
@@ -238,60 +238,93 @@ public class DAOProduct extends DBContext {
         return listP;
     }
 
+    public boolean deleteAttribute(int attributeID) {
+        String sql = "DELETE FROM [dbo].[ProductAttributes] \n"
+                + "      WHERE AttributeID = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, attributeID);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0; // Trả về true nếu xóa thành công
+        } catch (Exception e) {
+            e.printStackTrace(); // Ghi log lỗi
+            return false; // Trả về false nếu có lỗi xảy ra
+        }
+    }
+
+    public String getImageById(int productId) {
+        String image = "img/default-phone.jpg"; // Đường dẫn ảnh mặc định
+        String sql = "SELECT img \n"
+                + "FROM Products \n"
+                + "WHERE ProductID = ?"; // Thay bằng tên bảng của bạn
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                image = rs.getString("img");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
     public static void main(String[] args) {
         DAOProduct p = new DAOProduct();
-        List<Product> list = p.getAllProduct();
-        for (Product product : list) {
-            System.out.println(product);
-        }
-//        if (list != null && !list.isEmpty()) {
-//            System.out.println("There are products in the list.");
-//            for (Product o : list) {
-//                System.out.println("Product: " + o);
-//            }
-//        } else {
-//            System.out.println("No products found.");
-//        }
-//        List<ProductAttribute> attributeList = p.getProductAttributesById(1);
-//
-//        if (attributeList != null && !attributeList.isEmpty()) {
-//            System.out.println("Attributes for Product ID 1:");
-//            for (ProductAttribute attr : attributeList) {
-//                System.out.println(attr);
-//            }
-//        } else {
-//            System.out.println("No attributes found for Product ID 1.");
-//        }
-//        int productId = 2; // Thay đổi theo ID sản phẩm bạn muốn thử nghiệm
-//        String[] oldAttributeNames = {"RAM Updated", "Screen Size", "Battery Capacity"};
-//        String[] newAttributeNames = {"RAM Updated2", "Screen Size2", "Battery Capacity2"};
-//        String[] attributeValues = {"12", "12 inches", "12Amh"};
-//        for (int i = 0; i < oldAttributeNames.length; i++) {
-//            String newName = newAttributeNames[i]; // Tên thuộc tính mới từ input
-//            String value = attributeValues[i]; // Giá trị thuộc tính mới từ input
-//            String oldName = oldAttributeNames[i];
-//            Boolean check = p.updateProductAttributes(productId, oldName, newName, value);
-//            if (check) {
-//                System.out.println("Cập nhật thuộc tính thành công!");
-//            } else {
-//                System.out.println("Cập nhật thuộc tính thất bại!");
-//            }
-//        }
-//        int productId = 1; // Change this to an actual product ID
-////        String attributeName = "Color"; // Example attribute name
-////        String attributeValue = "Red"; // Example attribute value
-//        String[] attributeName = {"RED", "RED"};
-//        String[] attributeValue = {"Blue", "Blue"};
-//        for (int i = 0; i < attributeName.length; i++) {
-//            String newName = attributeName[i]; // Tên thuộc tính mới từ input
-//            String value = attributeValue[i]; // Giá trị thuộc tính mới từ input
-//
-//            Boolean check = p.addProductAttribute(productId, newName, value);
-//            if (check) {
-//                System.out.println("Cập nhật thuộc tính thành công!");
-//            } else {
-//                System.out.println("Cập nhật thuộc tính thất bại!");
-//            }
-//        }
+        Product d = p.getProductById(2);
+        System.out.println(d.getImg());
+        System.out.println(d != null ? d : "Product with ID not found"); // Kiểm tra sản phẩm
+        String a = p.getImageById(2);
+        System.out.println(a);
+        //        if (list != null && !list.isEmpty()) {
+                //            System.out.println("There are products in the list.");
+                //            for (Product o : list) {
+                //                System.out.println("Product: " + o);
+                //            }
+                //        } else {
+                //            System.out.println("No products found.");
+                //        }
+                //        List<ProductAttribute> attributeList = p.getProductAttributesById(1);
+                //
+                //        if (attributeList != null && !attributeList.isEmpty()) {
+                //            System.out.println("Attributes for Product ID 1:");
+                //            for (ProductAttribute attr : attributeList) {
+                //                System.out.println(attr);
+                //            }
+                //        } else {
+                //            System.out.println("No attributes found for Product ID 1.");
+                //        }
+                //        int productId = 2; // Thay đổi theo ID sản phẩm bạn muốn thử nghiệm
+                //        String[] oldAttributeNames = {"RAM Updated", "Screen Size", "Battery Capacity"};
+                //        String[] newAttributeNames = {"RAM Updated2", "Screen Size2", "Battery Capacity2"};
+                //        String[] attributeValues = {"12", "12 inches", "12Amh"};
+                //        for (int i = 0; i < oldAttributeNames.length; i++) {
+                //            String newName = newAttributeNames[i]; // Tên thuộc tính mới từ input
+                //            String value = attributeValues[i]; // Giá trị thuộc tính mới từ input
+                //            String oldName = oldAttributeNames[i];
+                //            Boolean check = p.updateProductAttributes(productId, oldName, newName, value);
+                //            if (check) {
+                //                System.out.println("Cập nhật thuộc tính thành công!");
+                //            } else {
+                //                System.out.println("Cập nhật thuộc tính thất bại!");
+                //            }
+                //        }
+                //        int productId = 1; // Change this to an actual product ID
+                ////        String attributeName = "Color"; // Example attribute name
+                ////        String attributeValue = "Red"; // Example attribute value
+                //        String[] attributeName = {"RED", "RED"};
+                //        String[] attributeValue = {"Blue", "Blue"};
+                //        for (int i = 0; i < attributeName.length; i++) {
+                //            String newName = attributeName[i]; // Tên thuộc tính mới từ input
+                //            String value = attributeValue[i]; // Giá trị thuộc tính mới từ input
+                //
+                //            Boolean check = p.addProductAttribute(productId, newName, value);
+                //            if (check) {
+                //                System.out.println("Cập nhật thuộc tính thành công!");
+                //            } else {
+                //                System.out.println("Cập nhật thuộc tính thất bại!");
+                //            }
+                //        }
     }
 }

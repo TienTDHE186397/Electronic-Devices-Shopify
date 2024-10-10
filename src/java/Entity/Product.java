@@ -25,13 +25,16 @@ public class Product {
     private String description;
     private String status;
     private String brand;
-    
-    
-    
+
     public Product() {
     }
 
-    public Product(int productID, String title, String productName, int views, Date releaseDate, int quantitySold, Categories category, int quantity, int sale, String img, double price, String publisher, String sortDescription, String description, String status,String brand) {
+
+
+    public Product(int productID, String title, String productName,
+            int views, Date releaseDate, int quantitySold, Categories category, int quantity, 
+            int sale, String img, double price, String publisher, String sortDescription,
+            String description, String status, String brand) {
         this.productID = productID;
         this.title = title;
         this.productName = productName;
@@ -57,7 +60,6 @@ public class Product {
     public void setBrand(String brand) {
         this.brand = brand;
     }
-    
 
     public int getProductID() {
         return productID;
@@ -170,8 +172,5 @@ public class Product {
     public String toString() {
         return "Product{" + "productID=" + productID + ", title=" + title + ", productName=" + productName + ", views=" + views + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", category=" + category + ", quantity=" + quantity + ", sale=" + sale + ", img=" + img + ", price=" + price + ", publisher=" + publisher + ", sortDescription=" + sortDescription + ", description=" + description + ", status=" + status + ", brand=" + brand + '}';
     }
-    
-    
-    
 
 }
