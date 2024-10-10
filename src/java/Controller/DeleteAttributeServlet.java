@@ -4,11 +4,7 @@
  */
 package Controller;
 
-import DAO.SaleDAO;
-import Entity.OrderByDay;
-import Entity.OrderStatus;
-import Entity.SaleHomeOrder;
-import jakarta.servlet.RequestDispatcher;
+import DAO.DAOProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,14 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "SaleHomeManager", urlPatterns = {"/SaleHomeManager"})
-public class SaleHomeServlet extends HttpServlet {
+@WebServlet(name = "DeleteAttributeServlet", urlPatterns = {"/DeleteAttributeServlet"})
+public class DeleteAttributeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +37,10 @@ public class SaleHomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");
+            out.println("<title>Servlet DeleteAttributeServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteAttributeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,39 +58,7 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SaleDAO saleDAO = new SaleDAO();
-        
-        int totalCount = saleDAO.getTotalOrderCount();
-        
-        List<SaleHomeOrder> list = saleDAO.getOrder();
-        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
-        
-        
-        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
-
-        
-        String[] statusList = new String[orderStatusList.size()];
-        Integer[] countList = new Integer[orderStatusList.size()];
-
-        int i = 0;
-        for (OrderStatus orderStatus : orderStatusList) {
-            statusList[i] = orderStatus.getStatus();
-            countList[i] = orderStatus.getCount();
-            
-            i++;
-        }
-
-        request.setAttribute("data", list);
-        request.setAttribute("statusList", statusList);
-        request.setAttribute("countList", countList);
-        request.setAttribute("ordersByDay", odbList);
-        request.setAttribute("totalCount", totalCount);
-
-       
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeManager.jsp");
-        dispatcher.forward(request, response);
-
-
+        processRequest(request, response);
     }
 
     /**
@@ -109,7 +72,28 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String attributeID = request.getParameter("attributeID");
+        int id = Integer.parseInt(request.getParameter("idhi")); // Lấy ID của sản phẩm từ form
+
+        // Kiểm tra xem attributeID có hợp lệ không
+        if (attributeID != null && !attributeID.isEmpty()) {
+            // Gọi phương thức để xóa thuộc tính trong cơ sở dữ liệu
+            DAOProduct dao = new DAOProduct();
+            boolean isDeleted = dao.deleteAttribute(Integer.parseInt(attributeID));
+
+            // Phản hồi lại người dùng
+            if (isDeleted) {
+                request.setAttribute("mess", "Update Successfull");
+                // Chuyển hướng đến trang chi tiết sản phẩm sau khi xóa thành công
+                response.sendRedirect("ProductDetail?ID=" + id);
+            } else {
+                request.setAttribute("mess", "Cannot Update");
+                response.sendRedirect("ProductDetail?ID=" + id); // Chuyển hướng đến trang lỗi nếu không xóa được
+            }
+        } else {
+            request.setAttribute("mess", "You have some error");
+            response.sendRedirect("ProductDetail?ID=" + id); // Chuyển hướng đến trang lỗi nếu attributeID không hợp lệ
+        }
     }
 
     /**
@@ -122,5 +106,4 @@ public class SaleHomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    }
-
+}
