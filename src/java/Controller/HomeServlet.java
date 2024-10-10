@@ -63,7 +63,7 @@ public class HomeServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO pDao = new ProductDAO();
-       
+        
         
 //==============================================================================\
 
@@ -73,19 +73,17 @@ public class HomeServlet extends HttpServlet{
 /*____________ ProductDAO ----> Homeservlet -----> Home.jsp _________________ */
         List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
         List<Product> listPhoneAndTablet = new ArrayList<>();
-        String brand = request.getParameter("brand");
-        if(brand.equals("all")){
-            listPhoneAndTablet = pDao.getProductByCategory(1);
-        }else{
-            listPhoneAndTablet = pDao.getProductByBrand(1, brand);
-        }
+        
+        
         request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
         request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
         
 //------------------------------------------------------------------------------
 
         List<String> listBLaptop = pDao.getBrandByCategory(2);
-        List<Product> listLaptop = pDao.getProductByCategory(2);   
+        List<Product> listLaptop = pDao.getProductByCategory(2);
+        
+    
         request.setAttribute("list_laptop", listLaptop);
         request.setAttribute("brand_laptop", listBLaptop);
         
