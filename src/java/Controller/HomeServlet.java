@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,13 @@ public class HomeServlet extends HttpServlet{
 //==============================================================================
 /*____________ ProductDAO ----> Homeservlet -----> Home.jsp _________________ */
         List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
-        List<Product> listPhoneAndTablet = pDao.getProductByCategory(1);
+        List<Product> listPhoneAndTablet = new ArrayList<>();
+        String brand = request.getParameter("brand");
+        if(brand.equals("all")){
+            listPhoneAndTablet = pDao.getProductByCategory(1);
+        }else{
+            listPhoneAndTablet = pDao.getProductByBrand(1, brand);
+        }
         request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
         request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
         

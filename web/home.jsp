@@ -278,13 +278,13 @@
 
         <section class="product-list container">
             <div class="row">
-                <h2 class="col product-type-title">Điện Thoại</h2>
+                <h2 class="col-md-6 product-type-title">Điện Thoại - Tablet</h2>
 
-                <div class="col-md-10 row product-type-select">
+                <div class="col-md-6 row product-type-select">
                     <c:forEach items="${brand_phone_and_tablet}" var="brand">
-                        <a href="#" class="col-auto mobile">${brand}</a>
+                        <a href="?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -338,7 +338,7 @@
                     <c:forEach items="${brand_laptop}" var="brand_laptop">
                         <a href="#" class="col-auto mobile">${brand_laptop}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -384,7 +384,7 @@
                     <c:forEach items="${brand_pc}" var="brand_pc">
                         <a href="#" class="col-auto mobile">${brand_pc}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 

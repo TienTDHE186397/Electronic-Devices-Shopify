@@ -3,14 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller;
+package ProductListPublic.Controller;
 
+import Entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ProductListPublic.DAO.ProductDAO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -53,7 +57,47 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+//==============================================================================
+        ProductDAO pDao = new ProductDAO();
+//==============================================================================
+/*__________ ProductDAO ----> ProductList -----> ProductListPublic.jsp ______ */
+        List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
+        List<Product> listPhoneAndTablet = pDao.getProductByCategory(1);
+        request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
+        request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBLaptop = pDao.getBrandByCategory(2);
+        List<Product> listLaptop = pDao.getProductByCategory(2);   
+        request.setAttribute("list_laptop", listLaptop);
+        request.setAttribute("brand_laptop", listBLaptop);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBPc = pDao.getBrandByCategory(3);
+        List<Product> listPc = pDao.getProductByCategory(3);   
+        request.setAttribute("list_pc", listPc);
+        request.setAttribute("brand_pc", listBPc);
+        
+//------------------------------------------------------------------------------
+        List<String> listBMonitor = pDao.getBrandByCategory(4);
+        List<Product> listMonitor = pDao.getProductByCategory(4);   
+        request.setAttribute("list_monitor", listMonitor);
+        request.setAttribute("brand_monitor", listBMonitor);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBHeadphone = pDao.getBrandByCategory(5);
+        List<Product> listHeadphone = pDao.getProductByCategory(5);   
+        request.setAttribute("list_headphone", listHeadphone);
+        request.setAttribute("brand_headphone", listBHeadphone);
+
+//==============================================================================
+    
+    List<Product> lProduct = new ArrayList<>();
+//==============================================================================
+        request.getRequestDispatcher("ProductListPublic.jsp").forward(request, response);
     } 
 
     /** 
@@ -66,7 +110,7 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /** 
