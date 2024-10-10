@@ -72,9 +72,7 @@ public class HomeServlet extends HttpServlet{
 //==============================================================================
 /*____________ ProductDAO ----> Homeservlet -----> Home.jsp _________________ */
         List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
-        List<Product> listPhoneAndTablet = new ArrayList<>();
-        
-        
+        List<Product> listPhoneAndTablet = pDao.getProductByCategory(1);
         request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
         request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
         
