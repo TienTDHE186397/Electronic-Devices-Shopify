@@ -9,6 +9,6 @@
         <url-pattern>/product-list</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-       <welcome-file>home</welcome-file>   <!-- Bạn có thể thay thế bằng trang khác nếu muốn -->
+        <welcome-file>home</welcome-file>
     </welcome-file-list>
 </web-app>

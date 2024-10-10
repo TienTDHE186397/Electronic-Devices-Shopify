@@ -20,6 +20,7 @@ public class DAOimgVideo extends DBContext {
 
     public List<ImageVideo> getImByProductID(int productID) {
         List<ImageVideo> listP = new ArrayList<>();
+
         String sql = "Select pim.image_id, pim.image_url, pim.alt_text\n"
                 + "                from ProductImages pim \n"
                 + "                LEFT JOIN Products p ON p.ProductID = pim.ProductID \n"
@@ -46,8 +47,10 @@ public class DAOimgVideo extends DBContext {
     }
 
     public boolean addImageVi(int productId, String img_video_url, String alt_text) {
+       
         String sql = "INSERT INTO [ProductImages] (ProductID, [image_url],[alt_text])\n"
                 + " VALUES (?,?,?);";
+        
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, productId);
             st.setString(2, img_video_url);
@@ -65,6 +68,12 @@ public class DAOimgVideo extends DBContext {
         for (Object ob : pa) {
             System.out.println(ob);
         }
-       
+         boolean a = d.addImageVi(2, "img/default-vid.mp4", "Check ADD");
+        if (a) {
+            System.out.println("add thanh cong");
+        } else {
+            System.out.println("add that bai");
+        }
+         
     }
 }

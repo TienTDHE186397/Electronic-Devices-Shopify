@@ -137,21 +137,6 @@ public class Product {
         this.views = views;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setQuantitySold(int quantitySold) {
-        this.quantitySold = quantitySold;
-    }
-
-    public void setCategory(Categories category) {
-        this.category = category;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public void setSale(int sale) {
         this.sale = sale;
@@ -180,6 +165,8 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    
 
     @Override
     public String toString() {

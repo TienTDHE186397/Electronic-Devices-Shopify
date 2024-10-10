@@ -136,6 +136,7 @@ public class ProductDetail extends HttpServlet {
         }
         System.out.println(image);
         System.out.println(imagePart);
+
 // Xử lý video
 // In ra đường dẫn để kiểm tra
         int views = Integer.parseInt(request.getParameter("views"));
@@ -184,6 +185,7 @@ public class ProductDetail extends HttpServlet {
             }
         }
         boolean addattri = true;
+
         if (newAttributeNames2 != null && newAttributeValues2 != null) {
             for (int i = 0; i < newAttributeNames2.length; i++) {
                 boolean exists = false;
@@ -199,7 +201,8 @@ public class ProductDetail extends HttpServlet {
                 }
 
                 if (!exists && value2 != null) {
-                   addattri = productAttributesDAO.addProductAttribute(id, newName2, value2);
+                    addattri = productAttributesDAO.addProductAttribute(id, newName2, value2);
+                     
                 }
             }
         }
@@ -232,16 +235,18 @@ public class ProductDetail extends HttpServlet {
             }
         }
         
+        
         if (a || insertSuccessful) {
             response.sendRedirect("ProductMKT");
         } else {
             response.sendRedirect("error.jsp");
         }
-       
+
         System.out.println("Image path: " + realImagePath);
         System.out.println("Video path: " + realVideoPath);
         System.out.println("Video path: " + vid);
         System.out.println("--------------------------------------------------------------------------------");
+        
     }
 
 }
