@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Duc Long
  */
+<<<<<<< HEAD
 @WebFilter(filterName = "EmployeeFilter", urlPatterns = {"/ProductMKT", "/ProductDetail","/SaleHomeEmp"})
 public class Sale implements Filter {
   
@@ -32,6 +33,53 @@ public class Sale implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
        
+=======
+@WebFilter(filterName = "EmployeeFilter", urlPatterns = {"/ProductMKT", "/ProductDetail"})
+public class Sale implements Filter {
+    
+    private static final boolean debug = true;
+
+    // The filter configuration object we are associated with.  If
+    // this value is null, this filter instance is not currently
+    // configured. 
+    private FilterConfig filterConfig = null;
+    
+    public Sale() {
+    }    
+    
+    private void doBeforeProcessing(ServletRequest request, ServletResponse response)
+            throws IOException, ServletException {
+        if (debug) {
+            log("EmployeeFilter:DoBeforeProcessing");
+        }
+    }    
+    
+    private void doAfterProcessing(ServletRequest request, ServletResponse response)
+            throws IOException, ServletException {
+        if (debug) {
+            log("EmployeeFilter:DoAfterProcessing");
+        }
+    }
+
+    /**
+     *
+     * @param request The servlet request we are processing
+     * @param response The servlet response we are creating
+     * @param chain The filter chain we are processing
+     *
+     * @exception IOException if an input/output error occurs
+     * @exception ServletException if a servlet error occurs
+     */
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain)
+            throws IOException, ServletException {
+        
+        if (debug) {
+            log("EmployeeFilter:doFilter()");
+        }
+        
+        doBeforeProcessing(request, response);
+>>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -57,7 +105,11 @@ public class Sale implements Filter {
             t.printStackTrace();
         }
         
+<<<<<<< HEAD
        
+=======
+        doAfterProcessing(request, response);
+>>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
@@ -75,7 +127,55 @@ public class Sale implements Filter {
     /**
      * Return the filter configuration object for this filter.
      */
+<<<<<<< HEAD
    
+=======
+    public FilterConfig getFilterConfig() {
+        return (this.filterConfig);
+    }
+
+    /**
+     * Set the filter configuration object for this filter.
+     *
+     * @param filterConfig The filter configuration object
+     */
+    public void setFilterConfig(FilterConfig filterConfig) {
+        this.filterConfig = filterConfig;
+    }
+
+    /**
+     * Destroy method for this filter
+     */
+    public void destroy() {        
+    }
+
+    /**
+     * Init method for this filter
+     */
+    public void init(FilterConfig filterConfig) {        
+        this.filterConfig = filterConfig;
+        if (filterConfig != null) {
+            if (debug) {                
+                log("EmployeeFilter:Initializing filter");
+            }
+        }
+    }
+
+    /**
+     * Return a String representation of this object.
+     */
+    @Override
+    public String toString() {
+        if (filterConfig == null) {
+            return ("EmployeeFilter()");
+        }
+        StringBuffer sb = new StringBuffer("EmployeeFilter(");
+        sb.append(filterConfig);
+        sb.append(")");
+        return (sb.toString());
+    }
+    
+>>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);        
         
@@ -119,6 +219,13 @@ public class Sale implements Filter {
         }
         return stackTrace;
     }
+<<<<<<< HEAD
  
+=======
+    
+    public void log(String msg) {
+        filterConfig.getServletContext().log(msg);        
+    }
+>>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
     
 }
