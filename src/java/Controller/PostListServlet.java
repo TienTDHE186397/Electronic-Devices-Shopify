@@ -52,7 +52,12 @@ public class PostListServlet extends HttpServlet {
         if (page == null) {
             page = "1";
         }
-      
+        
+        String uri = request.getRequestURI();
+        String queryString = request.getQueryString();
+        
+        request.setAttribute("uri", uri);
+        request.setAttribute("queryString", queryString);
 
         if (tittlewrite == null && authorwrite == null && type == null && statusf == null && sort == null && event == null) {
 

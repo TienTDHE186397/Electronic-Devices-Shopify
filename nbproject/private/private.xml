@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostDetailServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/editPost.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostList.jsp</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/web/addPost.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/editPostServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/addBlogType.jsp</file>
             <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/addPostServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/BlogListDAO.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Blog.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostDetail.jsp</file>
         </group>
     </open-files>
 </project-private>

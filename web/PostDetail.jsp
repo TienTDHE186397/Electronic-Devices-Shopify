@@ -255,7 +255,7 @@
         }
 
         .related-posts {
-            width: 112%; /* Đặt độ rộng 100% để phần này chiếm toàn bộ chiều ngang */
+            width: 400px; /* Đặt độ rộng 100% để phần này chiếm toàn bộ chiều ngang */
             background-color: #222;
             margin-left: 37px;
             padding: 20px;
@@ -298,7 +298,15 @@
             <div class="main-content ">
                 <img src="${B.blog_img}" alt="Laptop with code" class="post-image">
                 <center><h3 style="color: gray; font-style: italic;">${B.blog_img_tittle}</h3><center>
-                        <h1>The Impact of Technology on Modern Society</h1>
+                        <c:if test="${B.blog_flag == 0}">
+                            <h1>${B.blog_tittle}</h1>
+                        </c:if>
+
+                        <c:if test="${B.blog_flag == 1}">
+                            <h1 style="color: red;">${B.blog_tittle}</h1>
+
+                        </c:if>
+
                         <div class="meta">
                             <img src="https://via.placeholder.com/50" alt="Author Image">
                             <span>${B.person.name}</span>
@@ -334,24 +342,19 @@
                             <div class="related-posts">
                                 <h2 style="color: red;">Edit For MKT Manager</h2>
 
-                                <a href="#"><i class="fa-solid fa-pen"></i> Edit this Blog<a> 
+                                <a href="editPost?id=${B.blogID}"><i class="fa-solid fa-pen"></i> Edit this Blog<a> 
                                         <br/>
                                         <br/>
                                         <c:if test="${B.blog_flag == 0}">
-                                            <a href="#"><i class="fa-regular fa-flag"></i> Give flag <a>
+                                            <a href="PostDetail?flag=${B.blogID}"><i class="fa-regular fa-flag"></i> Give flag <a>
                                                 </c:if>
 
                                                 <c:if test="${B.blog_flag == 1}">
-                                                    <a href="#"><i class="fa-solid fa-flag"></i> Remove flag <a>
+                                                    <a href="PostDetail?flag=${B.blogID}"><i class="fa-solid fa-flag"></i> Remove flag <a>
 
                                                         </c:if>
 
 
-                                                        </div>
-                                                        <div class="related-posts">
-                                                            <video height="250px" width="400px" controls>
-                                                                <source src="blogimages\iot cuoi ki.mp4" type="video/mp4" autoplay controls>
-                                                            </video>
                                                         </div>
 
                                                         </div>

@@ -89,50 +89,51 @@
 
 
         <c:set value="${requestScope.listType}" var="listType" />
+        <c:set value="${requestScope.blog}" var="b" />
 
         <div class="container">
-            <h2>Add New Blog</h2>
-            <form action="addPost" method="post"  enctype="multipart/form-data">
-
+            <h2>Edit Blog</h2>
+            <form action="editPost" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="${b.blogID}">
                 <label for="blogtype">Blog Type: <a href="addBlogType.jsp">(ADD NEW BLOG TYPE +)</a></label>
                 <select name="blogtype" id="customSelect" >
                     <option value="">Select Blog Type</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
-                        <option value="${listType.get(c)}" ${(listType.get(c) == param.type) ? "selected" : ""} >${listType.get(c)}</option>
+                        <option value="${listType.get(c)}" ${(b.blog_type == listType.get(c)) ? "selected" : ""} >${listType.get(c)}</option>
                     </c:forEach>
                 </select>
 
                 <label for="blogTitle">Blog Title:</label>
-                <input type="text" id="blogTitle" name="blogtittle" placeholder="Tittle Blog....." required>
+                <input type="text" id="blogTitle" value="${b.blog_tittle}" name="blogtittle" placeholder="Tittle Blog....." required>
 
                 <label for="blogSummary">Blog Summary Information:</label>
-                <input type="text" id="blogTitle" name="blogsummary" placeholder="Summary Blog......" required>
+                <input type="text" id="blogTitle" value="${b.blog_summary_information}" name="blogsummary" placeholder="Summary Blog......" required>
 
                 <!-- comment -->
                 <label for="blogDetail">Blog Detail:</label>
-                <textarea style="height: 200px;"  class="tinymce" placeholder="Write A Blog......." name="blogdetail" rows="6"></textarea>
+                <textarea style="height: 200px;"  class="tinymce" placeholder="Write A Blog......." name="blogdetail" rows="6">${b.blog_detail}</textarea>
                 <br/>
                 <!-- comment -->
 
                 <label for="blogStatus">Blog Status:</label>
                 <select id="blogStatus" name="blogstatus" required>
-                    <option value="Published">Published</option>
-                    <option value="Hided">Hided</option>
+                    <option value="Published" ${(b.blog_status == "Published") ? "selected" : ""} >Published</option>
+                    <option value="Hided" ${(b.blog_status == "Hided") ? "selected" : ""} >Hided</option>
                 </select>
 
                 <div class="form-group">
                     <label>Image Blog</label>
                     <input type="file" class="form-control" id="centeredInput" accept=".jpg" name="blogimage">
-                    <input type="text" class="form-control" id="centeredInput" name="imagetittle" style="width: 367px; height: 23px;" placeholder="Tittle Image..." required>
+                    <input type="text" class="form-control" id="centeredInput" value="${blog.blog_img_tittle}" name="imagetittle" style="width: 367px; height: 23px;" placeholder="Tittle Image..." required>
 
                      <b>Blog Flag:</b> <select name="blogflag" id="customSelect">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0" ${(b.blog_flag == "0") ? "selected" : ""}>No</option>
+                        <option value="1" ${(b.blog_flag == "1") ? "selected" : ""}>Yes</option>
                     </select>
                 </div>
                 
                 
-                <button type="submit">Add Blog</button>
+                <button type="submit">Edit Blog</button>
             </form>
         </div>
 

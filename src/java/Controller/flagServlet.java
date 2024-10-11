@@ -16,8 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.lang.*;
 
-@WebServlet(name = "PostDetailServlet", urlPatterns = {"/PostDetail"})
-public class PostDetailServlet extends HttpServlet {
+@WebServlet(name = "flagServlet", urlPatterns = {"/flagServlet"})
+public class flagServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,10 +26,10 @@ public class PostDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PostDetailServlet</title>");
+            out.println("<title>Servlet flagServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PostDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet flagServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -38,39 +38,21 @@ public class PostDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+
         BlogListDAO blogDAO = new BlogListDAO();
         String id_raw = request.getParameter("id");
-        List<Blog> listRB;
-        String flag_raw = request.getParameter("flag");
 
-        if (flag_raw != null) {
+        try {
+            int id = Integer.parseInt(id_raw);
+            Blog b = blogDAO.getBlogById(id);
+            blogDAO.changeBlogFlag(b);
 
-            try {
-
-                int id = Integer.parseInt(flag_raw);
-                Blog blog = blogDAO.getBlogById(id);
-                blogDAO.changeBlogFlag(blog);
-                listRB = blogDAO.getRelatedBlog(blog);
-                request.setAttribute("blog", blog);
-                request.setAttribute("listRB", listRB);
-                response.sendRedirect("PostDetail?id=" + id);
-            } catch (Exception e) {
-
-            }
-
-        } else {
-            try {
-                int id = Integer.parseInt(id_raw);
-                Blog blog = blogDAO.getBlogById(id);
-                listRB = blogDAO.getRelatedBlog(blog);
-                request.setAttribute("blog", blog);
-                request.setAttribute("listRB", listRB);
-                request.getRequestDispatcher("PostDetail.jsp").forward(request, response);
-
-            } catch (Exception e) {
-            }
+        } catch (Exception e) {
 
         }
+            
+        request.getRequestDispatcher("PostListMKT").forward(request, response);
 
     }
 

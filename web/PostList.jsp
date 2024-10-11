@@ -395,7 +395,12 @@
                                                                     <td>
                                                                         <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
                                                                     </td>
-                                                                    <td>${blog.blog_tittle}</td>
+                                                                    <c:if test="${blog.blog_flag == 0}">
+                                                                        <td><b>${blog.blog_tittle}</b></td>
+                                                                    </c:if>
+                                                                    <c:if test="${blog.blog_flag == 1}">
+                                                                        <td style="color: red;"><b>${blog.blog_tittle}</b></td>
+                                                                            </c:if>
                                                                     <td>${blog.blog_type}</td>
                                                                     <td>${blog.person.name}</td>
                                                                     <td>${blog.blog_update_time}</td>
@@ -403,13 +408,13 @@
                                                                     <td>${blog.blog_status}</td>
                                                                     <td><a href="PostDetail?id=${blog.blogID}"><i class="fa-regular fa-eye"></i></a>
                                                                         &nbsp;
-                                                                        <a href="#"><i class="fa-solid fa-pen"></i></a>
+                                                                        <a href="editPost?id=${blog.blogID}"><i class="fa-solid fa-pen"></i></a>
                                                                         &nbsp; 
                                                                         <c:if test="${blog.blog_flag == 0}">
-                                                                            <a href="#"><i class="fa-regular fa-flag"></i></a>
+                                                                            <a href="flagServlet?id=${blog.blogID}"><i class="fa-regular fa-flag"></i></a>
                                                                             </c:if>
                                                                             <c:if test="${blog.blog_flag == 1}">
-                                                                            <a><i class="fa-solid fa-flag"></i></a>
+                                                                            <a href="flagServlet?id=${blog.blogID}"><i class="fa-solid fa-flag"></i></a>
                                                                             </c:if>
                                                                     </td>
                                                                 </tr>

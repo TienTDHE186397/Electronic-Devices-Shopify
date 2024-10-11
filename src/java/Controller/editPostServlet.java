@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import DAO.BlogListDAO;
-import DAO.CategoryDAO;
 import DAO.DAOPerson;
-import DAO.PersonDAO;
 import Entity.Blog;
-import Entity.Categories;
 import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,9 +21,9 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@WebServlet(name = "addPostServlet", urlPatterns = {"/addPost"})
+@WebServlet(name = "editPostServlet", urlPatterns = {"/editPost"})
 @MultipartConfig
-public class addPostServlet extends HttpServlet {
+public class editPostServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,10 +32,10 @@ public class addPostServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addPostServlet</title>");
+            out.println("<title>Servlet editPostServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addPostServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet editPostServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,9 +49,20 @@ public class addPostServlet extends HttpServlet {
 
         List<String> listBlogType = blogDAO.getDistinctOfBlogType();
 
+        String id_raw = request.getParameter("id");
+
+        try {
+            int id = Integer.parseInt(id_raw);
+            Blog b = blogDAO.getBlogById(id);
+            request.setAttribute("blog", b);
+
+        } catch (Exception e) {
+
+        }
+
         request.setAttribute("listType", listBlogType);
 
-        request.getRequestDispatcher("addPost.jsp").forward(request, response);
+        request.getRequestDispatcher("editPost.jsp").forward(request, response);
 
     }
 
@@ -95,28 +99,7 @@ public class addPostServlet extends HttpServlet {
                 blog_image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
             }
         }
-//--------------------------------------------video-------------------------------------------------
-        Part part2 = request.getPart("blogvideo");
-        String blog_video = "";
-        String realPath2 = "";
-        if (part2 != null && part2.getSize() > 0) {
-            realPath2 = request.getServletContext().getRealPath("blogvideos");
-            String filename2 = Path.of(part2.getSubmittedFileName()).getFileName().toString();
-            if (!Files.exists(Path.of(realPath2))) {
-                Files.createDirectory(Path.of(realPath2));
-            }
-            part2.write(realPath2 + "\\" + filename2);
-            if (!filename2.endsWith(".mp4")) {
-
-                err2 = "File video phải kết thúc với đuôi .mp4";
-                check = false;
-
-            } else {
-                blog_video = realPath2.substring(realPath2.length() - 10, realPath2.length()) + "/" + filename2;
-            }
-        }
 //--------------------------------------------------------------------------------------------------
-
         int blog_flag_i = 0;
         try {
             blog_flag_i = Integer.parseInt(blog_flag);
@@ -134,25 +117,35 @@ public class addPostServlet extends HttpServlet {
         Person person = perDAO.getPersonById("6");
 
         BlogListDAO blogDAO = new BlogListDAO();
-        List<Blog> list = blogDAO.getAllBlog();
 
-        Blog b = new Blog(list.size() + 1,
-                blog_image,
-                image_tittle,
-                blog_tittle,
-                blog_type,
-                blog_summary,
-                formattedDate,
-                blog_detail,
-                0,
-                blog_status,
-                blog_flag_i,
-                person);
+        String id_raw = request.getParameter("id");
+        
 
-        blogDAO.insertBlog(b, person);
+        try {
+            int id = Integer.parseInt(id_raw);
+            Blog b = blogDAO.getBlogById(id);
+            if (blog_image.equals("")) {
+
+            } else {
+                b.setBlog_img(blog_image);
+            }
+            b.setBlog_img_tittle(image_tittle);
+            b.setBlog_tittle(blog_tittle);
+            b.setBlog_type(blog_type);
+            b.setBlog_summary_information(blog_summary);
+            b.setBlog_update_time(formattedDate);
+            b.setBlog_detail(blog_detail);
+            b.setBlog_status(blog_status);
+            b.setBlog_flag(blog_flag_i);
+
+            
+            blogDAO.editBlog(b, person);
+
+        } catch (Exception e) {
+
+        }
 
         response.sendRedirect("PostListMKT");
-
     }
 
     @Override
