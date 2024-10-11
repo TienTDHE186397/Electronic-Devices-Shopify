@@ -4,6 +4,7 @@
  */
 package DAO;
 
+
 import Entity.OrderByDay;
 import Entity.OrderStatus;
 import Entity.SaleHomeOrder;
@@ -226,24 +227,101 @@ public class SaleDAO {
 
         return totalCount;
     }
+}
+
+
+//    public List<Details> getDetails(String orderID) {
+//        List<Details> detail = new ArrayList<>();
+//        String sql = "SELECT \n"
+//                + "    o.OrderID,\n"
+//                + "    p.Name AS cusName,\n"
+//                + "    p.Email,\n"
+//                + "    p.Phone AS mobile,\n"
+//                + "    o.OrderDate,\n"
+//                + "    o.TotalMoney AS totalCost,\n"
+//                + "    s.Name AS saleName,\n"
+//                + "    o.Status,\n"
+//                + "    p.Gender,\n"
+//                + "    p.Address\n"
+//                + "FROM \n"
+//                + "    Orders o\n"
+//                + "JOIN \n"
+//                + "    Person p ON o.PersonID = p.PersonID  -- Customer details\n"
+//                + "LEFT JOIN \n"
+//                + "    Person s ON o.SaleID = s.PersonID  -- Sales employee details (optional)\n"
+//                + "WHERE \n"
+//                + "    o.OrderID = ?;";
+//
+//        try {
+//            PreparedStatement st = connection.prepareStatement(sql);
+//            st.setString(1, orderID);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                Details s = new Details(rs.getInt("OrderID"), 
+//                        rs.getString("cusName"), 
+//                        rs.getString("Email"), 
+//                        rs.getString("mobile"), 
+//                        rs.getDate("OrderDate"), 
+//                        rs.getInt("totalCost"), 
+//                        rs.getString("saleName"), 
+//                        rs.getString("Status"), 
+//                        rs.getString("Gender"), 
+//                        rs.getString("Address"));
+//                detail.add(s);
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//
+//        }
+//        return detail;
+//    }
 
 //    public static void main(String[] args) {
 ////
 //        SaleDAO saleDAO = new SaleDAO();
 //        String status = "Complete";
-//        List<SaleOrderL> l = saleDAO.getOrderLByStatus(status);
+//        List<Details> l = saleDAO.getDetails();
 ////        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
 ////        List<SaleOrder> orderSale = saleDAO.getOrder();
 //        System.out.println(l.get(0).getTotal());
 //
 //        
-//        if (orderStatusList.isEmpty()) {
+//        if (Details.isEmpty()) {
 //            System.out.println("Không có dữ liệu trả về hoặc kết nối không thành công.");
 //        } else {
 //            System.out.println("Dữ liệu trạng thái đơn hàng:");
-//            for (OrderStatus orderStatus : orderStatusList) {
+//            for (OrderStatus orderStatus : Details) {
 //                System.out.println("Trạng thái: " + orderStatus.getStatus() + " - Tổng số đơn hàng: " + orderStatus.getCount());
 //            }
 //        }
-}
+    
+//      public static void main(String[] args) {
+//        // Assuming 'DetailsDAO' is the class where getDetails() is implemented
+//        SaleDAO saleDAO = new SaleDAO();
+//        String orderID = "1";
+//        // Get the details
+//        List<Details> detailsList = saleDAO.getDetails(orderID);
+//
+//        // Check if details are retrieved and print them
+//        if(detailsList.isEmpty()){
+//                System.out.println("trong");
+//        }else{
+//        for (Details detail : detailsList) {
+//            System.out.println("OrderID: " + detail.getOrderID());
+//            System.out.println("Customer Name: " + detail.getCusName());
+//            System.out.println("Email: " + detail.getEmail());
+//            System.out.println("Mobile: " + detail.getMobile());
+//            System.out.println("Order Date: " + detail.getOrderDate());
+//            System.out.println("Total Cost: " + detail.getTotalCost());
+//            System.out.println("Sales Employee: " + detail.getSaleName());
+//            System.out.println("Status: " + detail.getStatus());
+//            System.out.println("Gender: " + detail.getGender());
+//            System.out.println("Address: " + detail.getAddress());
+//            System.out.println("----------------------------");
+//        }
+//    }
+//}
+
+//}
 //}
