@@ -1,59 +1,54 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
 
-import DAO.ProductDAO;
+package ProductListPublic.Controller;
+
 import Entity.Product;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import ProductListPublic.DAO.ProductDAO;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Date: 
- * @author Vu Duc Hai
- * 
- * This Servlet resolve request on homepage, include session of user........
+ *
+ * @author Dokkuhai
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet{
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class ProductList extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ProductList</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProductList at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,16 +56,11 @@ public class HomeServlet extends HttpServlet{
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ProductDAO pDao = new ProductDAO();
-        
-        
-//==============================================================================\
-
-    /* Session or any other servlet please write here */
-        
+    throws ServletException, IOException {
 //==============================================================================
-/*____________ ProductDAO ----> Homeservlet -----> Home.jsp _________________ */
+        ProductDAO pDao = new ProductDAO();
+//==============================================================================
+/*__________ ProductDAO ----> ProductList -----> ProductListPublic.jsp ______ */
         List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
         List<Product> listPhoneAndTablet = pDao.getProductByCategory(1);
         request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
@@ -79,9 +69,7 @@ public class HomeServlet extends HttpServlet{
 //------------------------------------------------------------------------------
 
         List<String> listBLaptop = pDao.getBrandByCategory(2);
-        List<Product> listLaptop = pDao.getProductByCategory(2);
-        
-    
+        List<Product> listLaptop = pDao.getProductByCategory(2);   
         request.setAttribute("list_laptop", listLaptop);
         request.setAttribute("brand_laptop", listBLaptop);
         
@@ -106,12 +94,14 @@ public class HomeServlet extends HttpServlet{
         request.setAttribute("brand_headphone", listBHeadphone);
 
 //==============================================================================
-        request.getRequestDispatcher("home.jsp").forward(request, response);
-    }
+    
+    List<Product> lProduct = new ArrayList<>();
+//==============================================================================
+        request.getRequestDispatcher("ProductListPublic.jsp").forward(request, response);
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -119,18 +109,17 @@ public class HomeServlet extends HttpServlet{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+    throws ServletException, IOException {
         
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

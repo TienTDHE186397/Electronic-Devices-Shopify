@@ -2,18 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-
 package Entity;
-
 
 import java.util.*;
 import java.lang.*;
 
-
 public class Product {
 
-    
     private int productID;
     private String title;
     private String productName;
@@ -29,13 +24,17 @@ public class Product {
     private String sortDescription;
     private String description;
     private String status;
-    
-    
-    
+    private String brand;
+
     public Product() {
     }
 
-    public Product(int productID, String title, String productName, int views, Date releaseDate, int quantitySold, Categories category, int quantity, int sale, String img, double price, String publisher, String sortDescription, String description, String status) {
+
+
+    public Product(int productID, String title, String productName,
+            int views, Date releaseDate, int quantitySold, Categories category, int quantity, 
+            int sale, String img, double price, String publisher, String sortDescription,
+            String description, String status, String brand) {
         this.productID = productID;
         this.title = title;
         this.productName = productName;
@@ -51,6 +50,15 @@ public class Product {
         this.sortDescription = sortDescription;
         this.description = description;
         this.status = status;
+        this.brand = brand;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public int getProductID() {
@@ -129,21 +137,6 @@ public class Product {
         this.views = views;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setQuantitySold(int quantitySold) {
-        this.quantitySold = quantitySold;
-    }
-
-    public void setCategory(Categories category) {
-        this.category = category;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public void setSale(int sale) {
         this.sale = sale;
@@ -174,6 +167,10 @@ public class Product {
     }
     
     
-    
+
+    @Override
+    public String toString() {
+        return "Product{" + "productID=" + productID + ", title=" + title + ", productName=" + productName + ", views=" + views + ", releaseDate=" + releaseDate + ", quantitySold=" + quantitySold + ", category=" + category + ", quantity=" + quantity + ", sale=" + sale + ", img=" + img + ", price=" + price + ", publisher=" + publisher + ", sortDescription=" + sortDescription + ", description=" + description + ", status=" + status + ", brand=" + brand + '}';
+    }
 
 }

@@ -8,7 +8,7 @@ import java.util.*;
 import java.lang.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+//Trung
 public class ProductListDAO extends DBContext {
 
     CategoryDAO cDAO = new CategoryDAO();
@@ -39,6 +39,7 @@ public class ProductListDAO extends DBContext {
                         rs.getString("publisher"),
                         rs.getString("sortDescription"),
                         rs.getString("description"),
+                        rs.getString("brand"),
                         rs.getString("status"));
               
 

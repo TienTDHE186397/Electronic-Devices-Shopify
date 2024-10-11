@@ -171,7 +171,7 @@ public class PersonDAO extends DBContext {
                 String passwordFromDB = rs.getString("Password");
 
                 // Tạo đối tượng Person từ dữ liệu lấy được
-                return new Person(name, gender, age, localDate, address, email, phone, roleID, password);
+                return new Person(personID , name, gender, age, localDate, address, email, phone, roleID, password);
             }
 
         } catch (SQLException e) {
