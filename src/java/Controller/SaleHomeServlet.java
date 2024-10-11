@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package Controller;
 
 import DAO.SaleDAO;
 import Entity.OrderByDay;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author admin
  */
-@WebServlet(name = "SaleHomeManager", urlPatterns = {"/SaleHomeManager"})
+@WebServlet(name = "SaleHomeServlet", urlPatterns = {"/SaleHomeManager"})
 public class SaleHomeServlet extends HttpServlet {
 
     /**
