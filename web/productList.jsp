@@ -177,10 +177,39 @@
             .product-list{
                 padding: 0;
             }
+
+
+            #customSelect {
+                background-color: black;
+                border: 1px solid #555;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-family: 'Arial', sans-serif;
+                font-size: 14px;
+                text-align: center;
+                width: 150px;
+                height: 30px;
+                margin-left: 10px;
+                display: inline-block;
+            }
+
+            #customSelect option {
+                background-color: white;
+                color: black;
+                padding: 10px;
+                font-family: 'Arial', sans-serif;
+            }
+
         </style>
 
     </head>
+
+
     <body>
+
+        <c:set value="${requestScope.listCategory}" var="cate" />
+
 
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
@@ -191,32 +220,65 @@
         <section class="product-list container">
 
 
+            <div>
 
+                <div  style="margin-top: 15px">
+                    <div class="row">
+                        <div class="col-12 mb-3 mb-lg-"> 
+                            <div>
+                                <div style="margin-bottom: 5px">
+                                    <h1>Product List</h1>
+                                    <a href="#">Add new product </a>
 
-            <div  style="margin-top: 15px">
-                <div class="row">
-                    <div class="col-12 mb-3 mb-lg-"> 
-                        <div>
-                            <div style="margin-bottom: 5px">
-                                <h1>Product List</h1>
-                                <span style="background-color: #eeecfd; padding:5px;">TOTAL Product: <b>${requestScope.listP.size()}</b></span>
-                            </div>
+                                    <span style="background-color: #eeecfd; padding:5px;">TOTAL Product: <b>${requestScope.listP.size()}</b></span>
 
-                            <center>
-
-                                <div>
-                                    <div class="row ">
-                                        <a href="#" class="col-auto mobile">Apple</a>
-                                        <a href="#" class="col-auto mobile">Samsung</a>
-                                        <a href="#" class="col-auto mobile">Xiaomi</a>
-                                        <a href="#" class="col-auto mobile">Oppo</a>
-                                        <a href="#" class="col-auto mobile">Vivo</a>
-                                        <a href="#" class="col-auto mobile">Realme</a>
-                                        <a href="#" class="col-auto mobile">Xem tất cả</a>
-                                    </div>    
                                 </div>
 
-                            </center>
+                                <br/>
+                                <br/>
+
+                                <span style="margin: 2px;" >        
+                                    <!-- search -->
+                                    <label for="filter"><b>Search:</b></label>
+                                    <input name="search" type="text" class="form-control" placeholder="Name,Brand,Model" value="${param.search == null ? "":param.search}">
+                                    <div class="row" >
+                                        <!-- from price -->
+                                        <div class="col-md-6">
+                                            <label for="filter"><b>Post Price:</b></label>
+                                            <input name="postedprice" type="number" class="form-control" placeholder="Posted Price" value="${param.postedprice == null ? "":param.postedprice}">
+                                        </div>
+                                        <!-- to price -->
+                                        <div class="col-md-6">
+                                            <label for="filter"><b>Selling Price:</b></label>
+                                            <input name="sellingprice" type="number" class="form-control" placeholder="Selling Price" value="${param.sellingprice == null ? "":param.sellingprice}">
+                                        </div>  
+
+                                    </div>
+                                    <label for="filter"><b>Short Description:</b></label>
+                                    <input name="postedprice" type="text" class="form-control" placeholder="Short Description" value="${param.postedprice == null ? "":param.postedprice}">
+
+                                </span>
+
+                                <div>
+                                    <b>Search:</b>
+
+                                    <div class="row ">
+                                        <select name="category" id="customSelect" onchange="document.getElementById('f1').submit()">
+                                            <option value="0">All</option>
+                                            <c:forEach var="c" begin="0" end="${cate.size() -1}" step ="1">
+                                                <option value="${cate.get(c).getCategoryName()}" ${(cate.get(c).getCategoryName() == param.category) ? "selected" : ""} >${cate.get(c).getCategoryName()}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <select id="customSelect" name="status">
+                                            <option class="col-auto mobile">Available</option>
+                                            <option class="col-auto mobile">Sold Out</option>
+                                            <option class="col-auto mobile">Maintaince</option>
+                                        </select>
+                                    </div>    
+                                </div> 
+                            </div>
+
+
 
 
                             <div class="table-responsive">  
@@ -224,30 +286,43 @@
                                     <thead class="text-uppercase bg-body text-muted">
                                         <tr>
                                             <th>ProductID</th>
+                                            <th>Image</th>
                                             <th>Views</th>
                                             <th>Release Date</th>
                                             <th>Quantity Sold</th>
                                             <th>CategoryID</th>
                                             <th>Quantity</th>
+                                            <th>Posted Price</th>
+                                            <th>Selling Price</th>
                                             <th>Sale</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${requestScope.listP}" var="p">
-                                        <tr class="align-content-between">
-                                            <td>${p.productID}</td>
-                                            <td>${p.views}</td>
-                                            <td>${p.releaseDate}</td>
-                                            <td>${p.quantitySold}</td>
-                                            <td>${p.categoryID}</td>
-                                            <td>${p.quantity}</td>
-                                            <td>${p.sale} %</td>
-                                        </tr>
+                                        <c:forEach items="${requestScope.listP}" var="p">
+                                            <tr class="align-content-between">
+                                                <td>${p.productID}</td>
+                                                <td>
 
-                                    </c:forEach>
+                                                    <img src="${p.img}" class="img-radius" alt="${p.productName}" width="80px" height="80px">
 
-
+                                                </td>
+                                                <td>${p.views}</td>
+                                                <td>${p.releaseDate}</td>
+                                                <td>${p.quantitySold}</td>
+                                                <td>${p.category.categoryName}</td>
+                                                <td>${p.quantity}</td>
+                                                <td>${p.price}</td>
+                                                <td>${p.price - ((p.sale)*(p.price))/100}</td>
+                                                <td>${p.sale}</td>
+                                                <td>${p.status}</td>
+                                                <td><a style="color: red" href="ProductDetail?ID=${p.getProductID()}">Edit</a></td>
+                                                
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -256,15 +331,7 @@
             </div>
 
 
-
-
-
-
-
-
-
         </section>
-
 
 
 
@@ -280,5 +347,11 @@
 <%@include file="footer.jsp" %>
 <!-- Footer end -->
 </body>
+
+
+<script>
+
+
+</script>
 
 </html>

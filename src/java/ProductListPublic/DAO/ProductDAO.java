@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAO;
+package ProductListPublic.DAO;
 
+import DAO.*;
 import Entity.Categories;
 import Entity.Product;
 import java.sql.PreparedStatement;
@@ -149,51 +150,13 @@ CategoryDAO cDAO = new CategoryDAO();
         }
          return listBrand;
     }
-//============================================================================== 
-    public List<Product> getProductByBrand(int cateid, String brand) {
-        List<Product> listP = new ArrayList<>();
-        String sql = "SELECT * FROM Products\n" +
-"Where CategoryID = ? AND brand = ?;";
-        try {
-            
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, cateid);
-            st.setString(2, brand);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
-                Product p = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("title"),
-                        rs.getString("ProductName"),
-                        rs.getInt("Views"), 
-                        rs.getDate("releaseDate"),
-                        rs.getInt("QuantitySold"),
-                        cate,
-                        rs.getInt("Quantity"),
-                        rs.getInt("Sale"),
-                        rs.getString("img"),
-                        rs.getDouble("price"),
-                        rs.getString("publisher"),
-                        rs.getString("sortDescription"),
-                        rs.getString("description"),
-                        rs.getString("status"),
-                        rs.getString("brand"));
-                        listP.add(p);
-            }
-            rs.close();
-            st.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return listP;
-    }
+    
 //==============================================================================    
 
     public static void main(String[] args) {
         //TEST Function getAllProduct
         ProductDAO pDAO = new ProductDAO();
-        List<Product> list = pDAO.getProductByBrand(1,"Apple");
+        List<Product> list = pDAO.getProductByCategory(4);
 //        Product p1 = pDAO.getProductsById(3);
 //        List<String> list = pDAO.getBrandByCategory(2);
         for(Product p: list){
