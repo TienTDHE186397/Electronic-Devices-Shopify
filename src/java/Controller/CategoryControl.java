@@ -6,12 +6,14 @@
 package Controller;
 
 import DAO.ProductDAO;
+import Entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -29,9 +31,60 @@ public class CategoryControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int cateId = Integer.parseInt(request.getParameter("cid"));
-        ProductDAO pDao = new ProductDAO();
-       
+        int cateId = Integer.parseInt(request.getParameter("cateid"));
+        String brand =  request.getParameter("brand");
+        ProductDAO pDao = new ProductDAO();     
+//==============================================================================
+/*____________ ProductDAO ----> Homeservlet -----> Home.jsp _________________ */
+        List<String> listBPhoneAndTablet = pDao.getBrandByCategory(cateId);
+        List<Product> listPhoneAndTablet = pDao.getProductByCategory(cateId);
+        if(cateId == 1 && brand.equals("all") == false){
+            listPhoneAndTablet = pDao.getProductByBrand(cateId, brand);
+        }
+        request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
+        request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBLaptop = pDao.getBrandByCategory(2);
+        List<Product> listLaptop = pDao.getProductByCategory(2);
+        if(cateId == 2 && brand.equals("all") == false){
+            listLaptop = pDao.getProductByBrand(cateId, brand);
+        }
+        request.setAttribute("list_laptop", listLaptop);
+        request.setAttribute("brand_laptop", listBLaptop);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBPc = pDao.getBrandByCategory(3);
+        List<Product> listPc = pDao.getProductByCategory(3);
+        if(cateId == 3 && brand.equals("all") == false){
+            listPc = pDao.getProductByBrand(cateId, brand);
+        }
+        request.setAttribute("list_pc", listPc);
+        request.setAttribute("brand_pc", listBPc);
+        
+//------------------------------------------------------------------------------
+        List<String> listBMonitor = pDao.getBrandByCategory(4);
+        List<Product> listMonitor = pDao.getProductByCategory(4);
+        if(cateId == 4 && brand.equals("all") == false){
+            listMonitor = pDao.getProductByBrand(cateId, brand);
+        }
+        request.setAttribute("list_monitor", listMonitor);
+        request.setAttribute("brand_monitor", listBMonitor);
+        
+//------------------------------------------------------------------------------
+
+        List<String> listBHeadphone = pDao.getBrandByCategory(5);
+        List<Product> listHeadphone = pDao.getProductByCategory(5);
+        if(cateId == 5 && brand.equals("all") == false){
+            listHeadphone = pDao.getProductByBrand(cateId, brand);
+        }
+        request.setAttribute("list_headphone", listHeadphone);
+        request.setAttribute("brand_headphone", listBHeadphone);
+
+//==============================================================================
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
