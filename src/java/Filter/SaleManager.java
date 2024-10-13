@@ -26,49 +26,13 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebFilter(filterName = "SaleManager", urlPatterns = {"/SaleHomeManager",})
 public class SaleManager implements Filter {
-<<<<<<< HEAD
-=======
-    
-    private static final boolean debug = true;
 
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
-    private FilterConfig filterConfig = null;
-    
-    public SaleManager() {
-    }    
-    
-    private void doBeforeProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        if (debug) {
-            log("SaleManager:DoBeforeProcessing");
-        }
-
-    }    
-    
-    private void doAfterProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        if (debug) {
-            log("SaleManager:DoAfterProcessing");
-        }
-
-    }
-
-   
->>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
         
-<<<<<<< HEAD
-=======
-        if (debug) {
-            log("SaleManager:doFilter()");
-        }
-        
-        doBeforeProcessing(request, response);
->>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
+
+      
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -92,11 +56,7 @@ public class SaleManager implements Filter {
             t.printStackTrace();
         }
         
-<<<<<<< HEAD
-      
-=======
-        doAfterProcessing(request, response);
->>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
+
         if (problem != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
@@ -107,43 +67,8 @@ public class SaleManager implements Filter {
             sendProcessingError(problem, response);
         }
     }
+  
 
-<<<<<<< HEAD
-=======
-    public FilterConfig getFilterConfig() {
-        return (this.filterConfig);
-    }
-
-    public void setFilterConfig(FilterConfig filterConfig) {
-        this.filterConfig = filterConfig;
-    }
-
-    public void destroy() {        
-    }
-
-   
-    public void init(FilterConfig filterConfig) {        
-        this.filterConfig = filterConfig;
-        if (filterConfig != null) {
-            if (debug) {                
-                log("SaleManager:Initializing filter");
-            }
-        }
-    }
-
-   
-    @Override
-    public String toString() {
-        if (filterConfig == null) {
-            return ("SaleManager()");
-        }
-        StringBuffer sb = new StringBuffer("SaleManager(");
-        sb.append(filterConfig);
-        sb.append(")");
-        return (sb.toString());
-    }
-    
->>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);        
         
@@ -187,13 +112,5 @@ public class SaleManager implements Filter {
         }
         return stackTrace;
     }
-<<<<<<< HEAD
- 
-=======
-    
-    public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
-    }
->>>>>>> ef1a0d948d38efeb2d9d1596cdc1815f7a8c72b6
     
 }
