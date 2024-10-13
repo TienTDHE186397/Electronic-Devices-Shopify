@@ -25,15 +25,13 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Duc Long
  */
-
 @WebFilter(filterName = "EmployeeFilter", urlPatterns = {"/ProductMKT", "/ProductDetail","/SaleHomeEmp"})
 public class Sale implements Filter {
   
-
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-   
+       
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -58,6 +56,8 @@ public class Sale implements Filter {
             problem = t;
             t.printStackTrace();
         }
+        
+       
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
@@ -72,7 +72,10 @@ public class Sale implements Filter {
         }
     }
 
-  
+    /**
+     * Return the filter configuration object for this filter.
+     */
+   
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);        
         
@@ -116,5 +119,6 @@ public class Sale implements Filter {
         }
         return stackTrace;
     }
-
+ 
+    
 }

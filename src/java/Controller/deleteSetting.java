@@ -4,11 +4,7 @@
  */
 package Controller;
 
-import DAO.SaleDAO;
-import Entity.OrderByDay;
-import Entity.OrderStatus;
-import Entity.SaleHomeOrder;
-import jakarta.servlet.RequestDispatcher;
+import DAO.DAOSetting;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,14 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
- * @author admin
+ * @author nghie
  */
-@WebServlet(name = "SaleHomeServlet", urlPatterns = {"/SaleHomeManager"})
-public class SaleHomeServlet extends HttpServlet {
+@WebServlet(name = "deleteSetting", urlPatterns = {"/deleteSetting"})
+public class deleteSetting extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +37,10 @@ public class SaleHomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");
+            out.println("<title>Servlet deleteSetting</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet deleteSetting at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,39 +58,11 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SaleDAO saleDAO = new SaleDAO();
+        DAOSetting ds = new DAOSetting();
+        String id = request.getParameter("id");
+        ds.deleteSetting(id);
+        response.sendRedirect("settingList");
         
-        int totalCount = saleDAO.getTotalOrderCount();
-        
-        List<SaleHomeOrder> list = saleDAO.getOrder();
-        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
-        
-        
-        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
-
-        
-        String[] statusList = new String[orderStatusList.size()];
-        Integer[] countList = new Integer[orderStatusList.size()];
-
-        int i = 0;
-        for (OrderStatus orderStatus : orderStatusList) {
-            statusList[i] = orderStatus.getStatus();
-            countList[i] = orderStatus.getCount();
-            
-            i++;
-        }
-
-        request.setAttribute("data", list);
-        request.setAttribute("statusList", statusList);
-        request.setAttribute("countList", countList);
-        request.setAttribute("ordersByDay", odbList);
-        request.setAttribute("totalCount", totalCount);
-
-       
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeManager.jsp");
-        dispatcher.forward(request, response);
-
-
     }
 
     /**
@@ -122,5 +89,4 @@ public class SaleHomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    }
-
+}

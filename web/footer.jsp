@@ -21,7 +21,7 @@
                         <div class="subs_1l">
                             <span class="d-inline-block col_yell font_50 float-start me-3"><i class="fa fa-envelope-o"></i></span>
                             <h4 class="text-white">Newsletter</h4>
-                            <p class="mb-0 text-light">Đăng ký ngay để không bỏ lỡ những bộ phim mới nhất</p>
+                            <p class="mb-0 text-light">Đăng ký ngay để không bỏ lỡ những sản phẩm mới nhất</p>
                         </div>
                     </div>
                     <div class="col-md-6">

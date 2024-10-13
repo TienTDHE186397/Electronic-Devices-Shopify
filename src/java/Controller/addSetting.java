@@ -4,11 +4,8 @@
  */
 package Controller;
 
-import DAO.SaleDAO;
-import Entity.OrderByDay;
-import Entity.OrderStatus;
-import Entity.SaleHomeOrder;
-import jakarta.servlet.RequestDispatcher;
+import Entity.Setting;
+import DAO.DAOSetting;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,10 +17,10 @@ import java.util.List;
 
 /**
  *
- * @author admin
+ * @author nghie
  */
-@WebServlet(name = "SaleHomeServlet", urlPatterns = {"/SaleHomeManager"})
-public class SaleHomeServlet extends HttpServlet {
+@WebServlet(name = "addSetting", urlPatterns = {"/addSetting"})
+public class addSetting extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +39,10 @@ public class SaleHomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");
+            out.println("<title>Servlet addSetting</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addSetting at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,39 +60,11 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SaleDAO saleDAO = new SaleDAO();
+        DAOSetting ds = new DAOSetting();
         
-        int totalCount = saleDAO.getTotalOrderCount();
-        
-        List<SaleHomeOrder> list = saleDAO.getOrder();
-        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
-        
-        
-        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
-
-        
-        String[] statusList = new String[orderStatusList.size()];
-        Integer[] countList = new Integer[orderStatusList.size()];
-
-        int i = 0;
-        for (OrderStatus orderStatus : orderStatusList) {
-            statusList[i] = orderStatus.getStatus();
-            countList[i] = orderStatus.getCount();
-            
-            i++;
-        }
-
-        request.setAttribute("data", list);
-        request.setAttribute("statusList", statusList);
-        request.setAttribute("countList", countList);
-        request.setAttribute("ordersByDay", odbList);
-        request.setAttribute("totalCount", totalCount);
-
-       
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeManager.jsp");
-        dispatcher.forward(request, response);
-
-
+        List<Setting> list = ds.getAllSettings();
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("SettingList.jsp").forward(request, response);
     }
 
     /**
@@ -109,7 +78,23 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOSetting ds = new DAOSetting();
+        String type = request.getParameter("type");
+        String value = request.getParameter("value");
+        String image = request.getParameter("image");
+        String orderStr = request.getParameter("order");
+        String status = request.getParameter("status");
+        int order = Integer.parseInt(orderStr);
+        Setting s = new Setting( type, value, image, order, status);
+        ds.addSetting(s);
+//        PrintWriter out = response.getWriter();
+//        out.println(id);
+//        out.println(type);
+//        out.println(value);
+//        out.println(image);
+//        out.println(order);
+//        out.println(status);
+        response.sendRedirect("settingList");
     }
 
     /**
@@ -122,5 +107,4 @@ public class SaleHomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    }
-
+}

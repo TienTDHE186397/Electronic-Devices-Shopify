@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User List</title>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<!--        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -37,21 +37,155 @@
 
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style.css">-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
         <style>
             
-        * {
+/*        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Roboto', sans-serif;
-        }
+        }*/
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;500;600&display=swap');
 
-        body {
+:root {
+    --main-color: #22BAA0;
+    --color-dark: #34425A;
+    --text-grey: #B0B0B0;
+}
+            *{
+                margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+    font-family: 'Merriweather', sans-serif;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f2f5;
+                color: #333;
+            }
+            .sidebar {
+    position: fixed;
+    height: 100%;
+    width: 165px;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 100;
+    background: var(--color-dark);
+    transition: left 300ms;
+}
+
+.side-header {
+    box-shadow: 0px 5px 5px -5px rgb(0 0 0 /10%);
+    background: var(--main-color);
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-header h3, side-head span {
+    color: #fff;
+    font-weight: 400;
+}
+
+.side-content {
+    height: calc(100vh - 60px);
+    overflow: auto;
+}
+
+ width 
+.side-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+ Track 
+.side-content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+ Handle 
+.side-content::-webkit-scrollbar-thumb {
+  background: #b0b0b0; 
+  border-radius: 10px;
+}
+
+ Handle on hover 
+.side-content::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+.profile {
+    text-align: center;
+    padding: 2rem 0rem;
+}
+
+.bg-img {
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.profile-img {
+    height: 80px;
+    width: 80px;
+    display: inline-block;
+    margin: 0 auto .5rem auto;
+    border: 3px solid #899DC1;
+}
+
+.profile h4 {
+    color: #fff;
+    font-weight: 500;
+}
+
+.profile small {
+    color: #899DC1;
+    font-weight: 600;
+}
+
+.sidebar {
+    /*overflow-y: auto;*/
+}
+.side-menu ul {
+    text-align: center;
+}
+
+.side-menu a {
+    display: block;
+    padding: 1.2rem 0rem;
+}
+
+.side-menu a.active {
+    background: #2B384E;
+}
+
+.side-menu a.active span, .side-menu a.active small {
+    color: #fff;
+}
+
+.side-menu a span {
+    display: block;
+    text-align: center;
+    font-size: 1.7rem;
+}
+
+.side-menu a span, .side-menu a small {
+    color: #899DC1;
+}
+
+/*        body {
             background-color: #f4f6f9;
             padding: 20px;
-        }
+        }*/
 
         h1 {
             text-align: center;
@@ -60,9 +194,25 @@
         }
 
         /* Search and Filter Form */
+        .main-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.search-form {
+    margin-bottom: 20px; /* Thêm khoảng cách giữa form và bảng */
+}
+
+.search-form form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa các input */
+}
         form {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             margin-bottom: 20px;
             background-color: #fff;
             padding: 20px;
@@ -92,13 +242,17 @@
 
         /* User Table */
         table {
-            width: 100%;
             border-collapse: collapse;
             background-color: #fff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
         }
+        .table-container {
+    display: flex;
+    justify-content: flex-end; /* Đẩy bảng về phía bên phải */
+    width: 100%; /* Chiếm hết chiều rộng khung chứa */
+}
 
         thead {
             background-color: #007bff;
@@ -155,6 +309,71 @@
         </style>
     </head>
     <body>
+        <div class="sidebar">
+        <div class="side-header">
+            <h3>H<span>STDTech</span></h3>
+        </div>
+        
+        <div class="side-content">
+            <div class="profile">
+                <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
+                <h4>Lê Thanh Thúy</h4>
+                <small>Admin</small>
+            </div>
+
+            <div class="side-menu">
+                <ul>
+                    <li>
+                       <a href="admin" class="">
+                            <span class="las la-home"></span>
+                            <small>Dashboard</small>
+                        </a>
+                    </li>
+                    
+                    <li>
+                       <a href="chart">
+                            <span class="las la-chart-pie"></span>
+                            <small>Chart</small>
+                        </a>
+                    </li>
+                    
+                    <li>
+                       <a href="profile?PersonID=5">
+                            <span class="las la-user-alt"></span>
+                            <small>Profile</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="userList" class="active">
+                            <span class="las la-tasks"></span>
+                            <small>User List</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settingList" class="">
+                            <span class="las la-cog"></span>
+                            <small>Setting List</small>
+                        </a>
+                    </li>
+<!--                    <li>
+                       <a href="">
+                            <span class="las la-clipboard-list"></span>
+                            <small>Projects</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="">
+                            <span class="las la-shopping-cart"></span>
+                            <small>Orders</small>
+                        </a>
+                    </li>-->
+
+                </ul>
+            </div>
+        </div>
+    </div>
+ 
+        
         <div  style="margin-top: 15px">
             <div class="row">
                 <div class="col-12 mb-3 mb-lg-"> 
@@ -163,6 +382,8 @@
         <h1>Danh sách người dùng</h1>
 
     <!-- Form tìm kiếm và lọc -->
+    <div class="main-container">
+    <div class="search-form">
     <form method="GET" action="userControl">
         <input type="text" name="search" placeholder="Tìm kiếm theo tên, email, di động" value="${param.search}" />
         <select name="gender" id="gender">
@@ -181,9 +402,11 @@
         </select>
         <input type="submit" value="Tìm kiếm" />
     </form>
+    </div>
+        </div>
          <!-- Bảng danh sách người dùng -->
-    
-    <table border="1" width = 100%>
+         <div class="table-container">
+    <table border="1" width="89%">
         <thead>
             <tr>
                 <th>ID</th>
@@ -233,6 +456,8 @@
             </c:forEach>
         </tbody>
     </table>
+             
+             </div>
                     </div>
                 </div>
             </div>

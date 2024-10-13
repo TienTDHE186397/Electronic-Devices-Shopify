@@ -26,13 +26,10 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebFilter(filterName = "SaleManager", urlPatterns = {"/SaleHomeManager",})
 public class SaleManager implements Filter {
-
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
         
-
-      
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -56,7 +53,7 @@ public class SaleManager implements Filter {
             t.printStackTrace();
         }
         
-
+      
         if (problem != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
@@ -67,7 +64,6 @@ public class SaleManager implements Filter {
             sendProcessingError(problem, response);
         }
     }
-  
 
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);        
@@ -112,5 +108,6 @@ public class SaleManager implements Filter {
         }
         return stackTrace;
     }
+ 
     
 }

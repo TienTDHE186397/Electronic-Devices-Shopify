@@ -4,11 +4,8 @@
  */
 package Controller;
 
-import DAO.SaleDAO;
-import Entity.OrderByDay;
-import Entity.OrderStatus;
-import Entity.SaleHomeOrder;
-import jakarta.servlet.RequestDispatcher;
+import Entity.Setting;
+import DAO.DAOSetting;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,10 +17,10 @@ import java.util.List;
 
 /**
  *
- * @author admin
+ * @author nghie
  */
-@WebServlet(name = "SaleHomeServlet", urlPatterns = {"/SaleHomeManager"})
-public class SaleHomeServlet extends HttpServlet {
+@WebServlet(name = "SettingList", urlPatterns = {"/settingList"})
+public class SettingList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,18 +34,7 @@ public class SaleHomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SaleDashboard</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SaleDashboard at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,39 +49,27 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SaleDAO saleDAO = new SaleDAO();
-        
-        int totalCount = saleDAO.getTotalOrderCount();
-        
-        List<SaleHomeOrder> list = saleDAO.getOrder();
-        List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
-        
-        
-        List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
-
-        
-        String[] statusList = new String[orderStatusList.size()];
-        Integer[] countList = new Integer[orderStatusList.size()];
-
-        int i = 0;
-        for (OrderStatus orderStatus : orderStatusList) {
-            statusList[i] = orderStatus.getStatus();
-            countList[i] = orderStatus.getCount();
-            
-            i++;
+        DAOSetting ds = new DAOSetting();
+        int count = ds.getTotalSettings();
+        int endPage = count / 5;
+        if (count % 5 != 0) {
+            endPage++;
         }
-
-        request.setAttribute("data", list);
-        request.setAttribute("statusList", statusList);
-        request.setAttribute("countList", countList);
-        request.setAttribute("ordersByDay", odbList);
-        request.setAttribute("totalCount", totalCount);
-
-       
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/SaleHomeManager.jsp");
-        dispatcher.forward(request, response);
-
-
+        String type = request.getParameter("Type");
+        String pageStr = request.getParameter("page");
+        if(pageStr == null){
+            pageStr = "1";
+        }
+        int page = Integer.parseInt(pageStr); // Giá trị mặc định là trang đầu tiên
+        //List<Setting> list = ds.getAllSettings();
+        List<Setting> list = ds.pagingSetting(page);
+        
+        //request.setAttribute("listP", listP);
+        List<String> listT = ds.getTypeDistinct(type);
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("listT", listT);
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("SettingList.jsp").forward(request, response);
     }
 
     /**
@@ -109,7 +83,8 @@ public class SaleHomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        
     }
 
     /**
@@ -122,5 +97,4 @@ public class SaleHomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    }
-
+}
