@@ -125,10 +125,13 @@ public class ForgotPassword extends HttpServlet {
         response.sendRedirect("verifyRePass.jsp");
     }
 
+
+    // Tạo một đối tượng Random tĩnh và tái sử dụng
+    private static final Random random = new Random();
+
     private String generateVerificationCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder code = new StringBuilder();
-        Random random = new Random();
 
         for (int i = 0; i < 15; i++) {
             int index = random.nextInt(characters.length());
@@ -137,6 +140,7 @@ public class ForgotPassword extends HttpServlet {
 
         return code.toString();
     }
+
 
     /**
      * Returns a short description of the servlet.
