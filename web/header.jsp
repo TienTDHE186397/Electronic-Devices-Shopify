@@ -145,7 +145,7 @@
                 <div class="sidebar-content">
                     <ul class="lists">
                         <li class="list">
-                            <a href="./home" class="nav-link">
+                            <a href="./" class="nav-link">
                                 <i class="bx bx-home-alt icon"></i>
                                 <span class="link">Home</span>
                             </a>
@@ -159,7 +159,7 @@
                         </li>
 
                         <li class="list">
-                            <a href="#" class="nav-link">
+                            <a href="./product-list" class="nav-link">
                                 <i class='bx bx-box icon'></i>
                                 <span class="link">Products</span>
                             </a>
@@ -172,7 +172,7 @@
                                 <span class="link">Setting</span>
                             </a>
                         </li>
-                        <>
+                      
 
                         <li class="list">
                             <a href="./login" class="nav-link">
@@ -199,7 +199,7 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#" target="_blank">
+                        <a class="nav-link" href="#" >
                             <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
                         </a>
                     </li>

@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/ProductListPublic/DAO/ProductDAO.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/DBContext.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/web/home.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/Controller/HomeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/Filter/AdminFilter.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/ProductListPublic/Controller/ProductList.java</file>
+            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/DAOPerson.java</file>
+            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/CartDAO.java</file>
         </group>
     </open-files>
 </project-private>

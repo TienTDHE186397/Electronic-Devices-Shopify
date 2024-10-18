@@ -88,15 +88,10 @@ public class ForgotPassword extends HttpServlet {
     private void registerUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
-//        String password = request.getParameter("pass");
-//        String repassword = request.getParameter("repass");
+
         PasswordUtils pw = new PasswordUtils();
-//        String passCom = pw.shiftPassword(password);
-//        if (!password.equals(repassword)) {
-//            request.setAttribute("error", "Mật khẩu không khớp!");
-//            request.getRequestDispatcher("forgot.jsp").forward(request, response);
-//            return;
-//        }
+
+
 
         PersonDAO personDAO = new PersonDAO();
         if (!personDAO.isEmailExists(email)) {

@@ -279,13 +279,13 @@
 
         <section class="product-list container">
             <div class="row">
-                <h2 class="col-md-6 product-type-title">Điện Thoại - Tablet</h2>
+                <h2 class="col-md-6 product-type-title" id="dien_thoai">Điện Thoại - Tablet</h2>
 
                 <div class="col-md-6 row product-type-select">
                     <c:forEach items="${brand_phone_and_tablet}" var="brand">
-                        <a href="?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
+                        <a href="./category?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
                     </c:forEach>
-                    <a href="?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -337,9 +337,9 @@
 
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_laptop}" var="brand_laptop">
-                        <a href="#" class="col-auto mobile">${brand_laptop}</a>
+                        <a href="./category?cateid=2&brand=${brand_laptop}" class="col-auto mobile">${brand_laptop}</a>
                     </c:forEach>
-                    <a href="?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -383,9 +383,9 @@
                 <h2 class="col product-type-title">PC</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_pc}" var="brand_pc">
-                        <a href="#" class="col-auto mobile">${brand_pc}</a>
+                        <a href="./category?cateid=3&brand=${brand_pc}" class="col-auto mobile">${brand_pc}</a>
                     </c:forEach>
-                    <a href="?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -435,9 +435,9 @@
                 <h2 class="col product-type-title">Màn Hình</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_monitor}" var="brand_monitor">
-                        <a href="#" class="col-auto mobile">${brand_monitor}</a>
+                        <a href="./category?cateid=4&brand=${brand_monitor}" class="col-auto mobile">${brand_monitor}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=4&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -485,9 +485,9 @@
                 <h2 class="col product-type-title">Tai nghe</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_headphone}" var="brand_headphone">
-                        <a href="#" class="col-auto mobile">${brand_headphone}</a>
+                        <a href="./category?cateid=5&brand=${brand_headphone}" class="col-auto mobile">${brand_headphone}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=5&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 

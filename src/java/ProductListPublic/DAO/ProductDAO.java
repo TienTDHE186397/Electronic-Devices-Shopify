@@ -151,18 +151,115 @@ CategoryDAO cDAO = new CategoryDAO();
          return listBrand;
     }
     
-//==============================================================================    
+//==============================================================================
+    public int getTotalProduct(){
+        String sql = "Select COUNT(*) from Products";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+            rs.close();
+            st.close();
+        }catch(Exception e){
+            
+        }
+        return 0;
+    }
+    
+    
+//==============================================================================
+    public List<Product> pagingProduct(int index){
+        List<Product> list = new ArrayList<>();
+        String sql = "Select * from Products ORDER BY ProductID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, (index-1)*8);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("title"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Views"), 
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"),
+                        rs.getString("brand"));
+                        list.add(p);
+            }
+            rs.close();
+            st.close();
+        }catch(Exception e){
+            
+        }
+        return list;
+    }
+
+
+//==============================================================================
+    public List<Product> getTop4Product(){
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT TOP 4 * \n" +
+"FROM products \n" +
+"ORDER BY Sale DESC;";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);  
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("title"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Views"), 
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"),
+                        rs.getString("brand"));
+                        list.add(p);
+            }
+            rs.close();
+            st.close();
+        }catch(Exception e){
+            
+        }
+        return list;
+    }
+//==============================================================================   
 
     public static void main(String[] args) {
         //TEST Function getAllProduct
         ProductDAO pDAO = new ProductDAO();
-        List<Product> list = pDAO.getProductByCategory(4);
+//        List<Product> list = pDAO.getAllProducts();
+//        int count = pDAO.getTotalProduct();
 //        Product p1 = pDAO.getProductsById(3);
 //        List<String> list = pDAO.getBrandByCategory(2);
-        for(Product p: list){
-            System.out.println(p);
-        }
-       
+//        for(Product p: list){
+//            System.out.println(p);
+//        }
+            List<Product> listP = pDAO.getTop4Product();
+            for(Product p: listP){
+                System.out.println(p);
+            }
         
     }
 }

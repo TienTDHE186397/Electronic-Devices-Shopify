@@ -227,7 +227,6 @@ public class DAOProduct extends DBContext {
                         rs.getString("brand")
                 );
 
-                System.out.println("Description: " + rs.getString("description")); // Debugging
 
                 listP.add(p);
             }
