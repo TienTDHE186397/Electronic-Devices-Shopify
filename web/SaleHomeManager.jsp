@@ -30,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <span class="icon">
                                 <ion-icon name="laptop-outline"></ion-icon>
                             </span>
-                            <span class="title">Webdientu</span>
+                            <span class="title">HSDTech</span>
                         </a>
 
                     </li>
@@ -52,7 +52,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="profile">
                             <span class="icon">
                                 <ion-icon name="people-outline"></ion-icon>
                             </span>
@@ -61,17 +61,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="home">
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <span class="title">Change Password</span>
+                            <span class="title">Home Page</span>
                         </a>
 
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="./LogoutServlet">
                             <span class="icon">
                                 <ion-icon name="log-out-outline"></ion-icon>
                             </span>

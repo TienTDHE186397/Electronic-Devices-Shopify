@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -61,9 +62,11 @@ public class SaleOrderListEmpServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
        SaleEmpDAO saleEmpDAO = new SaleEmpDAO();
+       Integer SaleID = null;
+      String saleIDParam = request.getParameter("SaleID");
+     
        
-        Integer SaleID = null;
-        String saleIDParam = request.getParameter("SaleID");
+        
 //        int SaleID = Integer.parseInt(request.getParameter("SaleID"));
        if(saleIDParam != null && !saleIDParam.trim().isEmpty()){
            try{
@@ -79,9 +82,19 @@ public class SaleOrderListEmpServlet extends HttpServlet {
                    return;
                    }
       
+        String indexPage = request.getParameter("index");
+        if(indexPage == null){
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
         
-
         int totalOrderCount = saleEmpDAO.getTotalOrderCount(SaleID);
+        int endPage = totalOrderCount/5;
+        if(totalOrderCount % 5 != 0){
+            endPage++;
+        }
+
+      
         
         String status = request.getParameter("status");
         // Lấy giá trị tìm kiếm từ request
@@ -98,7 +111,7 @@ public class SaleOrderListEmpServlet extends HttpServlet {
             list = saleEmpDAO.getOrderLByStatusS(status, SaleID);
         } else {
             // Nếu không có searchQuery và status, lấy toàn bộ danh sách đơn hàng
-            list = saleEmpDAO.getOrderLS(SaleID);
+            list = saleEmpDAO.pagingOrder(index, SaleID);
         }
         
         List<OrderStatus> orderStatusList = saleEmpDAO.getOrderCountByStatusS(SaleID);
@@ -115,7 +128,9 @@ public class SaleOrderListEmpServlet extends HttpServlet {
             i++;
         }
         
-        
+        request.setAttribute("total", totalOrderCount);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tagP", index);
         request.setAttribute("dataList", list);
         request.setAttribute("statusOrderList", statusList);
         request.setAttribute("countOrderList", countList);
@@ -148,5 +163,5 @@ public class SaleOrderListEmpServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+ 
 }

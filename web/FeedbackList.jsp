@@ -24,7 +24,7 @@
             </a>
             <ul class="side-menu top">
                 <li class="active">
-                    <a href="#">
+                    <a href="mktdashboard">
                         <i class='bx bxs-dashboard' ></i>
                         <span class="text">Dashboard</span>
                     </a>
@@ -138,10 +138,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
+<!--                                    <td>
                                         <img src="img/people.png">
                                         <p>John Doe</p>
-                                    </td>
+                                    </td>-->
                                     <td>Laptop</td>
                                     <td>
                                         <div class="star-rating" data-rating="4">
@@ -154,162 +154,7 @@
                                     </td>
                                     <td><span class="status completed">new</span></td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Laptop</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status completed">new</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Laptop</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status completed">new</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Laptop</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status completed">new</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Laptop</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status completed">new</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Laptop</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="status completed">new</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>PC
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                        </div>
-                                    </td>
-
-                                    <td><span class="status pending">ignored</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Phone-Tablet</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                        </div> 
-                                    </td>
-
-                                    <td><span class="status process">processed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Monitor</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                            <span>☆</span>
-                                        </div>
-                                    </td>
-
-                                    <td><span class="status pending">ignored</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>Earphone</td>
-                                    <td>
-                                        <div class="star-rating" data-rating="4">
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span class="filled">☆</span>
-                                            <span>☆</span>
-                                        </div> 
-                                    </td>
-
-                                    <td><span class="status completed">new</span></td>
+                               
                                 </tr>
                             </tbody>
                         </table>

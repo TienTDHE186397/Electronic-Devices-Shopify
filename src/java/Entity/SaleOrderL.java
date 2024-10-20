@@ -11,19 +11,39 @@ import java.util.Date;
  * @author admin
  */
 public class SaleOrderL {
-    private int orderID;
+    private String orderID;
     private Date orderDate;
     private String cusName;
+    private String mobile;
+    private String Email;
     private String showRoomName;
     private double total;
     private String method;
     private String saleName;
     private String status;
+    private String gender;
+    private String address;
+    private String saleNotes;
+    private String saleID;
 
     public SaleOrderL() {
     }
+      public SaleOrderL(String orderID, String cusName, String Email, String mobile, Date orderDate, int total, String saleName, String status, String gender, String address, String saleNotes) {
+        this.orderID = orderID;
+        this.cusName = cusName;
+        this.Email = Email;
+        this.mobile = mobile;
+        this.orderDate = orderDate;
+        this.total = total;
+        this.saleName = saleName;
+        this.status = status;
+        this.gender = gender;
+        this.address = address;
+        this.saleNotes = saleNotes;
+       
+      }
 
-    public SaleOrderL(int orderID, Date orderDate, String cusName, String showRoomName, double total, String method, String saleName, String status) {
+    public SaleOrderL(String orderID, Date orderDate, String cusName, String showRoomName, double total, String method, String saleName, String status) {
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.cusName = cusName;
@@ -33,12 +53,19 @@ public class SaleOrderL {
         this.saleName = saleName;
         this.status = status;
     }
+    public SaleOrderL(String orderID, String saleNotes, String saleID, String status){
+        this.status = status;
+        this.saleNotes = saleNotes;
+        this.saleID = saleID;
+        this.orderID = orderID;
+        
+    }
 
-    public int getOrderID() {
+    public String getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
 
@@ -98,10 +125,65 @@ public class SaleOrderL {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "SaleOrderList{" + "orderID=" + orderID + ", orderDate=" + orderDate + ", cusName=" + cusName + ", showRoomName=" + showRoomName + ", total=" + total + ", method=" + method + ", saleName=" + saleName + ", status=" + status + '}';
+    public String getMobile() {
+        return mobile;
     }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    public String getShowRoomName() {
+        return showRoomName;
+    }
+
+    public void setShowRoomName(String showRoomName) {
+        this.showRoomName = showRoomName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getSaleNotes() {
+        return saleNotes;
+    }
+
+    public void setSaleNotes(String saleNotes) {
+        this.saleNotes = saleNotes;
+    }
+
+    public String getSaleID() {
+        return saleID;
+    }
+
+    public void setSaleID(String saleID) {
+        this.saleID = saleID;
+    }
+    
+
+ 
+    
     
     
     

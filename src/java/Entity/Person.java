@@ -60,6 +60,12 @@ public class Person {
         this.Phone = Phone;
         this.Pasword = Password;
     }
+    public Person(int PersonID, String Name, int RoleID){
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.roleID = RoleID;
+        
+    }
 
     public int getPersonID() {
         return PersonID;

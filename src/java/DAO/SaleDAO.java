@@ -4,9 +4,10 @@
  */
 package DAO;
 
-
 import Entity.OrderByDay;
+import Entity.OrderProduct;
 import Entity.OrderStatus;
+import Entity.Person;
 import Entity.SaleHomeOrder;
 import Entity.SaleOrderL;
 import java.util.ArrayList;
@@ -96,13 +97,13 @@ public class SaleDAO {
                 + "LEFT JOIN \n"
                 + "    Person s ON o.SaleID = s.PersonID\n"
                 + "ORDER BY\n"
-                + "o.OrderDate DESC";
+                + "o.OrderID DESC";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                SaleOrderL s = new SaleOrderL(rs.getInt("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
                 saleOrder.add(s);
             }
 
@@ -127,7 +128,7 @@ public class SaleDAO {
             st.setString(1, status);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                SaleOrderL s = new SaleOrderL(rs.getInt("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
                 saleOrder.add(s);
             }
 
@@ -156,7 +157,7 @@ public class SaleDAO {
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     SaleOrderL order = new SaleOrderL(
-                            rs.getInt("OrderID"),
+                            rs.getString("OrderID"),
                             rs.getDate("OrderDate"),
                             rs.getString("CustomerName"),
                             rs.getString("ShowRoomName"),
@@ -227,54 +228,244 @@ public class SaleDAO {
 
         return totalCount;
     }
-}
 
+    public List<SaleOrderL> getDetails(String orderID) {
+        List<SaleOrderL> detail = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    o.OrderID,\n"
+                + "    p.Name AS cusName,\n"
+                + "    p.Email,\n"
+                + "    p.Phone AS mobile,\n"
+                + "    o.OrderDate,\n"
+                + "    o.TotalMoney AS totalCost,\n"
+                + "    s.Name AS saleName,\n"
+                + "    o.Status,\n"
+                + "    p.Gender,\n"
+                + "    p.Address,\n" // Add the missing comma here
+                + "    o.SaleNote\n"
+                + " FROM \n"
+                + "    Orders o\n"
+                + " JOIN \n"
+                + "    Person p ON o.PersonID = p.PersonID  -- Customer details\n"
+                + " LEFT JOIN \n"
+                + "    Person s ON o.SaleID = s.PersonID  -- Sales employee details (optional)\n"
+                + " WHERE \n"
+                + "   o.OrderID = ?";
 
-//    public List<Details> getDetails(String orderID) {
-//        List<Details> detail = new ArrayList<>();
-//        String sql = "SELECT \n"
-//                + "    o.OrderID,\n"
-//                + "    p.Name AS cusName,\n"
-//                + "    p.Email,\n"
-//                + "    p.Phone AS mobile,\n"
-//                + "    o.OrderDate,\n"
-//                + "    o.TotalMoney AS totalCost,\n"
-//                + "    s.Name AS saleName,\n"
-//                + "    o.Status,\n"
-//                + "    p.Gender,\n"
-//                + "    p.Address\n"
-//                + "FROM \n"
-//                + "    Orders o\n"
-//                + "JOIN \n"
-//                + "    Person p ON o.PersonID = p.PersonID  -- Customer details\n"
-//                + "LEFT JOIN \n"
-//                + "    Person s ON o.SaleID = s.PersonID  -- Sales employee details (optional)\n"
-//                + "WHERE \n"
-//                + "    o.OrderID = ?;";
-//
-//        try {
-//            PreparedStatement st = connection.prepareStatement(sql);
-//            st.setString(1, orderID);
-//            ResultSet rs = st.executeQuery();
-//            while (rs.next()) {
-//                Details s = new Details(rs.getInt("OrderID"), 
-//                        rs.getString("cusName"), 
-//                        rs.getString("Email"), 
-//                        rs.getString("mobile"), 
-//                        rs.getDate("OrderDate"), 
-//                        rs.getInt("totalCost"), 
-//                        rs.getString("saleName"), 
-//                        rs.getString("Status"), 
-//                        rs.getString("Gender"), 
-//                        rs.getString("Address"));
-//                detail.add(s);
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, orderID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"),
+                        rs.getString("cusName"),
+                        rs.getString("Email"),
+                        rs.getString("mobile"),
+                        rs.getDate("OrderDate"),
+                        rs.getInt("totalCost"),
+                        rs.getString("saleName"),
+                        rs.getString("Status"),
+                        rs.getString("Gender"),
+                        rs.getString("Address"),
+                        rs.getString("SaleNote")
+                );
+                detail.add(s);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+        return detail;
+    }
+
+    public List<OrderProduct> getProDetails(String orderID) {
+        List<OrderProduct> op = new ArrayList<>();
+        String sql = " SELECT  \n"
+                + "    OD.OrderDetailID, \n"
+                + "    P.img,\n"
+                + "    P.ProductName,\n"
+                + "    C.CategoryName AS Category,\n"
+                + "    P.price AS UnitPrice,\n"
+                + "    OD.Quantity,\n"
+                + "    (P.price * OD.Quantity) AS TotalCost \n"
+                + " FROM \n"
+                + "    Products P\n"
+                + "    INNER JOIN Categories C ON P.CategoryID = C.CategoryID \n"
+                + "    INNER JOIN OrderDetails OD ON P.ProductID = OD.ProductID \n"
+                + " Where OrderID = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, orderID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                OrderProduct s = new OrderProduct(
+                        rs.getString("OrderDetailID"),
+                        rs.getString("img"),
+                        rs.getString("ProductName"),
+                        rs.getString("Category"),
+                        rs.getDouble("UnitPrice"),
+                        rs.getInt("Quantity"),
+                        rs.getDouble("TotalCost")
+                );
+
+                op.add(s);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+        return op;
+    }
+
+    public List<SaleOrderL> getUpdate(String orderID) {
+        List<SaleOrderL> so = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    O.OrderID,\n"
+                + "    O.Status,\n"
+                + "    O.SaleNote,\n"
+                + "    CASE \n"
+                + "        WHEN O.SaleID IS NULL THEN NULL\n"
+                + "        ELSE P.Name\n"
+                + "    END AS saleName\n"
+                + "FROM \n"
+                + "    Orders O\n"
+                + "LEFT JOIN \n"
+                + "    Person P ON O.SaleID = P.PersonID\n"
+                + "Where OrderID = ?\n";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, orderID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getString("SaleNote"), rs.getString("saleName"), rs.getString("Status"));
+                so.add(s);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+        return so;
+    }
+
+    public List<Person> getAllSale() {
+        List<Person> salePersons = new ArrayList<>();
+        String sql = "SELECT PersonID, Name, RoleID \n"
+                + "FROM Person \n"
+                + "WHERE RoleID IN (3, 4)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Person p = new Person(rs.getInt("PersonID"), rs.getString("Name"), rs.getInt("RoleID"));
+                salePersons.add(p);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return salePersons;
+    }
+
+    public void Update(SaleOrderL s) {
+        String sql = "UPDATE Orders SET Status = ?, SaleNote = ?, SaleID = ? WHERE OrderID = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, s.getOrderID());
+            st.setString(2, s.getSaleNotes());
+            st.setString(3, s.getSaleID());
+            st.setString(4, s.getStatus());
+
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Updating order failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating order: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public int getTotalOrders() {
+
+        String sql = "SELECT COUNT(*) FROM Orders";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<SaleOrderL> pagingOrder(int index) {
+        List<SaleOrderL> list = new ArrayList<>();
+        String sql = " SELECT \n"
+                + "    o.OrderID, \n"
+                + "    o.OrderDate, \n"
+                + "    c.Name AS CustomerName, \n"
+                + "    sr.ShowRoomName, \n"
+                + "    o.TotalMoney, \n"
+                + "    o.Method, \n"
+                + "    s.Name AS SaleName, \n"
+                + "    o.Status\n"
+                + " FROM \n"
+                + "    Orders o\n"
+                + " JOIN \n"
+                + "    Person c ON o.PersonID = c.PersonID  \n"
+                + " JOIN \n"
+                + "    ShowRoom sr ON o.ShowRoomID = sr.ShowRoomID  \n"
+                + " LEFT JOIN \n"
+                + "    Person s ON o.SaleID = s.PersonID\n"
+                + " ORDER BY\n"
+                + "    o.OrderID DESC"
+                + " OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, (index - 1) * 5);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+               SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
+                list.add(s);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+//    public static void main(String[] args) {
+//        SaleDAO dao = new SaleDAO();
+//        List<SaleOrderL> list = dao.pagingOrder(2);
+//        for(SaleOrderL o : list){
+//            System.out.println(o);
 //        }
-//        return detail;
+//    }
+//public static void main(String[] args) {
+//        // Create a SaleDAO instance (assuming your SaleDAO class is already defined)
+//        SaleDAO saleDAO = new SaleDAO();
+//
+//        // Create a SaleOrderL object with test data (assuming the constructor is defined correctly)
+//        String testOrderID = "5";  // Use an existing OrderID for testing
+//        String testStatus = "In Progress";  // New status to update
+//        String testSaleNotes = "must be Complete";  // New sale notes
+//        String testSaleID = "7";  // Salesperson ID for assignment (ensure this exists in your DB)
+//
+//        SaleOrderL saleOrder = new SaleOrderL(testStatus, testSaleNotes, testSaleID, testOrderID);
+//        saleOrder.setSaleID(testSaleID);  // If you have a setter for SaleID
+//
+//        // Call the Update method to update the order in the database
+//        saleDAO.Update(saleOrder);
+//
+//        // If no exceptions are thrown, print success message
+//        System.out.println("Order update method executed. Please check the database for changes.");
 //    }
 
 //    public static void main(String[] args) {
@@ -295,33 +486,22 @@ public class SaleDAO {
 //                System.out.println("Trạng thái: " + orderStatus.getStatus() + " - Tổng số đơn hàng: " + orderStatus.getCount());
 //            }
 //        }
-    
 //      public static void main(String[] args) {
 //        // Assuming 'DetailsDAO' is the class where getDetails() is implemented
 //        SaleDAO saleDAO = new SaleDAO();
 //        String orderID = "1";
 //        // Get the details
-//        List<Details> detailsList = saleDAO.getDetails(orderID);
+//        List<SaleOrderL> detailsList = saleDAO.getUpdate(orderID);
 //
 //        // Check if details are retrieved and print them
 //        if(detailsList.isEmpty()){
 //                System.out.println("trong");
 //        }else{
-//        for (Details detail : detailsList) {
-//            System.out.println("OrderID: " + detail.getOrderID());
-//            System.out.println("Customer Name: " + detail.getCusName());
-//            System.out.println("Email: " + detail.getEmail());
-//            System.out.println("Mobile: " + detail.getMobile());
-//            System.out.println("Order Date: " + detail.getOrderDate());
-//            System.out.println("Total Cost: " + detail.getTotalCost());
-//            System.out.println("Sales Employee: " + detail.getSaleName());
-//            System.out.println("Status: " + detail.getStatus());
-//            System.out.println("Gender: " + detail.getGender());
-//            System.out.println("Address: " + detail.getAddress());
+//        for (SaleOrderL detail : detailsList) {
+//            System.out.println(detail);
+//            
 //            System.out.println("----------------------------");
 //        }
-//    }
 //}
-
-//}
-//}
+//      }
+}
