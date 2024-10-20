@@ -27,6 +27,9 @@
                 padding: 0;
                 box-sizing: border-box;
             }
+            h5{
+                font-family: 'Roboto', sans-serif;
+            }
             body{
                 font-family: 'Roboto', sans-serif;
                 background-color: #faf2e8;
@@ -256,10 +259,9 @@
                     <div class="filter-table">
                         <label><b>Phân loại:</b></label>
                         <select name="category" id="categoryselect" onchange="document.getElementById('form1').submit()">
-
                             <option value="0">All</option>
                             <c:forEach var="c" items="${listCategory}">
-                                <option value="${c.getCategoryID()}" ${c.getCategoryID()} == param.category ? "selected" : ""} >${c.getCategoryName()}</option>
+                                <option value="${c.getCategoryID()}" ${c.getCategoryID() == param.category ? "selected":""} >${c.getCategoryName()}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -267,7 +269,7 @@
                     <div class="filter-table">
                         <label><b>Sắp xếp theo:</b></label>
                         <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
-                            <option value="sortName">Tên(A-Z)</option>
+                            <option value="sortName" >Tên(A-Z)</option>
                             <option value="sortUpdate">Mới cập nhật</option>
                         </select>
                     </div>
@@ -275,7 +277,7 @@
                         <label><b>Số lượng xem:</b></label>
                         <select name="numberOfProducts" id="categoryselect" onchange="document.getElementById('form1').submit()">
                             <c:forEach var="count" begin="1" end="8">
-                                <option value="${count}">${count}</option>
+                                <option value="${count}" ${count == param.numberOfProducts ? "selected":""}>${count}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -283,12 +285,19 @@
                     
                     <div class="filter-table">
                         <label><b>Tìm kiếm sản phẩm:</b></label>
-                        <input style="" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="">
+                        <input style="border-radius: 5px;width: 100%" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="">
                     </div> 
                 
             </div>
             <div class="container category-table">
-
+                <h5>Lọc sản phẩm: </h5>
+                    <div class="filter-table">
+                        <label><b>Sắp xếp theo:</b></label>
+                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="sortName" >Tên(A-Z)</option>
+                            <option value="sortUpdate">Mới cập nhật</option>
+                        </select>
+                    </div>
             </div>
             <div class="container background-container">
                 <div class="product-card">
@@ -307,11 +316,9 @@
             </div>
             <div class="pagination-container" aria-label="Page navigation">
                 <ul class="pagination">
-                    
                         <c:forEach begin="1" end="${endP}" var="o">
-                            <button class="pagination-button" type="submit" name="page" value="${o}" }>${o}</button>
+                            <button class="pagination-button" type="submit" name="page" value="${o}" ${o == param.page ? "selected":""} }>${o}</button>
                         </c:forEach>
-                    
                 </ul>
             </div>
         </form>
