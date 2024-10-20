@@ -396,7 +396,115 @@ text-decoration: none;
     background:orange;
     color: white;
 }
+/*============================================Details=================================*/
+h1, h2 {
+    color: #2c3e50;
+    padding: 20px;
+    font-size: 50px;
+}
+.order-section {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: var(--white);
+    padding: 50px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    margin-bottom: 50px;
+    
+   
+}
+.order-info, .receiver-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    font-size: 25px;
+}
+.product-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+.product-list th, .product-list td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+.product-list{
+    background: var(--white);
+    padding: 50px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 50px;
+}
+.product-list th {
+    background-color: var(--red);
+    color: yellow;
+}
+.thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+.status-section {
+    margin-top: 20px;
+    background: var(--white);
+}
+select, textarea {
+    background: var(--white);
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+select, textarea, input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Optional: Add consistent height to the input field to match the others */
+input[type="text"] {
+    height: 40px; /* Or any other value that suits your design */
+}
+
+/* Add a hover effect to keep consistency */
+input[type="text"]:hover, select:hover, textarea:hover {
+    border-color: #888;
+}
+
+/* Add a focus effect to match other fields */
+input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
 /*============================responsive================================*/
+@media (max-width: 768px) {
+    .popup-content {
+        width: 90%;
+    }
+    .popup-content table tr td {
+        display: block;
+        width: 100%;
+    }
+    .popup-content img {
+        max-width: 30px;
+    }
+}
+
 @media (max-width: 991px){
     .navigation{
         left: -300px;

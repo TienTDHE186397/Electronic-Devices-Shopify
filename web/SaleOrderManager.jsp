@@ -1,8 +1,9 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
@@ -12,13 +13,56 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>sale Order Manager</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- =============Style css ======================== -->
         <link rel="stylesheet" type="text/css" href="css/styleSaleManager.css">
 
     </head>
+    <style>
+    .clearfix {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
 
+    .hint-text {
+        flex-grow: 1;
+    }
+
+    .pagination {
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination li a {
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        border-radius: 3px;
+    }
+
+    .pagination li.active a {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .pagination li a:hover:not(.active) {
+        background-color: #f0f0f0;
+    }
+    a.active{
+        color: red;
+        font-weight: bold;
+        
+    }
+</style>
     <body>
         <!--==============================Navigation==================================-->
         <div class="container">
@@ -29,7 +73,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <span class="icon">
                                 <ion-icon name="laptop-outline"></ion-icon>
                             </span>
-                            <span class="title">Webdientu</span>
+                            <span class="title">HSDTech</span>
                         </a>
 
                     </li>
@@ -51,7 +95,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="profile">
                             <span class="icon">
                                 <ion-icon name="people-outline"></ion-icon>
                             </span>
@@ -60,17 +104,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="home">
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <span class="title">Change Password</span>
+                            <span class="title">Home Page</span>
                         </a>
 
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="./LogoutServlet">
                             <span class="icon">
                                 <ion-icon name="log-out-outline"></ion-icon>
                             </span>
@@ -186,74 +230,45 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                                     <span class="status unknown">${c.status}</span> 
                                                 </c:otherwise>
                                             </c:choose>
-                                        </td>
-                                        <td>
-                                            <a href="OrderDetails?orderID=${c.orderID}" class="btn-details">Details</a>
-                                            <button onclick="showAssignPopup(${c.orderID})" class="btn-assign">Assign</button>
-                                            <button class="btn-submit">Submit</button>
+                                        </td>   
+                                        
 
-                                            
+                                        <td>
+                                              <a href="OrderDetailsManager?orderID=${c.orderID}" class="btn-details">Details</a>
                                         </td>
-                                    </tr>
-                                </c:forEach>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
+                        <div class="clearfix">
+                            <div class="hint-text">Showing<b>5</b> out of <b>${total}</b> Orders </div>
+                            <ul class="pagination">
+                                <c:if test="${tagP > 1}">
+                                <li class="page-item disabled"><a href="SaleOrderManager?index=${tagP - 1}">Previous</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                <li class="page-item ${tag == i?"active":""}"><a href="SaleOrderManager?index=${i}" class="page-link">${i}</a>
+                                </c:forEach>
+                                <c:if test="${tagP < endP}">  
+                                <li class="page-item"><a href="SaleOrderManager?index=${tagP + 1}" class="page-link">Next</a></li>
+                                </c:if>
+                            </ul>
+                            
+                        </div>
+                        
                     </div> 
                 </div>
-                <div id="assignPopup" class="popup">
-                    <div class="popup-content">
-                        <span class="close" onclick="closeAssignPopup()">&times;</span>
-                        <h2>Assign Order to Sales Representative</h2>
-                        <table id="salesTable">
-                            <thead>
-                                <tr>
-                                    <th>Sale ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            
-                            </tbody>
-                        </table>
+            </div>
+        </div>                        
+        <!--                ===========================================order Details Pop-up====================================-->
 
-
-
-                    </div>
-                </div>
-                </div>
-               </div>
+     
 
 
 
 
-                <!--=========================Script navigation=======================-->
-                <script>
-                    let list = document.querySelectorAll(".navigation li");
 
-                    function activeLink() {
-                        list.forEach((item) => {
-                            item.classList.remove("hovered");
-                        });
-                        this.classList.add("hovered");
-                    }
-
-                    list.forEach((item) => item.addEventListener("mouseover", activeLink));
-
-                    //menu toggle
-
-                    let toggle = document.querySelector(".toggle");
-                    let navigation = document.querySelector(".navigation");
-                    let main = document.querySelector(".main");
-
-                    toggle.onclick = function () {
-                        navigation.classList.toggle("active");
-                        main.classList.toggle("active");
-                    };
-
-                </script>
-                
+        <!--========================================assignPopup=================================-->
 
 
 
@@ -262,10 +277,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
 
 
-                <!--==========ionicons==========-->
 
-                <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-                <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-                </body>
-                </html>
+
+
+
+        <!--=========================Script navigation=======================-->
+        <script>
+            let list = document.querySelectorAll(".navigation li");
+
+            function activeLink() {
+                list.forEach((item) => {
+                    item.classList.remove("hovered");
+                });
+                this.classList.add("hovered");
+            }
+
+            list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+            //menu toggle
+
+            let toggle = document.querySelector(".toggle");
+            let navigation = document.querySelector(".navigation");
+            let main = document.querySelector(".main");
+
+            toggle.onclick = function () {
+                navigation.classList.toggle("active");
+                main.classList.toggle("active");
+            };
+
+        </script>
+
+        
+
+
+
+
+
+
+
+
+
+        <!--==========ionicons==========-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    </body>
+</html>

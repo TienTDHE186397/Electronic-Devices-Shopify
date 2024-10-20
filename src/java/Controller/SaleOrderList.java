@@ -61,7 +61,17 @@ public class SaleOrderList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        String indexPage = request.getParameter("index");
+        if(indexPage == null){
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
         SaleDAO saleDAO = new SaleDAO();
+        int count = saleDAO.getTotalOrders();
+        int endPage = count/5;
+        if(count % 5 != 0){
+            endPage++;
+        }
         
         int totalOrderCount = saleDAO.getTotalOrderCount();
         
@@ -79,12 +89,12 @@ public class SaleOrderList extends HttpServlet {
             list = saleDAO.getOrderLByStatus(status);
         } else {
             // Nếu không có searchQuery và status, lấy toàn bộ danh sách đơn hàng
-            list = saleDAO.getOrderL();
+            list = saleDAO.pagingOrder(index);
         }
         
         List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
           // Gọi SaleDAO để tìm kiếm đơn hàng dựa trên OrderID hoặc CustomerName
-        
+      
 
         
         String[] statusList = new String[orderStatusList.size()];
@@ -96,8 +106,9 @@ public class SaleOrderList extends HttpServlet {
             
             i++;
         }
-        
-        
+        request.setAttribute("total", count);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tagP", index);
         request.setAttribute("dataList", list);
         request.setAttribute("statusOrderList", statusList);
         request.setAttribute("countOrderList", countList);

@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="saleID" value="${param.SaleID}" />
+<c:set var="saleID" value="${session.saleID}" />
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,6 +17,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" type="text/css" href="css/styleSale.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
+    <style>
+    .clearfix {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .hint-text {
+        flex-grow: 1;
+    }
+
+    .pagination {
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination li a {
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        border-radius: 3px;
+    }
+
+    .pagination li.active a {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .pagination li a:hover:not(.active) {
+        background-color: #f0f0f0;
+    }
+    a.active{
+        color: red;
+        font-weight: bold;
+        
+    }
+</style>
 
     <body>
         <!--==============================Navigation==================================-->
@@ -28,13 +73,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <span class="icon">
                                 <ion-icon name="laptop-outline"></ion-icon>
                             </span>
-                            <span class="title">Webdientu</span>
+                            <span class="title">HSDTech</span>
                         </a>
 
                     </li>
 
                     <li>
-                        <a href="SaleHomeEmp?SaleID=${param.SaleID}">
+                        <a href="SaleHomeEmp?SaleID=${sessionScope.saleid}">
                             <span class="icon">
                                 <ion-icon name="pie-chart-outline"></ion-icon></span>
                             <span class="title">Dashboard</span>
@@ -42,7 +87,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="SaleOrderEmp?SaleID=${param.SaleID}">
+                        <a href="SaleOrderEmp?SaleID=${sessionScope.saleid}">
                             <span class="icon">
                                 <ion-icon name="pricetags-outline"></ion-icon></span>
                             <span class="title">Orders</span>
@@ -50,7 +95,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="profile">
                             <span class="icon">
                                 <ion-icon name="people-outline"></ion-icon>
                             </span>
@@ -59,17 +104,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="home">
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <span class="title">Change Password</span>
+                            <span class="title">Home Page</span>
                         </a>
 
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="./LogoutServlet">
                             <span class="icon">
                                 <ion-icon name="log-out-outline"></ion-icon>
                             </span>
@@ -78,8 +123,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
                 </ul>
             </div>
-            
-                            
+
+
             <!--====================Main=========================-->
             <div class="main">
                 <div class="topbar">
@@ -89,18 +134,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                     <div class="search">
 
-                      
-                        <c:if test="${saleID != null}">
-                            
-                        <form action="SaleOrderEmp" method="GET">
-                            <input type="hidden" name="SaleID" value="${SaleID}" />
-                            <label> 
-                                
-                                <input type="text" name="searchQuery" placeholder="search here">
-                                <ion-icon name="search-outline"></ion-icon>
-                            </label>
-                        </form>
-                     </c:if>
+
+                        <c:if test="${param.SaleID != null}">
+
+                            <form action="SaleOrderEmp" method="GET">
+                                <input type="hidden" name="SaleID" value="${param.SaleID}" />
+                                <label> 
+
+                                    <input type="text" name="searchQuery" placeholder="search here">
+                                    <ion-icon name="search-outline"></ion-icon>
+                                </label>
+                            </form>
+                        </c:if>
                     </div>
 
                     <div class="user">
@@ -109,7 +154,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>   
 
                 <!--==================Card==================-->
-                 <div class="cardBox">
+                <div class="cardBox">
                     <a href="SaleOrderEmp?SaleID=${param.SaleID}" class="btn">
                         <div class="card">
                             <div>
@@ -122,8 +167,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             </div>
                         </div>
                     </a>
-                
-                
+
+
                     <c:forEach var="status" items="${statusOrderList}" varStatus="loop">
                         <a href="SaleOrderEmp?status=${status}&SaleID=${param.SaleID}" class="btn">
                             <div class="card">
@@ -176,34 +221,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                         <td>${c.cusName}</td>
                                         <td>${c.showRoomID}</td>
                                         <td><fmt:formatNumber value="${c.total}" type="number" pattern="#,##0"/></td>
-                                <td>${c.method}</td>
-                                <td>${c.saleName}</td>
-                                <td> <c:choose>
-                                        <c:when test="${c.status == 'Complete'}">
-                                            <span class="status Complete">${c.status}</span>
-                                        </c:when>
-                                        <c:when test="${c.status == 'In Line'}">
-                                            <span class="status inline">${c.status}</span>
-                                        </c:when>
-                                        <c:when test="${c.status == 'In Progress'}">
-                                            <span class="status inProgress">${c.status}</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="status unknown">${c.status}</span> 
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <a href="OrderDetails?orderID=${c.orderID}" class="btn-details">Details</a>
-                                    <button class="btn-submit">Submit</button>
-                                </td>
-                                </tr>
-                            </c:forEach>
+                                        <td>${c.method}</td>
+                                        <td>${c.saleName}</td>
+                                        <td> <c:choose>
+                                                <c:when test="${c.status == 'Complete'}">
+                                                    <span class="status Complete">${c.status}</span>
+                                                </c:when>
+                                                <c:when test="${c.status == 'In Line'}">
+                                                    <span class="status inline">${c.status}</span>
+                                                </c:when>
+                                                <c:when test="${c.status == 'In Progress'}">
+                                                    <span class="status inProgress">${c.status}</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="status unknown">${c.status}</span> 
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <a href="OrderDetailsEmp?saleID=${param.SaleID}&orderID=${c.orderID}" class="btn-details">Details</a>
+
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
+                      <div class="clearfix">
+                            <div class="hint-text">Showing<b>5</b> out of <b>${total}</b> Orders </div>
+                            <ul class="pagination">
+                                <c:if test="${tagP > 1}">
+                                    <li class="page-item"><a href="SaleOrderEmp?index=${tagP - 1}}" class="page-link">Previous</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                <li class="page-item ${tagP == i ? "active" : ""}"><a href="SaleOrderEmp?index=${i}" class="page-link">${i}</a></li>
+                                </c:forEach>
+                                <c:if test="${tagP < endP}">  
+                                <li class="page-item"><a href="SaleOrderEmp?index=${tagP + 1}" class="page-link">Next</a></li>
+                                </c:if>
+                            </ul>
+                            
+                        </div>
+
                     </div> 
                 </div>
             </div>
+
 
 
 
@@ -236,6 +298,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             };
 
         </script>
+
+        
 
 
 
