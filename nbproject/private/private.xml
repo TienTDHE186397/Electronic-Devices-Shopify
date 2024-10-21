@@ -2,23 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/header.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Filter/AdminFilter.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Entity/Person.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/DeleteAttributeServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/DAO/DAOProduct.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SaleOrderList.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/forgot.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/DAO/DAOimgVideo.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/ProductDetail.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/LoginServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SaleHomeServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/HomeServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SaleOrderListEmpServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/DAO/PersonDAO.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/LogoutServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
