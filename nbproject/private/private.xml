@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/SWP391/webdientu/src/java/ProductListPublic/Controller/ProductList.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/ProductListPublic/Controller/CategoryControlList.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/PostListServlet.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/ProductListPublic/DAO/ProductDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/CategoryControl.java</file>
+            <file>file:/D:/SWP391/webdientu/web/PostList.jsp</file>
+            <file>file:/D:/SWP391/webdientu/web/ProductListPublic.jsp</file>
+        </group>
     </open-files>
 </project-private>

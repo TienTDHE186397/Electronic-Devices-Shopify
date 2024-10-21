@@ -6,6 +6,7 @@ package Controller;
 
 import Entity.Orders;
 import DAO.DAOAdmin;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -35,8 +36,11 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<Orders> listS = null;
+
         response.setContentType("text/html;charset=UTF-8");
         DAOAdmin da = new DAOAdmin();
+        String id = request.getParameter("PersonID");
+        Person p = da.getPersonById(id);
         String search = request.getParameter("search");
         String status = request.getParameter("status");
         String startDate = request.getParameter("startDate");
@@ -74,6 +78,7 @@ public class AdminServlet extends HttpServlet {
         double Rate5 = da.getRateByCategory(5);
         double avgRate = da.Rate();
         int comment = da.TotalComment();
+        request.setAttribute("person", p);
         request.setAttribute("allCustomer", allCustomer);
         request.setAttribute("allOrders", allOrders);
         request.setAttribute("successOrders", successOrders);

@@ -5,11 +5,13 @@
 package DAO;
 
 import Entity.Orders;
+import Entity.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,8 +19,31 @@ import java.sql.ResultSet;
  */
 public class DAOAdmin extends DBContext {
 
-    public void getAdmin() {
-        String sql = "select * from Person where ";
+    public Person getPersonById(String id) {
+        String sql = "select * from Person where PersonID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("startdate");
+                LocalDate localDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+                Person p = new Person(rs.getInt("PersonID"),
+                        rs.getString("Name"),
+                        rs.getString("Gender"),
+                        rs.getString("DateOfBirth"),
+                        localDate,
+                        rs.getString("Address"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getInt("RoleID"),
+                        rs.getString("Password"));
+                return p;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public int getAllCustomers() {
@@ -34,6 +59,7 @@ public class DAOAdmin extends DBContext {
         }
         return 0;
     }
+
     public List<Orders> searchOrders(String search, String status, String startDate, String endDate) {
         List<Orders> list = new ArrayList<>();
         String sql = "Select * from Orders where 1=1";
@@ -66,6 +92,7 @@ public class DAOAdmin extends DBContext {
         }
         return list;
     }
+
     public int getAllOrder() {
         String sql = "select count(*) from Orders";
         try {
@@ -103,7 +130,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public int getSuccessOrder() {
-        String sql = "Select count(*) from orders where Status = 'Hoàn thành' ";
+        String sql = "Select count(*) from orders where Status = 'Complete' ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -117,7 +144,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public int getCancelOrder() {
-        String sql = "Select count(*) from orders where Status = 'Đã hủy' ";
+        String sql = "Select count(*) from orders where Status = 'In Line' ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -131,7 +158,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public int getShipOrder() {
-        String sql = "Select count(*) from orders where Status = 'Đã ship' ";
+        String sql = "Select count(*) from orders where Status = 'In Progress' ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -176,9 +203,9 @@ public class DAOAdmin extends DBContext {
         DAOAdmin da = new DAOAdmin();
 //        int n = da.getSuccessOrder();
 //        System.out.println(n);
-List<Orders> list = da.searchOrders("T", "", "", "");
-        for(Orders o:list){
-        System.out.println(o);
+        List<Orders> list = da.searchOrders("T", "", "", "");
+        for (Orders o : list) {
+            System.out.println(o);
         }
     }
 
@@ -197,7 +224,7 @@ List<Orders> list = da.searchOrders("T", "", "", "");
     }
 
     public int NewPurchaser() {
-        String sql = "select count(PersonID) from Orders where OrderID not in (1) ";
+        String sql = "select count(PersonID) from Orders where OrderID not in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10) ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -225,12 +252,12 @@ List<Orders> list = da.searchOrders("T", "", "", "");
     }
 
     public int getRevenueByCategory(int CateID) {
-        String sql = "select sum(o.TotalMoney) \n"
-                + "from Orders o \n"
-                + "join OrderDetails od on o.OrderID = od.OrderID \n"
-                + "join Products p on p.ProductID = od.ProductID \n"
-                + "where p.CategoryID = \n" + CateID
-                + " group by p.CategoryID";
+        String sql = "SELECT SUM(od.TotalCost) AS TotalRevenue \n"
+                + "FROM OrderDetails od \n"
+                + "JOIN Products p ON od.ProductID = p.ProductID \n"
+                + "JOIN Categories c ON p.CategoryID = c.CategoryID \n"
+                + "where p.CategoryID = " + CateID
+                + "GROUP BY c.CategoryID, c.CategoryName;";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -275,5 +302,3 @@ List<Orders> list = da.searchOrders("T", "", "", "");
         return 0;
     }
 }
-
-    

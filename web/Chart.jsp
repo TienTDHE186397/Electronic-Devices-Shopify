@@ -191,40 +191,40 @@
         <div class="side-content">
             <div class="profile">
                 <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
-                <h4>Lê Thanh Thúy</h4>
+                <h4 name="name">${person.name}</h4>
                 <small>Admin</small>
             </div>
 
             <div class="side-menu">
                 <ul>
                     <li>
-                       <a href="admin" class="">
+                       <a href="admin?PersonID=${person.personID}" class="">
                             <span class="las la-home"></span>
                             <small>Dashboard</small>
                         </a>
                     </li>
                     
                     <li>
-                        <a href="chart" class="active">
+                        <a href="chart?PersonID=${person.personID}" class="active">
                             <span class="las la-chart-pie"></span>
                             <small>Chart</small>
                         </a>
                     </li>
                     
                     <li>
-                       <a href="profile?PersonID=5">
+                       <a href="adminProfile?PersonID=${person.personID}">
                             <span class="las la-user-alt"></span>
                             <small>Profile</small>
                         </a>
                     </li>
                     <li>
-                       <a href="userList">
+                       <a href="userList?PersonID=${person.personID}">
                             <span class="las la-tasks"></span>
                             <small>User List</small>
                         </a>
                     </li>
                     <li>
-                        <a href="settingList" class="">
+                        <a href="settingList?PersonID=${person.personID}" class="">
                             <span class="las la-cog"></span>
                             <small>Setting List</small>
                         </a>
