@@ -39,11 +39,13 @@ public class PostListHomeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         BlogListDAO blogDAO = new BlogListDAO();
         String search = request.getParameter("search");
+        
         String page = request.getParameter("page");
         List<Blog> listRB = blogDAO.trendingBlogList();
         String numberofpage = request.getParameter("numberofpage");
         String[] col = request.getParameterValues("col");
         request.setAttribute("nof", numberofpage);
+        
         if (col != null) {
             for (int i = 0; i < col.length; i++) {
                 request.setAttribute(col[i], col[i]);

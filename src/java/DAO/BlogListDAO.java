@@ -637,11 +637,11 @@ public class BlogListDAO extends DBContext {
 
     }
 
-    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page) {
+    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page,int perpage) {
 
         List<Blog> list = new ArrayList<>();
 
-        int pageget = (Integer.parseInt(page) * 4 - 4);
+        int pageget = (Integer.parseInt(page) * perpage - perpage);
 
         String sql = "SELECT b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
@@ -763,7 +763,7 @@ public class BlogListDAO extends DBContext {
         }
 
         sql += "\n OFFSET " + pageget + " ROWS\n"
-                + "FETCH NEXT 4 ROWS ONLY";
+                + "FETCH NEXT "+ perpage +" ROWS ONLY";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
