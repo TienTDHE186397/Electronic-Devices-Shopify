@@ -152,7 +152,7 @@
                         </li>
 
                         <li class="list">
-                            <a href="./PostListMKT" class="nav-link">
+                            <a href="./PostListHome" class="nav-link">
                                 <i class='bx bx-news icon'></i>
                                 <span class="link">Posts</span>
                             </a>

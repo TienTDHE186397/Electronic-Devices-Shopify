@@ -111,7 +111,6 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("admin?PersonID=" + user.getPersonID());
             } else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
-                
                 session.setAttribute("user", user);
                 response.sendRedirect("SaleHomeEmp?SaleID=" + user.getPersonID());
             } else if (user.getRoleID() == 4) {
@@ -122,6 +121,13 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("home");
+                System.out.println("Personn " + session.getAttribute("user"));
+
+            }
+            else if (user.getRoleID() == 2) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                response.sendRedirect("mktdashboard");
                 System.out.println("Personn " + session.getAttribute("user"));
 
             } else {

@@ -46,13 +46,13 @@ public class PostDetailHomeServlet extends HttpServlet {
         BlogListDAO blogDAO = new BlogListDAO();
         String id_raw = request.getParameter("id");
         List<Blog> listRB;
-
+    
         try {
             int id = Integer.parseInt(id_raw);
             Blog blog = blogDAO.getBlogById(id);
             listRB = blogDAO.getRelatedBlog(blog);
             List<CommentBlog> listC = blogDAO.getAllCommetFromBlog(id);
-
+            
             request.setAttribute("listC", listC);
             request.setAttribute("blog", blog);
             request.setAttribute("listRB", listRB);
