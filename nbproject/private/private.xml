@@ -3,55 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/editPost.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostList.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/editPostServlet.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/addPostServlet.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/BlogListDAO.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Blog.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Filter/Sale.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Filter/SaleManager.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/DAOimgVideo.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Filter/AdminFilter.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/addPost.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/addBlogType.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/DAOProduct.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostDetail.jsp</file>
-=======
-<<<<<<< HEAD
-            <file>file:/E:/PRJ301/webdientu/web/SaleHomeManager.jsp</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/DAO/SaleDAO.java</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/DAO/DBContext.java</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Controller/SaleOrderList.java</file>
-            <file>file:/E:/PRJ301/webdientu/web/SaleOrderManager.jsp</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Controller/SaleHomeEmpServlet.java</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Entity/OrderStatus.java</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Controller/SaleHomeServlet.java</file>
-            <file>file:/E:/PRJ301/webdientu/web/productList.jsp</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Entity/SaleOrderL.java</file>
-            <file>file:/E:/PRJ301/webdientu/web/WEB-INF/web.xml</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Entity/SaleHomeOrder.java</file>
-            <file>file:/E:/PRJ301/webdientu/src/java/Entity/OrderByDay.java</file>
-=======
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/header.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Filter/AdminFilter.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Entity/Person.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/DeleteAttributeServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/DAO/DAOProduct.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SaleOrderList.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/web/forgot.jsp</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/DAO/DAOimgVideo.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/ProductDetail.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/LoginServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SaleHomeServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/HomeServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/SaleOrderListEmpServlet.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/DAO/PersonDAO.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/WebDienTu/src/java/Controller/LogoutServlet.java</file>
->>>>>>> 1bb7c8978a70d98789c6cb4a4526e4902e9f7699
->>>>>>> bd7758a9fd475b2c727591c668f585d2a4613dbc
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/SliderListServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostListHomeServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/SliderList.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/SliderListDAO.java</file>
         </group>
     </open-files>
 </project-private>

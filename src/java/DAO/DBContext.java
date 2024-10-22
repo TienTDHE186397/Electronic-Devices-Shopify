@@ -28,8 +28,8 @@ public class DBContext {
         try {
             String user = "sa";
 
-            String pass = "1234567890";
-            String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=DBGr2SWP";
+            String pass = "123456";
+            String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=swp";
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);

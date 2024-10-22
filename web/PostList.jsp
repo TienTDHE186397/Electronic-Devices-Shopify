@@ -427,12 +427,10 @@
                                                 </div>
                                                 <br/> 
 
-
                                                 <div class="pagination">
                                                     <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
                                                         <button type="submit" name="page" value="${c}" }>${c}</button>
                                                     </c:forEach>
-
                                                 </div>
 
                                                 </form>

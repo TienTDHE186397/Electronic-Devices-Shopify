@@ -216,11 +216,6 @@
         <!-- Header start -->
         <%@include file="header.jsp" %>
         <!-- Header end -->
-
-
-        <!-- Sidebar start -->
-
-
         <!---------------------------- Phần banner lớn start-------------------------------->
         <section id="center" class="center_home center-custom">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -234,16 +229,13 @@
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/thang-oppo-muon-van-uu-dai-home.jpg" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="slider-title">Ưu đãi tháng Oppo</h5>
-                            <p class="slider-description">Nhiều ưu đãi hấp dẫn đang chờ bạn</p>
                             <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
                         </div>
-
                     </div>
                     <div class="carousel-item">
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sliding-home-iphone-16-pro-km-moi.jpg" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="slider-title">Ưu đãi tháng Iphone 16</h5>
-                            <p class="slider-description">Khuyến mãi đặc biệt cho các dòng Iphone Series</p>
                             <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
                         </div>
                     </div>
@@ -251,7 +243,6 @@
                         <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-ai-banner-chung-slide.png" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="slider-title">Ưu đãi tháng Laptop</h5>
-                            <p class="slider-description">Khuyến mãi đặc biệt cho các dòng laptop</p>
                             <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
                         </div>
                     </div>
