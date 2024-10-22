@@ -18,7 +18,7 @@
         <link href="css/global.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
-        
+
         <style>
             *{
                 margin: 0;
@@ -32,14 +32,14 @@
             .bg_light_1 {
                 background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
             }
-            
-            #subs {   
+
+            #subs {
                 margin-top: 70px;
                 background-color: #f7f7f7; /* Màu nền nhẹ */
                 padding-top: 5rem;
                 padding-bottom: 5rem;
             }
-            
+
             @keyframes gradientAnimation {
                 0% {
                     background-position: 0% 50%;
@@ -51,7 +51,7 @@
                     background-position: 0% 50%;
                 }
             }
-            
+
             .brand-name {
                 font-size: 4rem; /* Kích thước chữ lớn hơn */
                 font-weight: bold;
@@ -65,11 +65,11 @@
                 letter-spacing: 0.2rem; /* Khoảng cách giữa các chữ cái lớn hơn */
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng chữ */
             }
-            
+
             .hot-product-banner{
                 border: 1px solid whitesmoke;
                 padding: 20px;
-                
+
                 background-color: #f8405e;
                 border-radius: 20px;
                 margin-top: 70px;
@@ -77,28 +77,28 @@
                 background-image: linear-gradient(#f8405e,#F95A74);
                 font-size: 16px;
             }
-            
+
             .title{
                 display: flex;
                 color: #fff;
                 font-weight: 500;
                 justify-content: center;
                 font-style: 100px;
-                
+
             }
-            
+
             .title .title-icon{
                 color: #fff;
                 font-size: 46px;
                 margin-right: 10px;
                 justify-items: center;
             }
-            
+
             .title-list{
                 border-bottom: 1px solid #979494;
             }
-            
-            
+
+
             .background-container{
                 border: 1px solid whitesmoke;
                 padding: 0px 30px;
@@ -106,10 +106,10 @@
                 width: 100%;
                 background-color: #d9d9d9;
                 border-radius: 20px;
-                margin: 20px; 
+                margin: 20px;
             }
 
-            
+
 
             /* --------------------------------------------------------- */
             .card {
@@ -154,10 +154,10 @@
                 border: none;
                 padding: 5px 10px;
                 border-radius: 5px;
-                
+
                 text-transform: uppercase;
             }
-            
+
             .btn .btn-primary{
                 font-size: 16px;
             }
@@ -174,7 +174,7 @@
             .filter-table{
                 background-color: red;
             }
-            
+
             .pagination{
                 justify-content: center;
             }
@@ -184,14 +184,14 @@
         <!-- Header start -->
         <%@include file="header.jsp" %>
         <!-- Header end -->
-        
+
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
                 <h1 class="brand-name">Shopify</h1>
             </div>
         </section>
-<!-------------------------------- comment ------------------------------>            
-       <section> 
+        <!-------------------------------- comment ------------------------------>            
+        <section> 
             <div class="container hot-product-banner">
                 <div class="title">
                     <i class='bx bxs-hot title-icon'></i>
@@ -210,26 +210,35 @@
                 </div>
             </div>               
         </section>
-<!-------------------------------- comment ------------------------------>        
+        <!-------------------------------- comment ------------------------------>        
         <section id="product-list-container">
             <div class="title-list container">
                 <h1>TẤT CẢ SẢN PHẨM</h1>
             </div>
             <div class="container filter-table">
-                
+
             </div>
             <div class="container background-container">
                 <div class="product-card">
                     <c:forEach items="${list_P}" var="list1">
                         <div class="card">
-                                <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
-                                <div class="card-body">
-                                    <h5 class="card-title">${list1.getProductName()}</h5>
-                                    <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
-                                    <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                                    <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                                </div>
-                            
+                            <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${list1.getProductName()}</h5>
+                                <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
+                                <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                               
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.user}">
+                                        <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                        <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+
                         </div>
                     </c:forEach>
                 </div>
@@ -243,8 +252,8 @@
                     </c:forEach>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
-          </div>
-          
+        </div>
+
         <!-- Footer start -->
         <%@include file="footer.jsp" %>
         <!-- Footer end -->

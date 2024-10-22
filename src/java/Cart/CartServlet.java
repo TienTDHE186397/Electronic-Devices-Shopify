@@ -4,6 +4,11 @@
  */
 package Cart;
 
+import DAO.CardDAO;
+import DAO.DAOProduct;
+import Entity.Cart;
+import Entity.Person;
+import Entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,12 +16,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "CartServlet", urlPatterns = {"/CartServlet"})
+@WebServlet(name = "CartServlet", urlPatterns = {"/cart"})
 public class CartServlet extends HttpServlet {
 
     /**
@@ -55,25 +61,51 @@ public class CartServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        CardDAO cd = new CardDAO();
+        DAOProduct pd = new DAOProduct();
+        int productID = Integer.parseInt(request.getParameter("ProductID"));
+        Product pro = pd.getProductById(productID);
+        HttpSession session = request.getSession();
+        session.getAttribute("user");
+        System.out.println(session.getAttribute("user"));   
+        Person user = (Person) session.getAttribute("user");
+        System.out.println("HAHAHHA: " + user);
+//        int personId = user.getPersonID();
+//        System.out.println(personId);
+        Cart cart = cd.getCartByPersonId(user.getPersonID());
+        System.out.println(cart);
+        if (cart == null) {
+            cart = new Cart();
+            cart.setPersonID(user.getPersonID());
+            cd.createCart(cart);
+        }
+
+        request.setAttribute("pro", pro);
+        request.getRequestDispatcher("cart.jsp").forward(request, response);
+
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
+//    @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        int productId = Integer.parseInt(request.getParameter("ProductId"));
+//        ystem.out.println("ProductID" + productID);
+//        System.out.println(productID);
+//        Product product = productDAO.selectProductById(productId);
+//        if (product != null) {
+//            HttpSession session = request.getSession();
+//            Cart cart = (Cart) session.getAttribute("cart");
+//
+//            if (cart == null) {
+//                cart = new Cart();
+//                session.setAttribute("cart", cart);
+//            }
+//
+//            cart.addItem(product, quantity);
+//        }
+//
+//        response.sendRedirect("cart");
+//    }
     /**
      * Returns a short description of the servlet.
      *

@@ -7,78 +7,71 @@ package Entity;
 /**
  *
  * @author admin
- */
-public class CartItem {
-    private int CartItemID;
-    private int CartID;
-    private int ProductID;
-    private int Quantity;
-    private double Price;
-    private double TotalPrice;
+ */public class CartItem {
+    private int cartItemID;
+    private int cartID;
+    private int productID;
+    private int quantity;
+    private double price;
 
-    public CartItem() {
+    // Calculated total price
+    public double getTotalPrice() {
+        return quantity * price;
     }
 
-    public CartItem(int CartItemID, int CartID, int ProductID, int Quantity, double Price, double TotalPrice) {
-        this.CartItemID = CartItemID;
-        this.CartID = CartID;
-        this.ProductID = ProductID;
-        this.Quantity = Quantity;
-        this.Price = Price;
-        this.TotalPrice = TotalPrice;
-    }
+    // Constructors, getters and setters
+    public CartItem() {}
 
     public int getCartItemID() {
-        return CartItemID;
+        return cartItemID;
     }
 
-    public void setCartItemID(int CartItemID) {
-        this.CartItemID = CartItemID;
+    public CartItem(int cartID, int productID, int quantity, double price) {
+        this.cartItemID = cartItemID;
+        this.cartID = cartID;
+        this.productID = productID;
+        this.quantity = quantity;
+        this.price = price;
+    }
+    
+
+    public void setCartItemID(int cartItemID) {
+        this.cartItemID = cartItemID;
     }
 
     public int getCartID() {
-        return CartID;
+        return cartID;
     }
 
-    public void setCartID(int CartID) {
-        this.CartID = CartID;
+    public void setCartID(int cartID) {
+        this.cartID = cartID;
     }
 
     public int getProductID() {
-        return ProductID;
+        return productID;
     }
 
-    public void setProductID(int ProductID) {
-        this.ProductID = ProductID;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
-    public void setQuantity(int Quantity) {
-        this.Quantity = Quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getPrice() {
-        return Price;
+        return price;
     }
 
-    public void setPrice(double Price) {
-        this.Price = Price;
+    public void setPrice(double price) {
+        this.price = price;
     }
-
-    public double getTotalPrice() {
-        return TotalPrice;
-    }
-
-    public void setTotalPrice(double TotalPrice) {
-        this.TotalPrice = TotalPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "CartItem{" + "CartItemID=" + CartItemID + ", CartID=" + CartID + ", ProductID=" + ProductID + ", Quantity=" + Quantity + ", Price=" + Price + ", TotalPrice=" + TotalPrice + '}';
-    }
-    
 }
+
+    
+    
+
