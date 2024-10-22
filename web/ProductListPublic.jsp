@@ -213,6 +213,12 @@
                 border-radius: 5px;
                 width: 50%;
             }
+            
+            .filter-col{
+                border-radius: 5px;
+                text-align: center;
+                
+            }
         </style>
     </head>
     <body>
@@ -234,11 +240,11 @@
                     <h1>HOT SALE MÙA TỰU TRƯỜNG</h1>
                 </div>
                 <div class="product-card">
-                    <c:forEach items="${hot_product}" var="hot-product">
+                    <c:forEach items="${hot_product}" var="product">
                     <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="${hot-product.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
+                        <img src="${product.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
                         <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">${hot-product.getProductName()}</h5>
+                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">${product.getProductName()}</h5>
                             <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px; background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
@@ -258,7 +264,7 @@
                 
                     <div class="filter-table">
                         <label><b>Phân loại:</b></label>
-                        <select name="category" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                        <select class="filter-col" name="category" id="categoryselect" onchange="document.getElementById('form1').submit()">
                             <option value="0">All</option>
                             <c:forEach var="c" items="${listCategory}">
                                 <option value="${c.getCategoryID()}" ${c.getCategoryID() == param.category ? "selected":""} >${c.getCategoryName()}</option>
@@ -268,14 +274,17 @@
 
                     <div class="filter-table">
                         <label><b>Sắp xếp theo:</b></label>
-                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                        <select class="filter-col" name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
                             <option value="sortName" >Tên(A-Z)</option>
                             <option value="sortUpdate">Mới cập nhật</option>
                         </select>
                     </div>
                     <div class="filter-table">
                         <label><b>Số lượng xem:</b></label>
-                        <select name="numberOfProducts" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                        <select class="filter-col" name="numberOfProducts" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <c:if test="${param.numberOfProducts == null}">
+                                    <option value="4" ${"selected"}>4(default)</option>
+                            </c:if>
                             <c:forEach var="count" begin="1" end="8">
                                 <option value="${count}" ${count == param.numberOfProducts ? "selected":""}>${count}</option>
                             </c:forEach>
@@ -285,19 +294,21 @@
                     
                     <div class="filter-table">
                         <label><b>Tìm kiếm sản phẩm:</b></label>
-                        <input style="border-radius: 5px;width: 100%" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="">
+                        <input style="border-radius: 5px;width: 250px" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="${param.search_product}">
                     </div> 
-                
             </div>
             <div class="container category-table">
-                <h5>Lọc sản phẩm: </h5>
-                    <div class="filter-table">
-                        <label><b>Sắp xếp theo:</b></label>
-                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
-                            <option value="sortName" >Tên(A-Z)</option>
-                            <option value="sortUpdate">Mới cập nhật</option>
-                        </select>
-                    </div>
+                <div>
+                    <h5>Bộ Lọc</h5>
+                </div>
+                <div class="filter-table">
+                    <label><b>Sắp xếp theo:</b></label>
+                    <select class="filter-col" name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                        <option value="sortName" >Tên(A-Z)</option>
+                        <option value="sortName1" >Tên(Z-A)</option>
+                        <option value="sortUpdate">Mới cập nhật</option>
+                    </select>
+                </div>
             </div>
             <div class="container background-container">
                 <div class="product-card">
@@ -319,7 +330,7 @@
                         <c:forEach begin="1" end="${endP}" var="o">
                             <button class="pagination-button" type="submit" name="page" value="${o}" ${o == param.page ? "selected":""} }>${o}</button>
                         </c:forEach>
-                </ul>
+                </ul> 
             </div>
         </form>
     </section>

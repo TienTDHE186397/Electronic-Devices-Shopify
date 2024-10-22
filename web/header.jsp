@@ -147,21 +147,21 @@
                         <li class="list">
                             <a href="./" class="nav-link">
                                 <i class="bx bx-home-alt icon"></i>
-                                <span class="link">Home</span>
+                                <span class="link">Trang chủ</span>
                             </a>
                         </li>
 
                         <li class="list">
                             <a href="./PostListMKT" class="nav-link">
                                 <i class='bx bx-news icon'></i>
-                                <span class="link">Posts</span>
+                                <span class="link">Bài Đăng</span>
                             </a>
                         </li>
 
                         <li class="list">
                             <a href="./product-list" class="nav-link">
                                 <i class='bx bx-box icon'></i>
-                                <span class="link">Products</span>
+                                <span class="link">Sản phẩm</span>
                             </a>
                         </li>
                     </ul>
@@ -177,7 +177,7 @@
                         <li class="list">
                             <a href="./login" class="nav-link">
                                 <i class='bx bx-user icon'></i>
-                                <span class="link">Sign in</span>
+                                <span class="link">Đăng Nhập</span>
                             </a>
                         </li>
                     </div>           
