@@ -241,7 +241,7 @@
         }
 
         /* User Table */
-        table {
+/*        table {
             border-collapse: collapse;
             background-color: #fff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -250,8 +250,8 @@
         }
         .table-container {
     display: flex;
-    justify-content: flex-end; /* Đẩy bảng về phía bên phải */
-    width: 100%; /* Chiếm hết chiều rộng khung chứa */
+    justify-content: flex-end;  Đẩy bảng về phía bên phải 
+    width: 100%;  Chiếm hết chiều rộng khung chứa 
 }
 
         thead {
@@ -275,8 +275,47 @@
 
         tbody td {
             padding: 15px;
-        }
-
+        }*/
+        table {
+                border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            }
+            .table-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+            }
+            table th, table td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            table th {
+                background-color: #f7f7f7;
+                cursor: pointer;
+            }
+            table tr:hover {
+                background-color: #f1f1f1;
+            }
+            .actions button {
+                padding: 6px 12px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                color: #fff;
+            }
+            .actions .edit {
+                background-color: #4CAF50;
+            }
+            .actions .toggle {
+                background-color: #f39c12;
+            }
+            .actions .view {
+                background-color: #3498db;
+            }
         /* Links and Actions */
         tbody td a {
             color: #007bff;
@@ -313,44 +352,43 @@
         <div class="side-header">
             <h3>H<span>STDTech</span></h3>
         </div>
-        
         <div class="side-content">
             <div class="profile">
                 <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
-                <h4>Lê Thanh Thúy</h4>
+                <h4 name="name">${person.name}</h4>
                 <small>Admin</small>
             </div>
 
             <div class="side-menu">
                 <ul>
                     <li>
-                       <a href="admin" class="">
+                       <a href="admin?PersonID=${person.personID}" class="">
                             <span class="las la-home"></span>
                             <small>Dashboard</small>
                         </a>
                     </li>
                     
                     <li>
-                       <a href="chart">
+                       <a href="chart?PersonID=${person.personID}">
                             <span class="las la-chart-pie"></span>
                             <small>Chart</small>
                         </a>
                     </li>
                     
                     <li>
-                       <a href="profile?PersonID=5">
+                       <a href="adminProfile?PersonID=${person.personID}">
                             <span class="las la-user-alt"></span>
                             <small>Profile</small>
                         </a>
                     </li>
                     <li>
-                        <a href="userList" class="active">
+                        <a href="userList?PersonID=${person.personID}" class="active">
                             <span class="las la-tasks"></span>
                             <small>User List</small>
                         </a>
                     </li>
                     <li>
-                        <a href="settingList" class="">
+                        <a href="settingList?PersonID=${person.personID}" class="">
                             <span class="las la-cog"></span>
                             <small>Setting List</small>
                         </a>
@@ -406,17 +444,17 @@
         </div>
          <!-- Bảng danh sách người dùng -->
          <div class="table-container">
-    <table border="1" width="89%">
+    <table border="1" width="89%" id="settingsTable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Họ tên</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <th>Địa chỉ</th>
-                <th>Email</th>
-                <th>Di động</th>
-                <th>Vai trò</th>
+                <th onclick="sortID(0)">ID</th>
+                <th onclick="sortTable(1)">Họ tên</th>
+                <th onclick="sortTable(2)">Giới tính</th>
+                <th onclick="sortTable(3)">Ngày sinh</th>
+                <th onclick="sortTable(4)">Địa chỉ</th>
+                <th onclick="sortTable(5)">Email</th>
+                <th onclick="sortID(6)">Di động</th>
+                <th onclick="sortTable(7)">Vai trò</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -466,5 +504,79 @@
         <div style="text-align: center; margin-top: 15px;">
     <center><h5> <a href="addUser"><input type="button" value="Thêm người dùng mới" id="addUser" style="border: none;padding: 20px;color: white;background-color: #007bff;border-radius: 8px;"></a></h5></center>
         </div>
+        <script>
+            function sortID(n) {
+                let table = document.getElementById("settingsTable"), rows, switching = true, dir = "asc", switchCount = 0;
+
+                while (switching) {
+                    switching = false;
+                    rows = table.rows;
+                    for (let i = 1; i < rows.length - 1; i++) {
+                        let x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
+                        let y = parseFloat(rows[i + 1].getElementsByTagName("TD")[n].innerHTML);
+
+                        if ((dir === "asc" && x > y) || (dir === "desc" && x < y)) {
+                            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                            // row[i].parentNode.insertBefore(new Node, reference Node);
+                            //parentNode: tra ve phan tu cha
+                            //insertBefore(new Node, reference Node): chen new Node len truoc reference Node.
+                            switching = true;
+                            switchCount++;
+                            break;
+                        }
+                    }
+
+                    if (!switching && dir === "asc" && switchCount === 0) {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+
+
+            function sortTable(n) {
+                let table, rows, switching, i, x, y, shouldSwitch, switchCount = 0;
+                let dir = "asc";
+                table = document.getElementById("settingsTable"); // lay gia tri cua bang voi id la settingsTable
+                switching = true;
+                // Start with ascending order
+                while (switching) {
+                    switching = false;
+                    rows = table.rows; // gan cac hang cua bang cho rows
+
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName("TD")[n]; //lay gia tri hang hien tai i
+                        y = rows[i + 1].getElementsByTagName("TD")[n]; // lay gia tri hang ke tiep i+1
+
+                        if (dir === "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir === "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        // row[i].parentNode.insertBefore(new Node, reference Node);
+                        //parentNode: tra ve phan tu cha
+                        //insertBefore(new Node, reference Node): chen new Node len truoc reference Node.
+                        switching = true;
+                        switchCount++;
+                    } else {
+                        if (switchCount === 0 && dir === "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

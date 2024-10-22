@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
-import Entity.Categories;
 import DAO.BlogListDAO;
 import Entity.Blog;
 import java.io.IOException;
@@ -14,11 +9,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.*;
 import java.lang.*;
 
-@WebServlet(name = "PostListServlet", urlPatterns = {"/PostListMKT"})
-public class PostListServlet extends HttpServlet {
+@WebServlet(name = "PostListHomeServlet", urlPatterns = {"/PostListHome"})
+public class PostListHomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,31 +36,16 @@ public class PostListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         BlogListDAO blogDAO = new BlogListDAO();
-        String tittlewrite = request.getParameter("tittlewrite");
-        String authorwrite = request.getParameter("authorwrite");
-        String type = request.getParameter("type");
-        String statusf = request.getParameter("statusf");
-        String sort = request.getParameter("sort");
-        String event = request.getParameter("event");
+        String search = request.getParameter("search");
+        
         String page = request.getParameter("page");
-
+        List<Blog> listRB = blogDAO.trendingBlogList();
         String numberofpage = request.getParameter("numberofpage");
         String[] col = request.getParameterValues("col");
         request.setAttribute("nof", numberofpage);
         
-        
-        request.setAttribute("tittlewrite", tittlewrite);
-        request.setAttribute("authorwirte", authorwrite);
-        request.setAttribute("type", type);
-        request.setAttribute("statusf", statusf);
-        request.setAttribute("sort", sort);
-        request.setAttribute("event", event);
-
-        if (page == null || page.equals("")) {
-            page = "1";
-        }
-
         if (col != null) {
             for (int i = 0; i < col.length; i++) {
                 request.setAttribute(col[i], col[i]);
@@ -75,14 +56,19 @@ public class PostListServlet extends HttpServlet {
                 numberofpage = String.valueOf(blogDAO.getAllBlog().size());
             }
         }
-
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (search != null) {
+            session.setAttribute("search", search);
+        }
         String uri = request.getRequestURI();
         String queryString = request.getQueryString();
 
         request.setAttribute("uri", uri);
         request.setAttribute("queryString", queryString);
 
-        if (tittlewrite == null && authorwrite == null && type == null && statusf == null && sort == null && event == null && numberofpage == null) {
+        if (search == null && numberofpage == null) {
 
             List<Blog> listB = blogDAO.getAllBlog();
             List<String> listBlogType = blogDAO.getDistinctOfBlogType();
@@ -91,32 +77,38 @@ public class PostListServlet extends HttpServlet {
 
             List<Blog> listBp = blogDAO.getBlogPerPage(Integer.parseInt(page), postPerPage);
 
+            request.setAttribute("search", search);
+            request.setAttribute("listRB", listRB);
             request.setAttribute("listBp", listBp);
             request.setAttribute("totalP", String.valueOf(totalpage));
             request.setAttribute("listB", listB);
             request.setAttribute("listBlogType", listBlogType);
             request.setAttribute("totalpage", totalpage);
             request.setAttribute("page", page);
-            request.getRequestDispatcher("PostList.jsp").forward(request, response);
+            request.getRequestDispatcher("PostListHome.jsp").forward(request, response);
 
         } else {
 
             try {
 
                 int postPerPage = Integer.parseInt(numberofpage);
-                List<Blog> listB2 = blogDAO.searchBlogList2(tittlewrite, authorwrite, type, statusf, sort, event, page);
+                List<Blog> listB2 = blogDAO.searchBlogListHome2(search, page);
                 List<Blog> listB = blogDAO.getAllBlog();
-                List<Blog> listBp = blogDAO.searchBlogList(tittlewrite, authorwrite, type, statusf, sort, event, page, postPerPage);
+                List<Blog> listBp = blogDAO.searchBlogListHome(search, page, postPerPage);
                 List<String> listBlogType = blogDAO.getDistinctOfBlogType();
 
                 int totalpage = (int) Math.ceil((double) listB2.size() / postPerPage);
 
+                request.setAttribute("search", search);
+                request.setAttribute("listRB", listRB);
                 request.setAttribute("listB", listB);
                 request.setAttribute("totalP", String.valueOf(totalpage));
                 request.setAttribute("listBp", listBp);
                 request.setAttribute("listBlogType", listBlogType);
+                request.setAttribute("totalpage", totalpage);
+                request.setAttribute("page", page);
 
-                request.getRequestDispatcher("PostList.jsp").forward(request, response);
+                request.getRequestDispatcher("PostListHome.jsp").forward(request, response);
             } catch (Exception e) {
                 System.out.println(e);
             }

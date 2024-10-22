@@ -106,6 +106,10 @@
                 color: #fff;
                 font-weight: 500;
             }
+            .profile input {
+                color: #fff;
+                font-weight: 500;
+            }
 
             .profile small {
                 color: #899DC1;
@@ -557,41 +561,43 @@
 
             <div class="side-content">
                 <div class="profile">
+                    <input type="hidden" id="PersonID" name="PersonID" value="${person.personID}"/>
                     <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
-                    <h4>Lê Thanh Thúy</h4>
+                    <h4 name="name">${person.name}</h4>
                     <small>Admin</small>
                 </div>
 
                 <div class="side-menu">
                     <ul>
                         <li>
-                            <a href="admin" class="active">
+                            <a name="PersonID" href="admin?PersonID=${person.personID}" class="active">
                                 <span class="las la-home"></span>
                                 <small>Dashboard</small>
                             </a>
+                            
                         </li>
 
                         <li>
-                            <a href="chart">
+                            <a href="chart?PersonID=${person.personID}">
                                 <span class="las la-chart-pie"></span>
                                 <small>Chart</small>
                             </a>
                         </li>
 
                         <li>
-                            <a href="profile?PersonID=5">
+                            <a href="adminProfile?PersonID=${person.personID}">
                                 <span class="las la-user-alt"></span>
                                 <small>Profile</small>
                             </a>
                         </li>
                         <li>
-                            <a href="userList">
+                            <a href="userList?PersonID=${person.personID}">
                                 <span class="las la-tasks"></span>
                                 <small>User List</small>
                             </a>
                         </li>
                         <li>
-                            <a href="settingList">
+                            <a href="settingList?PersonID=${person.personID}">
                                 <span class="las la-cog"></span>
                                 <small>Setting List</small>
                             </a>
@@ -675,7 +681,7 @@
                                 <span class="las la-check-circle" style="color: greenyellow"></span>
                             </div>
                             <div class="card-progress">
-                                <small>Successful Orders</small>
+                                <small>Complete</small>
                                 <div class="card-indicator">
                                     <div class="indicator one" style="width: ${(successOrders/allOrders)*100}%"></div>
                                 </div>
@@ -685,7 +691,7 @@
                                 <span class="las la-times" style="color: red"></span>
                             </div>
                             <div class="card-progress">
-                                <small>Canceled Orders</small>
+                                <small>In Line</small>
                                 <div class="card-indicator">
                                     <div class="indicator four" style="width: ${(cancelOrders/allOrders)*100}%"></div>
                                 </div>
@@ -695,7 +701,7 @@
                                 <span class="las la-truck" style="color: orange"></span>
                             </div>
                             <div class="card-progress">
-                                <small>Shipped Orders</small>
+                                <small>In Progress</small>
                                 <div class="card-indicator">
                                     <div class="indicator three" style="width: ${(shipOrders/allOrders)*100}%"></div>
                                 </div>
@@ -978,9 +984,9 @@
                                     <input type="text" name="search" placeholder="Search by Method" class="record-search" value="${param.search}">
                                     <select name="status" id="status">
                                         <option value="">Status</option>
-                                        <option value="Hoàn thành" ${param.status == 'Hoàn thành' ? 'selected' : ''}>Hoàn thành</option>
-                                        <option value="Đã ship" ${param.status == 'Đã ship' ? 'selected' : ''}>Đã ship</option>
-                                        <option value="Đã hủy" ${param.status == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
+                                        <option value="Complete" ${param.status == 'Complete' ? 'selected' : ''}>Complete</option>
+                                        <option value="In line" ${param.status == 'In line' ? 'selected' : ''}>In Line</option>
+                                        <option value="In progress" ${param.status == 'In progress' ? 'selected' : ''}>In Progress</option>
                                     </select>
                                     <input style="background-color: blue;color: white" type="submit" value="Search">
                                 </form>

@@ -87,7 +87,6 @@
 
     <body>
 
-
         <c:set value="${requestScope.listType}" var="listType" />
 
         <div class="container">
@@ -137,8 +136,8 @@
         </div>
 
     </body>
-
-
+    
+    
     <script>
         tinymce.init({
             selector: '.tinymce',
@@ -146,6 +145,7 @@
             toolbar_mode: 'floating'
         });
     </script>
+
 
 
 </html>

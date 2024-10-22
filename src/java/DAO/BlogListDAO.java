@@ -5,6 +5,7 @@
 package DAO;
 
 import Entity.Blog;
+import Entity.CommentBlog;
 import Entity.Person;
 import java.util.*;
 import java.lang.*;
@@ -17,27 +18,20 @@ public class BlogListDAO extends DBContext {
     DAOPerson pDAO = new DAOPerson();
 
     public List<Blog> getAllBlog() {
-
         List<Blog> list = new ArrayList<>();
-
         String sql = "select * from Blog";
-
         try {
-
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
-
                 Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
                         rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
                         rs.getString("Blog_Update_Time"),
                         rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
                         rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
-
                 list.add(blog);
-
             }
 
         } catch (Exception e) {
@@ -69,12 +63,14 @@ public class BlogListDAO extends DBContext {
                 + "WHERE b.PersonID = p.PersonID\n"
                 + "ORDER BY b.BlogID \n"
                 + "OFFSET ? ROWS\n"
-                + "FETCH NEXT 4 ROWS ONLY";
+                + "FETCH NEXT ? ROWS ONLY";
 
         try {
 
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, pageget);
+            st.setInt(2, perpage);
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
 
@@ -96,6 +92,123 @@ public class BlogListDAO extends DBContext {
 
         return list;
 
+    }
+
+    public List<Blog> searchBlogListHome2(String search, String page) {
+
+        List<Blog> list = new ArrayList<>();
+
+        String[] arr = search.split(" ");
+
+        String sql = "Select * From Blog Where 1=1 ";
+        int count = 0;
+        for (String m : arr) {
+            if (count == 0) {
+                sql += "AND Blog_tittle Like N'%" + m + "%' ";
+            }
+            if (count > 0) {
+                sql += "OR Blog_tittle Like N'%" + m + "%' ";
+            }
+            count++;
+        }
+
+        try {
+
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getString("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
+
+                list.add(blog);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+    }
+
+    public List<Blog> searchBlogListHome(String search, String page, int perpage) {
+        List<Blog> list = new ArrayList<>();
+
+        String[] arr = search.split(" ");
+
+        int pageget = (Integer.parseInt(page) * perpage - perpage);
+
+        String sql = "Select * From Blog Where 1=1 ";
+        int count = 0;
+        for (String m : arr) {
+            if (count == 0) {
+                sql += "AND Blog_tittle Like N'%" + m + "%' ";
+            }
+            if (count > 0) {
+                sql += "OR Blog_tittle Like N'%" + m + "%' ";
+            }
+            count++;
+        }
+
+        sql += " ORDER BY BlogID";
+
+        sql += "\n OFFSET " + pageget + " ROWS\n"
+                + "FETCH NEXT " + perpage + " ROWS ONLY";
+
+        try {
+
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getString("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
+
+                list.add(blog);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+    }
+
+    public List<Blog> trendingBlogList() {
+
+        List<Blog> list = new ArrayList<>();
+
+        String sql = "select *\n"
+                + "from Blog\n"
+                + "Order BY Blog_Views desc";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getString("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
+                list.add(blog);
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 
     // Khong su dung !!!
@@ -252,11 +365,68 @@ public class BlogListDAO extends DBContext {
             st.setInt(11, o.getPersonID());
             st.executeUpdate();
         } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void addCommentBlog(CommentBlog c, Blog b, Person o) {
+
+        String sql = "INSERT INTO [dbo].[CommentBlog]\n"
+                + "           ([CommentText]\n"
+                + "           ,[CommentDate]\n"
+                + "           ,[PersonID]\n"
+                + "           ,[BlogID])\n"
+                + "     VALUES\n"
+                + "          (?,?,?,?)";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, c.getComment_text());
+            st.setString(2, c.getComment_date());
+            st.setInt(3, o.getPersonID());
+            st.setInt(4, b.getBlogID());
+
+            st.executeUpdate();
+        } catch (Exception e) {
 
             System.out.println(e);
 
         }
 
+    }
+
+    public List<CommentBlog> getAllCommetFromBlog(int id) {
+
+        BlogListDAO bDao = new BlogListDAO();
+        List<CommentBlog> list = new ArrayList<>();
+
+        String sql = "Select * From CommentBlog Where BlogID = " + id;
+
+        try {
+
+            PreparedStatement st = connection.prepareCall(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+                Blog blog = bDao.getBlogById(Integer.parseInt(rs.getString("BlogID")));
+
+                CommentBlog cb = new CommentBlog(rs.getInt("CommentID"),
+                        rs.getString("CommentText"),
+                        rs.getString("CommentDate"),
+                        person,
+                        blog);
+
+                list.add(cb);
+
+            }
+
+        } catch (Exception e) {
+        }
+
+        return list;
     }
 
     public void editBlog(Blog b, Person o) {
@@ -467,11 +637,11 @@ public class BlogListDAO extends DBContext {
 
     }
 
-    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page) {
+    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page,int perpage) {
 
         List<Blog> list = new ArrayList<>();
 
-        int pageget = (Integer.parseInt(page) * 4 - 4);
+        int pageget = (Integer.parseInt(page) * perpage - perpage);
 
         String sql = "SELECT b.[BlogID]\n"
                 + "      ,b.[Blog_Type]\n"
@@ -593,13 +763,11 @@ public class BlogListDAO extends DBContext {
         }
 
         sql += "\n OFFSET " + pageget + " ROWS\n"
-                + "FETCH NEXT 4 ROWS ONLY";
+                + "FETCH NEXT "+ perpage +" ROWS ONLY";
 
         try {
-
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-
             while (rs.next()) {
 
                 Person person = pDAO.getPersonById(rs.getString("PersonID"));
@@ -623,21 +791,14 @@ public class BlogListDAO extends DBContext {
     public List<String> getDistinctOfBlogType() {
 
         List<String> list = new ArrayList();
-
         String sql = "select distinct Blog_Type\n"
                 + "from Blog";
-
         try {
-
             PreparedStatement st = connection.prepareStatement(sql);
-
             ResultSet rs = st.executeQuery();
-
             while (rs.next()) {
-
                 list.add(rs.getString("Blog_Type"));
             }
-
         } catch (Exception e) {
 
         }
@@ -701,6 +862,10 @@ public class BlogListDAO extends DBContext {
         // }
 //
         DAOPerson pd = new DAOPerson();
+//        List<Blog> bm = bl.searchBlogListHome("Điện Thoại", "1");
+//        for(Blog b : bm) {
+//            System.out.println(b.getBlogID());
+//        }
 
 //        //Blog b2 = new Blog(22, "trung", "trung", "trung", "trung", "trung",
 //                "2024-9-10", "trung", 12, "Published", "trung", 0, pd.getPersonById("6"));
@@ -708,6 +873,15 @@ public class BlogListDAO extends DBContext {
 //        bl.insertBlog(b2, pd.getPersonById("6"));
 //
 //        System.out.println("add thanh cong");
+//              String m = bl.searchBlogListHome("Điện Nghe Bàn","1");
+//          System.out.println(m);
+        Blog b = bl.getBlogById(10);
+        Person p = pd.getPersonById("1");
+        System.out.println(p.getPersonID());
+        System.out.println(b.getBlogID());
+        CommentBlog c = new CommentBlog(6, "Bài viết này thật thú vị", "2024-10-18", p, b);
+        bl.addCommentBlog(c, b, p);
+        System.out.println("Thanh Cong");
     }
 
 }
