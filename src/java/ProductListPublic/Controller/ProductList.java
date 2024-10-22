@@ -6,6 +6,8 @@
 package ProductListPublic.Controller;
 
 import Entity.Product;
+import DAO.CategoryDAO;
+import Entity.Categories;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ProductListPublic.DAO.ProductDAO;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  *
@@ -59,43 +62,54 @@ public class ProductList extends HttpServlet {
     throws ServletException, IOException {
 //==============================================================================
         ProductDAO pDao = new ProductDAO();
+        CategoryDAO cDao = new CategoryDAO();
 //==============================================================================
-/*__________ ProductDAO ----> ProductList -----> ProductListPublic.jsp ______ */
-        List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);
-        List<Product> listPhoneAndTablet = pDao.getProductByCategory(1);
-        request.setAttribute("list_phone_and_tablet", listPhoneAndTablet);
-        request.setAttribute("brand_phone_and_tablet", listBPhoneAndTablet);
+        String queryString = request.getQueryString();
+        String uri = request.getRequestURI();
+        request.setAttribute("uri", uri);
+        request.setAttribute("queryString", queryString);
+        String category = request.getParameter("category");
+        int cate=0;
+        if(category !=null){
+            cate = Integer.parseInt(category);
+        }
+        String quantity_product = request.getParameter("numberOfProducts");
+        int quantity = 4;
+        if(quantity_product != null){
+            quantity = Integer.parseInt(quantity_product);
+        }
         
+        String indexPage = request.getParameter("page");
+        if (indexPage == null) {
+                indexPage = "1";
+            }
+        int index = Integer.parseInt(indexPage);
+//==============================================================================
+
+        
+
 //------------------------------------------------------------------------------
 
-        List<String> listBLaptop = pDao.getBrandByCategory(2);
-        List<Product> listLaptop = pDao.getProductByCategory(2);   
-        request.setAttribute("list_laptop", listLaptop);
-        request.setAttribute("brand_laptop", listBLaptop);
         
-//------------------------------------------------------------------------------
-
-        List<String> listBPc = pDao.getBrandByCategory(3);
-        List<Product> listPc = pDao.getProductByCategory(3);   
-        request.setAttribute("list_pc", listPc);
-        request.setAttribute("brand_pc", listBPc);
-        
-//------------------------------------------------------------------------------
-        List<String> listBMonitor = pDao.getBrandByCategory(4);
-        List<Product> listMonitor = pDao.getProductByCategory(4);   
-        request.setAttribute("list_monitor", listMonitor);
-        request.setAttribute("brand_monitor", listBMonitor);
-        
-//------------------------------------------------------------------------------
-
-        List<String> listBHeadphone = pDao.getBrandByCategory(5);
-        List<Product> listHeadphone = pDao.getProductByCategory(5);   
-        request.setAttribute("list_headphone", listHeadphone);
-        request.setAttribute("brand_headphone", listBHeadphone);
+    List<Product> listProductTop = pDao.getTop4Product();
+    request.setAttribute("hot_product", listProductTop);
 
 //==============================================================================
-    
-    List<Product> lProduct = new ArrayList<>();
+    List<Categories> listCategory = cDao.getAllCategory();
+    request.setAttribute("listCategory", listCategory);
+
+//==============================================================================
+
+ /**********************************Paging******************************/
+            
+            List<Product> listP = pDao.pagingProductByCategory(index, cate,quantity);
+            int count = pDao.getTotalProductByCatetory(cate);
+            int endPage = count / quantity;
+            if (count % quantity != 0) {
+                endPage += 1;
+            }
+            request.setAttribute("list_P", listP);
+            request.setAttribute("endP", endPage);
 //==============================================================================
         request.getRequestDispatcher("ProductListPublic.jsp").forward(request, response);
     } 
@@ -110,7 +124,7 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /** 

@@ -17,6 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -63,9 +64,12 @@ public class SaleHomeEmpServlet extends HttpServlet {
     throws ServletException, IOException {
          SaleEmpDAO saleEmpDAO = new SaleEmpDAO();
        
-         
+      
          
         int SaleID = Integer.parseInt(request.getParameter("SaleID"));
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("saleid", request.getParameter("SaleID"));
        
         int totalCount = saleEmpDAO.getTotalOrderCount(SaleID);
         

@@ -80,8 +80,6 @@ public class HomeServlet extends HttpServlet{
 
         List<String> listBLaptop = pDao.getBrandByCategory(2);
         List<Product> listLaptop = pDao.getProductByCategory(2);
-        
-    
         request.setAttribute("list_laptop", listLaptop);
         request.setAttribute("brand_laptop", listBLaptop);
         

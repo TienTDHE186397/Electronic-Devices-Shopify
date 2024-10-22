@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="com.google.gson.Gson" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="saleID" value="${param.SaleID}" />
+<c:set var="saleID" value="${session.saleID}" />
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -29,13 +29,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <span class="icon">
                                 <ion-icon name="laptop-outline"></ion-icon>
                             </span>
-                            <span class="title">Webdientu</span>
+                            <span class="title">HSDTech</span>
                         </a>
 
                     </li>
 
                     <li>
-                        <a href="SaleHomeEmp?SaleID=${param.SaleID}">
+                        <a href="SaleHomeEmp?SaleID=${sessionScope.saleid}">
                             <span class="icon">
                                 <ion-icon name="pie-chart-outline"></ion-icon></span>
                             <span class="title">Dashboard</span>
@@ -43,7 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="SaleOrderEmp?SaleID=${param.SaleID}">
+                        <a href="SaleOrderEmp?SaleID=${sessionScope.saleid}">
                             <span class="icon">
                                 <ion-icon name="pricetags-outline"></ion-icon></span>
                             <span class="title">Orders</span>
@@ -51,7 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="profile">
                             <span class="icon">
                                 <ion-icon name="people-outline"></ion-icon>
                             </span>
@@ -60,17 +60,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="home">
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <span class="title">Change Password</span>
+                            <span class="title">Home Page</span>
                         </a>
 
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="./LogoutServlet">
                             <span class="icon">
                                 <ion-icon name="log-out-outline"></ion-icon>
                             </span>
@@ -188,6 +188,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div> 
             </div>
         </div>
+                    
 
 
 

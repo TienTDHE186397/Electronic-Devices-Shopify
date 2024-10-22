@@ -189,17 +189,30 @@ CategoryDAO cDAO = new CategoryDAO();
         return listP;
     }
 //==============================================================================    
-
+public int getTotalProduct(){
+        String sql = "Select COUNT(*) from Products";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();      
+            while (rs.next()) {
+                return rs.getInt(1);
+            }      
+        }catch(Exception e){
+            
+        }
+        return 0;
+    }
     public static void main(String[] args) {
         //TEST Function getAllProduct
         ProductDAO pDAO = new ProductDAO();
-        List<Product> list = pDAO.getProductByBrand(1,"Apple");
+//        List<Product> list = pDAO.getProductByBrand(1,"Apple");
 //        Product p1 = pDAO.getProductsById(3);
 //        List<String> list = pDAO.getBrandByCategory(2);
-        for(Product p: list){
-            System.out.println(p);
-        }
-       
-        
+//        for(Product p: list){
+//            System.out.println(p);
+//        }
+//       
+        int count = pDAO.getTotalProduct();
+        System.out.println(pDAO.getTotalProduct());
     }
 }

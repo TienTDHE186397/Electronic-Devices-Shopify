@@ -4,9 +4,7 @@
  */
 package Controller;
 
-import DAO.DAOAdmin;
-import Entity.Person;
-import DAO.DAOPerson;
+import DAO.DAOSetting;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author nghie
  */
-@WebServlet(name = "UserListServlet", urlPatterns = {"/userList"})
-public class UserListServlet extends HttpServlet {
+@WebServlet(name = "deleteSetting", urlPatterns = {"/deleteSetting"})
+public class deleteSetting extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class UserListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserListServlet</title>");
+            out.println("<title>Servlet deleteSetting</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet deleteSetting at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,14 +58,11 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
-        DAOAdmin da = new DAOAdmin();
-        String id = request.getParameter("PersonID");
-        Person p = da.getPersonById(id);
-        request.setAttribute("person", p);
-        List<Person> listP = dp.getAllPerson();
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        DAOSetting ds = new DAOSetting();
+        String id = request.getParameter("id");
+        ds.deleteSetting(id);
+        response.sendRedirect("settingList");
+        
     }
 
     /**
@@ -82,7 +76,7 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**

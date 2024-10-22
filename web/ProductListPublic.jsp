@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Product List</title>
+        <title>Danh Sách Sản Phẩm</title>
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link href="css/bootstrap.min.css" rel="stylesheet" >
         <link href="css/font-awesome.min.css" rel="stylesheet" >
@@ -17,27 +17,34 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <link href="css/global.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
-        
+        <link href="https://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <style>
             *{
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
+            h5{
+                font-family: 'Roboto', sans-serif;
+            }
             body{
-                font-family: Roboto;
+                font-family: 'Roboto', sans-serif;
+                background-color: #faf2e8;
             }
             .bg_light_1 {
                 background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
             }
-            
-            #subs {   
+
+            #subs {
                 margin-top: 70px;
                 background-color: #f7f7f7; /* Màu nền nhẹ */
                 padding-top: 5rem;
                 padding-bottom: 5rem;
             }
-            
+
             @keyframes gradientAnimation {
                 0% {
                     background-position: 0% 50%;
@@ -49,7 +56,7 @@
                     background-position: 0% 50%;
                 }
             }
-            
+
             .brand-name {
                 font-size: 4rem; /* Kích thước chữ lớn hơn */
                 font-weight: bold;
@@ -63,11 +70,11 @@
                 letter-spacing: 0.2rem; /* Khoảng cách giữa các chữ cái lớn hơn */
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng chữ */
             }
-            
+
             .hot-product-banner{
                 border: 1px solid whitesmoke;
                 padding: 20px;
-                
+
                 background-color: #f8405e;
                 border-radius: 20px;
                 margin-top: 70px;
@@ -75,28 +82,28 @@
                 background-image: linear-gradient(#f8405e,#F95A74);
                 font-size: 16px;
             }
-            
+
             .title{
                 display: flex;
                 color: #fff;
                 font-weight: 500;
                 justify-content: center;
                 font-style: 100px;
-                
+
             }
-            
+
             .title .title-icon{
                 color: #fff;
                 font-size: 46px;
                 margin-right: 10px;
                 justify-items: center;
             }
-            
+
             .title-list{
                 border-bottom: 1px solid #979494;
             }
-            
-            
+
+
             .background-container{
                 border: 1px solid whitesmoke;
                 padding: 0px 30px;
@@ -104,10 +111,10 @@
                 width: 100%;
                 background-color: #d9d9d9;
                 border-radius: 20px;
-                margin: 20px; 
+                margin: 20px;
             }
 
-            
+
 
             /* --------------------------------------------------------- */
             .card {
@@ -152,10 +159,10 @@
                 border: none;
                 padding: 5px 10px;
                 border-radius: 5px;
-                
+
                 text-transform: uppercase;
             }
-            
+
             .btn .btn-primary{
                 font-size: 16px;
             }
@@ -167,185 +174,159 @@
             .product-card {
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: center;
+                width: auto;
+                
             }
-         
+            .category-table{
+                background-color: #f7f7f9;
+                margin: 15px 0px;
+                padding: 15px;
+                border-radius: 15px;
+                display: flex;
+                justify-items: left;
+
+            }
+
+            .dropdown{
+                margin: 0px 10px;
+            }
+
+            .pagination{
+                justify-content: center;
+            }
+
+            .filter-table{
+                margin: 0px 15px;
+            }
+            
+            .pagination-button{
+                margin: 0px 5px;
+                padding: 10px;
+                border: solid 1px #d9d9d9;
+                border-radius: 5px;
+            }
+            
+            .form-input{
+                background: #d9d9d9;
+                border: solid 1px #d9d9d9;
+                border-radius: 5px;
+                width: 50%;
+            }
         </style>
     </head>
     <body>
         <!-- Header start -->
         <%@include file="header.jsp" %>
         <!-- Header end -->
-        
+
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
                 <h1 class="brand-name">Shopify</h1>
             </div>
         </section>
-<!-------------------------------- comment ------------------------------>            
-       <section> 
+        <!-------------------------------- comment ------------------------------>          
+        
+        <section> 
             <div class="container hot-product-banner">
                 <div class="title">
                     <i class='bx bxs-hot title-icon'></i>
                     <h1>HOT SALE MÙA TỰU TRƯỜNG</h1>
                 </div>
-                <div class="product-card"> 
+                <div class="product-card">
+                    <c:forEach items="${hot_product}" var="hot-product">
                     <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="path/to/hot-product-image.jpg" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
+                        <img src="${hot-product.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
                         <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
+                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">${hot-product.getProductName()}</h5>
                             <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
                             <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px; background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
                         </div>
                     </div>
-
-
-                    <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="path/to/hot-product-image.jpg" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                        <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
-                            <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
-                        </div>
-                    </div>
-
-
-                    <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="path/to/hot-product-image.jpg" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                        <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
-                            <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
-                        </div>
-                    </div>
-
-                    <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="path/to/hot-product-image.jpg" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                        <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">Hot Product Name</h5>
-                            <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>               
         </section>
-<!-------------------------------- comment ------------------------------>        
-        <section id="product-list-container">
+        <!-------------------------------- comment ------------------------------>        
+    <section id="product-list-container">
             <div class="title-list container">
-                <h1>TẤT CẢ SẢN PHẨM</h1>
+                <h1 style="font-family: 'Roboto';">TẤT CẢ SẢN PHẨM</h1>
             </div>
-            
+        <form action="product-list" id="form1" method="get">
+            <div class="container category-table">
+                
+                    <div class="filter-table">
+                        <label><b>Phân loại:</b></label>
+                        <select name="category" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="0">All</option>
+                            <c:forEach var="c" items="${listCategory}">
+                                <option value="${c.getCategoryID()}" ${c.getCategoryID() == param.category ? "selected":""} >${c.getCategoryName()}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="filter-table">
+                        <label><b>Sắp xếp theo:</b></label>
+                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="sortName" >Tên(A-Z)</option>
+                            <option value="sortUpdate">Mới cập nhật</option>
+                        </select>
+                    </div>
+                    <div class="filter-table">
+                        <label><b>Số lượng xem:</b></label>
+                        <select name="numberOfProducts" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <c:forEach var="count" begin="1" end="8">
+                                <option value="${count}" ${count == param.numberOfProducts ? "selected":""}>${count}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                
+                    
+                    <div class="filter-table">
+                        <label><b>Tìm kiếm sản phẩm:</b></label>
+                        <input style="border-radius: 5px;width: 100%" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="">
+                    </div> 
+                
+            </div>
+            <div class="container category-table">
+                <h5>Lọc sản phẩm: </h5>
+                    <div class="filter-table">
+                        <label><b>Sắp xếp theo:</b></label>
+                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="sortName" >Tên(A-Z)</option>
+                            <option value="sortUpdate">Mới cập nhật</option>
+                        </select>
+                    </div>
+            </div>
             <div class="container background-container">
                 <div class="product-card">
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                    <c:forEach items="${list_P}" var="list1">
+                        <div class="card">
+                            <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${list1.getProductName()}</h5>
+                                <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
+                                <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                                <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                            </div>  
                         </div>
-                    </div>
-                    
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>
-
-
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>
-
-
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    
-
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="card">
-                        <img src="path/to/product-image.jpg" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>
-                            <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                        </div>
-                    </div>  
+                    </c:forEach>
+                </div>
             </div>
-        </section>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item d</li>isabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>    
-        <!-- Footer start -->
-        <%@include file="footer.jsp" %>
-        <!-- Footer end -->
-    </body>
+            <div class="pagination-container" aria-label="Page navigation">
+                <ul class="pagination">
+                        <c:forEach begin="1" end="${endP}" var="o">
+                            <button class="pagination-button" type="submit" name="page" value="${o}" ${o == param.page ? "selected":""} }>${o}</button>
+                        </c:forEach>
+                </ul>
+            </div>
+        </form>
+    </section>
+    
+    
+    <!-- Footer start -->
+    <%@include file="footer.jsp" %>
+    <!-- Footer end -->
+</body>
 </html>

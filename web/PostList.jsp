@@ -321,10 +321,6 @@
                                                                     <option value="hide" ${(param.statusf == "hided")? "selected" : ""} >Hided</option>
                                                                 </select>
                                                             </div>  
-
-
-
-
                                                         </div> 
 
                                                         <div>

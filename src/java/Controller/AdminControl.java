@@ -4,9 +4,8 @@
  */
 package Controller;
 
+import Entity.Orders;
 import DAO.DAOAdmin;
-import Entity.Person;
-import DAO.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +19,8 @@ import java.util.List;
  *
  * @author nghie
  */
-@WebServlet(name = "UserListServlet", urlPatterns = {"/userList"})
-public class UserListServlet extends HttpServlet {
+@WebServlet(name = "AdminControl", urlPatterns = {"/adminControl"})
+public class AdminControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class UserListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserListServlet</title>");
+            out.println("<title>Servlet AdminControl</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,14 +60,26 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
-        DAOAdmin da = new DAOAdmin();
-        String id = request.getParameter("PersonID");
-        Person p = da.getPersonById(id);
-        request.setAttribute("person", p);
-        List<Person> listP = dp.getAllPerson();
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("UserList.jsp").forward(request, response);
+        DAOAdmin da= new DAOAdmin();
+        String search = request.getParameter("search");
+               String status = request.getParameter("status");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        List<Orders> listS = da.searchOrders(search, status, startDate, endDate);
+        List<Orders> listO = da.getOrder();
+        if(search==null&&status==null&&startDate==null&&endDate==null){
+            request.setAttribute("list", listS);
+            request.getRequestDispatcher("AdminDashboard.jsp").forward(request, response);
+        }else{
+            request.setAttribute("list", listO);
+        request.getRequestDispatcher("AdminDashboard.jsp").forward(request, response);
+        }
+//        PrintWriter out = response.getWriter();
+//        out.println(search);
+//        out.println(status);
+//        out.println(endDate);
+//        
+//        out.println(startDate);
     }
 
     /**
@@ -82,7 +93,7 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**

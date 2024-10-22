@@ -19,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <style>
             body {
                 font-family: Roboto;
@@ -128,7 +129,7 @@
                 height: 450px;
                 align-items: center;
             }
-            
+
             .card.position-relative{
                 border-radius: 10px;
             }
@@ -161,7 +162,7 @@
                 display: inline;
                 line-height: 24px;
                 margin: 5px;
-              
+
             }
 
             .product-image{
@@ -192,7 +193,7 @@
             .product-list{
                 padding: 0;
             }
-           
+
             /* <!-- Slider css --> */
             .slider-title {
                 font-size: 2rem;
@@ -269,13 +270,13 @@
 
         <section class="product-list container">
             <div class="row">
-                <h2 class="col-md-6 product-type-title">Điện Thoại - Tablet</h2>
+                <h2 class="col-md-6 product-type-title" id="dien_thoai">Điện Thoại - Tablet</h2>
 
                 <div class="col-md-6 row product-type-select">
                     <c:forEach items="${brand_phone_and_tablet}" var="brand">
-                        <a href="?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
+                        <a href="./category?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
                     </c:forEach>
-                    <a href="?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -308,14 +309,14 @@
                         </c:forEach>
                     </div>
                 </div>
-<!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>-->
+                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>-->
             </div>
         </section> 
 
@@ -327,9 +328,9 @@
 
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_laptop}" var="brand_laptop">
-                        <a href="#" class="col-auto mobile">${brand_laptop}</a>
+                        <a href="./category?cateid=2&brand=${brand_laptop}" class="col-auto mobile">${brand_laptop}</a>
                     </c:forEach>
-                    <a href="?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -362,7 +363,7 @@
                         </c:forEach>
                     </div>
                 </div>
-                
+
             </div>
         </section> 
 
@@ -373,9 +374,9 @@
                 <h2 class="col product-type-title">PC</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_pc}" var="brand_pc">
-                        <a href="#" class="col-auto mobile">${brand_pc}</a>
+                        <a href="./category?cateid=3&brand=${brand_pc}" class="col-auto mobile">${brand_pc}</a>
                     </c:forEach>
-                    <a href="?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -407,14 +408,14 @@
                         </c:forEach>
                     </div>
                 </div>
-<!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>-->
+                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>-->
             </div>
         </section>
 
@@ -425,9 +426,9 @@
                 <h2 class="col product-type-title">Màn Hình</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_monitor}" var="brand_monitor">
-                        <a href="#" class="col-auto mobile">${brand_monitor}</a>
+                        <a href="./category?cateid=4&brand=${brand_monitor}" class="col-auto mobile">${brand_monitor}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=4&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -459,14 +460,14 @@
                         </c:forEach>
                     </div>
                 </div>
-<!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>-->
+                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>-->
             </div>
         </section>
         <!-------------------------------- comment --------------------------------->       
@@ -475,9 +476,9 @@
                 <h2 class="col product-type-title">Tai nghe</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_headphone}" var="brand_headphone">
-                        <a href="#" class="col-auto mobile">${brand_headphone}</a>
+                        <a href="./category?cateid=5&brand=${brand_headphone}" class="col-auto mobile">${brand_headphone}</a>
                     </c:forEach>
-                    <a href="#" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./category?cateid=5&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -509,14 +510,20 @@
                         </c:forEach>
                     </div>
                 </div>
-<!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>-->
+                <df-messenger
+                    intent="WELCOME"
+                    chat-title="Test_AI_@1543"
+                    agent-id="5b284bab-6b4e-465e-bf1b-a4722ed1f4cb"
+                    language-code="vi"
+                    ></df-messenger>
+                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>-->
             </div>
         </section>
         <!-- Footer start -->
