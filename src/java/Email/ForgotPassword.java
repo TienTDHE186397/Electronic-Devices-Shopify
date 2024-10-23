@@ -88,15 +88,10 @@ public class ForgotPassword extends HttpServlet {
     private void registerUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
-//        String password = request.getParameter("pass");
-//        String repassword = request.getParameter("repass");
+
         PasswordUtils pw = new PasswordUtils();
-//        String passCom = pw.shiftPassword(password);
-//        if (!password.equals(repassword)) {
-//            request.setAttribute("error", "Mật khẩu không khớp!");
-//            request.getRequestDispatcher("forgot.jsp").forward(request, response);
-//            return;
-//        }
+
+
 
         PersonDAO personDAO = new PersonDAO();
         if (!personDAO.isEmailExists(email)) {
@@ -125,10 +120,13 @@ public class ForgotPassword extends HttpServlet {
         response.sendRedirect("verifyRePass.jsp");
     }
 
+
+    // Tạo một đối tượng Random tĩnh và tái sử dụng
+    private static final Random random = new Random();
+
     private String generateVerificationCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder code = new StringBuilder();
-        Random random = new Random();
 
         for (int i = 0; i < 15; i++) {
             int index = random.nextInt(characters.length());
@@ -137,6 +135,7 @@ public class ForgotPassword extends HttpServlet {
 
         return code.toString();
     }
+
 
     /**
      * Returns a short description of the servlet.

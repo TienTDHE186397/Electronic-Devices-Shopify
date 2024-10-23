@@ -440,8 +440,8 @@
         </select>
         <input type="submit" value="Tìm kiếm" />
     </form>
-    </div>
-        </div>
+    
+        
          <!-- Bảng danh sách người dùng -->
          <div class="table-container">
     <table border="1" width="89%" id="settingsTable">

@@ -103,18 +103,16 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("SaleHomeManager");
             } else if (user.getRoleID() == 1) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+                Person person = user;
+                session.setAttribute("user", person);
                 response.sendRedirect("home");
-                System.out.println("Personn " + session.getAttribute("user"));
-
-            }
-            else if (user.getRoleID() == 2) {
+            } else if (user.getRoleID() == 2) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+                Person person = user;
+                session.setAttribute("user", person);
                 response.sendRedirect("mktdashboard");
-                System.out.println("Personn " + session.getAttribute("user"));
-
             } else {
+
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("login.jsp");

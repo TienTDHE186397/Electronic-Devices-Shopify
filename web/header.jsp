@@ -199,7 +199,7 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#" target="_blank">
+                        <a class="nav-link" href="#" >
                             <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
                         </a>
                     </li>
