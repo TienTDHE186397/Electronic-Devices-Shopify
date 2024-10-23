@@ -103,7 +103,7 @@
 
                 <label for="blogTitle">Blog Title:</label>
                 <input type="text" id="blogTitle" name="blogtittle" placeholder="Tittle Blog....." required>
-
+                
                 <label for="blogSummary">Blog Summary Information:</label>
                 <input type="text" id="blogTitle" name="blogsummary" placeholder="Summary Blog......" required>
 
