@@ -168,7 +168,24 @@ CategoryDAO cDAO = new CategoryDAO();
         return 0;
     }
     
-    
+    /**************************************************************************/
+     public int getTotalProductByCatetory(int cate){
+        String sql = "Select COUNT(*) from Products WHERE CategoryID = ?";
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, cate);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+            rs.close();
+            st.close();
+        }catch(Exception e){
+            
+        }
+        return 0;
+    }
+
 //==============================================================================
     public List<Product> pagingProduct(int index){
         List<Product> list = new ArrayList<>();
@@ -206,7 +223,59 @@ CategoryDAO cDAO = new CategoryDAO();
         return list;
     }
 
-
+//------------------------------------------------------------------------------
+    
+    
+     public List<Product> pagingProductByCategory(int index, int cat, int quantity_product){
+        String sql = "";
+        if(cat == 0){
+            sql = "Select * from Products ORDER BY ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        }else{
+            sql = "Select * from Products WHERE CategoryID = ? ORDER BY ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        }
+        List<Product> list = new ArrayList<>();
+        try{
+            PreparedStatement st = connection.prepareStatement(sql);
+            if(cat != 0){
+                st.setInt(1, cat);
+                st.setInt(2, (index-1)*8);
+                st.setInt(3, quantity_product);
+            }else{
+                st.setInt(1, (index-1)*8);
+                st.setInt(2, quantity_product);
+            }
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("title"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Views"), 
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"),
+                        rs.getString("brand"));
+                        list.add(p);
+            }
+            rs.close();
+            st.close();
+        }catch(Exception e){
+            
+        }
+        return list;
+    }
+    
+    
+    
 //==============================================================================
     public List<Product> getTop4Product(){
         List<Product> list = new ArrayList<>();
@@ -249,10 +318,10 @@ CategoryDAO cDAO = new CategoryDAO();
     public static void main(String[] args) {
         //TEST Function getAllProduct
         ProductDAO pDAO = new ProductDAO();
-//        List<Product> list = pDAO.getAllProducts();
-//        int count = pDAO.getTotalProduct();
-//        Product p1 = pDAO.getProductsById(3);
-//        List<String> list = pDAO.getBrandByCategory(2);
+//        List<Product> list = pDAO.pagingProductByCategory(1, 0,8);
+////        int count = pDAO.getTotalProduct();
+////        Product p1 = pDAO.getProductsById(3);
+////        List<String> list = pDAO.getBrandByCategory(2);
 //        for(Product p: list){
 //            System.out.println(p);
 //        }
@@ -260,6 +329,5 @@ CategoryDAO cDAO = new CategoryDAO();
             for(Product p: listP){
                 System.out.println(p);
             }
-        
     }
 }

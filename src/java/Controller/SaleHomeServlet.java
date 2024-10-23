@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -66,6 +67,8 @@ public class SaleHomeServlet extends HttpServlet {
         SaleDAO saleDAO = new SaleDAO();
         
         int totalCount = saleDAO.getTotalOrderCount();
+        
+        HttpSession session = request.getSession();
         
         List<SaleHomeOrder> list = saleDAO.getOrder();
         List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();

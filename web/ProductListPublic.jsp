@@ -17,16 +17,21 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <link href="css/global.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
+        <link href="https://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
-
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <style>
             *{
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
+            h5{
+                font-family: 'Roboto', sans-serif;
+            }
             body{
-                font-family: Roboto;
+                font-family: 'Roboto', sans-serif;
                 background-color: #faf2e8;
             }
             .bg_light_1 {
@@ -169,14 +174,44 @@
             .product-card {
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: center;
+                width: auto;
+
             }
-            .filter-table{
-                background-color: red;
+            .category-table{
+                background-color: #f7f7f9;
+                margin: 15px 0px;
+                padding: 15px;
+                border-radius: 15px;
+                display: flex;
+                justify-items: left;
+
+            }
+
+            .dropdown{
+                margin: 0px 10px;
             }
 
             .pagination{
                 justify-content: center;
+            }
+
+            .filter-table{
+                margin: 0px 15px;
+            }
+
+            .pagination-button{
+                margin: 0px 5px;
+                padding: 10px;
+                border: solid 1px #d9d9d9;
+                border-radius: 5px;
+            }
+
+            .form-input{
+                background: #d9d9d9;
+                border: solid 1px #d9d9d9;
+                border-radius: 5px;
+                width: 50%;
             }
         </style>
     </head>
@@ -190,69 +225,121 @@
                 <h1 class="brand-name">Shopify</h1>
             </div>
         </section>
-        <!-------------------------------- comment ------------------------------>            
+        <!-------------------------------- comment ------------------------------>          
+
         <section> 
             <div class="container hot-product-banner">
                 <div class="title">
                     <i class='bx bxs-hot title-icon'></i>
                     <h1>HOT SALE MÙA TỰU TRƯỜNG</h1>
                 </div>
-                <div class="product-card">          
-                    <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                        <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">title</h5>
-                            <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px; background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
+                <div class="product-card">
+                    <c:forEach items="${hot_product}" var="hot_product">
+                        <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
+                            <img src="${hot_product.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
+                            <div class="card-body" style="padding: 10px;">
+                                <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">${hot-product.getProductName()}</h5>
+                                <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
+                                <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.user}">
+                                        <a href="#" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                        <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="cart?ProductID=${hot_product.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                         </div>
-                    </div>                   
+                    </c:forEach>
                 </div>
             </div>               
         </section>
         <!-------------------------------- comment ------------------------------>        
         <section id="product-list-container">
             <div class="title-list container">
-                <h1>TẤT CẢ SẢN PHẨM</h1>
+                <h1 style="font-family: 'Roboto';">TẤT CẢ SẢN PHẨM</h1>
             </div>
-            <div class="container filter-table">
+            <form action="product-list" id="form1" method="get">
+                <div class="container category-table">
 
-            </div>
-            <div class="container background-container">
-                <div class="product-card">
-                    <c:forEach items="${list_P}" var="list1">
-                        <div class="card">
-                            <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">${list1.getProductName()}</h5>
-                                <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
-                                <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                               
-                                <c:choose>
-                                    <c:when test="${empty sessionScope.user}">
-                                        <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                                        <a href="javascript:history.back()" class="btn btn-back">Back</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
+                    <div class="filter-table">
+                        <label><b>Phân loại:</b></label>
+                        <select name="category" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="0">All</option>
+                            <c:forEach var="c" items="${listCategory}">
+                                <option value="${c.getCategoryID()}" ${c.getCategoryID() == param.category ? "selected":""} >${c.getCategoryName()}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                        </div>
-                    </c:forEach>
+                    <div class="filter-table">
+                        <label><b>Sắp xếp theo:</b></label>
+                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="sortName" >Tên(A-Z)</option>
+                            <option value="sortUpdate">Mới cập nhật</option>
+                        </select>
+                    </div>
+                    <div class="filter-table">
+                        <label><b>Số lượng xem:</b></label>
+                        <select name="numberOfProducts" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <c:forEach var="count" begin="1" end="8">
+                                <option value="${count}" ${count == param.numberOfProducts ? "selected":""}>${count}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+
+                    <div class="filter-table">
+                        <label><b>Tìm kiếm sản phẩm:</b></label>
+                        <input style="border-radius: 5px;width: 100%" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="">
+                    </div> 
+
                 </div>
-            </div>
+                <div class="container category-table">
+                    <h5>Lọc sản phẩm: </h5>
+                    <div class="filter-table">
+                        <label><b>Sắp xếp theo:</b></label>
+                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
+                            <option value="sortName" >Tên(A-Z)</option>
+                            <option value="sortUpdate">Mới cập nhật</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="container background-container">
+                    <div class="product-card">
+                        <c:forEach items="${list_P}" var="list1">
+                            <div class="card">
+                                <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">${list1.getProductName()}</h5>
+                                    <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
+                                    <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.user}">
+                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>  
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="pagination-container" aria-label="Page navigation">
+                    <ul class="pagination">
+                        <c:forEach begin="1" end="${endP}" var="o">
+                            <button class="pagination-button" type="submit" name="page" value="${o}" ${o == param.page ? "selected":""} }>${o}</button>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </form>
         </section>
-        <div class="pagination-container" aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <c:forEach begin="1" end="${endP}" var="o">
-                    <li class="page-item"><a class="page-link" href="./product-list?index=${o}">${o}</a></li>
-                    </c:forEach>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </div>
+
 
         <!-- Footer start -->
         <%@include file="footer.jsp" %>

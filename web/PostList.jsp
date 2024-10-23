@@ -318,13 +318,9 @@
                                                                 <select id="customSelect" name="statusf" onchange="document.getElementById('f1').submit()">
                                                                     <option value="">Status</option>
                                                                     <option value="published" ${(param.statusf == "published")? "selected" : ""}>Published</option>
-                                                                    <option value="hide" ${(param.statusf == "hided")? "selected" : ""} >Hided</option>
+                                                                    <option value="hided" ${(param.statusf == "hided")? "selected" : ""} >Hided</option>
                                                                 </select>
                                                             </div>  
-
-
-
-
                                                         </div> 
 
                                                         <div>
@@ -359,53 +355,121 @@
                                                                     <option value="thieunhi" ${(param.event == "thieunhi")? "selected" : ""} class="col-auto mobile">Ngày Quốc tế Thiếu nhi 1-6</option>
                                                                 </select>
 
+
+
                                                             </div> 
                                                         </div> 
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <button style="float: right; position: relative;"><a href="addPost">ADD NEW POST <i class="fa-solid fa-circle-plus"> </i></a></button>
+
+
+
+                                                        <div>
+                                                            <b>Number Per Page:</b>  <input type="number" name="numberofpage" value="${nof}" placeholder="Number of page ...."> <br/>
+                                                            <b>Column To Hide:</b>
+                                                            <br/>
+                                                            <input type="checkbox" name="col" value="id" ${(id != null) ? "checked" : ""}> PostID
+                                                            <input type="checkbox" name="col" value="image" ${(image != null) ? "checked" : ""}> Post Image
+                                                            <input type="checkbox" name="col" value="tittle" ${(tittle != null) ? "checked" : ""}> Post Tittle
+                                                            <input type="checkbox" name="col" value="type" ${(type != null) ? "checked" : ""}> Post Type
+                                                            <input type="checkbox" name="col" value="author" ${(author != null) ? "checked" : ""}> Author
+                                                            <input type="checkbox" name="col" value="updatetime" ${(updatetime != null) ? "checked" : ""}> Update Time
+                                                            <input type="checkbox" name="col" value="views" ${(views != null) ? "checked" : ""}> Views 
+                                                            <input type="checkbox" name="col" value="status" ${(status != null) ? "checked" : ""}> Status 
+
+                                                            <br/>
+                                                            <input type="submit" value="Apply">
+                                                        </div>
+
+                                                        <input type="hidden" name="page" value="${param.page}">
+
+
                                                     </div>
 
 
+
+
                                                 </div>
 
                                                 </div>
+                                                </form>
 
 
                                                 <div class="table-responsive">  
                                                     <table class="table mb-0"> <!-- comment -->
                                                         <thead class="text-uppercase bg-body text-muted">
                                                             <tr>
-                                                                <th>PostID</th>
-                                                                <th>Blog Image</th>
-                                                                <th>Blog Tittle</th>
-                                                                <th>Blog Type</th>
-                                                                <th>Author</th>
-                                                                <th>Update Time</th>
-                                                                <th>Views</th>
-                                                                <th>Status</th>
+                                                                <c:if test="${id == null}">
+                                                                    <th>PostID</th>
+                                                                    </c:if>
+                                                                    <c:if test="${image == null}">
+                                                                    <th>Post Image</th>
+                                                                    </c:if>
+                                                                    <c:if test="${tittle == null}">
+                                                                    <th>Post Tittle</th>
+                                                                    </c:if>
+                                                                    <c:if test="${type == null}">
+                                                                    <th>Post Type</th>
+                                                                    </c:if>
+                                                                    <c:if test="${author == null}">
+                                                                    <th>Author</th>
+                                                                    </c:if>
+                                                                    <c:if test="${updatetime == null}">
+                                                                    <th>Update Time</th>
+                                                                    </c:if>
+                                                                    <c:if test="${views == null}">
+                                                                    <th>Views</th>
+                                                                    </c:if>
+                                                                    <c:if test="${status == null}">
+                                                                    <th>Status</th>
+                                                                    </c:if>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
 
                                                             <c:forEach items="${requestScope.listBp}" var="blog">
                                                                 <tr>
-                                                                    <td>${blog.blogID}</td>
-                                                                    <td>
-                                                                        <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
-                                                                    </td>
-                                                                    <c:if test="${blog.blog_flag == 0}">
-                                                                        <td><b>${blog.blog_tittle}</b></td>
+                                                                    <c:if test="${id == null}">
+                                                                        <td>${blog.blogID}</td>
                                                                     </c:if>
-                                                                    <c:if test="${blog.blog_flag == 1}">
-                                                                        <td style="color: red;"><b>${blog.blog_tittle}</b></td>
+
+                                                                    <c:if test="${image == null}">
+                                                                        <td>
+                                                                            <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
+                                                                        </td>
+                                                                    </c:if>
+
+                                                                    <c:if test="${tittle == null}">
+                                                                        <c:if test="${blog.blog_flag == 0}">
+                                                                            <td><b>${blog.blog_tittle}</b></td>
+                                                                        </c:if>
+                                                                        <c:if test="${blog.blog_flag == 1}">
+                                                                            <td style="color: red;"><b>${blog.blog_tittle}</b></td>
+                                                                                </c:if>
                                                                             </c:if>
-                                                                    <td>${blog.blog_type}</td>
-                                                                    <td>${blog.person.name}</td>
-                                                                    <td>${blog.blog_update_time}</td>
-                                                                    <td>${blog.blog_views}</td>
-                                                                    <td>${blog.blog_status}</td>
+
+                                                                    <c:if test="${type == null}">
+                                                                        <td>${blog.blog_type}</td>
+                                                                    </c:if>
+
+                                                                    <c:if test="${author == null}">
+                                                                        <td>${blog.person.name}</td>
+                                                                    </c:if>
+
+                                                                    <c:if test="${updatetime == null}">
+                                                                        <td>${blog.blog_update_time}</td>
+                                                                    </c:if>
+
+                                                                    <c:if test="${views == null}">
+                                                                        <td>${blog.blog_views}</td>
+                                                                    </c:if>
+
+                                                                    <c:if test="${status == null}">
+                                                                        <td>${blog.blog_status}</td>
+                                                                    </c:if>
+
                                                                     <td><a href="PostDetail?id=${blog.blogID}"><i class="fa-regular fa-eye"></i></a>
                                                                         &nbsp;
                                                                         <a href="editPost?id=${blog.blogID}"><i class="fa-solid fa-pen"></i></a>
@@ -427,14 +491,49 @@
                                                 </div>
                                                 <br/> 
 
-
                                                 <div class="pagination">
-                                                    <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
-                                                        <button type="submit" name="page" value="${c}" }>${c}</button>
-                                                    </c:forEach>
-
+                                                    <c:if test="${totalpage > 1}">
+                                                        <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
+                                                            <button type="submit" name="page" onclick="goToPage(${c})">${c}</button>
+                                                        </c:forEach>
+                                                    </c:if>
                                                 </div>
 
+
+                                                <form id="paginationForm" action="PostListMKT" method="get">
+                                                    <input type="hidden" name="tittlewrite" value="${param.tittlewrite}">
+                                                    <input type="hidden" name="authorwrite" value="${param.authorwrite}">
+                                                    <input type="hidden" name="type" value="${param.type}">
+                                                    <input type="hidden" name="statusf" value="${param.statusf}">
+                                                    <input type="hidden" name="sort" value="${param.sort}">
+                                                    <input type="hidden" name="event" value="${param.event}">
+                                                    <input type="hidden" name="numberofpage" value="${param.numberofpage}">
+
+                                                    <c:if test="${id != null}">
+                                                        <input type="hidden" name="col" value="${id}">
+                                                    </c:if>
+                                                    <c:if test="${image != null}">
+                                                        <input type="hidden" name="col" value="${image}">
+                                                    </c:if>
+                                                    <c:if test="${tittle != null}">
+                                                        <input type="hidden" name="col" value="${tittle}">
+                                                    </c:if>
+                                                    <c:if test="${type != null}">
+                                                        <input type="hidden" name="col" value="${type}">
+                                                    </c:if>
+                                                    <c:if test="${author != null}">
+                                                        <input type="hidden" name="col" value="${author}">
+                                                    </c:if>
+                                                    <c:if test="${updatetime != null}">
+                                                        <input type="hidden" name="col" value="${updatetime}">
+                                                    </c:if>
+                                                    <c:if test="${views != null}">
+                                                        <input type="hidden" name="col" value="${views}">
+                                                    </c:if>
+                                                    <c:if test="${status != null}">
+                                                        <input type="hidden" name="col" value="${status}">
+                                                    </c:if>
+                                                    <input type="hidden" name="page" id="pageInput" value="1">
                                                 </form>
 
 
@@ -453,6 +552,14 @@
 
 
                                                 <script>
+
+                                                    function goToPage(pageNumber) {
+
+                                                        document.getElementById('pageInput').value = pageNumber;
+
+                                                        document.getElementById('paginationForm').submit();
+
+                                                    }
 
                                                 </script>
 

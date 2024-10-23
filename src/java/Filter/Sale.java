@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Duc Long
  */
-@WebFilter(filterName = "EmployeeFilter", urlPatterns = {"/ProductMKT", "/ProductDetail","/SaleHomeEmp"})
+@WebFilter(filterName = "EmployeeFilter", urlPatterns = {"/SaleHomeEmp"})
 public class Sale implements Filter {
   
     public void doFilter(ServletRequest request, ServletResponse response,

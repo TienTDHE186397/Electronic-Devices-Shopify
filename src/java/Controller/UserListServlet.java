@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAO.DAOAdmin;
 import Entity.Person;
 import DAO.DAOPerson;
 import java.io.IOException;
@@ -61,7 +62,10 @@ public class UserListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOPerson dp = new DAOPerson();
-        
+        DAOAdmin da = new DAOAdmin();
+        String id = request.getParameter("PersonID");
+        Person p = da.getPersonById(id);
+        request.setAttribute("person", p);
         List<Person> listP = dp.getAllPerson();
         request.setAttribute("listP", listP);
         request.getRequestDispatcher("UserList.jsp").forward(request, response);

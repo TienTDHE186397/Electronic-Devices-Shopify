@@ -9,12 +9,21 @@ package Entity;
  * @author admin
  */
 public class Cart {
+
     private int cartID;
     private int personID;
     private double totalPrice;
 
     // Constructors, getters and setters
-    public Cart() {}
+    public Cart() {
+    }
+
+    public Cart(int cartID, int personID, double totalPrice) {
+        this.cartID = cartID;
+        this.personID = personID;
+       
+        this.totalPrice = totalPrice;
+    }
 
     public int getCartID() {
         return cartID;
@@ -32,6 +41,8 @@ public class Cart {
         this.personID = personID;
     }
 
+  
+
     public double getTotalPrice() {
         return totalPrice;
     }
@@ -39,4 +50,6 @@ public class Cart {
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+   
 }

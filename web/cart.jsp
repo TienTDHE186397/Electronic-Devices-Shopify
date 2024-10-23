@@ -1,207 +1,93 @@
-<%-- 
-    Document   : cart
-    Created on : Oct 21, 2024, 2:27:10 PM
-    Author     : admin
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="description" content="Ogani Template">
+        <meta name="keywords" content="Ogani, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-.cart-container {
-    max-width: 800px;
-    margin: 100px auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
-.cart-headermenu {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.progress-bar2 {
-    display: flex;
-    justify-content: space-around;
-    padding: 0;
-    list-style-type: none;
-}
-
-.progress-bar2 li {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    border-bottom: 2px solid #ccc;
-}
-
-.progress-bar2 li.active {
-    border-bottom: 2px solid red;
-    color: red;
-}
-
-.cart-content {
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-}
-
-.cart-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.cart-item img {
-    max-width: 150px;
-    border-radius: 8px;
-}
-
-.item-details {
-    flex: 2;
-    margin-left: 20px;
-}
-
-.item-details h3 {
-    margin: 0;
-    font-size: 18px;
-}
-
-.price {
-    color: red;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.old-price {
-    text-decoration: line-through;
-    color: #aaa;
-}
-
-.item-actions {
-    text-align: center;
-}
-
-.remove-btn {
-    background-color: transparent;
-    border: none;
-    color: #888;
-    cursor: pointer;
-}
-
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.quantity-selector button {
-    width: 30px;
-    height: 30px;
-    background-color: #ddd;
-    border: none;
-    cursor: pointer;
-}
-
-.quantity-selector input {
-    width: 50px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.discount-code {
-    margin: 20px 0;
-    text-align: right;
-}
-
-.discount-code button {
-    background-color: #f0f0f0;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.shipping-details {
-    text-align: right;
-}
-
-.total-price {
-    font-size: 20px;
-    color: red;
-    font-weight: bold;
-}
-
-.checkout-button {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.checkout-button button {
-    background-color: red;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-    </style>
-</head>
-<body>
-    <jsp:include page="header.jsp"></jsp:include>
-    <div class="cart-container">
-        <div class="cart-headermenu">
-            <ul class="progress-bar2">
-                <li class="active">Giỏ hàng</li>
-                <li>Thông tin đặt hàng</li>
-                <li>Thanh toán</li>
-                <li>Hoàn tất</li>
-            </ul>
-        </div>
-        
-        <div class="cart-content">
-            <div class="cart-item">
-                <img src="${pro.getImg()}" alt="Laptop">
-                <div class="item-details">
-                    <h3>${pro.getProductName()}</h3>
-                    <span class="price">${pro.getPrice()}</span>
-                    <span class="old-price">48.990.000đ</span>
-                </div>
-                <div class="item-actions">
-                    <button class="remove-btn">Xoá</button>
-                    <div class="quantity-selector">
-                        <button class="decrease">-</button>
-                        <input type="number" value="1">
-                        <button class="increase">+</button>
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <title>Borrower's Slip</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            th, td {
+                text-align: left;
+                padding: 10px;
+            }
+            th {
+                background-color: #3399ff;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <jsp:include page="header.jsp"></jsp:include>
+            <section class="hero">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9" style="margin-bottom: 20px">
+                            <h3><strong>Borrower's Slip</strong></h3>
+                            <form action="borrowdetail" method="post">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Tên Sách</th>
+                                            <th>Hình Ảnh</th>
+                                            <th>Tác Giả</th>
+                                            <th>Số Lượng</th>
+                                            <th style="width: 170px">Cập Nhật Số Lượng</th>
+                                            <th style="text-align: center">Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                 
+                                        <tr>
+                                            <td>${pro.getProductName()}</td>
+                                            <td><img style="width: 69px; height: 100px" src="${pro.getImg()}" alt="Book Image"></td>
+                                            <td>${c.getBook().getAuthor()}</td>
+                                            <td>
+                                                <input style="width: 50px" type="number" name="amount_${pro.getProductID()}" value="${pro.getQuantity()}" min="1">
+                                            </td>
+                                            <td style="text-align: center"><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
+                                            <td style="text-align: center">
+                                                <a href="remove?bookID=${pro.getProductID()}" class="btn btn-danger">Xóa</a>
+                                            </td>
+                                        </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </form>
+                       
                     </div>
                 </div>
             </div>
-
-            <div class="discount-code">
-                <button>Sử dụng mã giảm giá</button>
-            </div>
-
-            <div class="shipping-details">
-                <p>Phí vận chuyển: <span>Miễn phí</span></p>
-                <p>Tổng tiền: <span class="total-price">47.990.000đ</span></p>
-            </div>
-        </div>
-
-        <div class="checkout-button">
-            <button>ĐẶT HÀNG NGAY</button>
-        </div>
-    </div>
-</body>
+        </section>
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/mixitup.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 </html>
-

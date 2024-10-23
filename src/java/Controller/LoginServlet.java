@@ -108,7 +108,7 @@ public class LoginServlet extends HttpServlet {
             if (user.getRoleID() == 5) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                response.sendRedirect("homeAdmin");
+                response.sendRedirect("admin?PersonID=" + user.getPersonID());
             } else if (user.getRoleID() == 3) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
@@ -123,7 +123,14 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("user", person);
                 response.sendRedirect("home");
 
-            } else {
+            }else if (user.getRoleID() == 2) {
+                HttpSession session = request.getSession();
+                Person person = user;
+                session.setAttribute("user", person);
+                response.sendRedirect("mktdashboard");
+
+            } 
+            else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("login.jsp");

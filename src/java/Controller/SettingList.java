@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAO.DAOAdmin;
 import Entity.Setting;
 import DAO.DAOSetting;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -50,6 +52,10 @@ public class SettingList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOSetting ds = new DAOSetting();
+        DAOAdmin da = new DAOAdmin();
+        String id = request.getParameter("PersonID");
+        Person p = da.getPersonById(id);
+        request.setAttribute("person", p);
         int count = ds.getTotalSettings();
         int endPage = count / 5;
         if (count % 5 != 0) {

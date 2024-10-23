@@ -96,26 +96,7 @@ public class addPostServlet extends HttpServlet {
             }
         }
 //--------------------------------------------video-------------------------------------------------
-        Part part2 = request.getPart("blogvideo");
-        String blog_video = "";
-        String realPath2 = "";
-        if (part2 != null && part2.getSize() > 0) {
-            realPath2 = request.getServletContext().getRealPath("blogvideos");
-            String filename2 = Path.of(part2.getSubmittedFileName()).getFileName().toString();
-            if (!Files.exists(Path.of(realPath2))) {
-                Files.createDirectory(Path.of(realPath2));
-            }
-            part2.write(realPath2 + "\\" + filename2);
-            if (!filename2.endsWith(".mp4")) {
-
-                err2 = "File video phải kết thúc với đuôi .mp4";
-                check = false;
-
-            } else {
-                blog_video = realPath2.substring(realPath2.length() - 10, realPath2.length()) + "/" + filename2;
-            }
-        }
-//--------------------------------------------------------------------------------------------------
+      //-------------------------------------------------------------------------------------
 
         int blog_flag_i = 0;
         try {

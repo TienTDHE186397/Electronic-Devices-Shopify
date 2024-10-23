@@ -6,6 +6,7 @@ package Controller;
 
 import Entity.Orders;
 import DAO.DAOAdmin;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -35,6 +36,9 @@ public class ChartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOAdmin da = new DAOAdmin();
+        String id = request.getParameter("PersonID");
+        Person p = da.getPersonById(id);
+        request.setAttribute("person", p);
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         int allCustomer = da.getAllCustomers();

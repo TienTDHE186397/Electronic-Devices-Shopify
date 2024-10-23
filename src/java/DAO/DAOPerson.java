@@ -50,37 +50,6 @@ public class DAOPerson extends DBContext {
         }
         return list;
     }
-
-    public List<Person> getPerson() {
-        List<Person> list = new ArrayList<>();
-        String sql = "Select * from Person";
-        try {
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                java.sql.Date sqlDate = rs.getDate("startdate");
-                LocalDate localDate = sqlDate.toLocalDate();
-                Person p = new Person(rs.getInt("PersonID"),
-                        rs.getString("Name"),
-                        rs.getString("Gender"),
-                        rs.getString("DateOfBirth"),
-                        localDate,
-                        rs.getString("Address"),
-                        rs.getString("Email"),
-                        rs.getString("Phone"),
-                        rs.getInt("RoleID"),
-                        rs.getString("Password"));
-
-                list.add(p);
-            }
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
     public List<Person> searchPerson(String search, String role, String gender) {
         List<Person> list = new ArrayList<>();
         String sql = "Select * from Person where 1=1";

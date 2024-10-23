@@ -276,54 +276,6 @@ public class DAOProduct extends DBContext {
         System.out.println(d != null ? d : "Product with ID not found"); // Kiểm tra sản phẩm
         String a = p.getImageById(2);
         System.out.println(a);
-        //        if (list != null && !list.isEmpty()) {
-                //            System.out.println("There are products in the list.");
-                //            for (Product o : list) {
-                //                System.out.println("Product: " + o);
-                //            }
-                //        } else {
-                //            System.out.println("No products found.");
-                //        }
-                //        List<ProductAttribute> attributeList = p.getProductAttributesById(1);
-                //
-                //        if (attributeList != null && !attributeList.isEmpty()) {
-                //            System.out.println("Attributes for Product ID 1:");
-                //            for (ProductAttribute attr : attributeList) {
-                //                System.out.println(attr);
-                //            }
-                //        } else {
-                //            System.out.println("No attributes found for Product ID 1.");
-                //        }
-                //        int productId = 2; // Thay đổi theo ID sản phẩm bạn muốn thử nghiệm
-                //        String[] oldAttributeNames = {"RAM Updated", "Screen Size", "Battery Capacity"};
-                //        String[] newAttributeNames = {"RAM Updated2", "Screen Size2", "Battery Capacity2"};
-                //        String[] attributeValues = {"12", "12 inches", "12Amh"};
-                //        for (int i = 0; i < oldAttributeNames.length; i++) {
-                //            String newName = newAttributeNames[i]; // Tên thuộc tính mới từ input
-                //            String value = attributeValues[i]; // Giá trị thuộc tính mới từ input
-                //            String oldName = oldAttributeNames[i];
-                //            Boolean check = p.updateProductAttributes(productId, oldName, newName, value);
-                //            if (check) {
-                //                System.out.println("Cập nhật thuộc tính thành công!");
-                //            } else {
-                //                System.out.println("Cập nhật thuộc tính thất bại!");
-                //            }
-                //        }
-                //        int productId = 1; // Change this to an actual product ID
-                ////        String attributeName = "Color"; // Example attribute name
-                ////        String attributeValue = "Red"; // Example attribute value
-                //        String[] attributeName = {"RED", "RED"};
-                //        String[] attributeValue = {"Blue", "Blue"};
-                //        for (int i = 0; i < attributeName.length; i++) {
-                //            String newName = attributeName[i]; // Tên thuộc tính mới từ input
-                //            String value = attributeValue[i]; // Giá trị thuộc tính mới từ input
-                //
-                //            Boolean check = p.addProductAttribute(productId, newName, value);
-                //            if (check) {
-                //                System.out.println("Cập nhật thuộc tính thành công!");
-                //            } else {
-                //                System.out.println("Cập nhật thuộc tính thất bại!");
-                //            }
-                //        }
+      
     }
 }

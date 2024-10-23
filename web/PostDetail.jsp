@@ -354,55 +354,11 @@
 
                                                         </c:if>
 
-
                                                         </div>
 
                                                         </div>
 
                                                         </div>
-
-
-                                                        <%
-                                                        /*
-                
-                                                         <!-- Comment Section -->
-                                                <div class="comments-section">
-                                                    <h2>Comments</h2>
-
-                                                    <!-- Form nhập bình luận mới -->
-                                                    <form action="#" method="POST">
-                                                        <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..."></textarea>
-                                                        <button type="submit">Post Comment</button>
-                                                    </form>
-
-                                                    <!-- Bình luận đã có -->
-                                                    <div class="posted-comments">
-                                                        <h3>Previous Comments</h3>
-                                                        <div class="comment">
-                                                            <img src="https://via.placeholder.com/50" alt="User Image">
-                                                            <p><strong>Jane Doe:</strong> This article really opened my eyes about the impact of technology. Thanks for sharing!</p>
-                                                        </div>
-                                                        <div class="comment">
-                                                            <img src="https://via.placeholder.com/50" alt="User Image">
-                                                            <p><strong>John Smith:</strong> Great insights! I think we need to focus more on the ethical aspects of technology too.</p>
-                                                        </div>
-                                                        <div class="comment">
-                                                            <img src="https://via.placeholder.com/50" alt="User Image">
-                                                            <p><strong>Emily Johnson:</strong> Very informative and well-written. Looking forward to more articles like this.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                
-                
-                
-                                                        */ %>
-
-
-
-
-
-
-
 
                                                         </body>
                                                         </html>
