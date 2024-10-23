@@ -84,6 +84,9 @@ public class ProductList extends HttpServlet {
                 indexPage = "1";
             }
         int index = Integer.parseInt(indexPage);
+        
+        
+        String searchProduct = request.getParameter("");
 //==============================================================================
 
         

@@ -307,7 +307,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </center>
-                                                                <a href="addSlider.jsp" style=" padding: 5px;border: 2px black solid;"><i class="fa-solid fa-circle-plus"></i> ADD NEW SLIDER</a>
+                                                                <a href="addSlider" style=" padding: 5px;border: 2px black solid;"><i class="fa-solid fa-circle-plus"></i> ADD NEW SLIDER</a>
                                                             </div> 
                                                         </div>
                                                     </div>

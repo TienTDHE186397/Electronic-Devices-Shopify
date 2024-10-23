@@ -122,15 +122,13 @@ public class LoginServlet extends HttpServlet {
                 Person person = user;
                 session.setAttribute("user", person);
                 response.sendRedirect("home");
-
-            }else if (user.getRoleID() == 2) {
+            } else if (user.getRoleID() == 2) {
                 HttpSession session = request.getSession();
                 Person person = user;
                 session.setAttribute("user", person);
                 response.sendRedirect("mktdashboard");
+            } else {
 
-            } 
-            else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("login.jsp");
