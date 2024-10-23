@@ -213,7 +213,7 @@
 
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
-                <h1 class="brand-name">MKT DashBoard</h1>
+                <a href="mktdashboard"><h1 class="brand-name"> MKT DashBoard</h1></a>
             </div>
         </section>
 

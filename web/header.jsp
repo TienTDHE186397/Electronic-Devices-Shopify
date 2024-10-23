@@ -134,13 +134,13 @@
         <div class="container-fluid">
             <div class="logo">
                 <i class='bx bx-menu menu-icon'></i>
-                <span class="logo-name">Shopify</span> 
+                <a href="home"><span class="logo-name">Shopify</span></a> 
             </div>
 
             <div class="sidebar">
                 <div class="logo">
                     <i class='bx bx-menu menu-icon'></i>
-                    <span class="logo-name">Shopify</span> 
+                    <a href="home"><span class="logo-name">Shopify</span></a> 
                 </div>
                 <div class="sidebar-content">
                     <ul class="lists">
@@ -207,7 +207,7 @@
                     <c:if test="${sessionScope.user != null}">
                         <li class="nav-item">
                             <a class="nav-link" href="./profile.jsp" >
-                                <i class="fa-solid fa-sign-in-alt"></i>Hello ${sessionScope.user.getName()}
+                                <i class="fa-solid fa-user"></i></i>Hello ${sessionScope.user.getName()}
                             </a>
                         </li>
                         <li class="nav-item">

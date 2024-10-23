@@ -278,9 +278,9 @@
                             <div class="row">
                                 <form action="PostListHome" method="get">
                                     <div class="search col-md-5">
-                                        <i style="margin-right: 10px;" class="fa-solid fa-magnifying-glass"></i><input name="search" style="width: 350px; height: 30px; display: inline-block; border: 1px #fff solid" id="myInput" type="text" class="form-control" placeholder=" Tìm Kiếm..." value="${search}">
+                                        <i style="margin-right: 10px;" class="fa-solid fa-magnifying-glass"></i><input name="search" style="width: 350px; height: 30px; display: inline-block; border: 1px #fff solid" id="myInput" type="text" class="form-control" placeholder=" Tìm Kiếm..." value="${(param.search == null) ? "" : param.search}">
                                     </div>
-
+                                    <br/>
                                     <div class="col-md-7">
                                         <b>Number Per Page:</b>  <input type="number" name="numberofpage" value="${nof}" placeholder="Number of page ...."> <br/>
                                         <b>Hide:  </b>
