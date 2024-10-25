@@ -132,107 +132,120 @@ CategoryDAO cDAO = new CategoryDAO();
         return listP;
     }
 //============================================================================== 
-    public List<String> getBrandByCategory(int cateId){
-        List<String> listBrand = new ArrayList<>();
-        String sql = "SELECT DISTINCT brand FROM Products WHERE CategoryID = ?";
-         try {
-            
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, cateId);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                listBrand.add(rs.getString("brand"));
-            }
-            rs.close();
-            st.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-         return listBrand;
-    }
-    
-//==============================================================================
+
    
     
     /**************************************************************************/
-     public int getTotalProductByCatetory(int cate){
-         String sql = "";
-         if(cate == 0){
-             sql = "Select COUNT(*) from Products";
-         }else{
-              sql = "Select COUNT(*) from Products WHERE CategoryID = ?";
-         }
-        try{
-            PreparedStatement st = connection.prepareStatement(sql);
-            if(cate !=0){
-                st.setInt(1, cate);
-            }
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-            rs.close();
-            st.close();
-        }catch(Exception e){
-            
-        }
-        return 0;
+    public int getTotalProduct(int cate, String search_product) {
+    StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Products");
+    
+    List<Object> parameters = new ArrayList<>();
+
+    if (cate != 0) {
+        sql.append(" WHERE CategoryID = ?");
+        parameters.add(cate);
     }
+
+    if (search_product != null && !search_product.isEmpty()) {
+        // Append AND only if there is already a WHERE clause
+        if (parameters.isEmpty()) {
+            sql.append(" WHERE ProductName LIKE ?");
+        } else {
+            sql.append(" AND ProductName LIKE ?");
+        }
+        parameters.add("%" + search_product + "%");
+    }
+
+    int total = 0;
+
+    try (PreparedStatement st = connection.prepareStatement(sql.toString())) {
+        for (int i = 0; i < parameters.size(); i++) {
+            st.setObject(i + 1, parameters.get(i));
+        }
+
+        try (ResultSet rs = st.executeQuery()) {
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Log the exception or handle it as needed
+    }
+
+    return total;
+}
 
 //==============================================================================
 
 //------------------------------------------------------------------------------
+
     
-    
-     public List<Product> pagingProductByCategory(int index, int cat, int quantity_product){
-        String sql = "";
-        if(cat == 0){
-            sql = "Select * from Products ORDER BY ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        }else{
-            sql = "Select * from Products WHERE CategoryID = ? ORDER BY ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    public List<Product> pagingProductByCategory1(int index, int cat, int quantity_product, String sort, String searchProduct) {
+    String sql;
+
+    // Xây dựng câu truy vấn dựa trên việc có tìm kiếm hoặc danh mục không
+    if (cat == 0) {
+        sql = "SELECT * FROM Products ";
+        if (searchProduct != null && !searchProduct.trim().isEmpty()) {
+            sql += "WHERE ProductName LIKE ? ";
         }
-        List<Product> list = new ArrayList<>();
-        try{
-            PreparedStatement st = connection.prepareStatement(sql);
-            if(cat != 0){
-                st.setInt(1, cat);
-                st.setInt(2, (index-1)*quantity_product);
-                st.setInt(3, quantity_product);
-            }else{
-                st.setInt(1, (index-1)*quantity_product);
-                st.setInt(2, quantity_product);
-            }
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
-                Product p = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("title"),
-                        rs.getString("ProductName"),
-                        rs.getInt("Views"), 
-                        rs.getDate("releaseDate"),
-                        rs.getInt("QuantitySold"),
-                        cate,
-                        rs.getInt("Quantity"),
-                        rs.getInt("Sale"),
-                        rs.getString("img"),
-                        rs.getDouble("price"),
-                        rs.getString("publisher"),
-                        rs.getString("sortDescription"),
-                        rs.getString("description"),
-                        rs.getString("status"),
-                        rs.getString("brand"));
-                        list.add(p);
-            }
-            rs.close();
-            st.close();
-        }catch(Exception e){
-            
+        sql += "ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    } else {
+        sql = "SELECT * FROM Products WHERE CategoryID = ? ";
+        if (searchProduct != null && !searchProduct.trim().isEmpty()) {
+            sql += "AND ProductName LIKE ? ";
         }
-        return list;
+        sql += "ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    }
+
+    List<Product> list = new ArrayList<>();
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        
+        int paramIndex = 1;
+        if (cat != 0) {
+            st.setInt(paramIndex++, cat); // Set CategoryID
+        }
+        if (searchProduct != null && !searchProduct.trim().isEmpty()) {
+            st.setString(paramIndex++, "%" + searchProduct + "%"); // Set điều kiện tìm kiếm
+        }
+        
+        // Set offset và limit cho phân trang
+        st.setInt(paramIndex++, (index - 1) * quantity_product);
+        st.setInt(paramIndex, quantity_product);
+
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+            Product p = new Product(
+                    rs.getInt("ProductID"),
+                    rs.getString("title"),
+                    rs.getString("ProductName"),
+                    rs.getInt("Views"), 
+                    rs.getDate("releaseDate"),
+                    rs.getInt("QuantitySold"),
+                    cate,
+                    rs.getInt("Quantity"),
+                    rs.getInt("Sale"),
+                    rs.getString("img"),
+                    rs.getDouble("price"),
+                    rs.getString("publisher"),
+                    rs.getString("sortDescription"),
+                    rs.getString("description"),
+                    rs.getString("status"),
+                    rs.getString("brand")
+            );
+            list.add(p);
+        }
+        
+        rs.close();
+        st.close();
+    } catch (Exception e) {
+        e.printStackTrace(); // Xử lý ngoại lệ nếu cần
     }
     
-    
+    return list;
+}
     
 //==============================================================================
     public List<Product> getTop4Product(){
@@ -287,6 +300,9 @@ CategoryDAO cDAO = new CategoryDAO();
 //            for(Product p: listP){
 //                System.out.println(p);
 //            }
-        System.out.println(pDAO.getTotalProductByCatetory(0));
+        
+         String tmp ="i";
+        System.out.println(pDAO.getTotalProduct(0, tmp));
+        
     }
 }
