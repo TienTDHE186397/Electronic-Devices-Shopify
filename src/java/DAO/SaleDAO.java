@@ -235,22 +235,30 @@ public class SaleDAO {
                 + "    o.OrderID,\n"
                 + "    p.Name AS cusName,\n"
                 + "    p.Email,\n"
-                + "    p.Phone AS mobile,\n"
+                + "    -- Get primary phone number from PersonPhone table\n"
+                + "    (SELECT TOP 1 pp.Phone \n"
+                + "     FROM PersonPhone pp \n"
+                + "     WHERE pp.PersonID = p.PersonID \n"
+                + "     ORDER BY pp.IsPrimary DESC) AS mobile,\n"
                 + "    o.OrderDate,\n"
                 + "    o.TotalMoney AS totalCost,\n"
                 + "    s.Name AS saleName,\n"
                 + "    o.Status,\n"
                 + "    p.Gender,\n"
-                + "    p.Address,\n" // Add the missing comma here
+                + "    -- Get primary address from PersonAddress table\n"
+                + "    (SELECT TOP 1 pa.Address \n"
+                + "     FROM PersonAddress pa \n"
+                + "     WHERE pa.PersonID = p.PersonID \n"
+                + "     ORDER BY pa.IsPrimary DESC) AS Address,\n"
                 + "    o.SaleNote\n"
-                + " FROM \n"
+                + "FROM \n"
                 + "    Orders o\n"
-                + " JOIN \n"
+                + "JOIN \n"
                 + "    Person p ON o.PersonID = p.PersonID  -- Customer details\n"
-                + " LEFT JOIN \n"
-                + "    Person s ON o.SaleID = s.PersonID  -- Sales employee details (optional)\n"
-                + " WHERE \n"
-                + "   o.OrderID = ?";
+                + "LEFT JOIN \n"
+                + "    Person s ON o.SaleID = s.PersonID    -- Sales employee details (optional)\n"
+                + "WHERE \n"
+                + "    o.OrderID = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -431,7 +439,7 @@ public class SaleDAO {
             st.setInt(1, (index - 1) * 5);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-               SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
                 list.add(s);
             }
 
@@ -467,7 +475,6 @@ public class SaleDAO {
 //        // If no exceptions are thrown, print success message
 //        System.out.println("Order update method executed. Please check the database for changes.");
 //    }
-
 //    public static void main(String[] args) {
 ////
 //        SaleDAO saleDAO = new SaleDAO();

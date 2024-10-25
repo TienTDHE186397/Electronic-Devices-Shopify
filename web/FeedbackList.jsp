@@ -188,7 +188,7 @@
                                             </c:choose>
                                         </td>
                                         <td>
-                                              <a href="FeedbackDetails?feedbackID=${c.feedbackID}" class="btn-details">Details</a>
+                                              <a href="FeedbackDetail?feedbackID=${c.feedbackID}" class="btn-details">Details</a>
                                         </td>
                                     </tr>
                                 </tbody>
