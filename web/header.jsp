@@ -134,34 +134,34 @@
         <div class="container-fluid">
             <div class="logo">
                 <i class='bx bx-menu menu-icon'></i>
-                <span class="logo-name">Shopify</span> 
+                <a href="home"><span class="logo-name">Shopify</span></a> 
             </div>
 
             <div class="sidebar">
                 <div class="logo">
                     <i class='bx bx-menu menu-icon'></i>
-                    <span class="logo-name">Shopify</span> 
+                    <a href="home"><span class="logo-name">Shopify</span></a> 
                 </div>
                 <div class="sidebar-content">
                     <ul class="lists">
                         <li class="list">
                             <a href="./" class="nav-link">
                                 <i class="bx bx-home-alt icon"></i>
-                                <span class="link">Home</span>
+                                <span class="link">Trang chủ</span>
                             </a>
                         </li>
 
                         <li class="list">
-                            <a href="./PostListMKT" class="nav-link">
+                            <a href="./PostListHome" class="nav-link">
                                 <i class='bx bx-news icon'></i>
-                                <span class="link">Posts</span>
+                                <span class="link">Bài Đăng</span>
                             </a>
                         </li>
 
                         <li class="list">
                             <a href="./product-list" class="nav-link">
                                 <i class='bx bx-box icon'></i>
-                                <span class="link">Products</span>
+                                <span class="link">Sản phẩm</span>
                             </a>
                         </li>
                     </ul>
@@ -177,7 +177,7 @@
                         <li class="list">
                             <a href="./login" class="nav-link">
                                 <i class='bx bx-user icon'></i>
-                                <span class="link">Sign in</span>
+                                <span class="link">Đăng Nhập</span>
                             </a>
                         </li>
                     </div>           
@@ -199,7 +199,7 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#" target="_blank">
+                        <a class="nav-link" href="#" >
                             <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
                         </a>
                     </li>
@@ -207,7 +207,7 @@
                     <c:if test="${sessionScope.user != null}">
                         <li class="nav-item">
                             <a class="nav-link" href="./profile.jsp" >
-                                <i class="fa-solid fa-sign-in-alt"></i>Hello ${sessionScope.user.getName()}
+                                <i class="fa-solid fa-user"></i></i>Hello ${sessionScope.user.getName()}
                             </a>
                         </li>
                         <li class="nav-item">

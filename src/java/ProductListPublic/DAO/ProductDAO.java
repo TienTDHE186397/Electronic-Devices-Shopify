@@ -152,28 +152,21 @@ CategoryDAO cDAO = new CategoryDAO();
     }
     
 //==============================================================================
-    public int getTotalProduct(){
-        String sql = "Select COUNT(*) from Products";
-        try{
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-            rs.close();
-            st.close();
-        }catch(Exception e){
-            
-        }
-        return 0;
-    }
+   
     
     /**************************************************************************/
      public int getTotalProductByCatetory(int cate){
-        String sql = "Select COUNT(*) from Products WHERE CategoryID = ?";
+         String sql = "";
+         if(cate == 0){
+             sql = "Select COUNT(*) from Products";
+         }else{
+              sql = "Select COUNT(*) from Products WHERE CategoryID = ?";
+         }
         try{
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, cate);
+            if(cate !=0){
+                st.setInt(1, cate);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -187,41 +180,6 @@ CategoryDAO cDAO = new CategoryDAO();
     }
 
 //==============================================================================
-    public List<Product> pagingProduct(int index){
-        List<Product> list = new ArrayList<>();
-        String sql = "Select * from Products ORDER BY ProductID OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
-        try{
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, (index-1)*8);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
-                Product p = new Product(
-                        rs.getInt("ProductID"),
-                        rs.getString("title"),
-                        rs.getString("ProductName"),
-                        rs.getInt("Views"), 
-                        rs.getDate("releaseDate"),
-                        rs.getInt("QuantitySold"),
-                        cate,
-                        rs.getInt("Quantity"),
-                        rs.getInt("Sale"),
-                        rs.getString("img"),
-                        rs.getDouble("price"),
-                        rs.getString("publisher"),
-                        rs.getString("sortDescription"),
-                        rs.getString("description"),
-                        rs.getString("status"),
-                        rs.getString("brand"));
-                        list.add(p);
-            }
-            rs.close();
-            st.close();
-        }catch(Exception e){
-            
-        }
-        return list;
-    }
 
 //------------------------------------------------------------------------------
     
@@ -238,10 +196,10 @@ CategoryDAO cDAO = new CategoryDAO();
             PreparedStatement st = connection.prepareStatement(sql);
             if(cat != 0){
                 st.setInt(1, cat);
-                st.setInt(2, (index-1)*8);
+                st.setInt(2, (index-1)*quantity_product);
                 st.setInt(3, quantity_product);
             }else{
-                st.setInt(1, (index-1)*8);
+                st.setInt(1, (index-1)*quantity_product);
                 st.setInt(2, quantity_product);
             }
             ResultSet rs = st.executeQuery();
@@ -325,9 +283,10 @@ CategoryDAO cDAO = new CategoryDAO();
 //        for(Product p: list){
 //            System.out.println(p);
 //        }
-            List<Product> listP = pDAO.getTop4Product();
-            for(Product p: listP){
-                System.out.println(p);
-            }
+//            List<Product> listP = pDAO.getTop4Product();
+//            for(Product p: listP){
+//                System.out.println(p);
+//            }
+        System.out.println(pDAO.getTotalProductByCatetory(0));
     }
 }

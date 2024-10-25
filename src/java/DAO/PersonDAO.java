@@ -20,92 +20,6 @@ import java.util.List;
  */
 public class PersonDAO extends DBContext {
 
-//    public List<Person> getAllPerson() {
-//        List<Person> listReader = new ArrayList<>();
-//        try {
-//            String sql = "select * from Person";
-//            Statement st = connection.createStatement();
-//            ResultSet rs = st.executeQuery(sql);
-//            while (rs.next()) {
-//                Person r = new Person(name, gender, age, startDate, address, email, phone, 1, password);
-//                r.setPersonID(rs.getInt("PersonID"));
-//                r.setName(rs.getString("Name"));
-//                r.setGender(rs.getString("Gender"));
-//                r.setDateOfBirth(rs.getString("DateOfBirth"));
-//                r.setStartDate(rs.getObject("StartDate",)));
-//                r.setAddress(rs.getString("Address"));
-//                r.setEmail(rs.getString("Email"));
-//                r.setPhone(rs.getString("Phone"));
-//                r.setRoleID(rs.getInt("RoleID"));
-//                listReader.add(r);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return listReader;
-//    }
-//    public Person getPersonByUser(String user) {
-//        try {
-//            String sql = "select * from Person p\n"
-//                    + "join Users u on p.PersonID = u.PersonID\n"
-//                    + "where u.Username = ?";
-//            PreparedStatement st = connection.prepareStatement(sql);
-//            st.setString(1, user);
-//            ResultSet rs = st.executeQuery();
-//            while (rs.next()) {
-//                Person r = new Person();
-//                r.setPersonID(rs.getInt("PersonID"));
-//                r.setName(rs.getString("Name"));
-//                r.setGender(rs.getString("Gender"));
-//                r.setDateOfBirth(rs.getDate("DateOfBirth"));
-//                r.setStartDate(rs.getString("StartDate"));
-//                r.setAddress(rs.getString("Address"));
-//                r.setEmail(rs.getString("Email"));
-//                r.setPhone(rs.getString("Phone"));
-//                return r;
-//            }
-//            rs.close();
-//            st.close();
-//            return null;
-//
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
-//    public Person getPersonByCard(int cardid) {
-//        try {
-//            String sql = "  select * from Person p\n"
-//                    + "  join Card c on p.PersonID = c.PersonID\n"
-//                    + "  where c.CardID = ?";
-//            PreparedStatement st = connection.prepareStatement(sql);
-//            st.setInt(1, cardid);
-//            ResultSet rs = st.executeQuery();
-//            while (rs.next()) {
-//                Person r = new Person();
-//                r.setPersonID(rs.getInt("PersonID"));
-//                r.setName(rs.getString("Name"));
-//                r.setGender(rs.getString("Gender"));
-//                r.setDateOfBirth(rs.getDate("DateOfBirth"));
-//                r.setStartDate(rs.getString("StartDate"));
-//                r.setAddress(rs.getString("Address"));
-//                r.setEmail(rs.getString("Email"));
-//                r.setPhone(rs.getString("Phone"));
-//                return r;
-//            }
-//            rs.close();
-//            st.close();
-//            return null;
-//
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
-//<<<<<<< HEAD
-//=======
-//
-//>>>>>>> b25085dc49024defb9c639d283e3875ce53273ad
     public int getLastInsertedBorrowID() {
         String sql = "SELECT MAX(BorrowID) AS BorrowID FROM Borrow";
         try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(sql)) {
@@ -182,6 +96,7 @@ public class PersonDAO extends DBContext {
 
     public boolean addPerson(Person person) {
         // Đảm bảo giá trị roleID là hợp lệ
+        boolean check = true;
         String sql = "INSERT INTO Person (Name, Gender, DateOfBirth, StartDate, Address, Email, Phone, Password, RoleID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -198,86 +113,19 @@ public class PersonDAO extends DBContext {
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+             check = false;
         }
+        return check;
     }
 
-//    public List<Person> searchPerson(String search, String role, String gender){
-//        List<Person> list = new ArrayList<>();
-//        String sql = "select * from Person where 1=1 ";
-//        if(search!=null&&!search.isEmpty()){
-//            sql += "and (Name like '%" + search + "'% or Email like '%" + search + "%' or Phone like '%" + search + "'%)";
-//        }
-//        if(gender!=null&&!gender.isEmpty()){
-//            sql += "and Gender like '%" + gender + "%'";
-//        }
-//        if(role!=null&&!role.isEmpty()){
-//            sql += "and RoleID = " + role;
-//        }
-//        try {
-//            Statement st = connection.createStatement();
-//            ResultSet rs = st.executeQuery(sql);
-//            while (rs.next()) {
-//                Person r = new Person(name, gender, age, startDate, address, email, phone, 1, password);
-//                r.setPersonID(rs.getInt("PersonID"));
-//                r.setName(rs.getString("Name"));
-//                r.setGender(rs.getString("Gender"));
-//                r.setDateOfBirth(rs.getString("DateOfBirth"));
-//                r.setStartDate(rs.getDate("StartDate"));
-//                r.setAddress(rs.getString("Address"));
-//                r.setEmail(rs.getString("Email"));
-//                r.setPhone(rs.getString("Phone"));
-//                 r.setRoleID(rs.getInt("RoleID"));
-//                list.add(r);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return list;
-//    }
-//=======
-//
-//    public List<Person> searchPerson(String search, String role, String gender) {
-//        List<Person> list = new ArrayList<>();
-//        String sql = "select * from Person where 1=1 ";
-//        if (search != null && !search.isEmpty()) {
-//            sql += "and (Name like '%" + search + "'% or Email like '%" + search + "%' or Phone like '%" + search + "'%)";
-//        }
-//        if (gender != null && !gender.isEmpty()) {
-//            sql += "and Gender like '%" + gender + "%'";
-//        }
-//        if (role != null && !role.isEmpty()) {
-//            sql += "and RoleID = " + role;
-//        }
-//        try {
-//            Statement st = connection.createStatement();
-//            ResultSet rs = st.executeQuery(sql);
-//            while (rs.next()) {
-//                Person r = new Person();
-//                r.setPersonID(rs.getInt("PersonID"));
-//                r.setName(rs.getString("Name"));
-//                r.setGender(rs.getString("Gender"));
-//                r.setDateOfBirth(rs.getString("DateOfBirth"));
-//                r.setStartDate(rs.getString("StartDate"));
-//                r.setAddress(rs.getString("Address"));
-//                r.setEmail(rs.getString("Email"));
-//                r.setPhone(rs.getString("Phone"));
-//                r.setRoleID(rs.getInt("RoleID"));
-//                list.add(r);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return list;
-//    }
-//>>>>>>> b25085dc49024defb9c639d283e3875ce53273ad
+
 
     public static void main(String[] args) {
         PersonDAO personDAO = new PersonDAO();
 
         // Giả định các thông tin đăng nhập (email và password)
-        String email = "vana@gmail.com";  // Bạn cần thay bằng email thực tế trong database
-        String password = "123";   // Bạn cần thay bằng password thực tế
+        String email = "user";  // Bạn cần thay bằng email thực tế trong database
+        String password = "234";   // Bạn cần thay bằng password thực tế
 
         // Thực hiện login
         Person person = personDAO.login(email, password);
@@ -292,5 +140,7 @@ public class PersonDAO extends DBContext {
             System.out.println("Đăng nhập thất bại! Email hoặc mật khẩu không chính xác.");
         }
     }
+    
+  
 
 }

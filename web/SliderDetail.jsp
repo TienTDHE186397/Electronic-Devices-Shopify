@@ -280,7 +280,7 @@
     <body>
 
         <!-- Back Button -->
-        <c:set value="${requestScope.blog}" var="B"/>      
+        <c:set value="${requestScope.slider}" var="slider"/>      
         <c:set value="${requestScope.listRB}" var="RB"/>
 
 
@@ -291,74 +291,46 @@
 
             <div>
                 <button id="backButton"> 
-                    <a href="PostListMKT">Back</a>
+                    <a href="SliderListMKT">Back</a>
                 </button>
             </div>
             <!-- Main Content Section -->
             <div class="main-content ">
-                <img src="${B.blog_img}" alt="Laptop with code" class="post-image">
-                <center><h3 style="color: gray; font-style: italic;">${B.blog_img_tittle}</h3><center>
-                        <c:if test="${B.blog_flag == 0}">
-                            <h1>${B.blog_tittle}</h1>
+                <center><h1>${slider.slider_tittle}</h1><center>
+                        <br/>
+                        <h2>Slider Image:</h2><br/>  
+                        <img src="${slider.slider_image}" style="width: 500px;height: 300px;" alt="Laptop with code" class="post-image">
+                        <br/><h2 >Slider Video:</h2><br/>
+                        <c:if test="${slider.slider_video == null}">Not Video</c:if>
+                        <c:if test="${slider.slider_video != null}">
+
+                            <video style="width: 500px;height: 300px;" controls autoplay loop muted >
+                                <source  src="${slider.slider_video}" type="video/mp4">
+                            </video>
+
                         </c:if>
-
-                        <c:if test="${B.blog_flag == 1}">
-                            <h1 style="color: red;">${B.blog_tittle}</h1>
-
-                        </c:if>
-
+                        <br/>
+                        <br/>
+                        <br/>
                         <div class="meta">
-                            <img src="https://via.placeholder.com/50" alt="Author Image">
-                            <span>${B.person.name}</span>
-                            <span>${B.blog_update_time}</span>
+                            <img src="https://m.yodycdn.com/blog/jerry-meme-yodyvn10.jpg" style="width: 50px;height: 50px;" alt="Author Image">
+                            <span>${slider.person.name}</span>
+                            <span><i style="color: grey;">${slider.slider_date}</i></span>
                         </div>
                         <br/>
-                        <h3>Summary Information:  </h3> <p>${B.blog_summary_information}</p>
+                        <h3>Slider BackLink:  </h3> 
+                        <p><a href="${slider.slider_backlink}" target="_blank">${slider.slider_backlink}</a></p>
                         <br/>
-                        <h3>Blog Detail:</h3>
-                        <p>${B.blog_detail}</p>
+                        <h3>Slider Note:</h3>
+                        <p>${slider.slider_note}</p>
                         <div class="social-links">
-                            <a href="#"><i class="fab fa-facebook"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
+
                         </div>
                         </div>
 
-                        <!-- Wrapper for both Related Posts sections -->
-                        <div class="related-posts-wrapper">
-                            <div class="related-posts">
-                                <h2>Related Posts</h2>
-                                <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
-                                    <a href="PostDetail?id=${RB.get(c).blogID}">  
-                                        <div class="related-post">
-                                            <img src="${RB.get(c).blog_img}" alt="Related Post Image">
-                                            <h4>${RB.get(c).blog_tittle}</h4>
-                                        </div>
-                                    </a>
-                                </c:forEach>
-                            </div>
 
-                            <div class="related-posts">
-                                <h2 style="color: red;">Edit For MKT Manager</h2>
 
-                                <a href="editPost?id=${B.blogID}"><i class="fa-solid fa-pen"></i> Edit this Blog<a> 
-                                        <br/>
-                                        <br/>
-                                        <c:if test="${B.blog_flag == 0}">
-                                            <a href="PostDetail?flag=${B.blogID}"><i class="fa-regular fa-flag"></i> Give flag <a>
-                                                </c:if>
+                        </div>
 
-                                                <c:if test="${B.blog_flag == 1}">
-                                                    <a href="PostDetail?flag=${B.blogID}"><i class="fa-solid fa-flag"></i> Remove flag <a>
-
-                                                        </c:if>
-
-                                                        </div>
-
-                                                        </div>
-
-                                                        </div>
-
-                                                        </body>
-                                                        </html>
+                        </body>
+                        </html>

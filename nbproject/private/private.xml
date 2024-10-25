@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostListHomeServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostDetailHome.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/addNewCategory.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostDetailHomeServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/addProductServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/addCategories.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostListHome.jsp</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/CategoryDAO.java</file>
+        </group>
+>>>>>>> 7f3c2fc7b7c8fd2aeadda8cf684aa2cd8889da45
     </open-files>
 </project-private>

@@ -87,7 +87,7 @@
                                         <td>${u.getReleaseDate()}</td>
                                         <td>${u.getQuantitySold()}</td>
                                         <td>${u.category.categoryID}</td>
-                                        <td>${u. getQuantity()}</td>
+                                        <td>${u.getQuantity()}</td>
                                         <td>${u. getSale()} %</td>
                                         <td><a href="ProductDetail?ID=${u.getProductID()}">Edit</a></td>
                                     </tr>
