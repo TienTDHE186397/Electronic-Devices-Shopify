@@ -4,7 +4,6 @@
  */
 package Filter;
 
-
 import Entity.Person;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -23,15 +22,15 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author Duc Long
+ * @author admin
  */
-@WebFilter(filterName = "EmployeeFilter", urlPatterns = {"/SaleHomeEmp"})
-public class Sale implements Filter {
-  
+// "/mktdashboard", "/PostlistMKT", "/PostDetail", "/editPost","/ProductDetail","/addPost","addSlider"
+@WebFilter(filterName = "MKT", urlPatterns = {"/ProductMKT",})
+public class MKT implements Filter {
+
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-       
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -42,10 +41,11 @@ public class Sale implements Filter {
             res.sendRedirect("home");
         } else {
             Person account = (Person) session.getAttribute("user");
-            if (account.getRoleID() != 3) {
+            if (account.getRoleID() != 2) {
                 res.sendRedirect("home");
             }
         }
+
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -56,8 +56,6 @@ public class Sale implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
-       
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
@@ -75,20 +73,19 @@ public class Sale implements Filter {
     /**
      * Return the filter configuration object for this filter.
      */
-   
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -105,7 +102,7 @@ public class Sale implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -119,6 +116,5 @@ public class Sale implements Filter {
         }
         return stackTrace;
     }
- 
-    
+
 }

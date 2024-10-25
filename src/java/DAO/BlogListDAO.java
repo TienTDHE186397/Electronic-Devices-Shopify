@@ -637,7 +637,7 @@ public class BlogListDAO extends DBContext {
 
     }
 
-    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page,int perpage) {
+    public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page, int perpage) {
 
         List<Blog> list = new ArrayList<>();
 
@@ -763,7 +763,7 @@ public class BlogListDAO extends DBContext {
         }
 
         sql += "\n OFFSET " + pageget + " ROWS\n"
-                + "FETCH NEXT "+ perpage +" ROWS ONLY";
+                + "FETCH NEXT " + perpage + " ROWS ONLY";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -846,6 +846,27 @@ public class BlogListDAO extends DBContext {
         }
 
         return list;
+    }
+
+    public void increaseViewBlog(Blog b) {
+
+        String sql = "UPDATE [dbo].[Blog]\n"
+                + "   SET \n"
+                + "      [Blog_Views] = ?\n"
+                + " WHERE BlogID = " + b.getBlogID();
+
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, b.getBlog_views() + 1);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     public static void main(String[] args) {

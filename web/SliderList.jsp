@@ -257,7 +257,7 @@
 
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
-                <h1 class="brand-name">MKT DashBoard</h1>
+                <a href="mktdashboard"><h1 class="brand-name"> MKT DashBoard</h1></a>   
             </div>
         </section>
 
@@ -289,7 +289,7 @@
                                                             <div>
                                                                 <center>
                                                                     <label><b>Search:</b></label>
-                                                                    <input style="width: 450px;border-radius: 15px; background: orange;" id ="myInput" name="search" type="text" class="form-control" placeholder="Enter your Tittle Or Backlink .........." value="${search}">
+                                                                    <input style="width: 450px;border-radius: 15px; background: orange;" id ="myInput" name="search" type="text" class="form-control" placeholder="Enter your Tittle Or Backlink .........." value="${(param.search == null) ? "" : param.search}">
                                                                 </center> 
                                                             </div>
                                                         </div>
@@ -307,7 +307,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </center>
-                                                                <a href="addSlider.jsp" style=" padding: 5px;border: 2px black solid;"><i class="fa-solid fa-circle-plus"></i> ADD NEW SLIDER</a>
+                                                                <a href="addSlider" style=" padding: 5px;border: 2px black solid;"><i class="fa-solid fa-circle-plus"></i> ADD NEW SLIDER</a>
                                                             </div> 
                                                         </div>
                                                     </div>
@@ -323,7 +323,7 @@
                                                         <input type="checkbox" name="col" value="backlink" ${(backlink != null) ? "checked" : ""}> Slider BackLink
                                                         <input type="checkbox" name="col" value="status" ${(status != null) ? "checked" : ""}> Slider Status 
                                                         <br/>
-                                                        <input type="submit" value="Apply">
+                                                        <input type="submit" value="Apply"> 
                                                     </div>
 
                                                     <input type="hidden" name="page" value="${param.page}">
@@ -374,8 +374,6 @@
                                                                             <img src="${slider.slider_image}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
                                                                         </td>
                                                                     </c:if>
-
-
                                                                     <c:if test="${video == null}">
                                                                         <td>
                                                                             <c:if test="${slider.slider_video == null}">Not Video</c:if>

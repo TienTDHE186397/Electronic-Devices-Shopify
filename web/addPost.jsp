@@ -93,7 +93,7 @@
             <h2>Add New Blog</h2>
             <form action="addPost" method="post"  enctype="multipart/form-data">
 
-                <label for="blogtype">Blog Type: <a href="addBlogType.jsp">(ADD NEW BLOG TYPE +)</a></label>
+                <label for="blogtype">Blog Type: <a href="addCategory">(ADD NEW BLOG TYPE +)</a></label>
                 <select name="blogtype" id="customSelect" >
                     <option value="">Select Blog Type</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
@@ -103,7 +103,7 @@
 
                 <label for="blogTitle">Blog Title:</label>
                 <input type="text" id="blogTitle" name="blogtittle" placeholder="Tittle Blog....." required>
-
+                
                 <label for="blogSummary">Blog Summary Information:</label>
                 <input type="text" id="blogTitle" name="blogsummary" placeholder="Summary Blog......" required>
 

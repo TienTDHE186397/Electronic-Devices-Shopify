@@ -76,32 +76,24 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add New Blog</title>
+        <title>Add New Category</title>
         <link rel="stylesheet" href="styles.css">
     </head>
 
     <body>
-
-
         <c:set value="${requestScope.listType}" var="listType" />
-        <c:set value="${requestScope.blog}" var="b" />
-
         <div class="container">
-            <h2>Edit Blog</h2>
-            <form action="editPost" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="${b.blogID}">
-                <label for="blogtype">Blog Type:</label>
-                    <input type="text" class="form-control" id="centeredInput" value="${blog.blog_img_tittle}" name="BlogType" style="width: 95%; height: 23px;" placeholder="Blog Type Name..." required>
-
-                
-                
-                    <button type="submit" style="width: 86px;">Edit Blog</button>
+            <h2>New Category</h2>
+            <form action="addCategory" method="post" >
+                <label for="blogtype">Category Type:</label>
+                <input type="text" class="form-control" id="centeredInput" value="${blog.blog_img_tittle}" name="name" style="width: 95%; height: 23px;" placeholder="Category Type Name..." required>
+                <center>     <button type="submit" style="width: 150px;">Add New Category</button> </center>
             </form>
         </div>
 
     </body>
 
 
-   
+
 
 </html>

@@ -338,15 +338,19 @@
                     </div>
 
     </div>
-                    <!-- Comment Section -->
+                    
                     <div class="comments-section">
                         <h2>Comments</h2>
-                        <!-- Form nhập bình luận mới -->
+                        <c:if test="${sessionScope.user != null}">
                         <form action="PostDetailHome?id=${param.id}" method="post">
                             <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..."></textarea>
                             <button type="submit">Post Comment</button>
                         </form>
-                        <!-- Bình luận đã có -->
+                        </c:if>
+                        
+                        <c:if test="${sessionScope.user == null}">
+                            <center><h3 style="color: grey;">Bạn phải đăng nhập để sử dụng tính năng bình luận</h3></center>
+                        </c:if>
                         <div class="posted-comments">
                             <h3>Previous Comments</h3>
 

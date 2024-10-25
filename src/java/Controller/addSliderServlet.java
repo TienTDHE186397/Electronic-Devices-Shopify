@@ -113,8 +113,9 @@ public class addSliderServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             DAOPerson perDAO = new DAOPerson();
-
-            Person person = perDAO.getPersonById("6");
+        //    session.setAttribute("user", user);
+            Person p = (Person)session.getAttribute("user");
+            Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
 
             SliderListDAO sDAO = new SliderListDAO();
             List<Slider> list = sDAO.getAllSlider();

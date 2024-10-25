@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Feedback</title>
     <link href="https://cdnjs.cloudflare.com/api/placeholder/400/320" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/qnmf6c0u3j7wk6wsljsqwke06htozhifzb9v9fs3pw2ed7vx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         :root {
             --primary-color: #4CAF50;
@@ -175,7 +176,7 @@
     </header>
     <div class="container">
         <main>
-            <form class="feedback-form" action="submitFeedback" method="post" enctype="multipart/form-data">
+            <form class="feedback-form" action="${pageContext.request.contextPath}/uploadmulti" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="fullName">Full Name:</label>
                     <input type="text" id="fullName" name="fullName" required>
@@ -216,13 +217,18 @@
                 </div>
                 <div class="form-group">
                     <label for="feedback">Feedback:</label>
-                    <textarea id="feedback" name="feedback" rows="5" required></textarea>
+                    <textarea style="height: 200px;"  class="tinymce" placeholder="Write A Blog......." name="feedback" rows="6"></textarea>
+                <br/>
                 </div>
                 <div class="form-group">
                     <label for="images">Attach Images:</label>
-                    <input type="file" id="images" name="images" multiple accept="image/*">
+                    <input type="file" id="images" name="images" accept=".jpg">
                 </div>
-                <button type="submit">Submit Feedback</button>
+                <div class="form-group">
+                    <label for="videos">Attach video:</label>
+                    <input type="file" id="videos" name="videos" accept=".mp4">
+                </div>
+                <button type="submit" >Submit Feedback</button>
             </form>
         </main>
        
@@ -231,4 +237,11 @@
         <%@include file="footer.jsp" %>
 <!-- Footer end -->
 </body>
+<script>
+        tinymce.init({
+            selector: '.tinymce',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak media',
+            toolbar_mode: 'floating'
+        });
+    </script>
 </html>
