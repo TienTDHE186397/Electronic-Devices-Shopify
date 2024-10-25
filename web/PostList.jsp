@@ -280,13 +280,9 @@
                                 <div>
                                     <div style="margin-bottom: 5px">
                                         <center>   <h1>POST LIST</h1> <center>
-
                                                 <span style="background-color: #eeecfd; padding:5px;">TOTAL POST: <b>${requestScope.listB.size()}</b></span>
-
                                                 </div>
-
                                                 <br/>
-
                                                 <span style="margin: 2px;" >        
                                                     <!-- search -->
                                                     <div class="row" >
@@ -298,7 +294,6 @@
                                                             <label><b>Author:</b></label>
                                                             <input style="background: orange;" id ="myInput" name="authorwrite" type="text" class="form-control" placeholder="Enter your Author" value="${param.authorwrite == null ? "":param.authorwrite}">
                                                         </div>  
-
                                                     </div>
 
                                                 </span>

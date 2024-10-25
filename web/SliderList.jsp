@@ -374,8 +374,6 @@
                                                                             <img src="${slider.slider_image}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
                                                                         </td>
                                                                     </c:if>
-
-
                                                                     <c:if test="${video == null}">
                                                                         <td>
                                                                             <c:if test="${slider.slider_video == null}">Not Video</c:if>

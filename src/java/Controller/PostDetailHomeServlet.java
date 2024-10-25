@@ -40,7 +40,7 @@ public class PostDetailHomeServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,6 +53,8 @@ public class PostDetailHomeServlet extends HttpServlet {
             Blog blog = blogDAO.getBlogById(id);
             listRB = blogDAO.getRelatedBlog(blog);
             List<CommentBlog> listC = blogDAO.getAllCommetFromBlog(id);
+            
+            blogDAO.increaseViewBlog(blog);
 
             request.setAttribute("listC", listC);
             request.setAttribute("blog", blog);

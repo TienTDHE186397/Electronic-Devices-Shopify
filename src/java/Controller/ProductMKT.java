@@ -39,16 +39,45 @@ public class ProductMKT extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ProductListDAO plDao = new ProductListDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
+        String search = request.getParameter("search");
+        String fromprice = request.getParameter("fromprice");
+        String toprice = request.getParameter("toprice");
+        String shortdescription = request.getParameter("shortdescription");
+        String category = request.getParameter("category");
+        String status = request.getParameter("status");
+        String sort = request.getParameter("sort");
 
-        List<Product> listP = plDao.getAllProduct();
-        List<Categories> listCategory = categoryDAO.getAllCategory();
+        String page = request.getParameter("page");
 
-        request.setAttribute("listP", listP);
-        request.setAttribute("listCategory", listCategory);
+        if (page == null || page.equals("")) {
+            page = "1";
+        }
 
-        request.getRequestDispatcher("productList.jsp").forward(request, response);
+        if (search == null && fromprice == null && toprice == null && shortdescription == null && category == null && status == null && sort == null) {
+
+            ProductListDAO plDao = new ProductListDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<Product> listP = plDao.searchProduct("", "", "", "", "0", "", "0", 1, 10);
+            List<Categories> listCategory = categoryDAO.getAllCategory();
+            List<Product> listPa = plDao.searchProduct2(search, fromprice, toprice, shortdescription, category, status, sort);
+            int totalpage = (int) Math.ceil((double) listPa.size() / 10);
+            request.setAttribute("totalpage", String.valueOf(totalpage));
+            request.setAttribute("listP", listP);
+            request.setAttribute("listCategory", listCategory);
+            request.getRequestDispatcher("productList.jsp").forward(request, response);
+
+        } else {
+            ProductListDAO plDao = new ProductListDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<Product> listP = plDao.searchProduct(search, fromprice, toprice, shortdescription, category, status, sort, Integer.parseInt(page), 10);
+            List<Categories> listCategory = categoryDAO.getAllCategory();
+            List<Product> listPa = plDao.searchProduct2(search, fromprice, toprice, shortdescription, category, status, sort);
+            int totalpage = (int) Math.ceil((double) listPa.size() / 10);
+            request.setAttribute("totalpage", String.valueOf(totalpage));
+            request.setAttribute("listP", listP);
+            request.setAttribute("listCategory", listCategory);
+            request.getRequestDispatcher("productList.jsp").forward(request, response);
+        }
 
     }
 

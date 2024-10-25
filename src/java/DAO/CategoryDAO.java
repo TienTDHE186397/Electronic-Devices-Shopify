@@ -66,22 +66,35 @@ public class CategoryDAO extends DBContext {
 
         return null;
     }
-    
-    
-    public static void main(String[] args) {
-        
-        CategoryDAO cdao = new CategoryDAO();
-        
-        List<Categories> c = cdao.getAllCategory();
-        
-        for(Categories cl : c) {
-            
-            System.out.println(cl.getCategoryName());
-            
+
+    public void addNewCategories(Categories c) {
+
+        String sql = "INSERT INTO [dbo].[Categories]\n"
+                + "           ([CategoryName])\n"
+                + "     VALUES\n"
+                + "           (?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, c.getCategoryName());
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        
-        
+
     }
-   
+
+    public static void main(String[] args) {
+
+        CategoryDAO cdao = new CategoryDAO();
+
+        List<Categories> c = cdao.getAllCategory();
+
+        for (Categories cl : c) {
+
+            System.out.println(cl.getCategoryName());
+
+        }
+
+    }
 
 }
