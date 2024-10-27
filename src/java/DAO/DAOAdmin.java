@@ -20,7 +20,11 @@ import java.time.LocalDate;
 public class DAOAdmin extends DBContext {
 
     public Person getPersonById(String id) {
-        String sql = "select * from Person where PersonID = ?";
+        String sql = "select p.PersonID,pimg.image_url Image, p.Name, p.Gender, p.DateOfBirth, p.StartDate, coalesce(pa.Address,'không có thông tin') Address, p.Email,coalesce(pp.Phone,'không có thông tin') Phone, p.RoleID, p.Password\n"
+                + " FROM Person p\n"
+                + " LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
+                + " LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
+                + " left join PersonImages pimg on p.PersonID = pimg.PersonID where p.PersonID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id);
@@ -29,6 +33,7 @@ public class DAOAdmin extends DBContext {
                 java.sql.Date sqlDate = rs.getDate("startdate");
                 LocalDate localDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
                 Person p = new Person(rs.getInt("PersonID"),
+                        rs.getString("Image"),
                         rs.getString("Name"),
                         rs.getString("Gender"),
                         rs.getString("DateOfBirth"),
