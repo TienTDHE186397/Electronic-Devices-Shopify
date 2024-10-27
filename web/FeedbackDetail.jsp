@@ -20,7 +20,7 @@
 
         <!-- SIDEBAR -->
         <section id="sidebar">
-            <a href="#" class="brand">
+            <a href="mktdashboard" class="brand">
                 <i class='bx bxs-smile'></i>
                 <span class="text">MKT WorkSpace</span>
             </a>
@@ -32,13 +32,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="ProductMKT">
                         <i class='bx bxs-shopping-bag-alt' ></i>
                         <span class="text">Products</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="SliderListMKT">
                         <i class='bx bxs-doughnut-chart' ></i>
                         <span class="text">Slider</span>
                     </a>
@@ -49,10 +49,17 @@
                         <span class="text">Feedback</span>
                     </a>
                 </li>
+                
                 <li>
-                    <a href="#">
+                    <a href="PostListMKT">
                         <i class='bx bxs-group' ></i>
                         <span class="text">Post</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="customerList">
+                        <i class='bx bxs-group' ></i>
+                        <span class="text">Customer List</span>
                     </a>
                 </li>
             </ul>

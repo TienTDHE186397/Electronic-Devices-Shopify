@@ -44,7 +44,8 @@
                 <span class="text">MKT WorkSpace</span>
             </a>
             <ul class="side-menu top">
-                <li>
+                <li class="active">
+                    
                     <a href="mktdashboard">
                         <i class='bx bxs-dashboard' ></i>
                         <span class="text">Dashboard</span>
@@ -62,7 +63,7 @@
                         <span class="text">Slider</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="FeedbackList">
                         <i class='bx bxs-message-dots' ></i>
                         <span class="text">Feedback</span>
@@ -74,11 +75,17 @@
                         <span class="text">Post</span>
                     </a>
                 </li>
+                <li>
+                    <a href="customerList">
+                        <i class='bx bxs-group' ></i>
+                        <span class="text">Customer List</span>
+                    </a>
+                </li>
             </ul>
             <ul class="side-menu">
                 </li>
                 <li>
-                    <a href="#" class="logout">
+                    <a href="./LogoutServlet" class="logout">
                         <i class='bx bxs-log-out-circle' ></i>
                         <span class="text">Logout</span>
                     </a>
