@@ -4,8 +4,8 @@
  */
 package Controller;
 
-import Entity.Person;
 import DAO.DAOPerson;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,8 +19,8 @@ import java.util.List;
  *
  * @author nghie
  */
-@WebServlet(name = "editUserServlet", urlPatterns = {"/editUser"})
-public class editUserServlet extends HttpServlet {
+@WebServlet(name = "customerControl", urlPatterns = {"/customerControl"})
+public class customerControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +34,18 @@ public class editUserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet customerControl</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet customerControl at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,11 +60,21 @@ public class editUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        DAOPerson dp = new DAOPerson();
-//        String id = request.getParameter("PersonID");
-//        Person p = dp.getPersonById(id);
-//        request.setAttribute("detail", p);
-//        request.getRequestDispatcher("UserDetail.jsp").forward(request, response);
+       DAOPerson dp = new DAOPerson();
+        request.setCharacterEncoding("UTF-8");
+        String search = request.getParameter("search");
+        String gender = request.getParameter("gender");
+        String role = request.getParameter("roleid");
+        
+        List<Person> pr = dp.searchPerson(search, role, gender);
+        if(search==null&&gender==null&&role==null){
+        List<Person> listP = dp.getAllPerson();
+        request.setAttribute("listC", listP);
+        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        } else{
+        request.setAttribute("listC", pr);
+        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -67,28 +88,7 @@ public class editUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String id = request.getParameter("PersonID");
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String roleid = request.getParameter("roleID");
-        String pass = request.getParameter("password");
-//        out.println(id);
-//        out.println(name);
-//        out.println(gender);
-//        out.println(address);
-//        out.println(email);
-//        out.println(phone);
-//        out.println(roleid);
-//        out.println(pass);
-        DAOPerson dp = new DAOPerson();
-        dp.updateUser(name, gender, email, roleid, pass, id);
-        response.sendRedirect("userList");
-        
-       
+        processRequest(request, response);
     }
 
     /**

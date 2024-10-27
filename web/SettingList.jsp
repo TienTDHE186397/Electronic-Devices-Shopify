@@ -212,8 +212,9 @@
                 background-color: #3498db;
             }
             .pagination {
-                display: inline-block;
+                display: flex;
                 margin-top: 20px;
+                justify-content: center;
             }
 
             .pagination a {
@@ -250,7 +251,7 @@
         
         <div class="side-content">
             <div class="profile">
-                <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
+                <div class="profile-img bg-img" style="background-image: url(${person.image})"></div>
                 <h4 name="name">${person.name}</h4>
                 <small>Admin</small>
             </div>
