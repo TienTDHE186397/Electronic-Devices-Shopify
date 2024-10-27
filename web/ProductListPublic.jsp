@@ -294,8 +294,11 @@
                     <div class="filter-table">
                         <label><b>Sắp xếp theo:</b></label>
                         <select class="filter-col" name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
-                            <option value="sortName" >Tên(A-Z)</option>
-                            <option value="sortUpdate">Mới cập nhật</option>
+                            <option value="releaseDate DESC" ${"releaseDate DESC" == param.sort ? "selected":""}>Mới cập nhật</option>
+                            <option value="ProductName" ${"ProductName" == param.sort ? "selected":""}>Tên(A-Z)</option>
+                             <option value="ProductName DESC" ${"ProductName DESC" == param.sort ? "selected":""} >Tên(Z-A)</option>
+                            <option value="price" ${"price" == param.sort ? "selected":""}>Giá(Cao - Thấp)</option>
+                            <option value="price DESC" ${"price DESC" == param.sort ? "selected":""}>Giá(Thấp - Cao)</option>
                         </select>
                     </div>
                     <div class="filter-table">
@@ -329,19 +332,7 @@
                     </div>
 =======
             </div>
-            <div class="container category-table">
-                <div>
-                    <h5>Bộ Lọc</h5>
-                </div>
-                <div class="filter-table">
-                    <label><b>Sắp xếp theo:</b></label>
-                    <select class="filter-col" name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
-                        <option value="sortName" >Tên(A-Z)</option>
-                        <option value="sortName1" >Tên(Z-A)</option>
-                        <option value="sortUpdate">Mới cập nhật</option>
-                    </select>
-                </div>
-            </div>
+            
             <div class="container background-container">
                 <div class="product-card">
                     <c:forEach items="${list_P}" var="list1">

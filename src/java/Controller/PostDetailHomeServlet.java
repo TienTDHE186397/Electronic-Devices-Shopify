@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.*;
 import java.lang.*;
 import java.time.LocalDate;
@@ -39,20 +40,22 @@ public class PostDetailHomeServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BlogListDAO blogDAO = new BlogListDAO();
         String id_raw = request.getParameter("id");
         List<Blog> listRB;
-    
+
         try {
             int id = Integer.parseInt(id_raw);
             Blog blog = blogDAO.getBlogById(id);
             listRB = blogDAO.getRelatedBlog(blog);
             List<CommentBlog> listC = blogDAO.getAllCommetFromBlog(id);
             
+            blogDAO.increaseViewBlog(blog);
+
             request.setAttribute("listC", listC);
             request.setAttribute("blog", blog);
             request.setAttribute("listRB", listRB);
@@ -71,17 +74,19 @@ public class PostDetailHomeServlet extends HttpServlet {
         String id_raw = request.getParameter("id");
 
         try {
-            
+
             int id = Integer.parseInt(id_raw);
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = currentDate.format(formatter);
-
             BlogListDAO blogDAO = new BlogListDAO();
             DAOPerson perDAO = new DAOPerson();
             
+            HttpSession session = request.getSession();
             Blog blog = blogDAO.getBlogById(id);
-            Person person = perDAO.getPersonById("1");
+            //    session.setAttribute("user", user);
+            Person p = (Person) session.getAttribute("user");
+            Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
 
             List<Blog> list = blogDAO.getAllBlog();
 
@@ -92,7 +97,7 @@ public class PostDetailHomeServlet extends HttpServlet {
             doGet(request, response);
 
         } catch (Exception e) {
-        
+
         }
 
     }

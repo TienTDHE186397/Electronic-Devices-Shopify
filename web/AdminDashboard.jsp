@@ -562,7 +562,7 @@
             <div class="side-content">
                 <div class="profile">
                     <input type="hidden" id="PersonID" name="PersonID" value="${person.personID}"/>
-                    <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
+                    <div class="profile-img bg-img" style="background-image: url(${person.image})"></div>
                     <h4 name="name">${person.name}</h4>
                     <small>Admin</small>
                 </div>
@@ -647,7 +647,7 @@
                             <div class="bg-img" style="background-image: url(img/1.jpeg)"></div>
 
                             <span class="las la-power-off"></span>
-                            <span onclick="window.location.href = 'login'">Logout</span>
+                            <span onclick="window.location.href = './LogoutServlet'">Logout</span>
                         </div>
                     </div>
                 </div>
@@ -1084,7 +1084,5 @@
 
         </script>
     </body>
+    
 </html>
-
-
-  

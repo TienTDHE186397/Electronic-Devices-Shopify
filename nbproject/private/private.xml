@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/admin/Desktop/webdientu-master/web/ProductDetail.jsp</file>
             <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/DAOPerson.java</file>
@@ -17,5 +18,20 @@
             <file>file:/C:/Users/admin/Desktop/webdientu-master/web/signup.jsp</file>
             <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/DBContext.java</file>
         </group>
+=======
+<<<<<<< HEAD
+        <group/>
+=======
+        <group>
+            <file>file:/D:/SWP391/webdientu/src/java/ProductListPublic/Controller/ProductList.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/ProductListPublic/Controller/CategoryControlList.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/PostListServlet.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/ProductListPublic/DAO/ProductDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/CategoryControl.java</file>
+            <file>file:/D:/SWP391/webdientu/web/PostList.jsp</file>
+            <file>file:/D:/SWP391/webdientu/web/ProductListPublic.jsp</file>
+        </group>
+>>>>>>> 7f3c2fc7b7c8fd2aeadda8cf684aa2cd8889da45
+>>>>>>> d39bb731d8724a78f2f9eb9fac84e68f6d95c029
     </open-files>
 </project-private>

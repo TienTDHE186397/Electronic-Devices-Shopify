@@ -49,6 +49,15 @@
                 padding: 0; /* Loại bỏ padding */
                 line-height: 40px; /* Căn giữa theo chiều dọc */
             }
+            
+            #startDate {
+                width: 500px; /* Đặt chiều rộng của input */
+                height: 40px; /* Đặt chiều cao của input */
+                box-sizing: border-box; /* Đảm bảo padding và border được bao gồm trong kích thước tổng */
+                text-align: center; /* Căn giữa theo chiều ngang */
+                padding: 0; /* Loại bỏ padding */
+                line-height: 40px; /* Căn giữa theo chiều dọc */
+            }
 
             /* Giữ văn bản placeholder ở giữa */
             #centeredInput::placeholder {
@@ -88,7 +97,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ngày bắt đầu</label>
-                                    <input type = "date" class="form-control" id="centeredInput" name="sd"/>
+                                    <input type = "datetime-local" class="form-control" id="startDate" name="sd" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label>Địa chỉ</label>
@@ -126,5 +135,14 @@
 
 
     </center>
+                    <script>
+                        const now = new Date();
+
+    // Chuyển đổi thời gian hiện tại thành định dạng phù hợp cho datetime-local (YYYY-MM-DDTHH:mm)
+    const currentDateTime = now.toISOString().slice(0, 16);
+
+    // Gán thời gian hiện tại cho trường End date
+    document.getElementById('startDate').value = currentDateTime;
+                    </script>
 </body>
 </html>

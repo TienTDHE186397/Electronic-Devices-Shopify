@@ -4,7 +4,6 @@
  */
 package Controller;
 
-import Entity.Person;
 import DAO.DAOPerson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,14 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author nghie
  */
-@WebServlet(name = "editUserServlet", urlPatterns = {"/editUser"})
-public class editUserServlet extends HttpServlet {
+@WebServlet(name = "deletePerson", urlPatterns = {"/deletePerson"})
+public class deletePerson extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,11 +47,10 @@ public class editUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        DAOPerson dp = new DAOPerson();
-//        String id = request.getParameter("PersonID");
-//        Person p = dp.getPersonById(id);
-//        request.setAttribute("detail", p);
-//        request.getRequestDispatcher("UserDetail.jsp").forward(request, response);
+        DAOPerson ds = new DAOPerson();
+        String id = request.getParameter("PersonID");
+        ds.deletePerson(id);
+        response.sendRedirect("userList");
     }
 
     /**
@@ -67,28 +64,7 @@ public class editUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String id = request.getParameter("PersonID");
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String roleid = request.getParameter("roleID");
-        String pass = request.getParameter("password");
-//        out.println(id);
-//        out.println(name);
-//        out.println(gender);
-//        out.println(address);
-//        out.println(email);
-//        out.println(phone);
-//        out.println(roleid);
-//        out.println(pass);
-        DAOPerson dp = new DAOPerson();
-        dp.updateUser(name, gender, email, roleid, pass, id);
-        response.sendRedirect("userList");
-        
-       
+        processRequest(request, response);
     }
 
     /**

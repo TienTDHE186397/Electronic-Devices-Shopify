@@ -61,59 +61,79 @@ public class ProductList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 //==============================================================================
+        //Init Data Access Object Package
         ProductDAO pDao = new ProductDAO();
         CategoryDAO cDao = new CategoryDAO();
 //==============================================================================
+        //Get Value from URI webpage
         String queryString = request.getQueryString();
         String uri = request.getRequestURI();
-        request.setAttribute("uri", uri);
-        request.setAttribute("queryString", queryString);
+        
         String category = request.getParameter("category");
+        String quantity_product = request.getParameter("numberOfProducts");
+        String indexPage = request.getParameter("page");
+        String searchProduct = request.getParameter("search_product");
+        String sort = request.getParameter("sort");
+        //Default Value
         int cate=0;
+        int quantity = 4;
+        if (indexPage == null) {
+                indexPage = "1";
+            }
+        if(sort == null){
+            sort = "releaseDate DESC" ;
+        }
+
+        // Process data received from query
         if(category !=null){
             cate = Integer.parseInt(category);
         }
-        String quantity_product = request.getParameter("numberOfProducts");
-        int quantity = 4;
+       
+        
         if(quantity_product != null){
             quantity = Integer.parseInt(quantity_product);
         }
         
-        String indexPage = request.getParameter("page");
-        if (indexPage == null) {
-                indexPage = "1";
-            }
         int index = Integer.parseInt(indexPage);
-        
-        
-        String searchProduct = request.getParameter("");
+           
 //==============================================================================
 
-        
-
-//------------------------------------------------------------------------------
-
-        
+    // Get Hot product by Sale percent
     List<Product> listProductTop = pDao.getTop4Product();
     request.setAttribute("hot_product", listProductTop);
 
 //==============================================================================
+        // Get all category
     List<Categories> listCategory = cDao.getAllCategory();
-    request.setAttribute("listCategory", listCategory);
+    
 
 //==============================================================================
 
  /**********************************Paging******************************/
             
-            List<Product> listP = pDao.pagingProductByCategory(index, cate,quantity);
-            int count = pDao.getTotalProductByCatetory(cate);
+            List<Product> listP = pDao.pagingProductByCategory1(index, cate,quantity,sort,searchProduct);
+            
+            int count = pDao.getTotalProduct(cate, searchProduct);
             int endPage = count / quantity;
             if (count % quantity != 0) {
                 endPage += 1;
             }
-            request.setAttribute("list_P", listP);
-            request.setAttribute("endP", endPage);
+            
+ //==============================================================================
+        //Send data request to jsp page
+        /* Send uri and query to webpage when send request to servlet*/
+        request.setAttribute("uri", uri);
+        request.setAttribute("queryString", queryString);
+        
+        /* Send list catgory to webpage */
+        request.setAttribute("listCategory", listCategory);
+        
+        /* Send list product to webpage and total page*/
+        
+        request.setAttribute("list_P", listP);
+        request.setAttribute("endP", endPage);
 //==============================================================================
+        // Forward to JSP Page 
         request.getRequestDispatcher("ProductListPublic.jsp").forward(request, response);
     } 
 
