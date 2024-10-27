@@ -35,9 +35,7 @@ public class DAOPerson extends DBContext {
                         rs.getString("Gender"),
                         rs.getString("DateOfBirth"),
                         localDate, // This can now be null if startdate is null
-                        rs.getString("Address"),
                         rs.getString("Email"),
-                        rs.getString("Phone"),
                         rs.getInt("RoleID"),
                         rs.getString("Password")
                 );
@@ -74,12 +72,11 @@ public class DAOPerson extends DBContext {
                         rs.getString("Name"),
                         rs.getString("Gender"),
                         rs.getString("DateOfBirth"),
-                        localDate,
-                        rs.getString("Address"),
+                        localDate, // This can now be null if startdate is null
                         rs.getString("Email"),
-                        rs.getString("Phone"),
                         rs.getInt("RoleID"),
-                        rs.getString("Password"));
+                        rs.getString("Password")
+                );
                 list.add(p);
             }
         } catch (SQLException e) {
@@ -97,9 +94,7 @@ public class DAOPerson extends DBContext {
             stmt.setString(2, person.getGender());
             stmt.setString(3, person.getDateOfBirth());
             stmt.setObject(4, (LocalDate)person.getStartDate());
-            stmt.setString(5, person.getAddress());
             stmt.setString(6, person.getEmail());
-            stmt.setString(7, person.getPhone());
             stmt.setString(8, person.getPasword());
             stmt.setInt(9, person.getRoleID()); // Thêm vai trò vào câu lệnh SQL
             int rowsAffected = stmt.executeUpdate();

@@ -77,7 +77,7 @@
         <script>
             // Hàm chuyển hướng đến trang đăng nhập
             function redirectToLogin() {
-                window.location.href = "/WebDienTu/signup.jsp"; // Thay đổi URL này theo trang đăng nhập của bạn
+                window.location.href = "/WebDienTu/RegisterServlet"; // Thay đổi URL này theo trang đăng nhập của bạn
             }
         </script> 
     </body>

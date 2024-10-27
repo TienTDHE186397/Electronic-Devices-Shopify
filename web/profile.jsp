@@ -107,21 +107,13 @@
                     <td><input type="text" name="startDate" value="<%= loggedInPerson.getStartDate() %>" placeholder="Start Date"></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>Địa chỉ</td>
-                    <td><input type="text" name="address" value="<%= loggedInPerson.getAddress() %>" placeholder="Address"></td>
-                    <td></td>
-                </tr>
+               
                 <tr>
                     <td>Email</td>
                     <td><input type="text" name="email" value="<%= loggedInPerson.getEmail() %>" placeholder="Email"></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>Điện thoại</td>
-                    <td><input type="text" name="phone" value="<%= loggedInPerson.getPhone() %>" placeholder="Phone"></td>
-                    <td></td>
-                </tr>
+               
                 <tr>
                     <td>Vai trò</td>
                     <td><input type="text" name="role" value="<%= loggedInPerson.getRoleID() %>" placeholder="Role"></td>

@@ -23,7 +23,7 @@
 
         <div class="container" id="container">
             <div class="form-container sign-in" style=" max-height: 700px; overflow-y: scroll;padding-top: 30px">
-                <form style="height: fit-content" action="RegisterServlet" method="post">
+                <form style="height: fit-content" action="RegisterServlet" method="post" enctype="multipart/form-data">
                     <h1>Đăng Kí</h1>
                     <div class="social-icons">
                         <a href="https://accounts.google.com/o/oauth2/auth?scope=profile%20email&redirect_uri=http://localhost:9999/WebDienTu/SignupGoogle&response_type=code&client_id=630598609264-9sp60ioal96seml048sl3946slk6eohr.apps.googleusercontent.com&approval_prompt=force" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -38,10 +38,20 @@
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
                     </select>
+
                     <input name="date" type="date" id="user-date" class="form-control" placeholder="Ngày sinh" value="<%= request.getParameter("date") != null ? request.getParameter("date") : ""%>" required>
                     <input type="email" id="email" name="email" " value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" placeholder="email" >
                     <input name="phone" type="tel" id="user-phone" class="form-control" placeholder="Số điện thoại" value="<%= request.getParameter("phone") != null ? request.getParameter("phone") : ""%>" required>
                     <input type="address" id="address" name="address" " value="<%= request.getParameter("address") != null ? request.getParameter("address") : ""%>" placeholder="address" >
+                    <button type="button" class="btn btn-primary" onclick="addVideo()">Thêm Video</button>
+
+                    <button type="button" class="btn btn-primary" onclick="addImage()">Thêm Ảnh</button>
+                    <div id="attributeContainer" style="margin-top: 20px;"></div>
+                    <div id="attributeContainer" style="margin-top: 20px;"></div>
+
+
+
+
                     <%
                         String error = (String) request.getAttribute("error");
                     %>
@@ -66,6 +76,58 @@
             // Hàm chuyển hướng đến trang đăng nhập
             function redirectToLogin() {
                 window.location.href = "/WebDienTu/login"; // Thay đổi URL này theo trang đăng nhập của bạn
+            }
+            let attributeCount = 0; // Khởi tạo attributeCount bên ngoài hàm
+            function confirmDelete() {
+                console.log('Confirm delete called');
+                return confirm('Are you sure you want to delete this attribute?');
+            }
+
+            function addVideo() {
+                const attributeContainer = document.getElementById('attributeContainer');
+                const newRow = document.createElement('div');
+                newRow.classList.add('form-row', 'mb-2');
+                newRow.innerHTML = `
+    <div class="form-group col-md-5">
+        <input type="text" placeholder="Nhập Tên Video" style="font-weight: bold;" name="vidImgName" class="form-control" required>
+    </div>
+    <div class="form-group col-md-5">
+        <input name="vidImgValue" type="file" accept="video/*, image/*" class="form-control" required>
+    </div>
+    <div class="form-group col-md-2">
+        <button type="button" class="btn btn-danger delete-button">Xóa</button>
+    </div>
+`;
+                attributeContainer.appendChild(newRow);
+                attributeCount++;
+
+                // Gán sự kiện xóa cho nút "Xóa" mới tạo
+                newRow.querySelector('.delete-button').addEventListener('click', function () {
+                    newRow.remove();
+                });
+            }
+            function addImage() {
+                const attributeContainer = document.getElementById('attributeContainer');
+                const newRow = document.createElement('div');
+                newRow.classList.add('form-row', 'mb-2');
+                newRow.innerHTML = `
+    <div class="form-group col-md-5">
+        <input type="text" placeholder="Nhập Tên Ảnh " style="font-weight: bold;" name="vidImageName" class="form-control" required>
+    </div>
+    <div class="form-group col-md-5">
+        <input name="vidImageValue" type="file" accept="video/*, image/*" class="form-control" required>
+    </div>
+    <div class="form-group col-md-2">
+        <button type="button" class="btn btn-danger delete-button">Xóa</button>
+    </div>
+`;
+                attributeContainer.appendChild(newRow);
+                attributeCount++;
+
+                // Gán sự kiện xóa cho nút "Xóa" mới tạo
+                newRow.querySelector('.delete-button').addEventListener('click', function () {
+                    newRow.remove();
+                });
             }
         </script> 
     </body>
