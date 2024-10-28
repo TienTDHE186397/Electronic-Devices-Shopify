@@ -238,5 +238,47 @@ public class SliderListDAO extends DBContext {
         return list;
 
     }
+    
+    public List<Slider> getAllSliderPublished() {
+
+        List<Slider> list = new ArrayList<>();
+
+        String sql = "Select * From Slider where SliderStatus = 'Published'";
+
+        try {
+
+            PreparedStatement st = connection.prepareCall(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+
+                Slider slider = new Slider(rs.getInt("SliderID"), rs.getString("SliderTittle"),
+                        rs.getString("SliderImage"), rs.getString("SliderVideo"),
+                        rs.getString("SliderBacklink"),
+                        rs.getString("SliderDate"),
+                        rs.getString("SliderStatus"),
+                        rs.getString("SliderNote"), person);
+
+                list.add(slider);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+    }
+    
+    public static void main(String[] args) {
+        SliderListDAO slDao = new SliderListDAO();
+        
+        List<Slider> list= slDao.getAllSliderPublished();
+        for(Slider sl : list){
+            System.out.println(sl);
+        }
+    }
 
 }

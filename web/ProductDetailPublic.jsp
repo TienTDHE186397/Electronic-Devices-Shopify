@@ -9,11 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Chi Tiết</title>
+        <title>${product.getProductName()}</title>
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link href="css/bootstrap.min.css" rel="stylesheet" >
         <link href="css/font-awesome.min.css" rel="stylesheet" >
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="js/bootstrap.bundle.min.js"></script>
         <link href="css/global.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
@@ -23,6 +23,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         
         <style>
+            
+            *{
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body{
+                
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }    
         .brand-name {
                 font-size: 4rem; /* Kích thước chữ lớn hơn */
                 font-weight: bold;
@@ -54,7 +67,52 @@
                     background-position: 0% 50%;
                 }
             }
-
+            
+            .p-title{
+                font-size: 22px;
+                border-bottom: 1px solid gray;
+            }
+            
+            .product-name{
+                margin: 10px 30px 10px 10px;
+                
+                border-radius: 15px;
+                padding: 20px;
+                
+            }
+            
+            
+            .p-infor{
+                display: flex;
+                font-style: italic;
+            }
+            
+            .p-body{
+                width: 100%;
+                background-color: #F7F7F7;
+                height: 100vh;
+                border: 1px black solid;
+                
+            }
+            
+            .p-body-infor{    
+                
+                height: 200px;
+                background-color: #F7F7F7;
+                border-radius: 10px;
+                margin-right: 10px;
+            }
+            
+            .product-sider{
+                
+                height: 200px;
+                background-color: #F7F7F7;
+                border-radius: 10px;    
+            }
+            
+            .product-title-note{
+                margin: 0px 10px;
+            }
         </style>
     </head>
     <body>
@@ -70,7 +128,19 @@
         </section>
         
         
+        <div class="product-name">
+            <div class="p-title">${product.getProductName()}</div>
+            <div class="p-infor">
+                <div class="product-title-note">Phân loại: <a href="product-list?category=${product.getCategory().getCategoryID()}">${product.getCategory().getCategoryName()}</a></div>
+                <div class="product-title-note">Thương hiệu: ${product.getBrand()}</div>
+                <div class="product-title-note">Ngày cập nhật: ${product.getReleaseDate()}</div>
+                <div class="product-title-note">${product.getViews()} lượt xem</div>
+            </div>
+        </div>
         
+        <div class="p-body container-fluid">
+           
+        </div>
         
         <!-- Footer start -->
         <%@include file="footer.jsp" %>

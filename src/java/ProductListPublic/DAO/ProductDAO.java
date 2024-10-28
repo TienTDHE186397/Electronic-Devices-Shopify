@@ -301,8 +301,6 @@ CategoryDAO cDAO = new CategoryDAO();
 //                System.out.println(p);
 //            }
         
-         String tmp ="i";
-        System.out.println(pDAO.getTotalProduct(0, tmp));
         
     }
 }

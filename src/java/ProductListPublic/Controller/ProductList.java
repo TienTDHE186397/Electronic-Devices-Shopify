@@ -110,15 +110,15 @@ public class ProductList extends HttpServlet {
 //==============================================================================
 
  /**********************************Paging******************************/
-            
-            List<Product> listP = pDao.pagingProductByCategory1(index, cate,quantity,sort,searchProduct);
-            
-            int count = pDao.getTotalProduct(cate, searchProduct);
-            int endPage = count / quantity;
-            if (count % quantity != 0) {
-                endPage += 1;
-            }
-            
+
+    List<Product> listP = pDao.pagingProductByCategory1(index, cate,quantity,sort,searchProduct);
+
+    int count = pDao.getTotalProduct(cate, searchProduct);
+    int endPage = count / quantity;
+    if (count % quantity != 0) {
+        endPage += 1;
+    }
+
  //==============================================================================
         //Send data request to jsp page
         /* Send uri and query to webpage when send request to servlet*/

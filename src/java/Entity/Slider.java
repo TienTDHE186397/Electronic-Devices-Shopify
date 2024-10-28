@@ -109,6 +109,11 @@ public class Slider {
     public void setPerson(Person person) {
         this.person = person;
     }
-    
 
+    @Override
+    public String toString() {
+        return "Slider{" + "slider_id=" + slider_id + ", slider_tittle=" + slider_tittle + ", slider_image=" + slider_image + ", slider_video=" + slider_video + ", slider_backlink=" + slider_backlink + ", slider_date=" + slider_date + ", slider_status=" + slider_status + ", slider_note=" + slider_note + ", person=" + person + '}';
+    }
+    
+    
 }

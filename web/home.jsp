@@ -4,6 +4,8 @@
    Author     : Admin
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Entity.Slider" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -22,7 +24,7 @@
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
         <style>
             body {
-                font-family: Roboto;
+                
                 background: #e2f2fd;
             }
             /* CSS */
@@ -57,18 +59,7 @@
                 color: white;
             }
 
-            /*            .custom-button {
-                            background-color: #f7c33e;
-                            color: #fff;
-                            font-size: 12px;
-                            padding: 10px 45px;
-                            border: 1px solid transparent;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            letter-spacing: 0.5px;
-                            text-transform: uppercase;
-            
-                        }*/
+           
 
             #subs {
                 background-color: #f7f7f7; /* Màu nền nhẹ */
@@ -128,6 +119,7 @@
                 width: 230px;
                 height: 450px;
                 align-items: center;
+               
             }
 
             .card.position-relative{
@@ -203,12 +195,17 @@
             }
             .slider-description {
                 font-size: 1.2rem;
-                color: #fff;
+                color: #fff; 
                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             }
             /* CSS Slider Product List */
             .product-list{
                 margin: 20px;
+            }
+            
+            .buy-option{
+                display: flex;
+                justify-content: space-between;
             }
         </style>
 
@@ -219,43 +216,37 @@
         <!-- Header end -->
         <!---------------------------- Phần banner lớn start-------------------------------->
         <section id="center" class="center_home center-custom">
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2" class="" aria-current="true"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
+            <%
+                List<Slider> sliders = (List<Slider>) request.getAttribute("listSlider");
+                String carouselId = "carousel" + System.currentTimeMillis();
+            %>
+
+            <div id="<%= carouselId %>" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/thang-oppo-muon-van-uu-dai-home.jpg" class="d-block w-100" alt="...">
+                    <%
+                        for (int i = 0; i < sliders.size(); i++) {
+                            Slider slider = sliders.get(i);
+                    %>
+                    <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
+                        <img class="d-block w-100" src="<%= slider.getSlider_image() %>" alt="<%= slider.getSlider_tittle() %>">
                         <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slider-title">Ưu đãi tháng Oppo</h5>
-                            <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
+                            <h5><%= slider.getSlider_tittle() %></h5>
+                            <p><%= slider.getSlider_note() %></p>
+                            <a href="<%= slider.getSlider_backlink() %>" class="btn btn-primary">Learn More</a>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sliding-home-iphone-16-pro-km-moi.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slider-title">Ưu đãi tháng Iphone 16</h5>
-                            <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-ai-banner-chung-slide.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="slider-title">Ưu đãi tháng Laptop</h5>
-                            <a href="https://www.example.com" class="btn btn-primary">Xem ngay</a>
-                        </div>
-                    </div>
+                    <% } %>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+
+                <!-- Điều khiển trái/phải -->
+                <a class="carousel-control-prev" href="#<%= carouselId %>" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#<%= carouselId %>" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </section>
         <!-- banner end -->
@@ -274,9 +265,9 @@
 
                 <div class="col-md-6 row product-type-select">
                     <c:forEach items="${brand_phone_and_tablet}" var="brand">
-                        <a href="./category?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
+                        <a href="./home?cateid=1&brand=${brand}" class="col-auto mobile">${brand}</a>
                     </c:forEach>
-                    <a href="./category?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./home?cateid=1&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -297,8 +288,22 @@
                                             </div>   
                                             <div class="card-body">
                                                 <h6 class="card-title">${list1.getProductName()}</h6>
-                                                <p class="price">${list1.getPrice()} <span class="original-price">${list1.getPrice() * (1 - list1.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                <div class="price">Giá ưu đãi: ${list1.getPrice() * (1 - list1.getSale() / 100)}đ</div>
+                                                <div class="original-price">Giá gốc: ${list1.getPrice()}đ</div>
+                                                <div style="color: #000;">Số lượng còn: <b>${list1.getQuantity()}</b></div>
+                                                <div style="color: #000;">Thương hiệu: <b>${list1.getBrand()}</b></div>                                 
+                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                <div class="buy-option">                                                  
+                                                    <c:choose>
+                                                        <c:when test="${empty sessionScope.user}">
+                                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -308,15 +313,7 @@
                             </c:if>
                         </c:forEach>
                     </div>
-                </div>
-                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>-->
+                </div>         
             </div>
         </section> 
 
@@ -328,9 +325,9 @@
 
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_laptop}" var="brand_laptop">
-                        <a href="./category?cateid=2&brand=${brand_laptop}" class="col-auto mobile">${brand_laptop}</a>
+                        <a href="./home?cateid=2&brand=${brand_laptop}" class="col-auto mobile">${brand_laptop}</a>
                     </c:forEach>
-                    <a href="./category?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./home?cateid=2&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
 
             </div>
@@ -351,8 +348,22 @@
                                             </div>   
                                             <div class="card-body">
                                                 <h6 class="card-title">${list2.getProductName()}</h6>
-                                                <p class="price">${list2.getPrice()} <span class="original-price">${list2.getPrice() * (1 - list2.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                <div class="price">Giá ưu đãi: ${list2.getPrice() * (1 - list2.getSale() / 100)}đ</div>
+                                                <div class="original-price">Giá gốc: ${list2.getPrice()}đ</div>                            
+                                                <div style="color: #000;">Số lượng còn: <b>${list2.getQuantity()}</b></div>
+                                                <div style="color: #000;">Thương hiệu: <b>${list2.getBrand()}</b></div> 
+                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                <div class="buy-option">        
+                                                    <c:choose>
+                                                        <c:when test="${empty sessionScope.user}">
+                                                            <a href="cart?ProductID=${list2.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="cart?ProductID=${list2.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -374,9 +385,9 @@
                 <h2 class="col product-type-title">PC</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_pc}" var="brand_pc">
-                        <a href="./category?cateid=3&brand=${brand_pc}" class="col-auto mobile">${brand_pc}</a>
+                        <a href="./home?cateid=3&brand=${brand_pc}" class="col-auto mobile">${brand_pc}</a>
                     </c:forEach>
-                    <a href="./category?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./home?cateid=3&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -395,9 +406,24 @@
                                                 <img src="${list3.getImg()}" class="card-img-top" alt="none">
                                             </div>   
                                             <div class="card-body">
-                                                <h6 class="card-title">${list3.getProductName()}</h6>
-                                                <p class="price">${list3.getPrice()} <span class="original-price">${list3.getPrice() * (1 - list3.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                <h6 class="card-title" style="overflow: hidden">${list3.getProductName()}</h6>
+                                               <div class="price">Giá ưu đãi: ${list3.getPrice() * (1 - list3.getSale() / 100)}đ</div>
+                                                <div class="original-price">Giá gốc: ${list3.getPrice()}đ</div>                              
+                                                <div style="color: #000;">Số lượng còn: <b>${list3.getQuantity()}</b></div>
+                                                <div style="color: #000;">Thương hiệu: <b>${list3.getBrand()}</b></div> 
+                                                
+                                                <div class="buy-option">
+                                                   
+                                                    <c:choose>
+                                                        <c:when test="${empty sessionScope.user}">
+                                                            <a href="cart?ProductID=${list3.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="cart?ProductID=${list3.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -407,15 +433,7 @@
                             </c:if>
                         </c:forEach>
                     </div>
-                </div>
-                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>-->
+                </div>      
             </div>
         </section>
 
@@ -426,9 +444,9 @@
                 <h2 class="col product-type-title">Màn Hình</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_monitor}" var="brand_monitor">
-                        <a href="./category?cateid=4&brand=${brand_monitor}" class="col-auto mobile">${brand_monitor}</a>
+                        <a href="./home?cateid=4&brand=${brand_monitor}" class="col-auto mobile">${brand_monitor}</a>
                     </c:forEach>
-                    <a href="./category?cateid=4&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./home?cateid=4&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -449,7 +467,19 @@
                                             <div class="card-body">
                                                 <h6 class="card-title">${list4.getProductName()}</h6>
                                                 <p class="price">${list4.getPrice()} <span class="original-price">${list4.getPrice() * (1 - list4.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                <div class="buy-option">
+                                                    
+                                                    <c:choose>
+                                                        <c:when test="${empty sessionScope.user}">
+                                                            <a href="cart?ProductID=${list4.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="cart?ProductID=${list4.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -459,15 +489,7 @@
                             </c:if>
                         </c:forEach>
                     </div>
-                </div>
-                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>-->
+                </div>      
             </div>
         </section>
         <!-------------------------------- comment --------------------------------->       
@@ -476,9 +498,9 @@
                 <h2 class="col product-type-title">Tai nghe</h2>              
                 <div class="col-md-10 row product-type-select">
                     <c:forEach items="${brand_headphone}" var="brand_headphone">
-                        <a href="./category?cateid=5&brand=${brand_headphone}" class="col-auto mobile">${brand_headphone}</a>
+                        <a href="./home?cateid=5&brand=${brand_headphone}" class="col-auto mobile">${brand_headphone}</a>
                     </c:forEach>
-                    <a href="./category?cateid=5&brand=all" class="col-auto mobile">Xem tất cả</a>
+                    <a href="./home?cateid=5&brand=all" class="col-auto mobile">Xem tất cả</a>
                 </div>
             </div>
 
@@ -499,7 +521,19 @@
                                             <div class="card-body">
                                                 <h6 class="card-title">${list5.getProductName()}</h6>
                                                 <p class="price">${list5.getPrice()} <span class="original-price">${list5.getPrice() * (1 - list5.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>         
+                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                <div class="buy-option">
+                                                    
+                                                    <c:choose>
+                                                        <c:when test="${empty sessionScope.user}">
+                                                            <a href="cart?ProductID=${list5.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="cart?ProductID=${list5.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -510,22 +544,17 @@
                         </c:forEach>
                     </div>
                 </div>
-                <df-messenger
+                
+                
+            </div>
+        </section>
+        
+        <df-messenger
                     intent="WELCOME"
                     chat-title="Test_AI_@1543"
                     agent-id="5b284bab-6b4e-465e-bf1b-a4722ed1f4cb"
                     language-code="vi"
                     ></df-messenger>
-                <!--                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>-->
-            </div>
-        </section>
         <!-- Footer start -->
         <%@include file="footer.jsp" %>
         <!-- Footer end -->

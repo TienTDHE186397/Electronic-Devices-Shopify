@@ -16,6 +16,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" >
     <link href="css/global.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
     <script src="js/bootstrap.bundle.min.js"></script>
     <!-- Intro settings -->
@@ -27,8 +28,8 @@
         }
 
         body{
-            min-height: 100%;
-
+            
+            font-family: sans-serif;
         }
 
         nav{
@@ -154,14 +155,14 @@
                         <li class="list">
                             <a href="./PostListHome" class="nav-link">
                                 <i class='bx bx-news icon'></i>
-                                <span class="link">Bài Đăng</span>
+                                <span class="link">Bài đăng</span>
                             </a>
                         </li>
 
                         <li class="list">
                             <a href="./product-list" class="nav-link">
                                 <i class='bx bx-box icon'></i>
-                                <span class="link">Sản phẩm</span>
+                                <span class="link">Danh sách sản phẩm</span>
                             </a>
                         </li>
                     </ul>
