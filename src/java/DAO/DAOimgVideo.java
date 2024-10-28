@@ -61,6 +61,21 @@ public class DAOimgVideo extends DBContext {
             return false; // Xử lý ngoại lệ
         }
     }
+    public boolean addImgViPerson(int personId, String img_video_url, String alt_text) {
+       
+        String sql = "INSERT INTO [PersonImages] (PersonID, [image_url],[alt_text])\n"
+                + " VALUES (?,?,?);";
+        
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, personId);
+            st.setString(2, img_video_url);
+            st.setString(3, alt_text);
+            return st.executeUpdate() > 0;// Trả về true nếu việc chèn thành công
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Xử lý ngoại lệ
+        }
+    }
 
     public static void main(String[] args) {
         DAOimgVideo d = new DAOimgVideo();

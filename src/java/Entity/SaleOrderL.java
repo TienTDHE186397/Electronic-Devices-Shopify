@@ -25,10 +25,12 @@ public class SaleOrderL {
     private String address;
     private String saleNotes;
     private String saleID;
+    private String shipstatus;
+    
 
     public SaleOrderL() {
     }
-      public SaleOrderL(String orderID, String cusName, String Email, String mobile, Date orderDate, int total, String saleName, String status, String gender, String address, String saleNotes) {
+      public SaleOrderL(String orderID, String cusName, String Email, String mobile, Date orderDate, int total, String saleName, String status, String gender, String address, String shipstatus , String saleNotes) {
         this.orderID = orderID;
         this.cusName = cusName;
         this.Email = Email;
@@ -39,6 +41,7 @@ public class SaleOrderL {
         this.status = status;
         this.gender = gender;
         this.address = address;
+        this.shipstatus = shipstatus;
         this.saleNotes = saleNotes;
        
       }
@@ -53,11 +56,12 @@ public class SaleOrderL {
         this.saleName = saleName;
         this.status = status;
     }
-    public SaleOrderL(String orderID, String saleNotes, String saleID, String status){
+    public SaleOrderL(String orderID, String saleNotes, String saleID, String status, String shipstatus){
         this.status = status;
         this.saleNotes = saleNotes;
         this.saleID = saleID;
         this.orderID = orderID;
+        this.shipstatus = shipstatus;
         
     }
 
@@ -179,6 +183,19 @@ public class SaleOrderL {
 
     public void setSaleID(String saleID) {
         this.saleID = saleID;
+    }
+
+    public String getShipstatus() {
+        return shipstatus;
+    }
+
+    public void setShipstatus(String shipstatus) {
+        this.shipstatus = shipstatus;
+    }
+
+    @Override
+    public String toString() {
+        return "SaleOrderL{" + "orderID=" + orderID + ", orderDate=" + orderDate + ", cusName=" + cusName + ", mobile=" + mobile + ", Email=" + Email + ", showRoomName=" + showRoomName + ", total=" + total + ", method=" + method + ", saleName=" + saleName + ", status=" + status + ", gender=" + gender + ", address=" + address + ", saleNotes=" + saleNotes + ", saleID=" + saleID + ", shipstatus=" + shipstatus + '}';
     }
     
 

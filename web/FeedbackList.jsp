@@ -51,13 +51,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="ProductMKT">
                         <i class='bx bxs-shopping-bag-alt' ></i>
                         <span class="text">Products</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="SliderListMKT">
                         <i class='bx bxs-doughnut-chart' ></i>
                         <span class="text">Slider</span>
                     </a>
@@ -69,16 +69,22 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="PostListMKT">
                         <i class='bx bxs-group' ></i>
                         <span class="text">Post</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="customerList">
+                        <i class='bx bxs-group' ></i>
+                        <span class="text">Customer List</span>
                     </a>
                 </li>
             </ul>
             <ul class="side-menu">
                 </li>
                 <li>
-                    <a href="#" class="logout">
+                    <a href="./LogoutServlet" class="logout">
                         <i class='bx bxs-log-out-circle' ></i>
                         <span class="text">Logout</span>
                     </a>
