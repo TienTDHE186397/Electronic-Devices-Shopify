@@ -205,7 +205,7 @@
             
             .buy-option{
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
             }
         </style>
 
@@ -283,9 +283,11 @@
                                     <li class="container-product-item col-md-3">
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list1.getSale()}%</span>
+                                            <a href="product-detail?ProductID=${list1.getProductID()}">
                                             <div class="product-image">
                                                 <img src="${list1.getImg()}" class="card-img-top" alt="none">
-                                            </div>   
+                                            </div>
+                                            </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list1.getProductName()}</h6>
                                                 <div class="price">Giá ưu đãi: ${list1.getPrice() * (1 - list1.getSale() / 100)}đ</div>
@@ -297,7 +299,7 @@
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                            
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -343,9 +345,11 @@
                                     <li class="container-product-item col-md-3">
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list2.getSale()}%</span>
+                                            <a href="product-detail?ProductID=${list2.getProductID()}">
                                             <div class="product-image">
                                                 <img src="${list2.getImg()}" class="card-img-top" alt="none">
-                                            </div>   
+                                            </div>
+                                            </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list2.getProductName()}</h6>
                                                 <div class="price">Giá ưu đãi: ${list2.getPrice() * (1 - list2.getSale() / 100)}đ</div>
@@ -357,7 +361,7 @@
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="cart?ProductID=${list2.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                           
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list2.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -402,9 +406,11 @@
                                     <li class="container-product-item col-md-3">
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list3.getSale()}%</span>
+                                            <a href="product-detail?ProductID=${list3.getProductID()}">
                                             <div class="product-image">
                                                 <img src="${list3.getImg()}" class="card-img-top" alt="none">
-                                            </div>   
+                                            </div>
+                                            </a>
                                             <div class="card-body">
                                                 <h6 class="card-title" style="overflow: hidden">${list3.getProductName()}</h6>
                                                <div class="price">Giá ưu đãi: ${list3.getPrice() * (1 - list3.getSale() / 100)}đ</div>
@@ -417,7 +423,7 @@
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="cart?ProductID=${list3.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                            
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list3.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -461,19 +467,24 @@
                                     <li class="container-product-item col-md-3">
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list4.getSale()}%</span>
+                                            <a href="product-detail?ProductID=${list4.getProductID()}">
                                             <div class="product-image">
                                                 <img src="${list4.getImg()}" class="card-img-top" alt="none">
-                                            </div>   
+                                            </div>
+                                            </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list4.getProductName()}</h6>
-                                                <p class="price">${list4.getPrice()} <span class="original-price">${list4.getPrice() * (1 - list4.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                <div class="price">Giá ưu đãi: ${list4.getPrice() * (1 - list4.getSale() / 100)}đ</div>
+                                                <div class="original-price">Giá gốc: ${list4.getPrice()}đ</div>                              
+                                                <div style="color: #000;">Số lượng còn: <b>${list4.getQuantity()}</b></div>
+                                                <div style="color: #000;">Thương hiệu: <b>${list4.getBrand()}</b></div>                             
+                                                <div style="font-style: italic">Trả góp <b>0%</b> qua thẻ tín dụng kỳ hạn <b>3-6 tháng</b></div>
                                                 <div class="buy-option">
                                                     
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="cart?ProductID=${list4.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                            
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list4.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -493,7 +504,7 @@
             </div>
         </section>
         <!-------------------------------- comment --------------------------------->       
-        <section class="product-list container">
+        <section class="product-list container" id="headphone">
             <div class="row">
                 <h2 class="col product-type-title">Tai nghe</h2>              
                 <div class="col-md-10 row product-type-select">
@@ -515,19 +526,24 @@
                                     <li class="container-product-item col-md-3">
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list5.getSale()}%</span>
+                                            <a href="product-detail?ProductID=${list5.getProductID()}">
                                             <div class="product-image">
                                                 <img src="${list5.getImg()}" class="card-img-top" alt="none">
-                                            </div>   
+                                            </div>
+                                            </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list5.getProductName()}</h6>
-                                                <p class="price">${list5.getPrice()} <span class="original-price">${list5.getPrice() * (1 - list5.getSale() / 100)}đ</span></p>                            
-                                                <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
+                                                <div class="price">Giá ưu đãi: ${list5.getPrice() * (1 - list5.getSale() / 100)}đ</div>
+                                                <div class="original-price">Giá gốc: ${list5.getPrice()}đ</div>                              
+                                                <div style="color: #000;">Số lượng còn: <b>${list5.getQuantity()}</b></div>
+                                                <div style="color: #000;">Thương hiệu: <b>${list5.getBrand()}</b></div>                             
+                                                <div style="font-style: italic">Trả góp <b>0%</b> qua thẻ tín dụng kỳ hạn <b>3-6 tháng</b></div>
                                                 <div class="buy-option">
                                                     
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="cart?ProductID=${list5.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                                            
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list5.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>

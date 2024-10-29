@@ -295,9 +295,11 @@
                     <c:forEach items="${hot_product}" var="hotproduct">
                         <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
                             <span class="discount-badge">Giảm ${hotproduct.getSale()}%</span>
+                            <a href="product-detail?ProductID=${hotproduct.getProductID()}">
                             <div class="p-image">
-                                <img src="${hotproduct.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                            </div>    
+                                <img src="${hotproduct.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;object-fit: contain">
+                            </div>
+                            </a>
                             <div class="card-body" style="padding: 10px;">
                                 <div class="card-title" style="font-size: 12px; margin-bottom: 5px; ">${hotproduct.getProductName()}</div>
                                 <div style="color: #F95A74">Thương hiệu: ${hotproduct.getBrand()}</div>
@@ -308,7 +310,7 @@
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
                                             <a href="#" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to Cart</a>
-                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                            <a href="javascript:history.back()" class=""></a>
                                         </c:when>
                                         <c:otherwise>
                                             <a href="cart?ProductID=${hotproduct.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
@@ -376,9 +378,11 @@
                         <c:forEach items="${list_P}" var="list1">
                             <div class="card">
                                 <span class="discount-badge">Giảm ${list1.getSale()}%</span>
+                                <a href="product-detail?ProductID=${list1.getProductID()}">
                                 <div class="p-image">
                                     <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
-                                </div>    
+                                </div>
+                                </a>
                                 <div class="card-body">
                                     <h5 class="card-title">${list1.getProductName()}</h5>
                                     <div style="color: #000;">Thương hiệu: <b>${list1.getBrand()}</b></div>
@@ -386,14 +390,14 @@
                                     <div style="font-style: italic">Trả góp 0% qua thẻ tín dụng</div>
                                     <p class="price">Giá ưu đãi: ${list1.getPrice() * (1 - list1.getSale() / 100)}đ  <span class="original-price">${list1.getPrice()}đ</span></p>
                                     <div class="buy-option">
-                                    <a href="#" class="btn btn-primary" style="font-size: 12px"><i class="fa fa-commenting-o" aria-hidden="true"></i>  Feedback</a>
+                                    <a href="#" class="btn btn-primary" style="font-size: 12px"><i class="fa fa-commenting-o" aria-hidden="true"></i>  Mua ngay</a>
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
-                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
-                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 11px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                            <a href="javascript:history.back()" class=""></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+                                            <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 11px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                         </c:otherwise>
                                     </c:choose>
                                     </div>        

@@ -7,12 +7,15 @@ package Controller;
 
 import DAO.ProductDAO;
 import Entity.Product;
+import Entity.ProductAttribute;
+import Entity.ProductImage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -60,9 +63,13 @@ public class ProductDetailServlet extends HttpServlet {
         
         int productid = Integer.parseInt(request.getParameter("ProductID"));
         Product p = pDao.getProductsById(productid);
+        List<ProductImage> listImage = pDao.getAllProductImageById(productid);
+        List<ProductAttribute> listAttribute = pDao.getAllProductAttributeById(productid);
         
-        request.setAttribute("product", p);
-        
+        //Set attribute for object to send data request to JSP Page
+        request.setAttribute("productDetail", p);
+        request.setAttribute("listImage", listImage);
+        request.setAttribute("listAttribute", listAttribute);
         // Forward to JSP Page 
         request.getRequestDispatcher("ProductDetailPublic.jsp").forward(request, response);
     } 

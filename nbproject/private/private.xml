@@ -2,15 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/Product.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/DBContext.java</file>
             <file>file:/D:/SWP391/webdientu/web/ProductDetailPublic.jsp</file>
             <file>file:/D:/SWP391/webdientu/src/java/Controller/ProductDetailServlet.java</file>
-            <file>file:/D:/SWP391/webdientu/web/footer.jsp</file>
-            <file>file:/D:/SWP391/webdientu/web/header.jsp</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/ProductDAO.java</file>
         </group>
->>>>>>> 7f3c2fc7b7c8fd2aeadda8cf684aa2cd8889da45
     </open-files>
 </project-private>

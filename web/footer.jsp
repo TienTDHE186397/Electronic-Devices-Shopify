@@ -43,7 +43,7 @@
                 <div class="row footer_1">
                     <div class="col-md-4">
                         <div class="footer_1i">
-                            <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="index.html"><img src="#" alt="" class="logo-img"> Shopify</a></h3><br/>
+                            <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="home"><img src="img/Icon.png" alt="" class="logo-img" style="width: 100px;height: 100px;"> Shopify</a></h3><br/>
                             <p class="fs-6 mb-4">KẾT NỐI VỚI CHÚNG TÔI TRÊN MẠNG XÃ HỘI</p>
                             <ul class="social-network social-circle mb-0 mt-3">
                                 <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-skype"></i></a></li>
