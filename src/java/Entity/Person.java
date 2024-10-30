@@ -33,9 +33,7 @@ public class Person {
         this.Gender = Gender;
         this.DateOfBirth = DateOfBirth;
         this.StartDate = StartDate;
-
         this.Email = Email;
-
         this.roleID = RoleID;
         this.Pasword = Password;
     }
@@ -43,9 +41,7 @@ public class Person {
     public Person(String Name, String Gender, String Email, LocalDate startDate, String Password, int RoleID, String password) {
         this.Name = Name;
         this.Gender = Gender;
-
         this.Email = Email;
-
         this.roleID = RoleID;
         this.Pasword = Password;
     }

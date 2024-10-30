@@ -163,9 +163,7 @@ public class DAOPerson extends DBContext {
                         rs.getString("Gender"),
                         rs.getString("DateOfBirth"),
                         localDate,
-                        rs.getString("Address"),
                         rs.getString("Email"),
-                        rs.getString("Phone"),
                         rs.getInt("RoleID"),
                         rs.getString("Password"));
                 return p;
