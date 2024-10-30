@@ -4,6 +4,8 @@
  */
 package Entity;
 
+import java.util.List;
+
 /**
  *
  * @author admin
@@ -11,18 +13,21 @@ package Entity;
 public class Cart {
 
     private int cartID;
-    private int personID;
-    private double totalPrice;
+    private Person person;
+    private List<CartItem> items;
+    private int status;
 
     // Constructors, getters and setters
+
     public Cart() {
+        this.status = 0;
     }
 
-    public Cart(int cartID, int personID, double totalPrice) {
+    public Cart(int cartID, Person person, List<CartItem> items, int status) {
         this.cartID = cartID;
-        this.personID = personID;
-       
-        this.totalPrice = totalPrice;
+        this.person = person;
+        this.items = items;
+        this.status = status;
     }
 
     public int getCartID() {
@@ -33,23 +38,31 @@ public class Cart {
         this.cartID = cartID;
     }
 
-    public int getPersonID() {
-        return personID;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonID(int personID) {
-        this.personID = personID;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-  
-
-    public double getTotalPrice() {
-        return totalPrice;
+    public List<CartItem> getItems() {
+        return items;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setItems(List<CartItem> items) {
+        this.items = items;
     }
+    
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
 
    
 }

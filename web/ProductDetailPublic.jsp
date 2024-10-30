@@ -267,17 +267,17 @@
                             </tr>
                             <tr>
                                 <td style="font-size: 20px"><b>Giá khuyến mại: </b></td>
-                                <td style="font-size: 20px; color: red">${productDetail.getPrice() * (1 - productDetail.getSale() / 100)}đ</td>
+                                <td style="font-size: 20px; color: red"><b>${productDetail.getPrice() * (1 - productDetail.getSale() / 100)}đ</b></td>
                             </tr>
                         </tbody>
                     </table>
                     <div style="color: grey; font-size: 20px; font-style: italic">Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</div> 
                 </div>
                 <div>            
-                 <a href="cart?ProductID=${productDetail.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;width: 70%;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Đặt mua ngay</a>           
+                 
                 <c:choose>
                     <c:when test="${empty sessionScope.user}">
-                        <a href="cart?ProductID=${productDetail.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
+                        <a href="cart?ProductID=${productDetail.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;width: 75%;height: 100px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
                         <a href="javascript:history.back()" class=""></a>
                     </c:when>
                     <c:otherwise>

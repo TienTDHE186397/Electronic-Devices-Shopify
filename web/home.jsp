@@ -65,6 +65,7 @@
                 background-color: #f7f7f7; /* Màu nền nhẹ */
                 padding-top: 5rem;
                 padding-bottom: 5rem;
+                
             }
 
             .brand-name {
@@ -298,7 +299,7 @@
                                                 <div class="buy-option">                                                  
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
-                                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                                             
                                                         </c:when>
                                                         <c:otherwise>
@@ -360,7 +361,7 @@
                                                 <div class="buy-option">        
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
-                                                            <a href="cart?ProductID=${list2.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                                            
                                                         </c:when>
                                                         <c:otherwise>
@@ -422,8 +423,7 @@
                                                    
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
-                                                            <a href="cart?ProductID=${list3.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            
+                                                            <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>                                                         
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list3.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -483,7 +483,7 @@
                                                     
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
-                                                            <a href="cart?ProductID=${list4.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                                             
                                                         </c:when>
                                                         <c:otherwise>
@@ -542,7 +542,7 @@
                                                     
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
-                                                            <a href="cart?ProductID=${list5.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                                            <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                                             
                                                         </c:when>
                                                         <c:otherwise>

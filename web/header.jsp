@@ -201,7 +201,7 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >
+                        <a class="nav-link" href="cart-detail" >
                             <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
                         </a>
                     </li>

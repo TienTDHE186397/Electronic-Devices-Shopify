@@ -238,6 +238,43 @@ CategoryDAO cDAO = new CategoryDAO();
             return listAttribute;
         }
 //==============================================================================
+    public List<Product> getTop5ProductLatests() {
+        List<Product> listProducts = new ArrayList<>();
+        try {
+            String sql = "select top 5 * from Products Order By releaseDate";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById
+                (rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("title"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Views"), 
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"),
+                        rs.getString("brand"));
+                        listProducts.add(p);
+            }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return listProducts;
+    }   
+    
+//==============================================================================
     public static void main(String[] args) {
         //TEST Function getAllProduct
         ProductDAO pDAO = new ProductDAO();

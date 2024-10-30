@@ -309,11 +309,11 @@
                                     <a href="#" class="btn btn-primary" style="padding: 7px 5px; font-size: 10px;"><i class="fa fa-commenting-o" aria-hidden="true"></i> Feedback</a>
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
-                                            <a href="#" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to Cart</a>
+                                            <a href="#" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to Cart</a>
                                             <a href="javascript:history.back()" class=""></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="cart?ProductID=${hotproduct.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+                                            <a href="cart?ProductID=${hotproduct.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -393,7 +393,7 @@
                                     <a href="#" class="btn btn-primary" style="font-size: 12px"><i class="fa fa-commenting-o" aria-hidden="true"></i>  Mua ngay</a>
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
-                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 11px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 11px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                             <a href="javascript:history.back()" class=""></a>
                                         </c:when>
                                         <c:otherwise>
