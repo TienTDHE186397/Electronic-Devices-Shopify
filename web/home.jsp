@@ -16,16 +16,22 @@
         <title>Shopify</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" >
         <link href="css/font-awesome.min.css" rel="stylesheet" >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link href="css/global.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             body {
-                
-                background: #e2f2fd;
+
+                background: linear-gradient;
             }
             /* CSS */
             .prod_2im img {
@@ -59,13 +65,13 @@
                 color: white;
             }
 
-           
+
 
             #subs {
                 background-color: #f7f7f7; /* Màu nền nhẹ */
                 padding-top: 5rem;
                 padding-bottom: 5rem;
-                
+
             }
 
             .brand-name {
@@ -120,7 +126,7 @@
                 width: 230px;
                 height: 450px;
                 align-items: center;
-               
+
             }
 
             .card.position-relative{
@@ -196,18 +202,89 @@
             }
             .slider-description {
                 font-size: 1.2rem;
-                color: #fff; 
+                color: #fff;
                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             }
             /* CSS Slider Product List */
             .product-list{
                 margin: 20px;
             }
-            
+
             .buy-option{
                 display: flex;
                 justify-content: center;
             }
+
+
+            /* */
+            .card-list .card-item .card-link{
+                user-select: none;
+                
+                display: block;
+                background: #fff;
+                padding: 18px;
+                border-radius: 18px;
+                text-decoration: none;
+                border: 2px solid transparent;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+                transition: 0.2 ease;
+            }
+
+            .card-list .card-item .card-link:hover{
+                border-color: #5372f0;
+            }
+            
+            .card-item{
+                height: 420px;
+            }
+            
+            .card-list .card-link .card-image{
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+
+            .card-list .card-link .badge{
+                color: #5372F0;
+                margin: 16px 0 18px;
+                background: #DDE4FF;
+                padding: 8px 16px;
+                font-size: 0.95rem;
+                font-weight: 500;
+                width: fit-content;
+                border-radius: 50px;
+            }
+
+            .card-list .card-link .card-title-item{
+                font-size: 1.19rem;
+                color: #000;
+                font-weight: 600;
+            }
+            .card-list .card-link .card-button{
+                height: 35px;
+                width: 35px;
+                border-radius: 50%;
+                margin: 30px 0 5px;
+                border: 2px solid #5372f0;
+                color: #5372f0;
+                background: none;
+                transform: rotate(-45deg);
+                transition: 0.4s ease;
+            }
+
+            .card-list .card-link:hover .card-button{
+                color: #fff;
+                background: #5372F0;
+            }
+            
+            .card-wrapper{
+                max-width: 1100px;
+                margin:0 60px 35px;
+                padding: 20px 10px;
+                overflow: hidden;
+            }
+
         </style>
 
     </head>
@@ -285,9 +362,9 @@
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list1.getSale()}%</span>
                                             <a href="product-detail?ProductID=${list1.getProductID()}">
-                                            <div class="product-image">
-                                                <img src="${list1.getImg()}" class="card-img-top" alt="none">
-                                            </div>
+                                                <div class="product-image">
+                                                    <img src="${list1.getImg()}" class="card-img-top" alt="none">
+                                                </div>
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list1.getProductName()}</h6>
@@ -300,7 +377,7 @@
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            
+
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -347,9 +424,9 @@
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list2.getSale()}%</span>
                                             <a href="product-detail?ProductID=${list2.getProductID()}">
-                                            <div class="product-image">
-                                                <img src="${list2.getImg()}" class="card-img-top" alt="none">
-                                            </div>
+                                                <div class="product-image">
+                                                    <img src="${list2.getImg()}" class="card-img-top" alt="none">
+                                                </div>
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list2.getProductName()}</h6>
@@ -362,7 +439,7 @@
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                           
+
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list2.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -408,19 +485,19 @@
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list3.getSale()}%</span>
                                             <a href="product-detail?ProductID=${list3.getProductID()}">
-                                            <div class="product-image">
-                                                <img src="${list3.getImg()}" class="card-img-top" alt="none">
-                                            </div>
+                                                <div class="product-image">
+                                                    <img src="${list3.getImg()}" class="card-img-top" alt="none">
+                                                </div>
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title" style="overflow: hidden">${list3.getProductName()}</h6>
-                                               <div class="price">Giá ưu đãi: ${list3.getPrice() * (1 - list3.getSale() / 100)}đ</div>
+                                                <div class="price">Giá ưu đãi: ${list3.getPrice() * (1 - list3.getSale() / 100)}đ</div>
                                                 <div class="original-price">Giá gốc: ${list3.getPrice()}đ</div>                              
                                                 <div style="color: #000;">Số lượng còn: <b>${list3.getQuantity()}</b></div>
                                                 <div style="color: #000;">Thương hiệu: <b>${list3.getBrand()}</b></div> 
-                                                
+
                                                 <div class="buy-option">
-                                                   
+
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>                                                         
@@ -468,9 +545,9 @@
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list4.getSale()}%</span>
                                             <a href="product-detail?ProductID=${list4.getProductID()}">
-                                            <div class="product-image">
-                                                <img src="${list4.getImg()}" class="card-img-top" alt="none">
-                                            </div>
+                                                <div class="product-image">
+                                                    <img src="${list4.getImg()}" class="card-img-top" alt="none">
+                                                </div>
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list4.getProductName()}</h6>
@@ -480,11 +557,11 @@
                                                 <div style="color: #000;">Thương hiệu: <b>${list4.getBrand()}</b></div>                             
                                                 <div style="font-style: italic">Trả góp <b>0%</b> qua thẻ tín dụng kỳ hạn <b>3-6 tháng</b></div>
                                                 <div class="buy-option">
-                                                    
+
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            
+
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list4.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -527,9 +604,9 @@
                                         <div class="card position-relative">
                                             <span class="discount-badge">Giảm ${list5.getSale()}%</span>
                                             <a href="product-detail?ProductID=${list5.getProductID()}">
-                                            <div class="product-image">
-                                                <img src="${list5.getImg()}" class="card-img-top" alt="none">
-                                            </div>
+                                                <div class="product-image">
+                                                    <img src="${list5.getImg()}" class="card-img-top" alt="none">
+                                                </div>
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list5.getProductName()}</h6>
@@ -539,11 +616,11 @@
                                                 <div style="color: #000;">Thương hiệu: <b>${list5.getBrand()}</b></div>                             
                                                 <div style="font-style: italic">Trả góp <b>0%</b> qua thẻ tín dụng kỳ hạn <b>3-6 tháng</b></div>
                                                 <div class="buy-option">
-                                                    
+
                                                     <c:choose>
                                                         <c:when test="${empty sessionScope.user}">
                                                             <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
-                                                            
+
                                                         </c:when>
                                                         <c:otherwise>
                                                             <a href="cart?ProductID=${list5.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
@@ -560,20 +637,44 @@
                         </c:forEach>
                     </div>
                 </div>
-                
-                
+
+
             </div>
         </section>
-        
-        <df-messenger
-                    intent="WELCOME"
-                    chat-title="Test_AI_@1543"
-                    agent-id="5b284bab-6b4e-465e-bf1b-a4722ed1f4cb"
-                    language-code="vi"
-                    ></df-messenger>
-        <!-- Footer start -->
-        <%@include file="footer.jsp" %>
-        <!-- Footer end -->
-    </body>
+        <div class="container swiper">
+            <h3>Bài Viết Mới</h3>
+            <div class="card-wrapper">
+                <ul class="card-list swiper-wrapper">
+                    <c:forEach items="${lBlog}" var="listBlog">
+                    <li class="card-item swiper-slide">
+                        <a href="PostDetailHome?id=${listBlog.blogID}" class="card-link">
+                            <img src="${listBlog.blog_img}" alt="${listBlog.blog_img_tittle}" class="card-image"/>
+                            <p class="badge">${listBlog.getPerson().getName()}</p>
+                            <h2 class="card-title-item">${listBlog.blog_tittle}</h2>
+                            <div style="font-size: 12px; font-style: italic">${listBlog.blog_summary_information}</div>
+                            <div style="font-size: 12px"><b>Ngày đăng: </b>${listBlog.blog_update_time}</div>
+                            <button class="material-symbols-rounded card-button">arrow_forward</button>
+                        </a>
+                    </li>
+                    </c:forEach>
+                </ul>
+                <div class="swiper-pagination"></div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+            </div>
+        </div>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="Test_AI_@1543"
+        agent-id="5b284bab-6b4e-465e-bf1b-a4722ed1f4cb"
+        language-code="vi"
+        ></df-messenger>
+    <script src="js/swiper.js"></script>
+    <!-- Footer start -->
+    <%@include file="footer.jsp" %>
+    <!-- Footer end -->
+</body>
 
 </html>

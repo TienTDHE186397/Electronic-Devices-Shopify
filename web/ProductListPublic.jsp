@@ -348,8 +348,8 @@
                             <option value="releaseDate DESC" ${"releaseDate DESC" == param.sort ? "selected":""}>Mới cập nhật</option>
                             <option value="ProductName" ${"ProductName" == param.sort ? "selected":""}>Tên(A-Z)</option>
                              <option value="ProductName DESC" ${"ProductName DESC" == param.sort ? "selected":""} >Tên(Z-A)</option>
-                            <option value="price" ${"price" == param.sort ? "selected":""}>Giá(Cao - Thấp)</option>
-                            <option value="price DESC" ${"price DESC" == param.sort ? "selected":""}>Giá(Thấp - Cao)</option>
+                            <option value="price DESC" ${"price DESC" == param.sort ? "selected":""}>Giá(Cao - Thấp)</option>
+                            <option value="price" ${"price" == param.sort ? "selected":""}>Giá(Thấp - Cao)</option>
                         </select>
                     </div>
                     <div class="filter-table">

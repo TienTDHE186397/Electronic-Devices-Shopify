@@ -868,6 +868,31 @@ public class BlogListDAO extends DBContext {
         }
 
     }
+    
+    //=============================================
+        public List<Blog> getLatestBlog() {
+        List<Blog> list = new ArrayList<>();
+        String sql = "select top 7 * from Blog order by Blog_Update_Time DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getString("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
+                list.add(blog);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+    }
 
     public static void main(String[] args) {
 
@@ -903,6 +928,7 @@ public class BlogListDAO extends DBContext {
         CommentBlog c = new CommentBlog(6, "Bài viết này thật thú vị", "2024-10-18", p, b);
         bl.addCommentBlog(c, b, p);
         System.out.println("Thanh Cong");
+        
     }
 
 }

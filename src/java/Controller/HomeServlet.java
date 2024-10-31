@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAO.BlogListDAO;
 import DAO.ProductDAO;
 import DAO.SliderListDAO;
+import Entity.Blog;
 import Entity.Product;
 import Entity.Slider;
 import jakarta.servlet.ServletException;
@@ -132,8 +134,10 @@ public class HomeServlet extends HttpServlet{
         request.setAttribute("listSlider", list_slider);
         
 //------------------------------------------------------------------------------
-    //Hot Post
-
+    //Latest Post
+        BlogListDAO blogDAO = new BlogListDAO();
+        List<Blog> listBlog = blogDAO.getLatestBlog();
+        request.setAttribute("lBlog", listBlog);
 //==============================================================================
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }

@@ -63,15 +63,15 @@ public class AddToCartController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ProductDAO pDao = new ProductDAO();
-       
+       String currentUrl = request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");  
         int quantity =1;
         int id;
         if(request.getParameter("ProductID")!=null){
             id = Integer.parseInt(request.getParameter("ProductID"));
             Product p = pDao.getProductsById(id);
             if(p!=null){
-                if(request.getParameter("quantity")!=null){
-                    quantity = Integer.parseInt(request.getParameter("quantity"));  
+                if(request.getParameter("quantity") !=null){
+                    quantity = Integer.parseInt(request.getParameter("quantity"));
                 }
                 HttpSession session = request.getSession();
                 if(session.getAttribute("cart") == null){

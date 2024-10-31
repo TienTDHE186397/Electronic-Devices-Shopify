@@ -29,7 +29,7 @@
         }
 
         body{
-            
+
             font-family: sans-serif;
         }
 
@@ -134,16 +134,27 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top navigation-custom">
         <div class="container-fluid">
+
             <div class="logo">
                 <i class='bx bx-menu menu-icon'></i>
+                <a class="navbar-brand" href="home">
+                    <img src="img/Icon.jpg" height="24" alt=""
+                         loading="lazy" style="margin-top: -3px;" />
+                </a>
                 <a href="home"><span class="logo-name">Shopify</span></a> 
             </div>
 
             <div class="sidebar">
+
                 <div class="logo">
                     <i class='bx bx-menu menu-icon'></i>
+                    <a class="navbar-brand" href="home">
+                        <img src="img/Icon.jpg" height="24" alt=""
+                             loading="lazy" style="margin-top: -3px;" />
+                    </a>
                     <a href="home"><span class="logo-name">Shopify</span></a> 
                 </div>
+
                 <div class="sidebar-content">
                     <ul class="lists">
                         <li class="list">
@@ -174,7 +185,7 @@
                                 <span class="link">Setting</span>
                             </a>
                         </li>
-                      
+
 
                         <li class="list">
                             <a href="./login" class="nav-link">
@@ -187,10 +198,7 @@
             </div>
             <!-- Navbar brand -->
 
-            <a class="navbar-brand" target="_blank" href="#">
-                <img src="https://drive.google.com/uc?export=view&id=1YoYfvxlyzbUCz0kMZ0TufLcRpMxcubhW" height="16" alt=""
-                     loading="lazy" style="margin-top: -3px;" />
-            </a>
+
 
 
             <div class="collapse navbar-collapse">
@@ -200,11 +208,25 @@
 
                 <ul class="navbar-nav d-flex flex-row">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart-detail" >
-                            <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
-                        </a>
-                    </li>
+                    
+
+                    <c:choose>
+                        <c:when test="${empty sessionScope.user}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" >
+                                    <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                                </a>
+                            </li>
+
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="cart-detail" >
+                                    <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                                </a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
 
                     <c:if test="${sessionScope.user != null}">
                         <li class="nav-item">

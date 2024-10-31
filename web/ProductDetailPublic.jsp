@@ -273,17 +273,22 @@
                     </table>
                     <div style="color: grey; font-size: 20px; font-style: italic">Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</div> 
                 </div>
-                <div>            
-                 
-                <c:choose>
-                    <c:when test="${empty sessionScope.user}">
-                        <a href="cart?ProductID=${productDetail.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;width: 75%;height: 100px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
-                        <a href="javascript:history.back()" class=""></a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="cart?ProductID=${productDetail.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
-                    </c:otherwise>
-                </c:choose>
+                <div style="display: flex">
+                    <form action="cart" method="get">
+                        <input type="hidden" name="ProductID" value="${productDetail.getProductID()}">
+                        <label><b>Số lượng</b></label>
+                        <input style="width: 50px" type="number" name="quantity" min="1" value="1">
+                     
+                        <c:choose>
+                            <c:when test="${empty sessionScope.user}">
+                                <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;height: 25px;width: 200px;font-style: 5px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
+                                <a href="javascript:history.back()" class=""></a>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="submit" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</button>
+                            </c:otherwise>
+                        </c:choose>
+                    </form>      
                 </div>
             </div>
         </div>
