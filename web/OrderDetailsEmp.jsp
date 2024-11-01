@@ -125,6 +125,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                 <p><strong>Total Cost:</strong> <fmt:formatNumber value="${order.total}" type="number" pattern="#,##0"/></p>
                                 <p><strong>Sale Name:</strong> ${order.saleName}</p>
                                 <p><strong>Status:</strong> ${order.status}</p>
+                                <p><strong>ShipStatus</strong> ${order.shipstatus}</p>
                             </div>
                         </div>
 
@@ -177,25 +178,39 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
   <div class="order-section status-section">
     <h2>Update Order</h2>
     <form action="OrderDetailsEmp" method="post" >
-        <c:forEach var="c" items="${requestScope.upList}">
-            <input type="hidden" name="orderID" value="${c.orderID}" />
+       <c:forEach var="c" items="${requestScope.upList}">
+           <input type="hidden" name="orderID" value="${c.orderID}" />
+           <input type="hidden" name="saleID" value="${c.saleID}" />
             
             <div>
-                <label for="Status">Status:</label>
-                <select id="${status.index}" name="statusUpdate">
+                <label for="Status-${c.orderID}">Status:</label>
+                <select id="status-${c.orderID}" name="statusUpdate">
                     <option value="Complete" ${c.status == 'Complete' ? 'selected' : ''}>Complete</option>
                     <option value="In Line" ${c.status == 'In Line' ? 'selected' : ''}>In Line</option>
                     <option value="In Progress" ${c.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
                 </select>
             </div>
+            <div>
+                <label for="shipstatus">Status:</label>
+                <select id="shipstatus-${c.orderID}" name="shipUpdate" >
+                     <option value="OrderNotComplete" ${c.shipstatus == 'OrderNotComplete' ? 'selected' : ''}>đơn hàng chưa được xử lý</option>
+                    <option value="Exproted" ${c.shipstatus == 'Exproted' ? 'selected' : ''}>đã xuất kho</option>
+                    <option value="InDelivery" ${c.shipstatus == 'InDelivery' ? 'selected' : ''}>đang giao hàng</option>
+                    <option value="Delivered" ${c.shipstatus == 'Delivered' ? 'selected' : ''}>đã giao hàng</option>
+                    <option value="received" ${c.shipstatus == 'received' ? 'selected' : ''}>đã nhận hàng</option>
+                </select>
+            </div>
+            
+             <div>
+            <label for="saleNotes-${c.orderID}">Sale Notes:</label>
+            <textarea id="saleNotes-${c.orderID}" rows="4" name="saleNotes">${c.saleNotes}</textarea>
+             </div>
             
             <div>
-                <label for="${status.index}">Sale Notes:</label>
-                <textarea id="${status.index}" rows="4" name="saleNotes">${c.saleNotes}</textarea>
-            </div>
-            <div>
-                <label for="${status.index}">Assigned Sale:</label>
-                <input type="text" value="${c.saleID}" name="salePerson" readonly />
+                  
+                <label for="salePerson-${c.orderID}}">Assigned Sale:</label>
+                <input type="hidden" value="${Sale}" name="salePerson" />
+                <input type="text" value="${c.saleID}" readonly/>
                 
             </div>
         </c:forEach>
@@ -234,7 +249,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             };
 
         </script>
-
+        
 
 
 

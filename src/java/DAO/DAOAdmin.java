@@ -74,7 +74,7 @@ public class DAOAdmin extends DBContext {
         if (status != null && !status.isEmpty()) {
             sql += " and Status = '" + status + "'";
         }
-        if (startDate != null && !startDate.isEmpty()) {
+if (startDate != null && !startDate.isEmpty()) {
             if (endDate != null && !endDate.isEmpty()) {
                 sql += " and OrderDate between '" + startDate + "' and '" + endDate + "'";
             }
@@ -163,7 +163,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public int getShipOrder() {
-        String sql = "Select count(*) from orders where Status = 'In Progress' ";
+String sql = "Select count(*) from orders where Status = 'In Progress' ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -243,7 +243,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public double Rate() {
-        String sql = "select AVG(CAST(Rate AS decimal(10, 1))) from Comment";
+        String sql = "select AVG(CAST(RatedStar AS decimal(10, 1))) from Feedback";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -259,7 +259,7 @@ public class DAOAdmin extends DBContext {
     public int getRevenueByCategory(int CateID) {
         String sql = "SELECT SUM(od.TotalCost) AS TotalRevenue \n"
                 + "FROM OrderDetails od \n"
-                + "JOIN Products p ON od.ProductID = p.ProductID \n"
++ "JOIN Products p ON od.ProductID = p.ProductID \n"
                 + "JOIN Categories c ON p.CategoryID = c.CategoryID \n"
                 + "where p.CategoryID = " + CateID
                 + "GROUP BY c.CategoryID, c.CategoryName;";
@@ -276,8 +276,8 @@ public class DAOAdmin extends DBContext {
     }
 
     public double getRateByCategory(int CateID) {
-        String sql = "select AVG(CAST(Rate AS decimal(10, 1))) \n"
-                + " from Comment c \n"
+        String sql = "select AVG(CAST(RatedStar AS decimal(10, 1))) \n"
+                + " from Feedback c \n"
                 + " join Products p on p.ProductID = c.ProductID \n"
                 + " where p.CategoryID = \n" + CateID
                 + " group by p.ProductID";
@@ -294,7 +294,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public int RateCount(double Rate) {
-        String sql = "Select count(*) from Comment where Rate = " + Rate;
+        String sql = "Select count(*) from Feedback where RatedStar = " + Rate;
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

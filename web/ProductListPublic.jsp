@@ -30,9 +30,13 @@
             h5{
                 font-family: 'Roboto', sans-serif;
             }
+            h1{
+                font-family: 'Roboto', sans-serif;
+            }
             body{
                 font-family: 'Roboto', sans-serif;
                 background-color: #faf2e8;
+                overflow-x: scroll;
             }
             .bg_light_1 {
                 background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
@@ -112,6 +116,8 @@
                 background-color: #d9d9d9;
                 border-radius: 20px;
                 margin: 20px;
+                display: flex;
+                flex-direction: column;
             }
 
 
@@ -125,18 +131,16 @@
                 margin: 20px;
                 flex: 1 1 calc(25% - 40px); /* Adjust size to fit container */
                 max-width: calc(25% - 40px); /* Ensure max width */
+                height: 100%;
+                box-sizing: border-box;
+                overflow: auto;
             }
 
             .card:hover {
                 transform: scale(1.05);
             }
 
-            .card-img-top {
-                border-top-left-radius: 10px;
-                border-top-right-radius: 10px;
-                height: 200px;
-                object-fit: cover;
-            }
+           
 
             .card-body {
                 padding: 15px;
@@ -176,7 +180,7 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 width: auto;
-
+                height: auto;
             }
             .category-table{
                 background-color: #f7f7f9;
@@ -205,6 +209,7 @@
                 padding: 10px;
                 border: solid 1px #d9d9d9;
                 border-radius: 5px;
+                
             }
 
             .form-input{
@@ -218,6 +223,52 @@
                 border-radius: 5px;
                 text-align: center;
                 
+            }
+            
+            .price {
+                color: red;
+                font-weight: bold;
+            }
+            .original-price {
+                text-decoration: line-through;
+                color: gray;
+            }
+            
+            .discount-badge {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: red;
+                color: white;
+                padding: 5px;
+                font-size: 0.9rem;
+                border-radius: 5px;
+            }
+            
+            .pagination-container{
+                display: flex;
+                justify-content: center;
+                max-width: 100%; /* Giới hạn chiều rộng theo kích thước của phần tử cha */
+                max-height: 100%;
+                overflow-x: scroll;
+
+            }
+            
+            .buy-option{
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .p-image{
+                display: flex;
+                justify-content: center;
+                height: auto;
+                
+            }
+            
+            .p-image img{
+                max-width: 60%;
+                height: auto;
             }
         </style>
     </head>
@@ -240,34 +291,34 @@
                     <h1>HOT SALE MÙA TỰU TRƯỜNG</h1>
                 </div>
                 <div class="product-card">
-<<<<<<< HEAD
-                    <c:forEach items="${hot_product}" var="hot_product">
+
+                    <c:forEach items="${hot_product}" var="hotproduct">
                         <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                            <img src="${hot_product.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                            <div class="card-body" style="padding: 10px;">
-                                <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">${hot-product.getProductName()}</h5>
-                                <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
-                                <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                                <c:choose>
-                                    <c:when test="${empty sessionScope.user}">
-                                        <a href="#" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                                        <a href="javascript:history.back()" class="btn btn-back">Back</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="cart?ProductID=${hot_product.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                                    </c:otherwise>
-                                </c:choose>
+                            <span class="discount-badge">Giảm ${hotproduct.getSale()}%</span>
+                            <a href="product-detail?ProductID=${hotproduct.getProductID()}">
+                            <div class="p-image">
+                                <img src="${hotproduct.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;object-fit: contain">
                             </div>
-=======
-                    <c:forEach items="${hot_product}" var="product">
-                    <div class="card" style="height: 250px; flex: 1 1 calc(20% - 20px); max-width: calc(20% - 20px);">
-                        <img src="${product.getImg()}" class="card-img-top" alt="Hot Product Image" style="height: 100px;">
-                        <div class="card-body" style="padding: 10px;">
-                            <h5 class="card-title" style="font-size: 12px; margin-bottom: 5px;">${product.getProductName()}</h5>
-                            <p class="card-text" style="font-size: 10px; margin-bottom: 10px;">Hot product description goes here. It provides a brief detail about the hot product.</p>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px;">Feedback</a>
-                            <a href="#" class="btn btn-primary" style="padding: 5px 10px; font-size: 10px; background-color: #f8405e; border-color: #f8405e">Add to Cart</a>
->>>>>>> f5d3156320d071c2c1b88f4946eb5a3cf78f00f4
+                            </a>
+                            <div class="card-body" style="padding: 10px;">
+                                <div class="card-title" style="font-size: 12px; margin-bottom: 5px; ">${hotproduct.getProductName()}</div>
+                                <div style="color: #F95A74">Thương hiệu: ${hotproduct.getBrand()}</div>
+                                <div class="price">Giá ưu đãi: ${hotproduct.getPrice() * (1 - hotproduct.getSale() / 100)}đ </div>
+                                <div class="original-price">Giá gốc: ${hotproduct.getPrice()}đ</div>
+                                <div class="buy-option">
+                                    <a href="#" class="btn btn-primary" style="padding: 7px 5px; font-size: 10px;"><i class="fa fa-commenting-o" aria-hidden="true"></i> Feedback</a>
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.user}">
+                                            <a href="#" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to Cart</a>
+                                            <a href="javascript:history.back()" class=""></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="cart?ProductID=${hotproduct.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 10px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+
                         </div>
                     </c:forEach>
                 </div>
@@ -307,7 +358,7 @@
                             <c:if test="${param.numberOfProducts == null}">
                                     <option value="4" ${"selected"}>4(default)</option>
                             </c:if>
-                            <c:forEach var="count" begin="1" end="8">
+                            <c:forEach var="count" begin="3" end="12">
                                 <option value="${count}" ${count == param.numberOfProducts ? "selected":""}>${count}</option>
                             </c:forEach>
                         </select>
@@ -318,54 +369,38 @@
                         <label><b>Tìm kiếm sản phẩm:</b></label>
                         <input style="border-radius: 5px;width: 250px" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="${param.search_product}">
                     </div> 
-<<<<<<< HEAD
-
-                </div>
-                <div class="container category-table">
-                    <h5>Lọc sản phẩm: </h5>
-                    <div class="filter-table">
-                        <label><b>Sắp xếp theo:</b></label>
-                        <select name="sort" id="categoryselect" onchange="document.getElementById('form1').submit()">
-                            <option value="sortName" >Tên(A-Z)</option>
-                            <option value="sortUpdate">Mới cập nhật</option>
-                        </select>
-                    </div>
-=======
             </div>
             
             <div class="container background-container">
-                <div class="product-card">
-                    <c:forEach items="${list_P}" var="list1">
-                        <div class="card">
-                            <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">${list1.getProductName()}</h5>
-                                <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
-                                <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
-                                <a href="#" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                            </div>  
-                        </div>
-                    </c:forEach>
->>>>>>> f5d3156320d071c2c1b88f4946eb5a3cf78f00f4
-                </div>
+                
                 <div class="container background-container">
                     <div class="product-card">
                         <c:forEach items="${list_P}" var="list1">
                             <div class="card">
-                                <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
+                                <span class="discount-badge">Giảm ${list1.getSale()}%</span>
+                                <a href="product-detail?ProductID=${list1.getProductID()}">
+                                <div class="p-image">
+                                    <img src="${list1.getImg()}" class="card-img-top" alt="Product Image">
+                                </div>
+                                </a>
                                 <div class="card-body">
                                     <h5 class="card-title">${list1.getProductName()}</h5>
-                                    <p class="card-text">Product description goes here. It provides a brief detail about the product.</p>                           
-                                    <a href="#" class="btn btn-primary" style="font-size: 12px">Feedback</a>
+                                    <div style="color: #000;">Thương hiệu: <b>${list1.getBrand()}</b></div>
+                                    <div style="color: #000;">Số lượng còn: <b>${list1.getQuantity()}</b></div>
+                                    <div style="font-style: italic">Trả góp 0% qua thẻ tín dụng</div>
+                                    <p class="price">Giá ưu đãi: ${list1.getPrice() * (1 - list1.getSale() / 100)}đ  <span class="original-price">${list1.getPrice()}đ</span></p>
+                                    <div class="buy-option">
+                                    <a href="#" class="btn btn-primary" style="font-size: 12px"><i class="fa fa-commenting-o" aria-hidden="true"></i>  Mua ngay</a>
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
-                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
-                                            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+                                            <a href="cart?ProductID=${list1.getProductID()}" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 11px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
+                                            <a href="javascript:history.back()" class=""></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px">Add to Cart</a>
+                                            <a href="cart?ProductID=${list1.getProductID()}" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 11px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ</a>
                                         </c:otherwise>
                                     </c:choose>
+                                    </div>        
                                 </div>  
                             </div>
                         </c:forEach>
@@ -376,27 +411,14 @@
                         <c:forEach begin="1" end="${endP}" var="o">
                             <button class="pagination-button" type="submit" name="page" value="${o}" ${o == param.page ? "selected":""} }>${o}</button>
                         </c:forEach>
-<<<<<<< HEAD
                     </ul>
                 </div>
             </form>
         </section>
-
-
         <!-- Footer start -->
         <%@include file="footer.jsp" %>
         <!-- Footer end -->
     </body>
-=======
-                </ul> 
-            </div>
-        </form>
-    </section>
-    
-    
-    <!-- Footer start -->
-    <%@include file="footer.jsp" %>
-    <!-- Footer end -->
-</body>
->>>>>>> f5d3156320d071c2c1b88f4946eb5a3cf78f00f4
+
+ 
 </html>

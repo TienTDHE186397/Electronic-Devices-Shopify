@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ProductListPublic.DAO;
+package DAO;
+
 
 import DAO.*;
 import Entity.Categories;
@@ -20,7 +21,7 @@ import java.util.List;
  * This file using to get the data from SQL Server, init data
  * function
  */
-public class ProductDAO extends DBContext {
+public class ProductDAOPublic extends DBContext {
 CategoryDAO cDAO = new CategoryDAO();
 
 //==============================================================================    
@@ -288,7 +289,7 @@ CategoryDAO cDAO = new CategoryDAO();
 
     public static void main(String[] args) {
         //TEST Function getAllProduct
-        ProductDAO pDAO = new ProductDAO();
+        ProductDAOPublic pDAO = new ProductDAOPublic();
 //        List<Product> list = pDAO.pagingProductByCategory(1, 0,8);
 ////        int count = pDAO.getTotalProduct();
 ////        Product p1 = pDAO.getProductsById(3);
@@ -301,8 +302,6 @@ CategoryDAO cDAO = new CategoryDAO();
 //                System.out.println(p);
 //            }
         
-         String tmp ="i";
-        System.out.println(pDAO.getTotalProduct(0, tmp));
         
     }
 }

@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header>
     <!--Link to library file-->
+    <link rel="icon" type="image/x-icon" href="img/Icon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" >
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -16,6 +17,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" >
     <link href="css/global.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
     <script src="js/bootstrap.bundle.min.js"></script>
     <!-- Intro settings -->
@@ -27,8 +29,8 @@
         }
 
         body{
-            min-height: 100%;
-
+            
+            font-family: sans-serif;
         }
 
         nav{
@@ -154,14 +156,14 @@
                         <li class="list">
                             <a href="./PostListHome" class="nav-link">
                                 <i class='bx bx-news icon'></i>
-                                <span class="link">Bài Đăng</span>
+                                <span class="link">Bài đăng</span>
                             </a>
                         </li>
 
                         <li class="list">
                             <a href="./product-list" class="nav-link">
                                 <i class='bx bx-box icon'></i>
-                                <span class="link">Sản phẩm</span>
+                                <span class="link">Danh sách sản phẩm</span>
                             </a>
                         </li>
                     </ul>
@@ -199,7 +201,7 @@
                 <ul class="navbar-nav d-flex flex-row">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >
+                        <a class="nav-link" href="cart-detail" >
                             <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
                         </a>
                     </li>

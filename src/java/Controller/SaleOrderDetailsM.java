@@ -106,12 +106,18 @@ request.getRequestDispatcher("OrderDetailsManager.jsp").forward(request, respons
     String status = request.getParameter("statusUpdate");
     String saleNotes = request.getParameter("saleNotes");
     String saleID = request.getParameter("salePerson");
+    String shipstatus = request.getParameter("shipUpdate");
 
     SaleDAO updateDAO = new SaleDAO();
     try {
-        SaleOrderL so = new SaleOrderL(status, saleNotes, saleID, orderID);
+        SaleOrderL so = new SaleOrderL(orderID, saleNotes, saleID, status, shipstatus);
         updateDAO.Update(so);
 
+//            response.getWriter().println(orderID);
+//            response.getWriter().println(status);
+//            response.getWriter().println(saleNotes);
+//            response.getWriter().println(saleID);
+//            response.getWriter().println(shipstatus);
         // Return a success response
         response.sendRedirect("SaleOrderManager?orderID=" + orderID + "&statusUpdate=success");
 
@@ -130,7 +136,14 @@ request.getRequestDispatcher("OrderDetailsManager.jsp").forward(request, respons
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
- 
+    }
+//     public static void main(String[] args) {
+//        SaleDAO dao = new SaleDAO();
+//        String id = "2";
+//        List<SaleOrderL> list = dao.getUpdate(id);
+//        for(SaleOrderL o : list){
+//            System.out.println(o);
+//        }
+//    }
 
 }

@@ -118,6 +118,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                 <p><strong>Total Cost:</strong> <fmt:formatNumber value="${order.total}" type="number" pattern="#,##0"/></p>
                                 <p><strong>Sale Name:</strong> ${order.saleName}</p>
                                 <p><strong>Status:</strong> ${order.status}</p>
+                                <p><strong>ShipStatus:</strong> ${order.shipstatus}</p>
                             </div>
                         </div>
 
@@ -133,7 +134,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <p><strong>Address:</strong> ${order.address}</p>
                         </div>
                     </div>
-                </c:forEach>
+                
                 <div class="order-section">
                     <h2>Ordered Products</h2>
                     <c:set var="list" value="${requestScope.orderProducts}"/>
@@ -167,6 +168,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         </tbody>
                     </table>
                 </div>
+                    </c:forEach>
 
                <div class="order-section status-section">
     <h2>Update Order</h2>
@@ -176,21 +178,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             
             <div>
                 <label for="Status">Status:</label>
-                <select id="${status.index}" name="statusUpdate">
+                <select id="status-${c.orderID}" id="${status.index}" name="statusUpdate">
                     <option value="Complete" ${c.status == 'Complete' ? 'selected' : ''}>Complete</option>
                     <option value="In Line" ${c.status == 'In Line' ? 'selected' : ''}>In Line</option>
                     <option value="In Progress" ${c.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
                 </select>
             </div>
-            
             <div>
-                <label for="${status.index}">Sale Notes:</label>
-                <textarea id="${status.index}" rows="4" name="saleNotes">${c.saleNotes}</textarea>
+                <label for="shipstatus">Status:</label>
+                <select id="shipstatus-${c.orderID}" id="${status.index}" name="shipUpdate">
+                     <option value="OrderNotComplete" ${c.shipstatus == 'OrderNotComplete' ? 'selected' : ''}>đơn hàng chưa được xử lý</option>
+                    <option value="Exproted" ${c.shipstatus == 'Exproted' ? 'selected' : ''}>đã xuất kho</option>
+                    <option value="InDelivery" ${c.shipstatus == 'InDelivery' ? 'selected' : ''}>đang giao hàng</option>
+                    <option value="Delivered" ${c.shipstatus == 'Delivered' ? 'selected' : ''}>đã giao hàng</option>
+                    <option value="received" ${c.shipstatus == 'received' ? 'selected' : ''}>đã nhận hàng</option>
+                </select>
             </div>
             
+             <div>
+            <label for="saleNotes">Sale Notes:</label>
+            <textarea id="saleNotes-${c.orderID}" rows="4" name="saleNotes">${c.saleNotes}</textarea>
+             </div>
+            
             <div>
-                <label for="${status.index}">Assign to Sale:</label>
-                <select id="${status.index}" name="salePerson">
+                 <label for="salePerson">Assign to Sale:</label>
+                 <select id="salePerson-${c.orderID}" name="salePerson">
                     <option value="">Select a sale person</option>
                     <c:forEach var="person" items="${requestScope.SaleList}">
                         <option value="${person.personID}" ${person.personID == order.saleID ? 'selected' : ''}>
@@ -208,6 +220,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </select>
             </div>
         </c:forEach>
+          
         
         <button type="submit">Update Order</button>
     </form>
@@ -252,6 +265,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             };
 
         </script>
+     <script>
+function toggleShipStatus(orderID) {
+    var statusSelect = document.getElementById("status-${c.orderID}");
+    var shipStatusSelect = document.getElementById("shipstatus-${c.orderID}");
+
+    // Check the selected value of the status
+    if (statusSelect.value === "Complete") {
+        shipStatusSelect.disabled = true; // Disable Ship Status
+    } else {
+        shipStatusSelect.disabled = false; // Enable Ship Status
+    }
+}
+</script>
        
 
 

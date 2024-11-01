@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package ProductListPublic.Controller;
+package Controller;
 
 import Entity.Product;
 import DAO.CategoryDAO;
@@ -14,7 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ProductListPublic.DAO.ProductDAO;
+import DAO.ProductDAOPublic;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Dokkuhai
  */
-public class ProductList extends HttpServlet {
+public class ProductListPublic extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -62,7 +62,7 @@ public class ProductList extends HttpServlet {
     throws ServletException, IOException {
 //==============================================================================
         //Init Data Access Object Package
-        ProductDAO pDao = new ProductDAO();
+        ProductDAOPublic pDao = new ProductDAOPublic();
         CategoryDAO cDao = new CategoryDAO();
 //==============================================================================
         //Get Value from URI webpage
@@ -110,15 +110,15 @@ public class ProductList extends HttpServlet {
 //==============================================================================
 
  /**********************************Paging******************************/
-            
-            List<Product> listP = pDao.pagingProductByCategory1(index, cate,quantity,sort,searchProduct);
-            
-            int count = pDao.getTotalProduct(cate, searchProduct);
-            int endPage = count / quantity;
-            if (count % quantity != 0) {
-                endPage += 1;
-            }
-            
+
+    List<Product> listP = pDao.pagingProductByCategory1(index, cate,quantity,sort,searchProduct);
+
+    int count = pDao.getTotalProduct(cate, searchProduct);
+    int endPage = count / quantity;
+    if (count % quantity != 0) {
+        endPage += 1;
+    }
+
  //==============================================================================
         //Send data request to jsp page
         /* Send uri and query to webpage when send request to servlet*/

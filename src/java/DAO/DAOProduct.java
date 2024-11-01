@@ -170,10 +170,12 @@ public class DAOProduct extends DBContext {
 
             // Iterate through all the results in the result set
             while (rs.next()) {
+                Product p = getProductById(productId);
                 ProductAttribute proAttribute = new ProductAttribute(
                         rs.getInt("AttributeID"),
                         rs.getString("AttributeName"),
-                        rs.getString("AttributeValue")
+                        rs.getString("AttributeValue"),
+                        p
                 );
                 // Add each attribute to the list
                 attributeList.add(proAttribute);

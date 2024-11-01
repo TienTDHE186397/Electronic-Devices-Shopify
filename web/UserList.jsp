@@ -130,7 +130,7 @@
     /*overflow-y: auto;*/
 }
 .side-menu ul {
-    text-align: center;
+text-align: center;
 }
 
 .side-menu a {
@@ -265,7 +265,7 @@
             table th, table td {
                 padding: 12px;
                 text-align: left;
-                border-bottom: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
             }
             table th {
                 background-color: #f7f7f7;
@@ -360,7 +360,7 @@
                             <span class="las la-tasks"></span>
                             <small>User List</small>
                         </a>
-                    </li>
+</li>
                     <li>
                         <a href="settingList?PersonID=${person.personID}" class="">
                             <span class="las la-cog"></span>
@@ -428,7 +428,7 @@
                 <th onclick="sortTable(4)">Ngày sinh</th>
                 <th onclick="sortTable(5)">Address</th>
                 <th onclick="sortTable(6)">Email</th>
-                <th onclick="sortID(7)">Phone</th>
+<th onclick="sortID(7)">Phone</th>
                 <th onclick="sortTable(8)">Vai trò</th>
                 <th>Hành động</th>
             </tr>
@@ -495,8 +495,7 @@
                     for (let i = 1; i < rows.length - 1; i++) {
                         let x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
                         let y = parseFloat(rows[i + 1].getElementsByTagName("TD")[n].innerHTML);
-
-                        if ((dir === "asc" && x > y) || (dir === "desc" && x < y)) {
+if ((dir === "asc" && x > y) || (dir === "desc" && x < y)) {
                             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                             // row[i].parentNode.insertBefore(new Node, reference Node);
                             //parentNode: tra ve phan tu cha
