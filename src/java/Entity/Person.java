@@ -18,6 +18,10 @@ public class Person {
     private String Pasword;
 //cua son
 
+    public Person() {
+        
+    }
+
     public String getImage() {
         return Image;
     }
@@ -26,9 +30,6 @@ public class Person {
         this.Image = Image;
     }
 
-    public Person() {
-    }
-   
     public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Name = Name;
         this.Gender = Gender;
@@ -78,6 +79,26 @@ public class Person {
         this.roleID = RoleID;
         
     }
+
+    public Person(int PersonID, String Name, String DateOfBirth, LocalDate StartDate, String Email, int roleID, String Pasword) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Email = Email;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
+    }
+    
+
+    public Person(String Name, String Address, String Email, String Phone) {
+        this.Name = Name;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+    }
+    
+    
     public Person(String image, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Image = image;
         this.Name = Name;
@@ -142,6 +163,7 @@ this.Gender = Gender;
         this.roleID = RoleID;
         
     }
+    
     public int getPersonID() {
         return PersonID;
     }
