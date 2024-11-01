@@ -29,6 +29,15 @@ public class OrderProduct {
         this.quantity = quantity;
         this.totalCost = totalCost;
     }
+
+    public OrderProduct(String odID, String img, String name, double unitprice, int quantity, double totalCost) {
+        this.odID = odID;
+        this.img = img;
+        this.name = name;
+        this.unitprice = unitprice;
+        this.quantity = quantity;
+        this.totalCost = totalCost;
+    }
     
 
     public String getOdID() {
@@ -86,6 +95,12 @@ public class OrderProduct {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+
+    @Override
+    public String toString() {
+        return "OrderProduct{" + "odID=" + odID + ", img=" + img + ", name=" + name + ", category=" + category + ", unitprice=" + unitprice + ", quantity=" + quantity + ", totalCost=" + totalCost + '}';
+    }
+    
 }
 
     

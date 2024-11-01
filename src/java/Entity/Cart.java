@@ -62,14 +62,12 @@ public class Cart {
     public void setStatus(int status) {
         this.status = status;
     }
-    
-    // Phương thức để tính tổng giá trị giỏ hàng
-    public double getTotalPrice() {
-        double total = 0;
-        for (CartItem item : items) {
-            total += item.getPrice() * item.getQuantity();
-        }
-        return total;
+
+    @Override
+    public String toString() {
+        return "Cart{" + "cartID=" + cartID + ", person=" + person + ", items=" + items + ", status=" + status + '}';
     }
+    
+
    
 }
