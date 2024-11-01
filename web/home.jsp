@@ -219,7 +219,7 @@
             /* */
             .card-list .card-item .card-link{
                 user-select: none;
-
+                
                 display: block;
                 background: #fff;
                 padding: 18px;
