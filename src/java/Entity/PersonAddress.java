@@ -19,6 +19,9 @@ public class PersonAddress {
         this.isPrimary = isPrimary;
     }
 
+    public PersonAddress() {
+     }
+
     public Person getPerson() {
         return person;
     }

@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Entity.OrderProduct;
 import Entity.Orders;
 import Entity.Person;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class DAOAdmin extends DBContext {
         if (status != null && !status.isEmpty()) {
             sql += " and Status = '" + status + "'";
         }
-if (startDate != null && !startDate.isEmpty()) {
+        if (startDate != null && !startDate.isEmpty()) {
             if (endDate != null && !endDate.isEmpty()) {
                 sql += " and OrderDate between '" + startDate + "' and '" + endDate + "'";
             }
@@ -163,7 +164,7 @@ if (startDate != null && !startDate.isEmpty()) {
     }
 
     public int getShipOrder() {
-String sql = "Select count(*) from orders where Status = 'In Progress' ";
+        String sql = "Select count(*) from orders where Status = 'In Progress' ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -208,10 +209,12 @@ String sql = "Select count(*) from orders where Status = 'In Progress' ";
         DAOAdmin da = new DAOAdmin();
 //        int n = da.getSuccessOrder();
 //        System.out.println(n);
-        List<Orders> list = da.searchOrders("T", "", "", "");
-        for (Orders o : list) {
-            System.out.println(o);
-        }
+//        List<Orders> list = da.searchOrders("T", "", "", "");
+//        for (Orders o : list) {
+//            System.out.println(o);
+//        }
+        OrderProduct op = da.getOrderById("1");
+        System.out.println(op);
     }
 
     public int NewRegister() {
@@ -259,7 +262,7 @@ String sql = "Select count(*) from orders where Status = 'In Progress' ";
     public int getRevenueByCategory(int CateID) {
         String sql = "SELECT SUM(od.TotalCost) AS TotalRevenue \n"
                 + "FROM OrderDetails od \n"
-+ "JOIN Products p ON od.ProductID = p.ProductID \n"
+                + "JOIN Products p ON od.ProductID = p.ProductID \n"
                 + "JOIN Categories c ON p.CategoryID = c.CategoryID \n"
                 + "where p.CategoryID = " + CateID
                 + "GROUP BY c.CategoryID, c.CategoryName;";
@@ -305,5 +308,30 @@ String sql = "Select count(*) from orders where Status = 'In Progress' ";
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public OrderProduct getOrderById(String id) {
+        String sql = "SELECT p.ProductID, p.ProductName, p.img, od.Quantity, od.UnitPrice, od.TotalCost \n"
+                + "        FROM Orders o \n"
+                + "        JOIN OrderDetails od ON o.OrderID = od.OrderID \n"
+                + "        JOIN Products p ON od.ProductID = p.ProductID \n"
+                + "        WHERE o.OrderID = " + id;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OrderProduct op = new OrderProduct(rs.getString("ProductID"),
+                        rs.getString("img"),
+                        rs.getString("ProductName"),
+                        rs.getInt("UnitPrice"),
+                        rs.getInt("Quantity"),
+                        rs.getInt("TotalCost"));
+                return op;
+            }
+        } catch (Exception e) {
+
+        }
+
+        return null;
     }
 }

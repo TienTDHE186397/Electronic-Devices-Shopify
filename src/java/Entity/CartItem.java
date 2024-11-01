@@ -21,6 +21,12 @@ public class CartItem {
         this.price = price;
     }
 
+    public CartItem(int id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
+    }
+    
+
     
     public CartItem(){
         super();
@@ -56,6 +62,11 @@ public class CartItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "CartItem{" + "id=" + id + ", product=" + product + ", quantity=" + quantity + ", price=" + price + '}';
     }
 
     

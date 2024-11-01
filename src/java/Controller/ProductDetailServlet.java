@@ -140,7 +140,7 @@ public class ProductDetailServlet extends HttpServlet {
         List<String> videoPaths = new ArrayList<>();
         List<String> videoNotes = new ArrayList<>();
 
-// Lặp qua các phần của request
+        // Lặp qua các phần của request
         if (videoPaths != null) {
             for (Part part : request.getParts()) {
                 if (part.getName().equals("vidImgValue")) {

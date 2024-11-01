@@ -468,7 +468,37 @@
             .brown-button:hover {
                 background-color: #7B3F1A; /* Màu nâu tối hơn khi hover */
             }
-
+            .comment-container {
+                border: 1px solid #ddd;
+                padding: 15px;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                background-color: black;
+            }
+            .comment-header {
+                font-size: 18px;
+                font-weight: bold;
+                color: #333;
+            }
+            .comment-body {
+                margin: 10px 0;
+                font-size: 14px;
+                color: #555;
+            }
+            .media-section {
+                margin-top: 15px;
+            }
+            .media-title {
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 10px;
+            }
+            .media-images img,
+            .media-videos video {
+                margin: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
         </style>
     </head>
     <body>
@@ -586,7 +616,7 @@
                         <input type="hidden" name="ProductID" value="${productDetail.getProductID()}">
                         <label><b>Số lượng</b></label>
                         <input style="width: 50px" type="number" name="quantity" min="1" value="1">
-                     
+
                         <c:choose>
                             <c:when test="${empty sessionScope.user}">
                                 <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;height: 25px;width: 200px;font-style: 5px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
@@ -626,22 +656,36 @@
                     <div class="comment">
                         <img src="https://m.yodycdn.com/blog/anh-dai-dien-hai-yodyvn2.jpg" alt="User Image">
 
-                        <p>${comment.person.name}<strong>Comment:</strong> ${comment.getContent()}</p>
-                        <p><strong>Created At:</strong> ${comment.getCreateAt()}</p>
-                        <c:if test="${not empty comment.imageUrls}">
-                            <h4>Images:</h4>
-                            <c:forEach var="imageUrl" items="${comment.imageUrls}">
-                                <img src="${imageUrl}" alt="Comment Image" width="200px" />
-                            </c:forEach>
-                        </c:if>
-                        <c:if test="${not empty comment.videoUrls}">
-                            <h4>Videos:</h4>
-                            <c:forEach var="videoUrl" items="${comment.videoUrls}">
-                                <video width="320" height="240" controls>
-                                    <source src="${videoUrl}" type="video/mp4">
-                                </video>
-                            </c:forEach>
-                        </c:if>
+
+                        <div class="comment-container">
+                            <div class="comment-header">
+                                ${comment.person.name}
+                            </div>
+                            <div class="comment-body">
+                                <p><strong>Comment:</strong> ${comment.getContent()}</p>
+                                <p><strong>Created At:</strong> ${comment.getCreateAt()}</p>
+                            </div>
+
+                            <c:if test="${not empty comment.imageUrls}">
+                                <div class="media-section media-images">
+                                    <div class="media-title">Images:</div>
+                                    <c:forEach var="imageUrl" items="${comment.imageUrls}">
+                                        <img src="${imageUrl}" alt="Comment Image" width="200px" />
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+
+                            <c:if test="${not empty comment.videoUrls}">
+                                <div class="media-section media-videos">
+                                    <div class="media-title">Videos:</div>
+                                    <c:forEach var="videoUrl" items="${comment.videoUrls}">
+                                        <video width="320" height="240" controls>
+                                            <source src="${videoUrl}" type="video/mp4">
+                                        </video>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+                        </div>
 
                     </div>
                 </c:forEach>
