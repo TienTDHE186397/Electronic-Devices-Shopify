@@ -51,28 +51,28 @@ public class ProductDetailServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductDetailServlet</title>");
-            out.println("<title>Servlet ProductDetailServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductDetailServlet at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Servlet ProductDetailServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        {
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet ProductDetailServlet</title>");
+                out.println("<title>Servlet ProductDetailServlet</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Servlet ProductDetailServlet at " + request.getContextPath() + "</h1>");
+                out.println("<h1>Servlet ProductDetailServlet at " + request.getContextPath() + "</h1>");
+                out.println("</body>");
+                out.println("</html>");
+            }
         }
-    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-    /**
+     * /**
      * Handles the HTTP <code>GET</code> method.
      *
      *
@@ -99,6 +99,15 @@ public class ProductDetailServlet extends HttpServlet {
 
 // Lấy danh sách thuộc tính của sản phẩm theo `productid`
         List<ProductAttribute> listAttribute = pDao.getAllProductAttributeById(productid);
+        CommentDAO comment = new CommentDAO();
+        List<CommentPerson> com = comment.getCommentsByProductId3(productid);
+
+//        List<imageComment> image = comment.getImageUrlsByCommentId(productid);
+//        List<videoComment> video = comment.getVideoUrlsByCommentId(productid);
+//        request.setAttribute("image", image);
+//        request.setAttribute("video", video);
+        request.setAttribute("comment", com);
+        //Set attribute for object to send data request to JSP Page
 
 // Thiết lập các attribute để truyền dữ liệu sang trang JSP
         request.setAttribute("productDetail", p);         // Gán chi tiết sản phẩm vào attribute
@@ -120,7 +129,107 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String comment = request.getParameter("comment");
+        String realVideoPath = request.getServletContext().getRealPath("/img");
+        String image = "img/default-phone.jpg";
+        String realImagePath = request.getServletContext().getRealPath("/img");
+        int productid = Integer.parseInt(request.getParameter("ProductID"));
+        System.out.println("productID: " + productid);
+        //---------------------------------------------------------------------------------------------------------------------------------
+        // Giả định rằng bạn đã có một danh sách để lưu trữ các đường dẫn video
+        List<String> videoPaths = new ArrayList<>();
+        List<String> videoNotes = new ArrayList<>();
+
+// Lặp qua các phần của request
+        if (videoPaths != null) {
+            for (Part part : request.getParts()) {
+                if (part.getName().equals("vidImgValue")) {
+                    // Xử lý video
+                    if (part.getSize() > 0) {
+                        String videoFilename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+
+                        // Kiểm tra và tạo thư mục nếu chưa tồn tại
+                        if (!Files.exists(Path.of(realVideoPath))) {
+                            Files.createDirectory(Path.of(realVideoPath));
+                        }
+
+                        // Ghi video vào thư mục
+                        part.write(realVideoPath + File.separator + videoFilename);
+
+                        // Kiểm tra định dạng video
+                        if (videoFilename.endsWith(".mp4")) {
+                            videoPaths.add("img/" + videoFilename); // Lưu đường dẫn video
+                        } else {
+                            videoPaths.add("img/default-vid.mp4"); // Lưu đường dẫn video mặc định nếu không phải .mp4
+                        }
+                    }
+                } else if (part.getName().equals("vidImgName")) {
+                    // Xử lý ghi chú
+                    String note = request.getParameter(part.getName());
+                    videoNotes.add(note); // Lưu ghi chú
+                }
+            }
+        }
+
+        //---------------------------------------------------------------------------------------------
+        //Xu ly Anh
+        List<String> ImagePaths = new ArrayList<>();
+        List<String> ImageNotes = new ArrayList<>();
+
+// Lặp qua các phần của request
+        if (ImagePaths != null) {
+            for (Part part : request.getParts()) {
+                if (part.getName().equals("vidImageValue")) {
+                    // Xử lý video
+                    if (part.getSize() > 0) {
+                        String IMGFilename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+
+                        // Kiểm tra và tạo thư mục nếu chưa tồn tại
+                        if (!Files.exists(Path.of(realVideoPath))) {
+                            Files.createDirectory(Path.of(realVideoPath));
+                        }
+
+                        // Ghi video vào thư mục
+                        part.write(realVideoPath + File.separator + IMGFilename);
+
+                        // Kiểm tra định dạng video
+                        if (IMGFilename.endsWith(".jpg")) {
+                            ImagePaths.add("img/" + IMGFilename); // Lưu đường dẫn video
+                        } else {
+                            ImagePaths.add("img/default-phone.jpg"); // Lưu đường dẫn video mặc định nếu không phải .mp4
+                        }
+                    }
+                } else if (part.getName().equals("vidImageName")) {
+                    // Xử lý ghi chú
+                    String note = request.getParameter(part.getName());
+                    ImageNotes.add(note); // Lưu ghi chú
+                }
+            }
+        }
+        System.out.println("comment: " + comment);
+        System.out.println("videoPaths: " + videoPaths);
+        System.out.println("videoNotes: " + videoNotes);
+        System.out.println("ImagePaths: " + ImagePaths);
+        System.out.println("ImageNotes: " + ImageNotes);
+        HttpSession session = request.getSession();
+        CommentDAO comDAO = new CommentDAO();
+        Person person = (Person) session.getAttribute("user");
+        if (comment == null || comment.trim().isEmpty()) {
+            // Nếu comment là null hoặc rỗng, chuyển hướng về trang chi tiết sản phẩm
+            response.sendRedirect("product-detail?ProductID=" + productid);
+        } else {
+
+            LocalDate date2 = LocalDate.now();
+            int addC = comDAO.addComment(productid, person.getPersonID(), comment, date2);
+            boolean addIm = comDAO.addCommentImages(addC, ImagePaths);
+            boolean addVideo = comDAO.addCommentVideos(addC, videoPaths);
+            System.out.println(addC);
+            System.out.println("check1" + addIm);
+            System.out.println("check2" + addVideo);
+//        boolean addComment = comDAO.addCommentWithMedia(productid, person.getPersonID(), comment, ImagePaths, videoPaths, date2);
+            response.sendRedirect("product-detail?ProductID=" + productid);
+
+        }
     }
 
     /**
