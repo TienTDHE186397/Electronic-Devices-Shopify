@@ -219,7 +219,7 @@
             /* */
             .card-list .card-item .card-link{
                 user-select: none;
-                
+
                 display: block;
                 background: #fff;
                 padding: 18px;
@@ -233,11 +233,11 @@
             .card-list .card-item .card-link:hover{
                 border-color: #5372f0;
             }
-            
+
             .card-item{
                 height: 420px;
             }
-            
+
             .card-list .card-link .card-image{
                 width: 100%;
                 aspect-ratio: 16 / 9;
@@ -277,7 +277,7 @@
                 color: #fff;
                 background: #5372F0;
             }
-            
+
             .card-wrapper{
                 max-width: 1100px;
                 margin:0 60px 35px;
@@ -637,32 +637,29 @@
                         </c:forEach>
                     </div>
                 </div>
-
-
             </div>
         </section>
-        <div class="container swiper">
-            <h3>Bài Viết Mới</h3>
-            <div class="card-wrapper">
-                <ul class="card-list swiper-wrapper">
-                    <c:forEach items="${lBlog}" var="listBlog">
-                    <li class="card-item swiper-slide">
-                        <a href="PostDetailHome?id=${listBlog.blogID}" class="card-link">
-                            <img src="${listBlog.blog_img}" alt="${listBlog.blog_img_tittle}" class="card-image"/>
-                            <p class="badge">${listBlog.getPerson().getName()}</p>
-                            <h2 class="card-title-item">${listBlog.blog_tittle}</h2>
-                            <div style="font-size: 12px; font-style: italic">${listBlog.blog_summary_information}</div>
-                            <div style="font-size: 12px"><b>Ngày đăng: </b>${listBlog.blog_update_time}</div>
-                            <button class="material-symbols-rounded card-button">arrow_forward</button>
-                        </a>
-                    </li>
+        <div class="container swiper"> <!-- Khởi tạo một container cho swiper để hiển thị các bài viết mới -->
+            <h3>Bài Viết Mới</h3> <!-- Tiêu đề cho phần bài viết mới -->
+            <div class="card-wrapper"> <!-- Wrapper chứa danh sách các thẻ card -->
+                <ul class="card-list swiper-wrapper"> <!-- Danh sách các thẻ card với lớp swiper-wrapper để hỗ trợ chức năng swiper -->
+                    <c:forEach items="${lBlog}" var="listBlog"> <!-- Lặp qua danh sách các bài viết (lBlog) -->
+                        <li class="card-item swiper-slide"> <!-- Mỗi bài viết được đặt trong một thẻ li với lớp swiper-slide -->
+                            <a href="PostDetailHome?id=${listBlog.blogID}" class="card-link"> <!-- Liên kết đến chi tiết bài viết, truyền blogID qua tham số URL -->
+                                <img src="${listBlog.blog_img}" alt="${listBlog.blog_img_tittle}" class="card-image"/> <!-- Hình ảnh bài viết -->
+                                <p class="badge">${listBlog.getPerson().getName()}</p> <!-- Tên tác giả của bài viết -->
+                                <h2 class="card-title-item">${listBlog.blog_tittle}</h2> <!-- Tiêu đề bài viết -->
+                                <div style="font-size: 12px; font-style: italic">${listBlog.blog_summary_information}</div> <!-- Tóm tắt thông tin bài viết -->
+                                <div style="font-size: 12px"><b>Ngày đăng: </b>${listBlog.blog_update_time}</div> <!-- Ngày cập nhật bài viết -->
+                                <button class="material-symbols-rounded card-button">arrow_forward</button> <!-- Nút điều hướng đến bài viết -->
+                            </a>
+                        </li>
                     </c:forEach>
                 </ul>
-                <div class="swiper-pagination"></div>
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
+                <div class="swiper-pagination"></div> <!-- Phần phân trang cho swiper -->
+                <!-- Nút điều hướng nếu cần -->
+                <div class="swiper-button-prev"></div> <!-- Nút quay lại -->
+                <div class="swiper-button-next"></div> <!-- Nút tiếp theo -->
             </div>
         </div>
     <df-messenger

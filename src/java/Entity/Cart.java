@@ -63,6 +63,13 @@ public class Cart {
         this.status = status;
     }
     
-
+    // Phương thức để tính tổng giá trị giỏ hàng
+    public double getTotalPrice() {
+        double total = 0;
+        for (CartItem item : items) {
+            total += item.getPrice() * item.getQuantity();
+        }
+        return total;
+    }
    
 }
