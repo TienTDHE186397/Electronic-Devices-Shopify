@@ -899,6 +899,7 @@ public class BlogListDAO extends DBContext {
         BlogListDAO bl = new BlogListDAO();
 //        List<Blog> b = bl.sortBlogList("viewsd");
         Blog b1 = bl.getBlogById(1);
+        System.out.println(b1);
 //           String b = bl.searchBlogList(null, null, null, "Published", "", "thieunhi", "1");
         //   System.out.println(b);
         // System.out.println(b);
@@ -921,13 +922,16 @@ public class BlogListDAO extends DBContext {
 //        System.out.println("add thanh cong");
 //              String m = bl.searchBlogListHome("Điện Nghe Bàn","1");
 //          System.out.println(m);
-        Blog b = bl.getBlogById(10);
-        Person p = pd.getPersonById("1");
-        System.out.println(p.getPersonID());
-        System.out.println(b.getBlogID());
-        CommentBlog c = new CommentBlog(6, "Bài viết này thật thú vị", "2024-10-18", p, b);
-        bl.addCommentBlog(c, b, p);
-        System.out.println("Thanh Cong");
+//        Blog b = bl.getBlogById(10);
+//        Person p = pd.getPersonById("1");
+//        System.out.println(p.getPersonID());
+//        System.out.println(b.getBlogID());
+//<<<<<<< HEAD
+//=======
+//        CommentBlog c = new CommentBlog(6, "Bài viết này thật thú vị", "2024-10-18", p, b);
+//        bl.addCommentBlog(c, b, p);
+//        System.out.println("Thanh Cong");
+//>>>>>>> 8155484ba893daeb3eb7733dd275da833bbe7bdb
         
     }
 

@@ -26,6 +26,9 @@ public class Person {
         this.Image = Image;
     }
 
+    public Person() {
+    }
+   
     public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Name = Name;
         this.Gender = Gender;
@@ -75,7 +78,6 @@ public class Person {
         this.roleID = RoleID;
         
     }
-    
     public Person(String image, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Image = image;
         this.Name = Name;
