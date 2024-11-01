@@ -115,53 +115,6 @@ public class CommentDAO extends DBContext {
         return videoComments;
     }
 
-    public List<CommentPerson> getCommentsByProductId2(int productId) {
-        String sql = "SELECT c.comment_id, c.CommentDetail, c.created_at, \n"
-                + "                   p.PersonID, p.Name, p.Email, p.Gender, p.DateOfBirth, \n"
-                + "                   img.image_url, vid.video_url\n"
-                + "            FROM Comment c\n"
-                + "            JOIN Person p ON c.PersonID = p.PersonID\n"
-                + "            LEFT JOIN CommentImages img ON c.comment_id = img.comment_id\n"
-                + "            LEFT JOIN CommentVideos vid ON c.comment_id = vid.comment_id\n"
-                + "            WHERE c.ProductID = ?\n"
-                + "            ORDER BY c.created_at DESC";
-
-        List<CommentPerson> comments = new ArrayList<>();
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, productId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int commentId = rs.getInt("comment_id");
-                    String content = rs.getString("CommentDetail");
-                    LocalDate createdAt = rs.getDate("created_at").toLocalDate();
-
-                    // Person information
-                    Person person = pDAO.getPersonById(rs.getString("personID")); // Gọi phương thức để lấy Person
-                    // Create CommentPerson object
-                    CommentPerson comment = new CommentPerson(commentId, productId, person, content, createdAt);
-
-                    // Add image URL if available
-                    String imageUrl = rs.getString("image_url");
-                    if (imageUrl != null) {
-                        comment.addImageUrl(imageUrl);
-                    }
-
-                    // Add video URL if available
-                    String videoUrl = rs.getString("video_url");
-                    if (videoUrl != null) {
-                        comment.addVideoUrl(videoUrl);
-                    }
-
-                    comments.add(comment);
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return comments;
-    }
   public List<CommentPerson> getCommentsByProductId3(int productId) {
         String sql = """
             SELECT c.comment_id, c.CommentDetail, c.created_at, 
