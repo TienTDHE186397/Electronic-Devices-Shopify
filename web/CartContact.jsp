@@ -233,7 +233,7 @@
                     </div>
                     <div style="display: flex;justify-content: space-between">
                         <a href="cart-detail" class="btn btn-primary">Thay đổi</a>
-                        <a href="cart-detail" class="btn btn-primary">Thanh toán</a>
+                        <a href="cartCompletion" class="btn btn-primary">Thanh toán</a>
 
 
                     </div>                  

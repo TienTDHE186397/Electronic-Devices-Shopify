@@ -66,7 +66,30 @@ public class PersonDAO extends DBContext {
     }
 
     public Person login(String email, String password) {
-        String query = "SELECT * FROM Person WHERE Email = ? AND Password = ?";
+        String query = "SELECT \n"
+                + "    p.PersonID,\n"
+                + "    p.Name,\n"
+                + "    p.Gender,\n"
+                + "    p.DateOfBirth,\n"
+                + "    p.StartDate,\n"
+                + "    p.Email,\n"
+                + "    p.RoleID,\n"
+                + "    p.Password,\n"
+                + "    \n"
+                + "    -- Retrieve primary address\n"
+                + "    pa.Address AS PrimaryAddress,\n"
+                + "    \n"
+                + "    -- Retrieve primary phone\n"
+                + "    pp.Phone AS PrimaryPhone\n"
+                + "FROM \n"
+                + "    Person p\n"
+                + "LEFT JOIN \n"
+                + "    PersonAddress pa ON p.PersonID = pa.PersonID AND pa.IsPrimary = 1\n"
+                + "LEFT JOIN \n"
+                + "    PersonPhone pp ON p.PersonID = pp.PersonID AND pp.IsPrimary = 1\n"
+                + "WHERE \n"
+                + "    p.Email = ?\n"
+                + "    AND p.Password = ?;";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, email);
@@ -81,9 +104,12 @@ public class PersonDAO extends DBContext {
                 LocalDate localDate = sqlDate.toLocalDate();
                 int roleID = rs.getInt("RoleID");
                 String passwordFromDB = rs.getString("Password");
-
+                String address = rs.getString("PrimaryAddress");
+                String phone = rs.getString("PrimaryPhone");
+                //int PersonID,String Name, String Gender, String DateOfBirth, LocalDate StartDate,
+                //String Address, String Email, String Phone, int RoleID, String Password
                 // Tạo đối tượng Person từ dữ liệu lấy được
-                return new Person(personID, name, gender, age, localDate, email, roleID, password);
+                return new Person(personID, name, gender, age, localDate, address, email, phone, roleID, password);
             }
 
         } catch (SQLException e) {
@@ -199,6 +225,7 @@ public class PersonDAO extends DBContext {
         }
         return check;
     }
+
     public boolean insertVideo(int personId, String videoUrl, String altText) {
         boolean check = true;
         try {
@@ -215,7 +242,6 @@ public class PersonDAO extends DBContext {
         }
         return check;
     }
-
 
     public static void main(String[] args) {
 
