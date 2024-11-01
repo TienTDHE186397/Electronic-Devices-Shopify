@@ -21,8 +21,8 @@ import java.util.List;
  *
  * @author Dokkuhai
  */
-@WebServlet(name="DeleteFromCartController", urlPatterns={"/delete"})
-public class DeleteFromCartController extends HttpServlet {
+@WebServlet(name="UpdateFromCartController", urlPatterns={"/update"})
+public class UpdateFromCartController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +39,10 @@ public class DeleteFromCartController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteFromCartController</title>");  
+            out.println("<title>Servlet UpdateFromCartController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteFromCartController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateFromCartController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,33 +58,37 @@ public class DeleteFromCartController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String key = request.getParameter("ProductID");
+    throws ServletException, IOException {
+         String productIdStr = request.getParameter("ProductID");
+    String quantityStr = request.getParameter("quantity");
 
-        if (key != null) {
-            try {
-                int productId = Integer.parseInt(key);
+    try {
+        int productId = Integer.parseInt(productIdStr);
+        int quantity = Integer.parseInt(quantityStr);
 
-                HttpSession session = request.getSession();
-                Cart cart = (Cart) session.getAttribute("cart"); // Retrieve the cart from session
+        HttpSession session = request.getSession();
+        Cart cart = (Cart) session.getAttribute("cart"); // Retrieve cart from session
 
-                if (cart != null) {
-                    List<CartItem> listItems = cart.getItems(); // Get list of cart items
-                    // Find and remove the item by ProductID
-                    listItems.removeIf(item -> item.getProduct().getProductID() == productId);
+        if (cart != null) {
+            List<CartItem> listItems = cart.getItems();
 
-                    // Update cart in session
-                    session.setAttribute("cart", cart);
+            for (CartItem item : listItems) {
+                if (item.getProduct().getProductID() == productId) {
+                    item.setQuantity(quantity); // Update the quantity
+                    break;
                 }
-            } catch (NumberFormatException e) {
-                // Handle invalid ProductID format gracefully
-                System.out.println("Invalid ProductID format: " + key);
             }
-        }
 
-        // Redirect to cart page
-        response.sendRedirect(request.getContextPath() + "/cart-detail");
+            // Update cart in session
+            session.setAttribute("cart", cart);
+        }
+    } catch (NumberFormatException e) {
+        System.out.println("Invalid product ID or quantity");
     }
+
+    // Redirect to the cart page or relevant page after update
+    response.sendRedirect(request.getContextPath() + "/cart-detail");
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.

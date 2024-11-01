@@ -139,15 +139,16 @@
                         <div class="col-lg-9" style="margin-bottom: 20px">
                             <h3><strong>Giỏ Hàng</strong></h3>
                             
-                            <form action="cart" method="get">
+                            
                                 <table>
                                     <thead>
                                         <tr>
                                             <th>Tên sản phẩm</th>
                                             <th>Hình Ảnh</th>
-                                            <th>Phân Loại</th>
+                                            <th>Đơn giá</th>
                                             <th>Số Lượng</th>
                                             <th style="width: 170px">Cập Nhật Số Lượng</th>
+                                            <th>Tổng</th>                                         
                                             <th style="text-align: center">Xóa</th>
                                         </tr>
                                     </thead>
@@ -156,20 +157,37 @@
                                         <tr>
                                             <td>${item.getProduct().getProductName()}</td>
                                             <td><img style="width: 69px; height: 100px" src="${item.getProduct().getImg()}" alt="Product Image"></td>
-                                            <td>${c.getBook().getAuthor()}</td>
-                                            <td>
-                                                <input style="width: 50px" type="number" name="quantity}" value="${item.getQuantity()}" min="1">
-                                            </td>
-                                            <td style="text-align: center"><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
+                                            <td style="color: red"><b>${item.getPrice()}đ</b></td>                                          
+                                            <form action="update" method="get">
+                                                <td>
+                                                    
+                                                    <input type="hidden" name="ProductID" value="${item.getProduct().getProductID()}">
+                                                    <input style="width: 50px" type="number" name="quantity" value="${item.getQuantity()}" min="1">
+                                                    
+                                                </td>
+                                                <td><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
+                                            </form>
+                                            <td style="color: red"><b>${item.getPrice()*item.getQuantity()}đ</b></td>
+                                            
                                             <td style="text-align: center">
-                                                <a href="remove?bookID=${pro.getProductID()}" class="btn btn-danger">Xóa</a>
+                                                <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-danger">Xóa</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                        </form>
-                       
+                        
+                            <div style="display: flex;justify-content: space-between">
+                            <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-primary">Lưu</a>
+                            <a href="cartcontact" class="btn btn-dark">Đặt hàng</a>
+                            <c:set var="total" value="0" />
+                            <c:forEach items="${cart.items}" var="item">
+                                <c:set var="total" value="${total + (item.price * item.quantity)}" />
+                            </c:forEach>
+                            <div style="color: red;font-size: 20px;"><b>Tổng cộng: ${total}</b></div>
+                            
+                        </div>  
+ 
                     </div>
                     <div class="col-lg-3">
                         <div class="sider drop-shadow">
