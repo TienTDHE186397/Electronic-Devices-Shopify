@@ -221,7 +221,7 @@
                                             <td>${person.email}</td>
                                             <td>${person.phone}</td>
                                             <td>
-                                                <a href="#" class="btn-details">Details</a>
+                                                <a href="customer-detail?id=${person.personID}" class="btn-details">Details</a>
                                             </td>
                                         </tr>
                                     </c:if>
