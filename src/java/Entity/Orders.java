@@ -27,6 +27,7 @@ public class Orders {
         this.Method = Method;
         this.Status = Status;
     }
+    
 
     public int getOrderID() {
         return OrderID;

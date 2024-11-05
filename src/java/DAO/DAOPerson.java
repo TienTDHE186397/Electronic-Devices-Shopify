@@ -352,8 +352,11 @@ int rowsAffectedImage = stmtImage.executeUpdate();
     public static void main(String[] args) {
 
         DAOPerson pd = new DAOPerson();
-        //List<Person> lp = pd.getPersonByRole("1");
-        //System.out.println(lp.get(0));
+        List<Person> lp = pd.getAllPerson();
+        for(Person p: lp){
+            System.out.println(p);
+        }
+//        System.out.println(lp.get(0));
 //        int n = pd.addPerson(new Person(6, "Duc", "Name", "2004-11-03", "2024-09-17", "Ha Noi", "duqweqwecdsfsdf@gmail.com", "0985407026", 5, "123"));
 //        if(n>0){
 //            System.out.println("inserted");
@@ -411,5 +414,5 @@ PreparedStatement ps = connection.prepareStatement(sql);
         }
         return list;
     }
-
+    
 }

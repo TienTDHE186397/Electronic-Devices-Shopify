@@ -9,7 +9,6 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
@@ -44,7 +43,7 @@
                 <div class="row footer_1">
                     <div class="col-md-4">
                         <div class="footer_1i">
-                            <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="index.html"><img src="img/logo/logo.png" alt="" class="logo-img"> Shopify</a></h3><br/>
+                            <h3 class="mb-0" style="font-family: serif"><a class="col_dark" href="home"><img src="img/Icon.png" alt="" class="logo-img" style="width: 100px;height: 100px;"> Shopify</a></h3><br/>
                             <p class="fs-6 mb-4">KẾT NỐI VỚI CHÚNG TÔI TRÊN MẠNG XÃ HỘI</p>
                             <ul class="social-network social-circle mb-0 mt-3">
                                 <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-skype"></i></a></li>
@@ -74,7 +73,7 @@
                                 <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="home">Trang Chủ</a></h6>
                                 <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Laptop</a></h6>
                                 <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Điện Thoại</a></h6>
-                                <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="#">Blog</a></h6>
+                                <h6 class="font_14 fw-normal mb-3 col-md-12 col-6"><a href="PostListHome">Blog</a></h6>
                                 <h6 class="font_14 fw-normal mb-0 col-md-12 col-6"><a href="#">PC</a></h6>
                             </div>
                         </div>

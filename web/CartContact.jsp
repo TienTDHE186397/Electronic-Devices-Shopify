@@ -1,0 +1,284 @@
+<%-- 
+    Document   : CartContact
+    Created on : Oct 31, 2024, 7:08:45 PM
+    Author     : Dokkuhai
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Thông tin đặt hàng</title>
+
+        <style>
+            body{
+                box-sizing: border-box;
+            }
+            #subs {
+                background-color: #f7f7f7; /* Màu nền nhẹ */
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+                margin-top: 70px;
+                margin-bottom: 30px;
+            }
+
+            .brand-name {
+                font-size: 4rem; /* Kích thước chữ lớn hơn */
+                font-weight: bold;
+                background: linear-gradient(45deg, #ff6, #f06, #f90, #6f9);
+                background-size: 300%;
+                color: transparent; /* Ẩn màu chữ gốc */
+                background-clip: text;
+                -webkit-background-clip: text;
+                animation: gradientAnimation 5s ease infinite;
+                text-transform: uppercase; /* Viết hoa toàn bộ chữ */
+                letter-spacing: 0.2rem; /* Khoảng cách giữa các chữ cái lớn hơn */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng chữ */
+            }
+
+            @keyframes gradientAnimation {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            .bg_light_1 {
+                background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
+            }
+
+            .search-item{
+                margin: 20px 20px;
+            }
+
+            .drop-shadow {
+                filter: drop-shadow(0.3em 0.3em 0.1em #555);
+            }
+
+            .category-box{
+                margin: 20px 20px;
+            }
+
+            table {
+                border-spacing: 0;
+                width: 100%;
+
+            }
+            td {
+                border: 1px solid black;
+
+                padding: 8px;
+                text-align: center;
+            }
+            .latest-product{
+                margin: 20px 20px;
+            }
+
+            .card-product{
+                display: flex;
+                overflow: hidden;
+                border: 1px solid black;
+                margin: 10px 0px;
+            }
+            .card-product img{
+                width: 50px;
+                height: 50px;
+                object-fit: contain;
+            }
+
+            .sider{
+                background-color: #ffffff;
+                width: 100%;
+                height: 100vh;
+                margin-top: 50px;
+                border-top: 1px solid black;
+                border-left: 1px solid black;
+
+            }
+
+            .contact-table{
+                width: 100%;
+
+                margin: 50px 20px 10px 10px;
+                background-color: #d9d9d9;
+                border-radius: 10px;
+                border: 1px solid black;
+                padding: 20px;
+                object-fit: contain;
+            }
+
+            .contact-information{
+
+
+                margin: 20px 10px 0px 0px;
+            }
+
+            .price-table{
+                margin-left: 0px;
+
+                background-color: white;
+                border-radius: 10px;
+
+            }
+
+            .input{
+                width: 100%;
+                height: 20px;
+                border: 1px solid black;
+            }
+        </style>
+
+    </head>
+    <body>
+        <%@include file="header.jsp" %>
+
+        <section id="subs" class="pt-5 pb-5 bg_light_1">
+            <div class="container text-center">
+                <h1 class="brand-name">Shopify</h1>
+            </div>
+        </section>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="contact-table container">
+                        <div class="row">
+                            <div class="contact-information col-md-7">
+                                <form action="action" method="get">
+                                    <h3>Thông tin đặt hàng</h3>
+                                    <label><b>Họ tên người nhận hàng</b></label><br>
+                                    <input type="text" name="name" value="${sessionScope.user.getName()}" class="input"/>
+                                    <div style="display: flex;justify-content: space-between">
+                                        <div style="width: 55%">
+                                            <label><b>Địa chỉ email</b></label><br>
+                                            <input type="text" name="email" value="${sessionScope.user.getEmail()}" class="input"/>
+                                        </div>
+                                        <div style="width: 35%">
+                                            <label><b>Số điện thoại</b></label><br>
+                                            <input type="text" name="phone" value="${sessionScope.user.getPhone()}" class="input"/>
+                                        </div>
+                                    </div>
+                                    <label><b>Địa chỉ nhận hàng</b></label><br>
+                                    <input type="text" name="address" value="${sessionScope.user.getAddress()}" class="input"/> 
+                                    <label><b>Phương thức thanh toán</b></label><br>
+                                    <select name="payment">
+                                        <option>Thanh toán bằng tiền mặt</option>
+                                        <option>Chuyển khoản</option>
+                                    </select>
+                                </form>
+                            </div>
+
+                            <div class="price-table col-md-4">
+                                <div style="font-size: 20px;margin-top: 10px;">Thông tin đơn hàng</div>
+                                <table border="0">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: start;">Tên SP</th>
+                                            <th style="text-align: center;">SL</th>
+                                            <th style="text-align: start;">Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${cart.items}" var="item">
+                                            <tr>
+                                                <td style="text-align: start;font-size: 12px;">${item.getProduct().getProductName()}</td>
+                                                <td style="text-align: center;font-size: 12px;">x${item.getQuantity()}</td>
+                                                <td style="text-align: end;font-size: 12px;">${item.getPrice()*item.getQuantity()}đ</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
+                                <c:set var="total" value="0" />
+                                <c:forEach items="${cart.items}" var="item">
+                                    <c:set var="total" value="${total + (item.price * item.quantity)}" />
+                                </c:forEach>
+                                <table border="0">
+
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: start"><b>Ưu đãi</b></td>
+                                            <td style="text-align: end">-${total/10}đ</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: start"><b>Phí vận chuyển</b></td>
+                                            <td style="text-align: end">+30.000đ</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="text-align: start"><b>Thuế</b></td>
+                                            <td style="text-align: end">0đ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
+                                <table border="0">                                  
+                                    <tbody>
+                                        <tr>
+
+                                            <td style="text-align: start"><b>Tổng đơn hàng</b></td>
+                                            <td style="text-align: end">${total - (total/10) + 30000}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>    
+                    </div>
+                    <div style="display: flex;justify-content: space-between">
+                        <a href="cart-detail" class="btn btn-primary">Thay đổi</a>
+                        <a href="cartCompletion" class="btn btn-primary">Thanh toán</a>
+
+
+                    </div>                  
+                </div>
+                <div class="col-lg-3">
+                    <div class="sider drop-shadow">
+                        <div class="search-item">
+                            <form action="product-list" method="get">
+                                <label><b>Tìm kiếm sản phẩm:</b></label>
+                                <input style="border-radius: 5px;width: 250px" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="${param.search_product}">
+                            </form>
+                        </div>
+
+                        <div class="category-box">
+                            <h3>Phân Loại</h3>
+                            <table border="1" width="100">
+                                <tbody>
+                                    <c:forEach items="${listCategory}" var="listC">
+                                        <tr>
+                                            <td><a href="product-list?category=${listC.getCategoryID()}">${listC.getCategoryName()}</a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>                                    
+                            </table>
+                        </div>
+
+                        <div class="latest-product">
+                            <h3>Sản phẩm mới</h3>
+                            <c:forEach items="${listProductLatest}" var="listPL">
+                                <a href="product-detail?ProductID=${listPL.getProductID()}">
+                                    <div class="card-product">
+                                        <img src="${listPL.getImg()}" alt="...">
+                                        <div>
+                                            <div>${listPL.getProductName()}</div>
+                                            <div style="font-size: 10px;font-style: italic">Ngày cập nhật: ${listPL.getReleaseDate()}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </c:forEach>
+                        </div>    
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        <%@include file="footer.jsp" %>
+    </body>
+</html>

@@ -2,6 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/CartContact.java</file>
+            <file>file:/D:/SWP391/webdientu/web/CustomerDetail.jsp</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/Person.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/PersonDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/HistoryChange.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/DAOCustomer.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/ProductDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/HistoryChangeDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/CustomerDetail.java</file>
+        </group>
+>>>>>>> 9930e6c7d1451d527ad0126d4ae445f139e27d5f
     </open-files>
 </project-private>
