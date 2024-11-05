@@ -36,6 +36,18 @@ public class HistoryChange {
         this.updatedDate = updatedDate;
     }
 
+    public HistoryChange(int personID, String email, String fullName, String gender, String mobile, String address, String updatedBy) {
+        this.personID = personID;
+        this.email = email;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.mobile = mobile;
+        this.address = address;
+        this.updatedBy = updatedBy;
+    }
+
+    
+    
     public int getHistoryID() {
         return historyID;
     }

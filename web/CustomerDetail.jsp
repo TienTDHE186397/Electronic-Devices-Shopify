@@ -12,6 +12,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Khách Hàng - ${customerDetail.getName()}</title>
+        <style>
+            .profile-img{
+                width: 220px;
+                height: 220px;
+                object-fit: contain;
+            }
+            .profile-img img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        </style>
     </head>
     <body>
         <%@include file="header.jsp" %>
@@ -26,32 +38,40 @@
                                     <div class="form-group">
                                         <div class="change-avatar">
                                             <div class="profile-img">
-                                                <img src="img/default-phone.jpg" alt="User Image">
+                                                <img src="${customerDetail.getImage()}" alt="User Image">
                                             </div>
 
                                         </div>
                                     </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            
+                                            <input name="id" type="hidden" class="form-control" value="${customerDetail.getPersonID()}">
+                                            <input name="userName" type="hidden" class="form-control" value="${sessionScope.user.getName()}">
+                                        </div>
+                                    </div>        
                                 </div>
+
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Tên đầy đủ</label>
-                                        <input type="text" class="form-control" value="${customerDetail.getName()}">
+                                        <input name="name" type="text" class="form-control" value="${customerDetail.getName()}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Giới tính</label>
-                                        <input type="text" class="form-control" value="${customerDetail.getGender()}">
+                                        <input type="text" name="gender" class="form-control" value="${customerDetail.getGender()}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control"
+                                        <input type="email" name="email" class="form-control"
                                                value="${customerDetail.getEmail()}">
                                         <label>Ngày tháng năm sinh</label>
                                         <div class="cal-icon">
-                                            <input type="text" class="form-control datetimepicker"
+                                            <input type="text" name="dateOfBirth" class="form-control datetimepicker"
                                                    value="${customerDetail.getDateOfBirth()}">
                                         </div>
                                     </div>
@@ -60,13 +80,13 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Số điện thoại</label>
-                                        <input type="text" value="${customerDetail.getPhone()}" class="form-control">
+                                        <input type="text" value="${customerDetail.getPhone()}" name="phone" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Địa chỉ</label>
-                                        <input type="text" class="form-control" value="${customerDetail.getAddress()}">
+                                        <input type="text" class="form-control" name="address" value="${customerDetail.getAddress()}">
                                     </div>
                                 </div>
                             </div>
@@ -131,25 +151,18 @@
         </div>
 
         <!-- Phân trang -->
-        <div class="pagination">
-            <c:if test="${currentPage > 1}">
-                <a href="customer-detail?personID=${customerDetail.getPersonID()}&pageIndex=${currentPage - 1}">Trang trước</a>
-            </c:if>
+        <div class="pagination container" style="display: flex;justify-content: center;width: 100%">
 
             <c:forEach var="i" begin="1" end="${totalPages}">
                 <c:choose>
                     <c:when test="${i == currentPage}">
-                        <strong>${i}</strong> <!-- Hiển thị trang hiện tại -->
+                        <strong style="padding: 20px">${i}</strong> <!-- Hiển thị trang hiện tại -->
                     </c:when>
                     <c:otherwise>
-                        <a href="customer-detail?personID=${customerDetail.getPersonID()}&pageIndex=${i}">${i}</a> <!-- Liên kết đến các trang khác -->
+                        <a style="padding: 20px;" href="customer-detail?id=${customerDetail.getPersonID()}&pageIndex=${i}">${i}</a> <!-- Liên kết đến các trang khác -->
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-
-            <c:if test="${currentPage < totalPages}">
-                <a href="customer-detail?personID=${personID}&pageIndex=${currentPage + 1}">Trang tiếp theo</a>
-            </c:if>
         </div>                               
     </body>
 </html>
