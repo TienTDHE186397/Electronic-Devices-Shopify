@@ -115,17 +115,17 @@ public class CommentDAO extends DBContext {
         return videoComments;
     }
 
-  public List<CommentPerson> getCommentsByProductId3(int productId) {
+    public List<CommentPerson> getCommentsByProductId3(int productId) {
         String sql = """
             SELECT c.comment_id, c.CommentDetail, c.created_at, 
-                   p.PersonID, p.Name, p.Email, p.Gender, p.DateOfBirth, 
-                   img.image_url, vid.video_url
-            FROM Comment c
-            JOIN Person p ON c.PersonID = p.PersonID
-            LEFT JOIN CommentImages img ON c.comment_id = img.comment_id
-            LEFT JOIN CommentVideos vid ON c.comment_id = vid.comment_id
-            WHERE c.ProductID = ?
-            ORDER BY c.created_at DESC
+                               p.PersonID, p.Name, p.Email, p.Gender, p.DateOfBirth, 
+                               img.image_url, vid.video_url , img.image_text , vid.video_text
+                        FROM Comment c
+                        JOIN Person p ON c.PersonID = p.PersonID
+                        LEFT JOIN CommentImages img ON c.comment_id = img.comment_id
+                        LEFT JOIN CommentVideos vid ON c.comment_id = vid.comment_id
+                        WHERE c.ProductID = ?
+                        ORDER BY c.created_at DESC
             """;
 
         Map<Integer, CommentPerson> commentMap = new HashMap<>();
@@ -145,7 +145,6 @@ public class CommentDAO extends DBContext {
 
                         // Lấy thông tin của Person
                         Person person = pDAO.getPersonById(rs.getString("personID")); // Gọi phương thức để lấy Person
-                     
 
                         // Khởi tạo CommentPerson và đưa vào Map
                         comment = new CommentPerson(commentId, productId, person, content, createdAt);
@@ -154,19 +153,22 @@ public class CommentDAO extends DBContext {
 
                     // Thêm URL ảnh vào CommentPerson nếu có
                     String imageUrl = rs.getString("image_url");
+                    String imageText = rs.getString("image_text");
                     if (imageUrl != null) {
                         comment.addImageUrl(imageUrl);
+                        comment.addImageText(imageText);
                     }
 
                     // Thêm URL video vào CommentPerson nếu có
                     String videoUrl = rs.getString("video_url");
+                    String videoText = rs.getString("video_text");
                     if (videoUrl != null) {
                         comment.addVideoUrl(videoUrl);
+                        comment.addVideoText(videoText);
                     }
                 }
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return new ArrayList<>(commentMap.values());
@@ -199,67 +201,39 @@ public class CommentDAO extends DBContext {
         return add; // Trả về -1 nếu có lỗi, hoặc ID của bình luận nếu chèn thành công
     }
 
-    public boolean addCommentImages(int commentId, List<String> imageUrls) {
-        String commentImageSql = "INSERT INTO CommentImages (comment_id, image_url) VALUES (?, ?)";
+    public boolean addCommentImages(int commentId, List<String> imageUrls, List<String> imageText) {
+        String commentImageSql = "INSERT INTO CommentImages (comment_id, image_url, image_text) VALUES (?, ?, ?)";
         try (PreparedStatement imagePs = connection.prepareStatement(commentImageSql)) {
-            for (String imageUrl : imageUrls) {
+            for (int i = 0; i < imageUrls.size(); i++) {
                 imagePs.setInt(1, commentId);
-                imagePs.setString(2, imageUrl);
+                imagePs.setString(2, imageUrls.get(i));
+                imagePs.setString(3, imageText.get(i));
                 imagePs.executeUpdate();
             }
-            return true; // Thêm hình ảnh thành công
+            return true; // Images added successfully
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false; // Thêm hình ảnh thất bại
+        return false; // Failed to add images
     }
 
-    public boolean addCommentVideos(int commentId, List<String> videoUrls) {
-        String commentVideoSql = "INSERT INTO CommentVideos (comment_id, video_url) VALUES (?, ?)";
+    public boolean addCommentVideos(int commentId, List<String> videoUrls, List<String> videoText) {
+        String commentVideoSql = "INSERT INTO CommentVideos (comment_id, video_url, video_text) VALUES (?, ?, ?)";
         try (PreparedStatement videoPs = connection.prepareStatement(commentVideoSql)) {
-            for (String videoUrl : videoUrls) {
+            for (int i = 0; i < videoUrls.size(); i++) {
                 videoPs.setInt(1, commentId);
-                videoPs.setString(2, videoUrl);
+                videoPs.setString(2, videoUrls.get(i));
+                videoPs.setString(3, videoText.get(i));
                 videoPs.executeUpdate();
             }
-            return true; // Thêm video thành công
+            return true; // Videos added successfully
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false; // Thêm video thất bại
+        return false; // Failed to add videos
     }
 
-    public boolean addCommentWithMedia(int productId, int personId, String commentDetail, List<String> imageUrls, List<String> videoUrls, LocalDate date) {
-        boolean success = false;
-        try {
-            CommentDAO cd = new CommentDAO();
-            // Bắt đầu giao dịch
-            connection.setAutoCommit(false);
-
-            // Thêm bình luận
-            int commentId = addComment(productId, personId, commentDetail, date);
-            addCommentImages(commentId, imageUrls);
-
-            addCommentVideos(commentId, videoUrls);
-
-            // Nếu mọi thứ thành công, cam kết giao dịch
-        } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                connection.rollback(); // Hoàn tác nếu có lỗi
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } finally {
-            try {
-                connection.setAutoCommit(true); // Đặt lại chế độ tự động cam kết
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return success; // Trả về true nếu thêm thành công, false nếu có lỗi
-    }
-
+//  
     public static void main(String[] args) {
         CommentDAO cm = new CommentDAO();
         List<CommentPerson> cd = cm.getCommentsByProductId(1);

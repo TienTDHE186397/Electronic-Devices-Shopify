@@ -33,11 +33,7 @@ public class UserDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                DAOPerson dp = new DAOPerson();
-        String id = request.getParameter("PersonID");
-        Person p = dp.getPersonById(id);
-        request.setAttribute("detail", p);
-        request.getRequestDispatcher("UserDetail.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,7 +48,11 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOPerson dp = new DAOPerson();
+        String id = request.getParameter("PersonID");
+        Person p = dp.getPersonById(id);
+        request.setAttribute("detail", p);
+        request.getRequestDispatcher("UserDetail.jsp").forward(request, response);
     }
 
     /**
@@ -66,7 +66,7 @@ public class UserDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         processRequest(request, response);
     }
 

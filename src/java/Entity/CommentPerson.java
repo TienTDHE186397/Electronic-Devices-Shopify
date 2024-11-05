@@ -22,8 +22,26 @@ public class CommentPerson {
     private LocalDate createAt;
     private List<String> imageUrls = new ArrayList<>();
     private List<String> videoUrls = new ArrayList<>();
+    private List<String> imageText = new ArrayList<>();
+    private List<String> videoText = new ArrayList<>();
 
     public CommentPerson() {
+    }
+
+    public List<String> getImageText() {
+        return imageText;
+    }
+
+    public void setImageText(List<String> imageText) {
+        this.imageText = imageText;
+    }
+
+    public List<String> getVideoText() {
+        return videoText;
+    }
+
+    public void setVideoText(List<String> videoText) {
+        this.videoText = videoText;
     }
 
     public CommentPerson(int commentid, int productid, Person person, String content, LocalDate createAt) {
@@ -34,6 +52,14 @@ public class CommentPerson {
         this.createAt = createAt;
     }
 
+    public void addImageText(String imgText) {
+        this.imageText.add(imgText);
+    }
+
+    public void addVideoText(String videoText) {
+        this.videoText.add(videoText);
+    }
+
     public void addImageUrl(String imageUrl) {
         this.imageUrls.add(imageUrl);
     }
@@ -41,7 +67,8 @@ public class CommentPerson {
     public void addVideoUrl(String videoUrl) {
         this.videoUrls.add(videoUrl);
     }
-     public List<String> getImageUrls() {
+
+    public List<String> getImageUrls() {
         return imageUrls;
     }
 
@@ -56,8 +83,6 @@ public class CommentPerson {
     public void setProductid(int productid) {
         this.productid = productid;
     }
-
-  
 
     public int getCommentid() {
         return commentid;

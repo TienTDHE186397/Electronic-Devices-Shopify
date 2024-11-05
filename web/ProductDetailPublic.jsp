@@ -5,6 +5,7 @@
 --%>
 <%@ page import="java.util.UUID" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -186,8 +187,9 @@
                 background-color: #333;
                 padding: 10px;
                 border-radius: 5px;
-                margin-bottom: 10px;
                 color: #000;
+                margin-bottom: 20px; /* Add space between comments */
+                border-radius: 5px; /* Rounded corners */
             }
 
             .comment img {
@@ -481,9 +483,8 @@
                 color: #333;
             }
             .comment-body {
-                margin: 10px 0;
-                font-size: 14px;
-                color: #555;
+                word-wrap: break-word; /* Allow long words to be broken and wrap onto the next line */
+                overflow-wrap: break-word; /* Ensure overflow wrapping in all modern browsers */
             }
             .media-section {
                 margin-top: 15px;
@@ -499,6 +500,40 @@
                 border: 1px solid #ccc;
                 border-radius: 4px;
             }
+/*            //phan trang*/
+            .pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 20px 0;
+            }
+
+            .page-link {
+                display: inline-block;
+                padding: 10px 15px;
+                margin: 0 5px;
+                border: 1px solid #007bff;
+                border-radius: 5px;
+                color: #007bff;
+                text-decoration: none;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .page-link:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .current-page {
+                display: inline-block;
+                padding: 10px 15px;
+                margin: 0 5px;
+                border: 1px solid #007bff;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: white;
+            }
+            
         </style>
     </head>
     <body>
@@ -633,9 +668,9 @@
         </div>
 
         <div class="comments-section">
-            <h2 style="color: white;" >Comments</h2>
+            <h2 style="color: white;">Comments</h2>
             <c:if test="${sessionScope.user != null}">
-                <form action="product-detail?ProductID=${productDetail.getProductID()}" method="post" enctype="multipart/form-data" >
+                <form action="product-detail?ProductID=${productDetail.getProductID()}" method="post" enctype="multipart/form-data">
                     <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..." required></textarea>
                     <div class="button-container">
                         <button type="button" class="btn btn-primary brown-button" onclick="addVideo()">Thêm Video</button>
@@ -649,63 +684,103 @@
             <c:if test="${sessionScope.user == null}">
                 <center><h3 style="color: grey;">Bạn phải đăng nhập để sử dụng tính năng bình luận</h3></center>
                 </c:if>
+
             <div class="posted-comments">
-                <h3 style="color: white;" >Previous Comments</h3>
+                <h3 style="color: white;">Previous Comments</h3>
 
                 <c:forEach var="comment" items="${requestScope.comment}">
                     <div class="comment">
                         <img src="https://m.yodycdn.com/blog/anh-dai-dien-hai-yodyvn2.jpg" alt="User Image">
 
-
                         <div class="comment-container">
                             <div class="comment-header">
-                                ${comment.person.name}
+                                <strong>Author:</strong> ${comment.person.name}
                             </div>
                             <div class="comment-body">
-                                <p><strong>Comment:</strong> ${comment.getContent()}</p>
+                                <p style="max-width: 600px; word-wrap: break-word; overflow-wrap: break-word;">
+                                    <strong>Comment:</strong> ${comment.getContent()}
+                                </p>
                                 <p><strong>Created At:</strong> ${comment.getCreateAt()}</p>
                             </div>
 
                             <c:if test="${not empty comment.imageUrls}">
                                 <div class="media-section media-images">
                                     <div class="media-title">Images:</div>
-                                    <c:forEach var="imageUrl" items="${comment.imageUrls}">
-                                        <img src="${imageUrl}" alt="Comment Image" width="200px" />
-                                    </c:forEach>
+                                    <img src="${comment.imageUrls[0]}" alt="Comment Image" width="200px" />
+                                    <p><strong>Image Text:</strong> ${comment.imageText[0]}</p>
+                                    <div id="more-images-${comment.commentid}" style="display: none;">
+                                        <c:forEach var="i" begin="1" end="${fn:length(comment.imageUrls) - 1}">
+                                            <img src="${comment.imageUrls[i]}" alt="Comment Image" width="200px" />
+                                            <p><strong>Image Text:</strong> ${comment.imageText[i]}</p>
+                                        </c:forEach>
+                                    </div>
+                                    <button onclick="toggleVisibility('more-images-${comment.commentid}')">See More Images</button>
                                 </div>
                             </c:if>
 
+                            <!-- Display first video and see more option -->
                             <c:if test="${not empty comment.videoUrls}">
                                 <div class="media-section media-videos">
                                     <div class="media-title">Videos:</div>
-                                    <c:forEach var="videoUrl" items="${comment.videoUrls}">
-                                        <video width="320" height="240" controls>
-                                            <source src="${videoUrl}" type="video/mp4">
-                                        </video>
-                                    </c:forEach>
+                                    <video width="320" height="240" controls>
+                                        <source src="${comment.videoUrls[0]}" type="video/mp4">
+                                    </video>
+                                    <p><strong>Video Text:</strong> ${comment.videoText[0]}</p>
+                                    <div id="more-videos-${comment.commentid}" style="display: none;">
+                                        <c:forEach var="i" begin="1" end="${fn:length(comment.videoUrls) - 1}">
+                                            <video width="320" height="240" controls>
+                                                <source src="${comment.videoUrls[i]}" type="video/mp4">
+                                            </video>
+                                            <p><strong>Video Text:</strong> ${comment.videoText[i]}</p>
+                                        </c:forEach>
+                                    </div>
+                                    <button onclick="toggleVisibility('more-videos-${comment.commentid}')">See More Videos</button>
                                 </div>
                             </c:if>
+                            <!-- ... -->
                         </div>
-
                     </div>
                 </c:forEach>
 
-
                 <c:if test="${requestScope.comment.isEmpty()}">
-                    <br/>
-                    <br/>
-                    <br/>
-                    <center> <h3 style="color: gray;">Hãy Là Người Bình Luận Đầu Tiên!</h3> </center>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <br/><br/><br/>
+                    <center><h3 style="color: gray;">Hãy Là Người Bình Luận Đầu Tiên!</h3></center>
+                    <br/><br/><br/>
                 </c:if>
 
+                <!-- Phân trang -->
+                <!-- Phân trang -->
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a class="page-link" href="?ProductID=${param.ProductID}&page=${currentPage - 1}">Previous</a>
+                    </c:if>
+                    <c:forEach var="i" begin="1" end="${requestScope.totalPages}">
+                        <c:choose>
+                            <c:when test="${i == currentPage}">
+                                <span class="current-page">${i}</span> <!-- Current button -->
+                            </c:when>
+                            <c:otherwise>
+                                <a class="page-link" href="?ProductID=${param.ProductID}&page=${i}">${i}</a> <!-- Page button -->
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${currentPage < totalPages}">
+                        <a class="page-link" href="?ProductID=${param.ProductID}&page=${currentPage + 1}">Next</a>
+                    </c:if>
+                </div>
 
 
             </div>
         </div>
         <script>
+            function toggleVisibility(id) {
+                const element = document.getElementById(id);
+                if (element.style.display === "none") {
+                    element.style.display = "block";
+                } else {
+                    element.style.display = "none";
+                }
+            }
             // Hàm chuyển hướng đến trang đăng nhập
             function redirectToLogin() {
                 window.location.href = "/WebDienTu/login"; // Thay đổi URL này theo trang đăng nhập của bạn
@@ -722,7 +797,7 @@
                 newRow.classList.add('form-row', 'mb-2');
                 newRow.innerHTML = `
 <div class="form-group col-md-5">
-<input type="text" placeholder="Nhập Tên Video" style="font-weight: bold;" name="vidImgName" class="form-control" required>
+<input type="text" placeholder="Nhập Tên Video" style="font-weight: bold;" name="vidName" class="form-control" required>
 </div>
 <div class="form-group col-md-5">
 <input name="vidImgValue" type="file" accept="video/*, image/*" class="form-control" required>
@@ -745,7 +820,7 @@
                 newRow.classList.add('form-row', 'mb-2');
                 newRow.innerHTML = `
 <div class="form-group col-md-5">
-<input type="text" placeholder="Nhập Tên Ảnh " style="font-weight: bold;" name="vidImageName" class="form-control" required>
+<input type="text" placeholder="Nhập Tên Ảnh " style="font-weight: bold;" name="ImageName" class="form-control" required>
 </div>
 <div class="form-group col-md-5">
 <input name="vidImageValue" type="file" accept="video/*, image/*" class="form-control" required>
@@ -764,7 +839,8 @@
             }
         </script> 
         <!-- Footer start -->
-        <%@include file="footer.jsp" %>
+
         <!-- Footer end -->
     </body>
+    <%@include file="footer.jsp" %>
 </html>
