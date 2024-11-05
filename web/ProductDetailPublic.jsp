@@ -654,8 +654,8 @@
 
                         <c:choose>
                             <c:when test="${empty sessionScope.user}">
-                                <a href="login" onclick="alert('Bạn cần đăng nhập để mượn sách')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;height: 25px;width: 200px;font-style: 5px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
-                                <a href="javascript:history.back()" class=""></a>
+                                <a href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;height: 25px;width: 200px;font-style: 5px;"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</a>
+
                             </c:when>
                             <c:otherwise>
                                 <button type="submit" class="btn btn-primary" style="background-color: #f8405e;border-color: #f8405e;font-size: 12px"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Thêm vào giỏ hàng</button>

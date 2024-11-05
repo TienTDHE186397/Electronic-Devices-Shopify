@@ -13,27 +13,74 @@
         <!-- My CSS -->
         <link rel="stylesheet" href="css/styleFeedback.css">
         <title>FeedbackList</title>
-        
+
     </head>
     <style>
-    #pagination-controls {
-        margin-top: 20px;
+        #pagination-controls {
+            margin-top: 20px;
+        }
+        #rowsPerPage {
+            width: 60px;
+            margin-right: 10px;
+        }
+        #pagination-buttons button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #pagination-buttons button.active {
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+        }
+        .column-visibility-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+       
+    .dropdown {
+        position: relative;
+        display: inline-block;
     }
-    #rowsPerPage {
-        width: 60px;
-        margin-right: 10px;
-    }
-    #pagination-buttons button {
-        margin: 0 5px;
-        padding: 5px 10px;
+
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
         cursor: pointer;
     }
-    #pagination-buttons button.active {
-        font-weight: bold;
-        background-color: #007bff;
-        color: white;
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content label {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content label:hover {background-color: #f1f1f1}
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
     }
 </style>
+
+    
     <body>
 
 
@@ -72,12 +119,6 @@
                     <a href="PostListMKT">
                         <i class='bx bxs-group' ></i>
                         <span class="text">Post</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="customerList">
-                        <i class='bx bxs-group' ></i>
-                        <span class="text">Customer List</span>
                     </a>
                 </li>
             </ul>
@@ -127,6 +168,20 @@
                         <div class="head">
                             <h3>Feedback List</h3>
                             <div class="filter">
+                                <h3>CheckBox</h3>
+                                <div class="dropdown">
+                                    <button class="dropbtn">Select Columns</button>
+                                    <div class="dropdown-content">
+                                        <label><input type="checkbox" data-column="1" checked> FID</label>
+                                        <label><input type="checkbox" data-column="2" checked> Product Name</label>
+                                        <label><input type="checkbox" data-column="3" checked> Customer Name</label>
+                                        <label><input type="checkbox" data-column="4" checked> Rate</label>
+                                        <label><input type="checkbox" data-column="5" checked> Created Date</label>
+                                        <label><input type="checkbox" data-column="6" checked> Status</label>
+                                        <label><input type="checkbox" data-column="7" checked> Action</label>
+                                    </div>
+                                </div>
+
 
                                 <h3>Status</h3>
                                 <select id="statusFilter" class="table-filter">
@@ -185,6 +240,9 @@
                                                 <c:when test="${c.status == 'New'}">
                                                     ${c.status}</span
                                                 </c:when>
+                                                <c:when test="${c.status == 'Processing'}">
+                                                    ${c.status}</span
+                                                </c:when>   
                                                 <c:when test="${c.status == 'Resolved'}">
                                                     ${c.status}
                                                 </c:when>
@@ -194,7 +252,7 @@
                                             </c:choose>
                                         </td>
                                         <td>
-                                              <a href="FeedbackDetail?feedbackID=${c.feedbackID}" class="btn-details">Details</a>
+                                            <a href="FeedbackDetail?feedbackID=${c.feedbackID}" class="btn-details">Details</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -209,7 +267,7 @@
             <!-- MAIN -->
         </section>
         <!-- CONTENT -->
-
+       
 
         <script>
 
@@ -283,130 +341,153 @@
 
         </script>
         <script>
-     document.addEventListener('DOMContentLoaded', function() {
-    const statusFilter = document.getElementById('statusFilter');
-    const ratingFilter = document.getElementById('ratingFilter');
-    const searchForm = document.getElementById('searchForm');
-    const searchInput = document.getElementById('searchInput');
-    const table = document.getElementById('feedback-table');
-    const rowsPerPageInput = document.getElementById('rowsPerPage');
-    const paginationButtons = document.getElementById('pagination-buttons');
-    let currentPage = 1;
-    let rowsPerPage = parseInt(rowsPerPageInput.value);
+            document.addEventListener('DOMContentLoaded', function () {
+                const statusFilter = document.getElementById('statusFilter');
+                const ratingFilter = document.getElementById('ratingFilter');
+                const searchForm = document.getElementById('searchForm');
+                const searchInput = document.getElementById('searchInput');
+                const table = document.getElementById('feedback-table');
+                const rowsPerPageInput = document.getElementById('rowsPerPage');
+                const paginationButtons = document.getElementById('pagination-buttons');
+                let currentPage = 1;
+                let rowsPerPage = parseInt(rowsPerPageInput.value);
 
-    function filterSearchAndPaginate() {
-        const rows = Array.from(table.querySelectorAll('tbody tr'));
-        const statusValue = statusFilter.value;
-        const ratingValue = ratingFilter.value;
-        const searchValue = searchInput.value.toLowerCase();
+                function filterSearchAndPaginate() {
+                    const rows = Array.from(table.querySelectorAll('tbody tr'));
+                    const statusValue = statusFilter.value;
+                    const ratingValue = ratingFilter.value;
+                    const searchValue = searchInput.value.toLowerCase();
 
-        const filteredRows = rows.filter(row => {
-            const status = row.querySelector('td:nth-child(6)').textContent.trim();
-            const ratingStars = row.querySelector('.star-rating').querySelectorAll('.filled').length;
-            const text = row.textContent.toLowerCase();
+                    const filteredRows = rows.filter(row => {
+                        const status = row.querySelector('td:nth-child(6)').textContent.trim();
+                        const ratingStars = row.querySelector('.star-rating').querySelectorAll('.filled').length;
+                        const text = row.textContent.toLowerCase();
 
-            const statusMatch = statusValue === 'all' || status === statusValue;
-            const ratingMatch = ratingValue === 'all' || ratingStars.toString() === ratingValue;
-            const searchMatch = text.includes(searchValue);
+                        const statusMatch = statusValue === 'all' || status === statusValue;
+                        const ratingMatch = ratingValue === 'all' || ratingStars.toString() === ratingValue;
+                        const searchMatch = text.includes(searchValue);
 
-            return statusMatch && ratingMatch && searchMatch;
-        });
+                        return statusMatch && ratingMatch && searchMatch;
+                    });
 
-        const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-        const start = (currentPage - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
+                    const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+                    const start = (currentPage - 1) * rowsPerPage;
+                    const end = start + rowsPerPage;
 
-        rows.forEach(row => row.style.display = 'none');
-        filteredRows.slice(start, end).forEach(row => row.style.display = '');
+                    rows.forEach(row => row.style.display = 'none');
+                    filteredRows.slice(start, end).forEach(row => row.style.display = '');
 
-        updatePaginationButtons(totalPages);
-    }
+                    updatePaginationButtons(totalPages);
+                }
 
-   function updatePaginationButtons(totalPages) {
-    paginationButtons.innerHTML = '';
+                function updatePaginationButtons(totalPages) {
+                    paginationButtons.innerHTML = '';
 
-    const maxVisiblePages = 3; // Số lượng nút phân trang tối đa muốn hiển thị
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                    const maxVisiblePages = 3; // Số lượng nút phân trang tối đa muốn hiển thị
+                    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-    if (currentPage > 1) {
-        const prevButton = document.createElement('button');
-        prevButton.textContent = 'Previous';
-        prevButton.addEventListener('click', () => {
-            currentPage = Math.max(1, currentPage - 1);
-            filterSearchAndPaginate();
-        });
-        paginationButtons.appendChild(prevButton);
-    }
+                    if (currentPage > 1) {
+                        const prevButton = document.createElement('button');
+                        prevButton.textContent = 'Previous';
+                        prevButton.addEventListener('click', () => {
+                            currentPage = Math.max(1, currentPage - 1);
+                            filterSearchAndPaginate();
+                        });
+                        paginationButtons.appendChild(prevButton);
+                    }
 
-    for (let i = startPage; i <= endPage; i++) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.classList.toggle('active', i === currentPage);
-        button.addEventListener('click', () => {
-            currentPage = i;
-            filterSearchAndPaginate();
-        });
-        paginationButtons.appendChild(button);
-    }
+                    for (let i = startPage; i <= endPage; i++) {
+                        const button = document.createElement('button');
+                        button.textContent = i;
+                        button.classList.toggle('active', i === currentPage);
+                        button.addEventListener('click', () => {
+                            currentPage = i;
+                            filterSearchAndPaginate();
+                        });
+                        paginationButtons.appendChild(button);
+                    }
 
-    if (currentPage < totalPages) {
-        const nextButton = document.createElement('button');
-        nextButton.textContent = 'Next';
-        nextButton.addEventListener('click', () => {
-            currentPage = Math.min(totalPages, currentPage + 1);
-            filterSearchAndPaginate();
-        });
-        paginationButtons.appendChild(nextButton);
-    }
-}
+                    if (currentPage < totalPages) {
+                        const nextButton = document.createElement('button');
+                        nextButton.textContent = 'Next';
+                        nextButton.addEventListener('click', () => {
+                            currentPage = Math.min(totalPages, currentPage + 1);
+                            filterSearchAndPaginate();
+                        });
+                        paginationButtons.appendChild(nextButton);
+                    }
+                }
 
-    if (statusFilter) {
-        statusFilter.addEventListener('change', () => {
-            currentPage = 1;
-            filterSearchAndPaginate();
-        });
-    }
+                if (statusFilter) {
+                    statusFilter.addEventListener('change', () => {
+                        currentPage = 1;
+                        filterSearchAndPaginate();
+                    });
+                }
 
-    if (ratingFilter) {
-        ratingFilter.addEventListener('change', () => {
-            currentPage = 1;
-            filterSearchAndPaginate();
-        });
-    }
+                if (ratingFilter) {
+                    ratingFilter.addEventListener('change', () => {
+                        currentPage = 1;
+                        filterSearchAndPaginate();
+                    });
+                }
 
-    if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            currentPage = 1;
-            filterSearchAndPaginate();
-        });
-    }
+                if (searchForm) {
+                    searchForm.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        currentPage = 1;
+                        filterSearchAndPaginate();
+                    });
+                }
 
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            currentPage = 1;
-            filterSearchAndPaginate();
-        });
-    }
+                if (searchInput) {
+                    searchInput.addEventListener('input', () => {
+                        currentPage = 1;
+                        filterSearchAndPaginate();
+                    });
+                }
 
-    if (rowsPerPageInput) {
-        rowsPerPageInput.addEventListener('change', () => {
-            const newValue = parseInt(rowsPerPageInput.value);
-            if (newValue > 0) {
-                rowsPerPage = newValue;
-                currentPage = 1;
+                if (rowsPerPageInput) {
+                    rowsPerPageInput.addEventListener('change', () => {
+                        const newValue = parseInt(rowsPerPageInput.value);
+                        if (newValue > 0) {
+                            rowsPerPage = newValue;
+                            currentPage = 1;
+                            filterSearchAndPaginate();
+                        } else {
+                            alert("Vui lòng nhập một số dương.");
+                            rowsPerPageInput.value = rowsPerPage;
+                        }
+                    });
+                }
+
+                // Áp dụng bộ lọc, tìm kiếm và phân trang ban đầu
                 filterSearchAndPaginate();
-            } else {
-                alert("Vui lòng nhập một số dương.");
-                rowsPerPageInput.value = rowsPerPage;
-            }
-        });
-    }
-
-    // Áp dụng bộ lọc, tìm kiếm và phân trang ban đầu
-    filterSearchAndPaginate();
-});
+            });
         </script>
+
+       
+          <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                var column = this.getAttribute('data-column');
+                var cells = document.querySelectorAll('#feedback-table td:nth-child(' + column + '), #feedback-table th:nth-child(' + column + ')');
+                cells.forEach(function (cell) {
+                    if (checkbox.checked) {
+                        cell.style.display = '';
+                    } else {
+                        cell.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+        </script
     </body>
 </html>

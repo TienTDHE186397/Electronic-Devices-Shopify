@@ -64,6 +64,9 @@ public class SaleOrderL {
         this.shipstatus = shipstatus;
         
     }
+    public SaleOrderL(String orderID){
+        this.orderID = orderID;
+    }
 
     public String getOrderID() {
         return orderID;
