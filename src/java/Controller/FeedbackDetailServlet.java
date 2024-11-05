@@ -6,8 +6,10 @@
 package Controller;
 
 import DAO.FeedbackDAO;
+import DAO.mediaDAO;
 import Entity.Feedback;
 import Entity.Person;
+import Entity.media;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -59,18 +62,94 @@ public class FeedbackDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+       
+        String action = request.getParameter("action");
+        
+        // Nếu là request để stream media
+        if ("getMedia".equals(action)) {
+            handleMediaStream(request, response);
+            return;
+        }
+        
+        // Existing code for displaying feedback details
         FeedbackDAO feedbackDao = new FeedbackDAO();
+        mediaDAO mediadao = new mediaDAO();
         String feedbackID = request.getParameter("feedbackID");
         try {
-        List<Feedback> fb = feedbackDao.getDetails(feedbackID);
-        List<Person> lp = feedbackDao.getAllMkt();
-        request.setAttribute("fList", fb);
-        request.setAttribute("mList", lp);
-        
-        }catch(NumberFormatException e){
-         System.out.println(e);
-    }
+            List<Feedback> fb = feedbackDao.getDetails(feedbackID);
+            List<Person> lp = feedbackDao.getAllMkt();
+            List<media> ml = mediadao.getALl(feedbackID);
+            
+            // Cập nhật đường dẫn để sử dụng servlet streaming
+            for (media media : ml) {
+                media.setFilePath(request.getContextPath() + 
+                    "/FeedbackDetail?action=getMedia&feedbackID=" + 
+                    feedbackID + "&fileName=" + media.getStoredFileName());
+            }
+            
+            request.setAttribute("fList", fb);
+            request.setAttribute("mList", lp);
+            request.setAttribute("mediaList", ml);
+        } catch(NumberFormatException e) {
+            System.out.println(e);
+        }
         request.getRequestDispatcher("FeedbackDetail.jsp").forward(request, response);
+    }
+    
+    private void handleMediaStream(HttpServletRequest request, HttpServletResponse response) 
+    throws IOException {
+        String feedbackID = request.getParameter("feedbackID");
+        String fileName = request.getParameter("fileName");
+        
+        if (feedbackID == null || fileName == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        
+        String filePath = "E:\\PRJ301\\webdientu\\web\\uploadfeedback\\feedback_" + 
+                         feedbackID + File.separator + fileName;
+        File file = new File(filePath);
+        
+        if (!file.exists()) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        
+        // Get media type from filename
+        String contentType;
+        if (fileName.toLowerCase().endsWith(".mp4")) {
+            contentType = "video/mp4";
+        } else if (fileName.toLowerCase().endsWith(".webm")) {
+            contentType = "video/webm";
+        } else if (fileName.toLowerCase().endsWith(".jpg") || 
+                   fileName.toLowerCase().endsWith(".jpeg")) {
+            contentType = "image/jpeg";
+        } else if (fileName.toLowerCase().endsWith(".png")) {
+            contentType = "image/png";
+        } else {
+            contentType = getServletContext().getMimeType(fileName);
+        }
+        
+        // Set response headers
+        response.setContentType(contentType);
+        response.setContentLength((int) file.length());
+        
+        if (contentType.startsWith("video/")) {
+            response.setHeader("Accept-Ranges", "bytes");
+            response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\"");
+        }
+        
+        // Stream the file
+        try (java.io.BufferedInputStream in = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
+             java.io.BufferedOutputStream out = new java.io.BufferedOutputStream(response.getOutputStream())) {
+            
+            byte[] buffer = new byte[8192];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+            out.flush();
+        }
     }
 
     /** 
@@ -85,12 +164,14 @@ public class FeedbackDetailServlet extends HttpServlet {
     throws ServletException, IOException {
        String feedbackID = request.getParameter("feedbackID");
        String status = request.getParameter("statusUpdate");
-       String feedbackReply = request.getParameter("reply");
        String mktfeedback = request.getParameter("feedbackPerson");
+       if (mktfeedback == null || mktfeedback.isEmpty()) { 
+           mktfeedback = request.getParameter("feedbackPersonHidden");
+       }
        
        FeedbackDAO updateDAO = new FeedbackDAO();
        try{
-           Feedback f = new Feedback(feedbackReply, status, mktfeedback, feedbackID);
+           Feedback f = new Feedback(status, mktfeedback, feedbackID);
            updateDAO.Update(f);
            response.sendRedirect("FeedbackDetail?feedbackID=" + feedbackID + "&statusUpdate=success");
        }catch(Exception e){

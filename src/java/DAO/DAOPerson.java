@@ -275,7 +275,25 @@ int rowsAffectedImage = stmtImage.executeUpdate();
             e.printStackTrace();
         }
     }
+    public String ReverPassword(String password) {
+        if (password == null) {
+            return "Loi pass"; // hoặc ném ra ngoại lệ tùy theo cách bạn muốn xử lý
+        }
 
+        StringBuilder str = new StringBuilder();
+        for (char ch : password.toCharArray()) {
+            if (ch >= 'a' && ch <= 'z') {
+                str.append((char) ((ch - 'a' - 1) % 26 + 'a'));
+            } else if (ch >= 'A' && ch <= 'Z') {
+                str.append((char) ((ch - 'A' - 1) % 26 + 'A'));
+            } else if (ch >= '0' && ch <= '9') {
+                str.append((char) ((ch - '0' - 1) % 10 + '0'));
+            } else {
+                str.append(ch);
+            }
+        }
+        return str.toString();
+    }
     public Person getPersonById(String id) {
         String sql = "select p.PersonID,pimg.image_url Image, p.Name, p.Gender, p.DateOfBirth, p.StartDate, coalesce(pa.Address,'không có thông tin') Address, p.Email,coalesce(pp.Phone,'không có thông tin') Phone, p.RoleID, p.Password\n"
                 + " FROM Person p\n"
@@ -289,6 +307,8 @@ int rowsAffectedImage = stmtImage.executeUpdate();
             while (rs.next()) {
                 java.sql.Date sqlDate = rs.getDate("startdate");
                 LocalDate localDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+                String pass = rs.getString("Password");
+                String reverspass = ReverPassword(pass);
                 Person p = new Person(rs.getInt("PersonID"),
                         rs.getString("Image"),
                         rs.getString("Name"),
@@ -299,7 +319,7 @@ int rowsAffectedImage = stmtImage.executeUpdate();
                         rs.getString("Email"),
                         rs.getString("Phone"),
                         rs.getInt("RoleID"),
-                        rs.getString("Password"));
+                        reverspass);
                 return p;
             }
         } catch (SQLException e) {

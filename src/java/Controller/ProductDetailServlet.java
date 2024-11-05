@@ -99,15 +99,29 @@ public class ProductDetailServlet extends HttpServlet {
 
 // Lấy danh sách thuộc tính của sản phẩm theo `productid`
         List<ProductAttribute> listAttribute = pDao.getAllProductAttributeById(productid);
-        CommentDAO comment = new CommentDAO();
-        List<CommentPerson> com = comment.getCommentsByProductId3(productid);
+        int commentsPerPage = 5;
 
-//        List<imageComment> image = comment.getImageUrlsByCommentId(productid);
-//        List<videoComment> video = comment.getVideoUrlsByCommentId(productid);
-//        request.setAttribute("image", image);
-//        request.setAttribute("video", video);
-        request.setAttribute("comment", com);
-        //Set attribute for object to send data request to JSP Page
+// Lấy số trang từ request, mặc định là trang 1
+        String pageParam = request.getParameter("page");
+        int page = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+
+// Lấy danh sách bình luận
+        CommentDAO commentDAO = new CommentDAO();
+        List<CommentPerson> allComments = commentDAO.getCommentsByProductId3(productid);
+
+// Tính toán chỉ số bắt đầu và kết thúc cho bình luận hiện tại
+        int totalComments = allComments.size();
+        int totalPages = (int) Math.ceil((double) totalComments / commentsPerPage);
+        int startIndex = (page - 1) * commentsPerPage;
+        int endIndex = Math.min(startIndex + commentsPerPage, totalComments);
+
+// Lấy danh sách bình luận cho trang hiện tại
+        List<CommentPerson> commentsOnPage = allComments.subList(startIndex, endIndex);
+
+// Lưu danh sách bình luận vào request
+        request.setAttribute("comment", commentsOnPage);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
 
 // Thiết lập các attribute để truyền dữ liệu sang trang JSP
         request.setAttribute("productDetail", p);         // Gán chi tiết sản phẩm vào attribute
@@ -163,7 +177,7 @@ public class ProductDetailServlet extends HttpServlet {
                             videoPaths.add("img/default-vid.mp4"); // Lưu đường dẫn video mặc định nếu không phải .mp4
                         }
                     }
-                } else if (part.getName().equals("vidImgName")) {
+                } else if (part.getName().equals("vidName")) {
                     // Xử lý ghi chú
                     String note = request.getParameter(part.getName());
                     videoNotes.add(note); // Lưu ghi chú
@@ -199,7 +213,7 @@ public class ProductDetailServlet extends HttpServlet {
                             ImagePaths.add("img/default-phone.jpg"); // Lưu đường dẫn video mặc định nếu không phải .mp4
                         }
                     }
-                } else if (part.getName().equals("vidImageName")) {
+                } else if (part.getName().equals("ImageName")) {
                     // Xử lý ghi chú
                     String note = request.getParameter(part.getName());
                     ImageNotes.add(note); // Lưu ghi chú
@@ -221,8 +235,8 @@ public class ProductDetailServlet extends HttpServlet {
 
             LocalDate date2 = LocalDate.now();
             int addC = comDAO.addComment(productid, person.getPersonID(), comment, date2);
-            boolean addIm = comDAO.addCommentImages(addC, ImagePaths);
-            boolean addVideo = comDAO.addCommentVideos(addC, videoPaths);
+            boolean addIm = comDAO.addCommentImages(addC, ImagePaths, ImageNotes);
+            boolean addVideo = comDAO.addCommentVideos(addC, videoPaths, videoNotes);
             System.out.println(addC);
             System.out.println("check1" + addIm);
             System.out.println("check2" + addVideo);

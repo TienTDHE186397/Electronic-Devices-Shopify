@@ -235,6 +235,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="./MyOrder" >
+                                <i class="fa-solid fa-user"></i> quản lý đơn hàng
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="./LogoutServlet">
                                 <i class="fa-solid fa-sign-out-alt"></i> Đăng Xuất
                             </a>

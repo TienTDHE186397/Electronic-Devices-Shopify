@@ -6,12 +6,16 @@ package DAO;
 
 import Entity.Feedback;
 import Entity.Person;
+import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  *
@@ -66,8 +70,8 @@ public class FeedbackDAO extends DBContext {
                 + "    pr.ProductName,\n"
                 + "    f.RatedStar AS RateStar,\n"
                 + "    f.FeedbackContent,\n"
-                + "    f.FeedbackReply,\n"
                 + "    s.Name As ProcessedByMkt,\n"
+                + "    f.ProcessedBy,\n"
                 + "    f.Status\n"
                 + "FROM \n"
                 + "    Feedback f\n"
@@ -96,8 +100,8 @@ public class FeedbackDAO extends DBContext {
                         rs.getString("ProductName"),
                         rs.getInt("RateStar"),
                         rs.getString("FeedbackContent"),
-                        rs.getString("FeedbackReply"),
                         rs.getString("ProcessedByMkt"),
+                        rs.getString("ProcessedBy"),
                         rs.getString("Status"));
                 detail.add(s);
             }
@@ -129,12 +133,11 @@ public class FeedbackDAO extends DBContext {
     }
 
     public void Update(Feedback s) {
-        String sql = "UPDATE Feedback SET FeedbackReply = ?, Status = ?, ProcessedBy = ? WHERE FeedbackID = ?";
+        String sql = "UPDATE Feedback SET Status = ?, ProcessedBy = ?, ProcessedDate = GETDATE() WHERE FeedbackID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, s.getFeedReply());
-            st.setString(2, s.getStatus());
-            st.setString(3, s.getMktEmp());
-            st.setString(4, s.getFeedbackID());
+            st.setString(1, s.getStatus());
+            st.setString(2, s.getMktEmp());
+            st.setString(3, s.getFeedbackID());
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -145,98 +148,61 @@ public class FeedbackDAO extends DBContext {
             e.printStackTrace();
         }
     }
-     public String createFeedback(Feedback feedback) throws SQLException {
-    String sql = """
-        INSERT INTO Feedback (CustomerID, ProductID, RatedStar, FeedbackContent, 
-                            Status, CreatedDate)
-        VALUES (?, ?, ?, ?, 'New', GETDATE())
-    """;
-
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-        // Check if CustomerID is present, if not set it to null
-        if (feedback.getCusID() != null && !feedback.getCusID().isEmpty()) {
-            stmt.setString(1, feedback.getCusID());  // CustomerID as String
-        } else {
-            stmt.setNull(1, java.sql.Types.VARCHAR); // Set null for VARCHAR
-        }
-
-        stmt.setString(2, feedback.getProID());   // ProductID as String
-        stmt.setInt(3, feedback.getRate());       // RatedStar as int
-        stmt.setString(4, feedback.getFeedContent()); // FeedbackContent as String
-
-        stmt.executeUpdate();
-
-        ResultSet rs = stmt.getGeneratedKeys();
-        if (rs.next()) {
-            return rs.getString(1); // Return the generated FeedbackID as String
-        }
-    }
-    return null;  // Return null if insertion failed
-}
-
-      public void saveFeedbackDetail(Feedback detail) throws SQLException {
-        String sql = """
-            INSERT INTO FeedbackDetails (FeedbackID, StoredFileName, OriginalFileName, 
-                                       FilePath, FileType)
-            VALUES (?, ?, ?, ?, ?)
-        """;
+    
+    public int createFeedback(Feedback feedback) throws SQLException {
+    String insertSql = "INSERT INTO Feedback (CustomerID, ProductID, RatedStar, " +
+                       "FeedbackContent, Status, CreatedDate) " +
+                       "VALUES (?, ?, ?, ?, 'New', GETDATE())";
+                       
+    try (PreparedStatement insertStmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+        insertStmt.setString(1, feedback.getCusID());
+        insertStmt.setString(2, feedback.getProID());
+        insertStmt.setInt(3, feedback.getRate());
+        insertStmt.setString(4, feedback.getFeedContent());
         
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, detail.getFeedbackID());
-            stmt.setString(2, detail.getStoreFileName());
-            stmt.setString(3, detail.getOriginalFileName());
-            stmt.setString(4, detail.getFilePath());
-            stmt.setString(5, detail.getFileType());
-            
-            stmt.executeUpdate();
+        int rowsInserted = insertStmt.executeUpdate();
+        if (rowsInserted == 0) {
+            throw new SQLException("Creating feedback failed, no rows affected.");
         }
-    }
-      public List<Feedback> getFeedbackMedia(String feedbackId) throws SQLException {
-        String sql = """
-            SELECT * FROM FeedbackDetails 
-            WHERE FeedbackID = ?
-            ORDER BY FileType DESC
-        """;
         
-        List<Feedback> mediaFiles = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, feedbackId);
-            ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()) {
-                Feedback detail = new Feedback();
-                detail.setFbDetail(rs.getString("FeedbackDetailID"));
-                detail.setFeedbackID(rs.getString("FeedbackID"));
-                detail.setStoreFileName(rs.getString("StoredFileName"));
-                detail.setOriginalFileName(rs.getString("OriginalFileName"));
-                detail.setFilePath(rs.getString("FilePath"));
-                detail.setFileType(rs.getString("FileType"));
-                mediaFiles.add(detail);
+        try (ResultSet rs = insertStmt.getGeneratedKeys()) {
+            if (rs.next()) {
+                return rs.getInt(1);
             }
         }
-        return mediaFiles;
     }
-        public void updateFeedbackStatus(String feedbackId, String status, 
-                                   String processedBy, String reply) throws SQLException {
-        String sql = """
-            UPDATE Feedback 
-            SET Status = ?, 
-                ProcessedBy = ?, 
-                FeedbackReply = ?,
-                ProcessedDate = GETDATE()
-            WHERE FeedbackID = ?
-        """;
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, status);
-            stmt.setString(2, processedBy);
-            stmt.setString(3, reply);
-            stmt.setString(4, feedbackId);
-            
-            stmt.executeUpdate();
-        }
+    return -1;
+}
+
+public void saveFeedbackDetails(int feedbackId, String storedFileName,
+                                String originalFileName, String filePath,
+                                String fileType) throws SQLException {
+    String contentType; 
+    if (storedFileName.toLowerCase().endsWith(".mp4")) { 
+        contentType = "video/mp4";
+    } else if (storedFileName.toLowerCase().endsWith(".webm")) { 
+        contentType = "video/webm";
+     } else if (storedFileName.toLowerCase().endsWith(".jpg") || storedFileName.toLowerCase().endsWith(".jpeg")) { 
+         contentType = "image/jpeg";
+     } else if (storedFileName.toLowerCase().endsWith(".png")) { 
+         contentType = "image/png";
+     } else { 
+         contentType = "application/octet-stream";// Giá trị mặc định nếu không xác định được loại tệp 
+     }
+    String sql = "INSERT INTO FeedbackDetails (FeedbackID, StoredFileName, " +
+                 "OriginalFileName, FilePath, FileType, ContentType ) VALUES (?, ?, ?, ?, ?, ?)";
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setInt(1, feedbackId);
+        stmt.setString(2, storedFileName);
+        stmt.setString(3, originalFileName);
+        stmt.setString(4, filePath);
+        stmt.setString(5, fileType);
+        stmt.setString(6, contentType);
+        stmt.executeUpdate();
     }
+}
+
 
     public static void main(String[] args) {
         Connection connection = null;
