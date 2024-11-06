@@ -145,16 +145,19 @@ public class CustomerDetail extends HttpServlet {
    
         //Update thông tin khách hàng
         
-        HistoryChangeDAO historyDAO = new HistoryChangeDAO();
-        SimpleDateFormat format = new SimpleDateFormat();
+        
+        
+        
 
         // Kiểm tra nếu dob không null và không rỗng trước khi chuyển đổi thành java.sql.Date
         java.sql.Date dateOfBirth = java.sql.Date.valueOf(dob);
 
         boolean check = customerDAO.updateCustomer(id, name, gender, dateOfBirth, email);
         boolean check2 = customerDAO.updatePersonAddress(id, address);
-
+        boolean check4 = customerDAO.updatePersonPhone(id, phone);
         //Thêm bản ghi
+        HistoryChangeDAO historyDAO = new HistoryChangeDAO();
+        SimpleDateFormat format = new SimpleDateFormat();
         HistoryChange history = new HistoryChange(id, email, name, gender, phone, address, userName);
         boolean check3 = historyDAO.addHistoryChange(history);
         if (check && check2 && check3) {

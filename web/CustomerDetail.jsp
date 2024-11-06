@@ -32,7 +32,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4>Thông tin khách hàng</h4>
-                        <form action="customer-detail" method="post" enctype="multipart/form-data">
+                        <form action="customer-detail" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                             <div class="row form-row">
                                 <div class="col-12 col-md-12">
                                     <div class="form-group">
@@ -46,20 +46,22 @@
                                         <div class="form-group">
                                             <input name="id" type="hidden" class="form-control" value="${customerDetail.getPersonID()}">
                                             <input name="userName" type="hidden" class="form-control" value="${sessionScope.user.getName()}">
-                                        </div>
+                                        </div> 
                                     </div>        
                                 </div>
-
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Tên đầy đủ</label>
-                                        <input name="name" type="text" class="form-control" value="${customerDetail.getName()}">
+                                        <input name="name" type="text" class="form-control" id="name" value="${customerDetail.getName()}">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label>Giới tính</label>
-                                        <input type="text" name="gender" class="form-control" value="${customerDetail.getGender()}">
+                                        <div>Giới tính</div>
+                                        <label>Nam</label>
+                                        <input type="radio" name="gender" value="Nam" ${customerDetail.getGender() == 'Nam' ? 'checked' : ''}>
+                                        <label>Nữ</label>
+                                        <input type="radio" name="gender" value="Nữ" ${customerDetail.getGender() == 'Nữ' ? 'checked' : ''}>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -74,11 +76,10 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Số điện thoại</label>
-                                        <input type="text" value="${customerDetail.getPhone()}" name="phone" class="form-control">
+                                        <input type="text" value="${customerDetail.getPhone()}" name="phone" id="phone" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -177,6 +178,39 @@
     </body>
     <script>
         let attributeCount = 0; // Khởi tạo attributeCount bên ngoài hàm
+
+        function validateForm() {
+            console.log("Validate form is called");
+            const nameInput = document.getElementById("name").value.trim();
+
+            if (nameInput === "") {
+                alert("Tên không được để trống.");
+                return false;
+            }
+
+            if (nameInput.length < 2) {
+                alert("Tên phải có ít nhất 2 ký tự.");
+                return false;
+            }
+
+            // Kiểm tra nếu tên chứa số hoặc ký tự đặc biệt
+            const namePattern = /^[A-Za-zÀ-ỹà-ỹ\s]+$/u; // Cho phép các chữ cái (cả dấu) và khoảng trắng
+            if (!namePattern.test(nameInput)) {
+                alert("Tên chỉ được chứa các chữ cái.");
+                return false;
+            }
+
+            // Kiểm tra số điện thoại
+            const phoneInput = document.getElementById("phone").value.trim();
+            const phonePattern = /^\d{10}$/;  // Giới hạn là 10 chữ số (có thể thay đổi theo yêu cầu)
+            if (!phonePattern.test(phoneInput)) {
+                alert("Vui lòng nhập số điện thoại hợp lệ (10 chữ số).");
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+
         function confirmDelete() {
             console.log('Confirm delete called');
             return confirm('Are you sure you want to delete this attribute?');
@@ -240,5 +274,7 @@
                 }
             }
         }
+
+
     </script>
 </html>
