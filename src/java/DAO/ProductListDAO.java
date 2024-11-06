@@ -254,7 +254,7 @@ public class ProductListDAO extends DBContext {
         return listP;
     }
 
-    public void addNewProduct(Product p,Categories c) {
+    public void addNewProduct(Product p, Categories c) {
 
         String sql = "INSERT INTO [dbo].[Products]\n"
                 + "           ([title]\n"
@@ -299,6 +299,41 @@ public class ProductListDAO extends DBContext {
 
         }
 
+    }
+
+    public List<Product> getProductMKTDashBoard(String fromdate, String todate) {
+
+        List<Product> list = new ArrayList<>();
+
+        String sql = "Select * From Products Where releaseDate BETWEEN '" + fromdate + "' AND '" + todate + "'";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(rs.getInt("ProductID"),
+                        rs.getString("title"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Views"), rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"),
+                        rs.getString("brand"));
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     public static void main(String[] args) {

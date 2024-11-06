@@ -47,7 +47,7 @@
                     %>
                     <h4><%= error != null ? error : ""%></h4>
 
-                    <button type="submit " style="background-color:  #b22222">Đăng Kí</button>
+                    <button type="submit " name="submit1" style="background-color:  #b22222">Đăng Kí</button>
                 </form>
             </div>
 

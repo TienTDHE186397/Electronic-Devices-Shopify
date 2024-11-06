@@ -210,8 +210,32 @@ public class BlogListDAO extends DBContext {
         }
         return list;
     }
-
-    // Khong su dung !!!
+    
+    
+    public List<Blog> getBlogMKTDashBoard(String fromdate, String todate) {
+        
+        List<Blog> list = new ArrayList<>();
+        
+        String sql = "Select * From Blog Where Blog_Update_Time BETWEEN '" + fromdate + "' AND '" + todate + "'";
+        
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getString("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
+                list.add(blog);
+            }
+        } catch (Exception e) {
+        }
+        
+        return list;
+    }
+     // Khong su dung !!!
     public List<Blog> sortBlogList(String sort) {
 
         List<Blog> list = new ArrayList<>();

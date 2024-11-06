@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostListHomeServlet.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostDetailHome.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/addNewCategory.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/PostDetailHomeServlet.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/addProductServlet.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/addCategories.java</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/web/PostListHome.jsp</file>
-            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/CategoryDAO.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Controller/MKTDashBoardServlet.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/Entity/Product.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/src/java/DAO/FeedbackDAO.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/test/Test/EditPostTest.java</file>
+            <file>file:/D:/wed%20dien%20may/project/webdientu/web/mktdashboard.jsp</file>
         </group>
     </open-files>
 </project-private>

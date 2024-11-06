@@ -20,7 +20,7 @@
             Số điện thoại: <input type="text" name="phone" required><br>
             Email: <input type="email" name="email" required><br>
             Mật khẩu: <input type="password" name="password" required><br>
-            <input type="submit" value="Đăng ký">
+            <input type="submit" name="submit1" value="Đăng ký">
         </form>
     </body>
 </html>
