@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Entity.OrderProduct;
 import Entity.Orders;
 import Entity.Person;
 import java.util.ArrayList;
@@ -20,7 +21,11 @@ import java.time.LocalDate;
 public class DAOAdmin extends DBContext {
 
     public Person getPersonById(String id) {
-        String sql = "select * from Person where PersonID = ?";
+        String sql = "select p.PersonID,pimg.image_url Image, p.Name, p.Gender, p.DateOfBirth, p.StartDate, coalesce(pa.Address,'không có thông tin') Address, p.Email,coalesce(pp.Phone,'không có thông tin') Phone, p.RoleID, p.Password\n"
+                + " FROM Person p\n"
+                + " LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
+                + " LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
+                + " left join PersonImages pimg on p.PersonID = pimg.PersonID where p.PersonID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id);
@@ -29,6 +34,7 @@ public class DAOAdmin extends DBContext {
                 java.sql.Date sqlDate = rs.getDate("startdate");
                 LocalDate localDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
                 Person p = new Person(rs.getInt("PersonID"),
+                        rs.getString("Image"),
                         rs.getString("Name"),
                         rs.getString("Gender"),
                         rs.getString("DateOfBirth"),
@@ -203,10 +209,12 @@ public class DAOAdmin extends DBContext {
         DAOAdmin da = new DAOAdmin();
 //        int n = da.getSuccessOrder();
 //        System.out.println(n);
-        List<Orders> list = da.searchOrders("T", "", "", "");
-        for (Orders o : list) {
-            System.out.println(o);
-        }
+//        List<Orders> list = da.searchOrders("T", "", "", "");
+//        for (Orders o : list) {
+//            System.out.println(o);
+//        }
+        OrderProduct op = da.getOrderById("1");
+        System.out.println(op);
     }
 
     public int NewRegister() {
@@ -238,7 +246,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public double Rate() {
-        String sql = "select AVG(CAST(Rate AS decimal(10, 1))) from Comment";
+        String sql = "select AVG(CAST(RatedStar AS decimal(10, 1))) from Feedback";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -271,8 +279,8 @@ public class DAOAdmin extends DBContext {
     }
 
     public double getRateByCategory(int CateID) {
-        String sql = "select AVG(CAST(Rate AS decimal(10, 1))) \n"
-                + " from Comment c \n"
+        String sql = "select AVG(CAST(RatedStar AS decimal(10, 1))) \n"
+                + " from Feedback c \n"
                 + " join Products p on p.ProductID = c.ProductID \n"
                 + " where p.CategoryID = \n" + CateID
                 + " group by p.ProductID";
@@ -289,7 +297,7 @@ public class DAOAdmin extends DBContext {
     }
 
     public int RateCount(double Rate) {
-        String sql = "Select count(*) from Comment where Rate = " + Rate;
+        String sql = "Select count(*) from Feedback where RatedStar = " + Rate;
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -300,5 +308,30 @@ public class DAOAdmin extends DBContext {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public OrderProduct getOrderById(String id) {
+        String sql = "SELECT p.ProductID, p.ProductName, p.img, od.Quantity, od.UnitPrice, od.TotalCost \n"
+                + "        FROM Orders o \n"
+                + "        JOIN OrderDetails od ON o.OrderID = od.OrderID \n"
+                + "        JOIN Products p ON od.ProductID = p.ProductID \n"
+                + "        WHERE o.OrderID = " + id;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OrderProduct op = new OrderProduct(rs.getString("ProductID"),
+                        rs.getString("img"),
+                        rs.getString("ProductName"),
+                        rs.getInt("UnitPrice"),
+                        rs.getInt("Quantity"),
+                        rs.getInt("TotalCost"));
+                return op;
+            }
+        } catch (Exception e) {
+
+        }
+
+        return null;
     }
 }

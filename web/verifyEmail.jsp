@@ -78,7 +78,7 @@
         </style>
         <script>
             let timer;
-            let timeLeft = 120;
+            let timeLeft = 10;
 
             function startCountdown() {
                 timer = setInterval(function () {

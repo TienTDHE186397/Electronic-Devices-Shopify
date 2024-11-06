@@ -235,22 +235,31 @@ public class SaleDAO {
                 + "    o.OrderID,\n"
                 + "    p.Name AS cusName,\n"
                 + "    p.Email,\n"
-                + "    p.Phone AS mobile,\n"
+                + "    -- Get primary phone number from PersonPhone table\n"
+                + "    (SELECT TOP 1 pp.Phone \n"
+                + "     FROM PersonPhone pp \n"
+                + "     WHERE pp.PersonID = p.PersonID \n"
+                + "     ORDER BY pp.IsPrimary DESC) AS mobile,\n"
                 + "    o.OrderDate,\n"
                 + "    o.TotalMoney AS totalCost,\n"
                 + "    s.Name AS saleName,\n"
                 + "    o.Status,\n"
                 + "    p.Gender,\n"
-                + "    p.Address,\n" // Add the missing comma here
+                + "    -- Get primary address from PersonAddress table\n"
+                + "    (SELECT TOP 1 pa.Address \n"
+                + "     FROM PersonAddress pa \n"
+                + "     WHERE pa.PersonID = p.PersonID \n"
+                + "     ORDER BY pa.IsPrimary DESC) AS Address,\n"
+                + "    o.ShipStatus,\n"
                 + "    o.SaleNote\n"
-                + " FROM \n"
+                + "FROM \n"
                 + "    Orders o\n"
-                + " JOIN \n"
+                + "JOIN \n"
                 + "    Person p ON o.PersonID = p.PersonID  -- Customer details\n"
-                + " LEFT JOIN \n"
-                + "    Person s ON o.SaleID = s.PersonID  -- Sales employee details (optional)\n"
-                + " WHERE \n"
-                + "   o.OrderID = ?";
+                + "LEFT JOIN \n"
+                + "    Person s ON o.SaleID = s.PersonID    -- Sales employee details (optional)\n"
+                + "WHERE \n"
+                + "    o.OrderID = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -267,6 +276,7 @@ public class SaleDAO {
                         rs.getString("Status"),
                         rs.getString("Gender"),
                         rs.getString("Address"),
+                        rs.getString("ShipStatus"),
                         rs.getString("SaleNote")
                 );
                 detail.add(s);
@@ -324,8 +334,10 @@ public class SaleDAO {
         List<SaleOrderL> so = new ArrayList<>();
         String sql = "SELECT \n"
                 + "    O.OrderID,\n"
-                + "    O.Status,\n"
                 + "    O.SaleNote,\n"
+                + "    O.Status,\n"
+                + "    O.ShipStatus,\n"
+                + "    O.SaleID,\n"
                 + "    CASE \n"
                 + "        WHEN O.SaleID IS NULL THEN NULL\n"
                 + "        ELSE P.Name\n"
@@ -341,7 +353,7 @@ public class SaleDAO {
             st.setString(1, orderID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getString("SaleNote"), rs.getString("saleName"), rs.getString("Status"));
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getString("SaleNote"), rs.getString("saleName"), rs.getString("Status"), rs.getString("ShipStatus"));
                 so.add(s);
             }
 
@@ -372,12 +384,51 @@ public class SaleDAO {
     }
 
     public void Update(SaleOrderL s) {
-        String sql = "UPDATE Orders SET Status = ?, SaleNote = ?, SaleID = ? WHERE OrderID = ?";
+        String sql = """
+            UPDATE Orders 
+            SET Status = ?,
+                SaleNote = ?,
+                SaleID = ?,
+                CompleteDate = CASE 
+                    WHEN ? = N'Complete' THEN GETDATE()
+                    ELSE CompleteDate 
+                END,
+                ShipStatus = ?,
+                ExprotedDate = CASE 
+                    WHEN ? = N'Exproted' THEN GETDATE()
+                    ELSE ExprotedDate 
+                END,
+                InDeliveryDate = CASE 
+                    WHEN ? = N'InDelivery' THEN GETDATE()
+                    ELSE InDeliveryDate 
+                END,
+                DeliveredDate = CASE 
+                    WHEN ? = N'Delivered' THEN GETDATE()
+                    ELSE DeliveredDate 
+                END,
+                receivedDate = CASE 
+                    WHEN ? = N'received' THEN GETDATE()
+                    ELSE receivedDate 
+                END
+            WHERE OrderID = ?
+            """;
+
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, s.getOrderID());
+            // Set Status related parameters
+            st.setString(1, s.getStatus());
             st.setString(2, s.getSaleNotes());
             st.setString(3, s.getSaleID());
-            st.setString(4, s.getStatus());
+            st.setString(4, s.getStatus());  // For CompleteDate CASE
+
+            // Set ShipStatus and its related parameters
+            st.setString(5, s.getShipstatus());
+            st.setString(6, s.getShipstatus());  // For ExprotedDate CASE
+            st.setString(7, s.getShipstatus());  // For InDeliveryDate CASE
+            st.setString(8, s.getShipstatus());  // For DeliveredDate CASE
+            st.setString(9, s.getShipstatus());  // For receivedDate CASE
+
+            // Set OrderID
+            st.setString(10, s.getOrderID());
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -431,7 +482,7 @@ public class SaleDAO {
             st.setInt(1, (index - 1) * 5);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-               SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
                 list.add(s);
             }
 
@@ -441,13 +492,51 @@ public class SaleDAO {
         return list;
     }
 
-//    public static void main(String[] args) {
-//        SaleDAO dao = new SaleDAO();
-//        List<SaleOrderL> list = dao.pagingOrder(2);
-//        for(SaleOrderL o : list){
-//            System.out.println(o);
-//        }
-//    }
+    public SaleOrderL getSaleOrderLById(int id) {
+        String sql = "SELECT [OrderID]\n"
+                + "      ,[OrderDate]\n"
+                + "      ,[PersonID]\n"
+                + "      ,[ShowRoomID]\n"
+                + "      ,[TotalMoney]\n"
+                + "      ,[Method]\n"
+                + "      ,[SaleID]\n"
+                + "      ,[Status]\n"
+                + "      ,[SaleNote]\n"
+                + "      ,[ShipStatus]\n"
+                + "      ,[CompleteDate]\n"
+                + "      ,[ExprotedDate]\n"
+                + "      ,[InDeliveryDate]\n"
+                + "      ,[DeliveredDate]\n"
+                + "      ,[receivedDate]\n"
+                + "  FROM [DBGR2Final].[dbo].[Orders]\n"
+                + "  WHERE OrderID = " + id;
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"),
+                        rs.getString("SaleNote"),
+                        rs.getString("SaleID"),
+                        rs.getString("Status"),
+                        rs.getString("ShipStatus"));
+                return s;
+            }
+
+        } catch (Exception e) {
+            
+            System.out.println(e);
+
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+        SaleDAO dao = new SaleDAO();
+        System.out.println(dao.getSaleOrderLById(6));
+    }
 //public static void main(String[] args) {
 //        // Create a SaleDAO instance (assuming your SaleDAO class is already defined)
 //        SaleDAO saleDAO = new SaleDAO();
@@ -467,7 +556,6 @@ public class SaleDAO {
 //        // If no exceptions are thrown, print success message
 //        System.out.println("Order update method executed. Please check the database for changes.");
 //    }
-
 //    public static void main(String[] args) {
 ////
 //        SaleDAO saleDAO = new SaleDAO();
@@ -504,4 +592,21 @@ public class SaleDAO {
 //        }
 //}
 //      }
+//    public static void main(String[] args) {
+//        SaleDAO sa = new SaleDAO();
+//        
+//            
+//            SaleOrderL testOrder = new SaleOrderL(
+//                "1",                    // orderID 
+//                "must be deliverd by 2 days",             // status
+//                "8",       // saleNotes
+//                "Complete",                    
+//                "InDelivery"             // shipStatus
+//            );
+//
+//            // Thực hiện update
+//            
+//            sa.Update(testOrder);
+//         
+//    }
 }

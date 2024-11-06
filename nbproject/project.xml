@@ -66,6 +66,14 @@
                     <file>${file.reference.google-api-client-2.0.0-sources.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                <library dirs="200">
+                    <file>${file.reference.jar_files.zip}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+>>>>>>> 0b6be8a00745b8b32ad85e25a4b913010e860ae0
                 <library dirs="200">
                     <file>${file.reference.auto-service-annotations-1.1.1-sources.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
@@ -402,6 +410,11 @@
                     <file>${libs.testng.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> d596dc01246c5ffbaf323c4903171241a914e7db
+>>>>>>> 0b6be8a00745b8b32ad85e25a4b913010e860ae0
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>

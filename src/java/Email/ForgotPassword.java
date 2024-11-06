@@ -76,13 +76,7 @@ public class ForgotPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if ("resend".equals(action)) {
-            resendVerificationCode(request, response);
-        } else {
-            registerUser(request, response);
-        }
+        registerUser(request, response);
     }
 
     private void registerUser(HttpServletRequest request, HttpServletResponse response)
@@ -90,9 +84,6 @@ public class ForgotPassword extends HttpServlet {
         String email = request.getParameter("email");
 
         PasswordUtils pw = new PasswordUtils();
-
-
-
         PersonDAO personDAO = new PersonDAO();
         if (!personDAO.isEmailExists(email)) {
             request.setAttribute("error", "Email not exist Please register account");
@@ -105,6 +96,7 @@ public class ForgotPassword extends HttpServlet {
         session.setMaxInactiveInterval(120);
         session.setAttribute("tempEmail", email);
         session.setAttribute("verificationCode", verificationCode);
+        System.out.println(verificationCode);
         // Redirect to verification page
         response.sendRedirect("verifyRePass.jsp");
     }
@@ -120,7 +112,6 @@ public class ForgotPassword extends HttpServlet {
         response.sendRedirect("verifyRePass.jsp");
     }
 
-
     // Tạo một đối tượng Random tĩnh và tái sử dụng
     private static final Random random = new Random();
 
@@ -135,7 +126,6 @@ public class ForgotPassword extends HttpServlet {
 
         return code.toString();
     }
-
 
     /**
      * Returns a short description of the servlet.

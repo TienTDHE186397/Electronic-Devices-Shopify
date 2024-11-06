@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header>
     <!--Link to library file-->
+    <link rel="icon" type="image/x-icon" href="img/Icon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" >
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -16,6 +17,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" >
     <link href="css/global.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
     <script src="js/bootstrap.bundle.min.js"></script>
     <!-- Intro settings -->
@@ -27,8 +29,8 @@
         }
 
         body{
-            min-height: 100%;
 
+            font-family: sans-serif;
         }
 
         nav{
@@ -132,16 +134,27 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top navigation-custom">
         <div class="container-fluid">
+
             <div class="logo">
                 <i class='bx bx-menu menu-icon'></i>
+                <a class="navbar-brand" href="home">
+                    <img src="img/Icon.jpg" height="24" alt=""
+                         loading="lazy" style="margin-top: -3px;" />
+                </a>
                 <a href="home"><span class="logo-name">Shopify</span></a> 
             </div>
 
             <div class="sidebar">
+
                 <div class="logo">
                     <i class='bx bx-menu menu-icon'></i>
+                    <a class="navbar-brand" href="home">
+                        <img src="img/Icon.jpg" height="24" alt=""
+                             loading="lazy" style="margin-top: -3px;" />
+                    </a>
                     <a href="home"><span class="logo-name">Shopify</span></a> 
                 </div>
+
                 <div class="sidebar-content">
                     <ul class="lists">
                         <li class="list">
@@ -154,14 +167,14 @@
                         <li class="list">
                             <a href="./PostListHome" class="nav-link">
                                 <i class='bx bx-news icon'></i>
-                                <span class="link">Bài Đăng</span>
+                                <span class="link">Bài đăng</span>
                             </a>
                         </li>
 
                         <li class="list">
                             <a href="./product-list" class="nav-link">
                                 <i class='bx bx-box icon'></i>
-                                <span class="link">Sản phẩm</span>
+                                <span class="link">Danh sách sản phẩm</span>
                             </a>
                         </li>
                     </ul>
@@ -172,7 +185,7 @@
                                 <span class="link">Setting</span>
                             </a>
                         </li>
-                      
+
 
                         <li class="list">
                             <a href="./login" class="nav-link">
@@ -185,10 +198,7 @@
             </div>
             <!-- Navbar brand -->
 
-            <a class="navbar-brand" target="_blank" href="#">
-                <img src="https://drive.google.com/uc?export=view&id=1YoYfvxlyzbUCz0kMZ0TufLcRpMxcubhW" height="16" alt=""
-                     loading="lazy" style="margin-top: -3px;" />
-            </a>
+
 
 
             <div class="collapse navbar-collapse">
@@ -198,16 +208,35 @@
 
                 <ul class="navbar-nav d-flex flex-row">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" >
-                            <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
-                        </a>
-                    </li>
+                    
+
+                    <c:choose>
+                        <c:when test="${empty sessionScope.user}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="login" onclick="alert('Bạn cần đăng nhập để mua hàng')" >
+                                    <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                                </a>
+                            </li>
+
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="cart-detail" >
+                                    <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng
+                                </a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
 
                     <c:if test="${sessionScope.user != null}">
                         <li class="nav-item">
                             <a class="nav-link" href="./profile.jsp" >
                                 <i class="fa-solid fa-user"></i></i>Hello ${sessionScope.user.getName()}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./MyOrder" >
+                                <i class="fa-solid fa-user"></i> quản lý đơn hàng
                             </a>
                         </li>
                         <li class="nav-item">

@@ -123,6 +123,7 @@ public class SaleEmpDAO {
         }
         return saleOrder;
     }
+
     public List<SaleOrderL> pagingOrder(int index, Integer SaleID) {
         List<SaleOrderL> list = new ArrayList<>();
         String sql = " SELECT \n"
@@ -151,10 +152,10 @@ public class SaleEmpDAO {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, SaleID);
             st.setInt(2, (index - 1) * 5);
-             
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-               SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
+                SaleOrderL s = new SaleOrderL(rs.getString("OrderID"), rs.getDate("OrderDate"), rs.getString("CustomerName"), rs.getString("ShowRoomName"), rs.getInt("TotalMoney"), rs.getString("Method"), rs.getString("SaleName"), rs.getString("Status"));
                 list.add(s);
             }
 
@@ -163,8 +164,7 @@ public class SaleEmpDAO {
         }
         return list;
     }
-    
-    
+
     public List<SaleOrderL> getOrderLByStatusS(String status, Integer SaleID) {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status "
@@ -335,25 +335,31 @@ public class SaleEmpDAO {
 
         return totalCount;
     }
-    public void SaleUpdate(SaleOrderL s) {
-    String sql = "UPDATE Orders SET Status = ?, SaleNote = ? WHERE OrderID = ?";
-    try (PreparedStatement st = connection.prepareStatement(sql)) {
-        st.setString(1, s.getOrderID());
-        st.setString(2, s.getSaleNotes());
-        st.setString(3, s.getStatus());
-        
-        
-        
-        int rowsAffected = st.executeUpdate();
-        if (rowsAffected == 0) {
-            throw new SQLException("Updating order failed, no rows affected.");
-        }
-    } catch (SQLException e) {
-        System.out.println("Error updating order: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
 
+      public String getSaleIDByOrder(String orderID) {
+        String query = "SELECT SaleID FROM [DBGR2Final].[dbo].[Orders] WHERE OrderID = ?";
+        String saleID = "";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, orderID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                saleID = resultSet.getString("SaleID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return saleID;
+    }
+
+//     public static void main(String[] args){
+//         SaleEmpDAO dao = new SaleEmpDAO();
+//         String orderID = "1";
+//         String saleID = dao.getSaleIDByOrder(orderID);
+//         System.out.println(saleID);
+//     }
 //    public static void main(String[] args) {
 //        SaleEmpDAO dao = new SaleEmpDAO();
 //        List<SaleOrderL> list = dao.pagingOrder(2,6);

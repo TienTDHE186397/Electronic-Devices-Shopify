@@ -13,16 +13,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
-import org.apache.tomcat.jni.SSLContext;
 
 /**
  *
  * @author nghie
  */
 @WebServlet(name = "addUserServlet", urlPatterns = {"/addUser"})
+@MultipartConfig
 public class addUserServlet extends HttpServlet {
 
     /**
@@ -79,47 +82,58 @@ public class addUserServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        DAOPerson dp = new DAOPerson();
-     
-        PrintWriter out = response.getWriter();
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        String dob = request.getParameter("dob");
-       
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String roleid = request.getParameter("roleid");
-        String pass = request.getParameter("pass");
-        LocalDate startDate = LocalDate.now();
-        int nroleid = Integer.parseInt(roleid);
-        Person person = new Person(name, gender, dob, startDate, address, email, phone, nroleid  , pass);
-        dp.addPerson(person);
-        
-//        Boolean add =  dp.addPerson(new Person( "Duc", "Name", "2004-11-03", "2024-09-17", "Ha Noi", "duqweqwecdsfsdf@gmaisadadasdasdl.com", "0985407026", 5, "123")); 
-//        if(add){
-//            System.out.println("add thanh cong");
-//        }
-//        else{
-//            System.out.println("loi");
-//        }
-//        
-//     
-//        System.out.println(name);
-//        System.out.println(gender);
-//        System.out.println(dob);
-//        System.out.println(sd);
-//        System.out.println(address);
-//        System.out.println(email);
-//        System.out.println(roleid);
-        
-        
-             response.sendRedirect("userList");
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    DAOPerson dp = new DAOPerson();
+    PrintWriter out = response.getWriter();
+    
+    // Lấy thông tin từ request
+    String name = request.getParameter("name");
+    String gender = request.getParameter("gender");
+    String dob = request.getParameter("dob");
+    String address = request.getParameter("address");
+    String email = request.getParameter("email");
+    String phone = request.getParameter("phone");
+    String roleid = request.getParameter("roleid");
+    String pass = request.getParameter("pass");
+    LocalDate startDate = LocalDate.now();
+    int nroleid = Integer.parseInt(roleid);
 
+    // Xử lý phần tệp
+    Part part = request.getPart("image"); // Lấy phần tệp
+    String image = "";
+    String realPath = "";
+
+    if (part != null && part.getSize() > 0) {
+        realPath = request.getServletContext().getRealPath("images"); // Đảm bảo thư mục tồn tại
+        String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
         
+        // Tạo thư mục nếu không tồn tại
+        if (!Files.exists(Path.of(realPath))) {
+            Files.createDirectories(Path.of(realPath));
+        }
+        
+        if (filename.endsWith(".jpg")) { // Kiểm tra định dạng
+            part.write(realPath + "/" + filename); // Lưu tệp
+            image = "images/" + filename; // Lưu đường dẫn tệp
+        } else {
+            out.println("File ảnh phải kết thúc với đuôi .jpg");
+            return;
+        }
     }
+
+    // Tạo đối tượng Person
+    LocalDate dobDate = LocalDate.parse(dob); // Nếu dob là dạng "yyyy-MM-dd"
+    Person person = new Person(image, name, gender, dobDate.toString(), startDate, address, email, phone, nroleid, pass);
+    
+    // Gọi phương thức thêm người
+    if (dp.addPerson(person, name)) {
+        response.sendRedirect("userList");
+    } else {
+        out.println("Error");
+    }
+}
+
     /**
      * Returns a short description of the servlet.
      *
@@ -131,3 +145,4 @@ public class addUserServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+

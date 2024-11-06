@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add User</title>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -38,10 +39,21 @@
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://cdn.tiny.cloud/1/qnmf6c0u3j7wk6wsljsqwke06htozhifzb9v9fs3pw2ed7vx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
         <style>
 
 
             #centeredInput {
+                width: 500px; /* Đặt chiều rộng của input */
+                height: 40px; /* Đặt chiều cao của input */
+box-sizing: border-box; /* Đảm bảo padding và border được bao gồm trong kích thước tổng */
+                text-align: center; /* Căn giữa theo chiều ngang */
+                padding: 0; /* Loại bỏ padding */
+                line-height: 40px; /* Căn giữa theo chiều dọc */
+            }
+            
+            #startDate {
                 width: 500px; /* Đặt chiều rộng của input */
                 height: 40px; /* Đặt chiều cao của input */
                 box-sizing: border-box; /* Đảm bảo padding và border được bao gồm trong kích thước tổng */
@@ -69,7 +81,11 @@
                     <center>
 
                         <div class="modal-body">
-                            <form action="addUser" method="post">
+                            <form action="addUser" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label>Hình ảnh</label>
+                                    <input type="file" class="form-control" id="centeredInput" accept=".jpg" name="image">
+                                </div>
                                 <div class="form-group">
                                     <label>Họ và tên</label>
                                     <input type="text" class="form-control" id="centeredInput" name="name"/>
@@ -88,7 +104,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ngày bắt đầu</label>
-                                    <input type = "date" class="form-control" id="centeredInput" name="sd"/>
+<input type = "datetime-local" class="form-control" id="startDate" name="sd" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label>Địa chỉ</label>
@@ -126,5 +142,21 @@
 
 
     </center>
+                    <script>
+                        const now = new Date();
+
+    // Chuyển đổi thời gian hiện tại thành định dạng phù hợp cho datetime-local (YYYY-MM-DDTHH:mm)
+    const currentDateTime = now.toISOString().slice(0, 16);
+
+    // Gán thời gian hiện tại cho trường End date
+    document.getElementById('startDate').value = currentDateTime;
+    
+    
+    tinymce.init({
+            selector: '.tinymce',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak media',
+            toolbar_mode: 'floating'
+        });
+                    </script>
 </body>
 </html>

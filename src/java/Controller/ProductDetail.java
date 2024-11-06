@@ -5,9 +5,11 @@
 package Controller;
 
 import DAO.CategoryDAO;
+import DAO.CommentDAO;
 import DAO.DAOProduct;
 import DAO.DAOimgVideo;
 import Entity.Categories;
+import Entity.CommentPerson;
 import Entity.ImageVideo;
 import Entity.Product;
 import Entity.ProductAttribute;
@@ -86,6 +88,7 @@ public class ProductDetail extends HttpServlet {
         List category = cd.getAllCategory();
         DAOimgVideo imdao = new DAOimgVideo();
         List<ImageVideo> video = imdao.getImByProductID(id);
+     
         request.setAttribute("pro", product);
         request.setAttribute("attribute", attribute);
         request.setAttribute("category", category);

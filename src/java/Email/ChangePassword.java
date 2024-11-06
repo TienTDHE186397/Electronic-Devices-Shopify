@@ -76,7 +76,7 @@ public class ChangePassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        System.out.println("Perasdasddasas " + session.getAttribute("user"));
+        System.out.println("Session ChangePassword" + session.getAttribute("user"));
         if (session != null) {
             System.out.println("Session ID: " + session.getId());
         } else {

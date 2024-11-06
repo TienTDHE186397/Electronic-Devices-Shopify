@@ -12,14 +12,15 @@ public class ProductAttribute {
     private int AttributeID;
     private String AttributeName;
     private String AttributeValue;
-
+    private Product product;
     public ProductAttribute() {
     }
 
-    public ProductAttribute(int AttributeID,String AttributeName, String AttributeValue) {
+    public ProductAttribute(int AttributeID,String AttributeName, String AttributeValue,Product product) {
         this.AttributeID = AttributeID;
         this.AttributeName = AttributeName;
         this.AttributeValue = AttributeValue;
+        this.product = product;
     }
     
     public int getAttributeID() {
@@ -47,9 +48,18 @@ public class ProductAttribute {
         this.AttributeValue = AttributeValue;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
-        return "ProductAttribute{" + "AttributeID=" + AttributeID + ", AttributeName=" + AttributeName + ", AttributeValue=" + AttributeValue + '}';
+        return "ProductAttribute{" + "AttributeID=" + AttributeID + ", AttributeName=" + AttributeName + ", AttributeValue=" + AttributeValue + ", product=" + product + '}';
     }
+
     
 }

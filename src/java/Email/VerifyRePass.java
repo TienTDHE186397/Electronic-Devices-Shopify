@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Random;
 
 /**
  *
@@ -75,6 +76,17 @@ public class VerifyRePass extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy mã xác thực từ form
+        String action = request.getParameter("action");
+        if ("resend".equals(action)) {
+            resendVerificationCode(request, response);
+        } else {
+           verify(request,response);
+        }
+
+    }
+
+    private void verify(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String inputCode = request.getParameter("verificationCode2");
 
         // Lấy mã xác thực lưu trữ trong session
@@ -82,23 +94,7 @@ public class VerifyRePass extends HttpServlet {
         String storedCode = (String) session.getAttribute("verificationCode");
         // Kiểm tra mã xác thực
         if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
-            // Lấy thông tin người dùng từ session và lưu vào database
-//            String email = (String) session.getAttribute("tempEmail");
-//            String password = (String) session.getAttribute("tempPassword");
-//            PersonDAO personDAO = new PersonDAO();
-//            boolean add = personDAO.updatePassword(email, password);  // Thêm người dùng vào database
-//            if (add) {
-//                System.out.println("Cập Nhật Thành Công");
-//
-//            } else {
-//                System.out.println("Cập Nhật Mật Khẩu Thất Bại");
-//            }
-//            // Xóa thông tin tạm thời trong session
-//            session.removeAttribute("verificationCode");
-//            session.removeAttribute("tempEmail");
-//            session.removeAttribute("tempPassword");
-//
-//            // Chuyển hướng tới trang thành công
+
             request.setAttribute("message", "Xác thực thành công");
             request.getRequestDispatcher("newPassword.jsp").forward(request, response);
         } else {
@@ -106,6 +102,31 @@ public class VerifyRePass extends HttpServlet {
             request.setAttribute("message", "Mã xác thực không chính xác.");
             request.getRequestDispatcher("forgot.jsp").forward(request, response);
         }
+    }
+     private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Generate a new verification code
+        String newCode = generateVerificationCode();
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+        session.setAttribute("verificationCode", newCode);
+        MailSender.sendVerificationEmail(email, newCode);
+        response.sendRedirect("verifyRePass.jsp");
+    }
+
+    // Tạo một đối tượng Random tĩnh và tái sử dụng
+    private static final Random random = new Random();
+
+    private String generateVerificationCode() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder code = new StringBuilder();
+
+        for (int i = 0; i < 15; i++) {
+            int index = random.nextInt(characters.length());
+            code.append(characters.charAt(index));
+        }
+
+        return code.toString();
     }
 
     /**

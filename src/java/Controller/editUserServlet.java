@@ -85,7 +85,7 @@ public class editUserServlet extends HttpServlet {
 //        out.println(roleid);
 //        out.println(pass);
         DAOPerson dp = new DAOPerson();
-        dp.updateUser(name, gender, address, email, phone, roleid, pass, id);
+        dp.updateUser(name, gender, email, roleid, pass, id);
         response.sendRedirect("userList");
         
        

@@ -11,35 +11,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User List</title>
-<!--        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-        <link rel="stylesheet" href="css/animate.css">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <link rel="stylesheet" href="css/owl.theme.default.min.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
-
-        <link rel="stylesheet" href="css/aos.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-        <link rel="stylesheet" href="css/ionicons.min.css">
-
-        <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-        <link rel="stylesheet" href="css/jquery.timepicker.css">
-
-
-        <link rel="stylesheet" href="css/flaticon.css">
-        <link rel="stylesheet" href="css/icomoon.css">
-        <link rel="stylesheet" href="css/style.css">-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
         <style>
@@ -156,7 +130,7 @@
     /*overflow-y: auto;*/
 }
 .side-menu ul {
-    text-align: center;
+text-align: center;
 }
 
 .side-menu a {
@@ -291,7 +265,7 @@
             table th, table td {
                 padding: 12px;
                 text-align: left;
-                border-bottom: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
             }
             table th {
                 background-color: #f7f7f7;
@@ -354,7 +328,7 @@
         </div>
         <div class="side-content">
             <div class="profile">
-                <div class="profile-img bg-img" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png)"></div>
+                <div class="profile-img bg-img" style="background-image: url(${person.image})"></div>
                 <h4 name="name">${person.name}</h4>
                 <small>Admin</small>
             </div>
@@ -386,7 +360,7 @@
                             <span class="las la-tasks"></span>
                             <small>User List</small>
                         </a>
-                    </li>
+</li>
                     <li>
                         <a href="settingList?PersonID=${person.personID}" class="">
                             <span class="las la-cog"></span>
@@ -440,21 +414,22 @@
         </select>
         <input type="submit" value="Tìm kiếm" />
     </form>
-    
-        
+    </div>
+        </div>
          <!-- Bảng danh sách người dùng -->
          <div class="table-container">
     <table border="1" width="89%" id="settingsTable">
         <thead>
             <tr>
                 <th onclick="sortID(0)">ID</th>
-                <th onclick="sortTable(1)">Họ tên</th>
-                <th onclick="sortTable(2)">Giới tính</th>
-                <th onclick="sortTable(3)">Ngày sinh</th>
-                <th onclick="sortTable(4)">Địa chỉ</th>
-                <th onclick="sortTable(5)">Email</th>
-                <th onclick="sortID(6)">Di động</th>
-                <th onclick="sortTable(7)">Vai trò</th>
+                <th>Hình ảnh</th>
+                <th onclick="sortTable(2)">Họ tên</th>
+                <th onclick="sortTable(3)">Giới tính</th>
+                <th onclick="sortTable(4)">Ngày sinh</th>
+                <th onclick="sortTable(5)">Address</th>
+                <th onclick="sortTable(6)">Email</th>
+<th onclick="sortID(7)">Phone</th>
+                <th onclick="sortTable(8)">Vai trò</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -463,6 +438,9 @@
         <c:forEach var="person" items="${listP}">
                 <tr>
                     <td>${person.personID}</td>
+                    <td>
+                        <img src="${person.image}" width="100px" height="100px"/>
+                    </td>
                     <td>${person.name}</td>
                     <td>${person.gender}</td>
                     <td>${person.dateOfBirth}</td>
@@ -488,7 +466,10 @@
                 </c:choose>
                     
                         <td>
-                            <a href="userDetail?PersonID=${person.personID}" style="">Chỉnh sửa</a>
+                            <a href="userDetail?PersonID=${person.personID}" style=""><i class="las la-edit" style="color: #f39c12  "></i></a>
+                            <a href="deletePerson?PersonID=${person.personID}" onclick="return confirm('Are you sure you want to delete this person?');">
+                                <i class="fas fa-trash delete-icon" style="color: black"></i>
+                                </a>
                     </td>
                 </tr>
             </c:forEach>
@@ -514,8 +495,7 @@
                     for (let i = 1; i < rows.length - 1; i++) {
                         let x = parseFloat(rows[i].getElementsByTagName("TD")[n].innerHTML);
                         let y = parseFloat(rows[i + 1].getElementsByTagName("TD")[n].innerHTML);
-
-                        if ((dir === "asc" && x > y) || (dir === "desc" && x < y)) {
+if ((dir === "asc" && x > y) || (dir === "desc" && x < y)) {
                             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                             // row[i].parentNode.insertBefore(new Node, reference Node);
                             //parentNode: tra ve phan tu cha

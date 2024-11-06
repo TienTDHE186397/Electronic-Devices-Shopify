@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class Person {
 
     private int PersonID;
+    private String Image;
     private String Name;
     private String Gender;
     private String DateOfBirth;
@@ -15,7 +16,19 @@ public class Person {
     private String Phone;
     private int roleID;
     private String Pasword;
+
 //cua son
+    public Person() {
+
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
 
     public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
         this.Name = Name;
@@ -31,7 +44,75 @@ public class Person {
     }
 
     //cua duc
-    public Person(int PersonID, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int RoleID, String Password) {
+//    public Person(int PersonID, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int RoleID, String Password) {
+//        this.PersonID = PersonID;
+//        this.Name = Name;
+//        this.Gender = Gender;
+//        this.DateOfBirth = DateOfBirth;
+//        this.StartDate = StartDate;
+//        this.Address = Address;
+//        this.Email = Email;
+//        this.Phone = Phone;
+//        this.roleID = RoleID;
+//        this.Pasword = Password;
+//    }
+//
+//    public Person(String Name, String Gender, String Address, String Email, String Phone, int RoleID, String Password) {
+//        this.Name = Name;
+//        this.Gender = Gender;
+//        this.Address = Address;
+//        this.Email = Email;
+//        this.Phone = Phone;
+//        this.roleID = RoleID;
+//        this.Pasword = Password;
+//    }
+//
+//    public Person(String Name, String Address, String Phone, String Password) {
+//        this.Name = Name;
+//        this.Address = Address;
+//        this.Phone = Phone;
+//        this.Pasword = Password;
+//    }
+    public Person(int PersonID, String Name, int RoleID) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.roleID = RoleID;
+
+    }
+
+    public Person(int PersonID, String Name, String DateOfBirth, LocalDate StartDate, String Email, int roleID, String Pasword) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Email = Email;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
+    }
+
+    public Person(String Name, String Address, String Email, String Phone) {
+        this.Name = Name;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+    }
+
+    public Person(String image, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+        this.Image = image;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
+
+    }
+//Son Inter3
+
+    public Person(int PersonID,String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int RoleID, String Password) {
         this.PersonID = PersonID;
         this.Name = Name;
         this.Gender = Gender;
@@ -44,7 +125,19 @@ public class Person {
         this.Pasword = Password;
     }
 
-    public Person(String Name, String Gender, String Address, String Email, String Phone, int RoleID, String Password) {
+    public Person(int PersonID, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Email, int RoleID, String Password) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Email = Email;
+        this.roleID = RoleID;
+        this.Pasword = Password;
+    }
+
+    public Person(String Images, String Name, String Gender, String Address, String Email, String Phone, int RoleID, String Password) {
+        this.Image = Images;
         this.Name = Name;
         this.Gender = Gender;
         this.Address = Address;
@@ -54,17 +147,34 @@ public class Person {
         this.Pasword = Password;
     }
 
-    public Person(String Name, String Address, String Phone, String Password) {
+    public Person(String Images, String Name, String Address, String Phone, String Password) {
+        this.Image = Images;
         this.Name = Name;
         this.Address = Address;
         this.Phone = Phone;
         this.Pasword = Password;
     }
-    public Person(int PersonID, String Name, int RoleID){
+
+    public Person(int PersonID, String Images, String Name, int RoleID) {
         this.PersonID = PersonID;
+        this.Image = Images;
         this.Name = Name;
         this.roleID = RoleID;
-        
+
+    }
+
+    public Person(int PersonID, String Image, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+        this.PersonID = PersonID;
+        this.Image = Image;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = roleID;
+        this.Pasword = Pasword;
     }
 
     public int getPersonID() {
@@ -146,7 +256,6 @@ public class Person {
     public void setPasword(String Pasword) {
         this.Pasword = Pasword;
     }
-
 
     @Override
     public String toString() {
