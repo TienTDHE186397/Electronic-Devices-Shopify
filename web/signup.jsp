@@ -57,7 +57,11 @@
                     %>
                     <h4><%= error != null ? error : ""%></h4>
 
+<<<<<<< HEAD
                     <button type="submit " style="background-color:  #b22222">Đăng Kí</button>
+=======
+                    <button type="submit " name="submit1" style="background-color:  #b22222">Đăng Kí</button>
+>>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
                 </form>
             </div>
 

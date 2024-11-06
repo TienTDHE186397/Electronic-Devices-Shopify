@@ -55,14 +55,12 @@ public class MailSender {
             e.printStackTrace();
         }
     }
-
     public static void main(String[] args) {
         // Giả sử token là một chuỗi ngẫu nhiên
         // Bạn nên tạo một token ngẫu nhiên và lưu trữ nó
         SecureRandom random = new SecureRandom();
         String token = new BigInteger(130, random).toString(32);
         // Gửi email xác thực với token
-        sendVerificationEmail("Sonnvhhe182275@fpt.edu.vn", token);
 
     }
 }
