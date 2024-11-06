@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -78,6 +79,8 @@ public class CartContact extends HttpServlet {
 
 // Chuyển tiếp request và response đến trang `CartContact.jsp` để hiển thị dữ liệu
         request.getRequestDispatcher("CartContact.jsp").forward(request, response);
+//PrintWriter out = response.getWriter();
+//out.print(payment);
     }
 
     /**

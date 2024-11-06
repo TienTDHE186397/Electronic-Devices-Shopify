@@ -23,7 +23,7 @@
                 padding: 5rem;
             }
             .sidebar, .order-details {
-                width: 20%;
+                width: 30%;
                 border: 1px solid #000;
                 padding: 10px;
             }
@@ -53,6 +53,45 @@
                 padding: 10px 20px;
                 font-size: 16px;
             }
+
+            /* Style the select dropdown */
+            select[name="selectedBank"] {
+                width: 100%; /* Full width */
+                padding: 10px; /* Space inside the box */
+                font-size: 16px; /* Font size for readability */
+                color: #333; /* Text color */
+                background-color: #f9f9f9; /* Background color */
+                border: 1px solid #ccc; /* Border color */
+                border-radius: 5px; /* Rounded corners */
+                outline: none; /* Remove default outline */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+                appearance: none; /* Remove default dropdown arrow (for custom styling) */
+                cursor: pointer;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            /* Hover and focus state for the select dropdown */
+            select[name="selectedBank"]:hover,
+            select[name="selectedBank"]:focus {
+                border-color: #007bff; /* Border color on hover/focus */
+                box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Slightly stronger shadow */
+            }
+
+            /* Style each option */
+            select[name="selectedBank"] option {
+                padding: 10px; /* Extra padding for readability */
+                color: #333; /* Text color */
+                background-color: #fff; /* Background color */
+            }
+
+            /* Add custom arrow indicator */
+            select[name="selectedBank"] {
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%23707070' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Custom down arrow */
+                background-repeat: no-repeat;
+                background-position: right 10px center; /* Position it on the right */
+                background-size: 16px 16px; /* Adjust size */
+            }
+
         </style>
     </head>
 
@@ -110,31 +149,37 @@
                 <!-- Display general order information -->
                 <h3>Order Information</h3>
                 <!-- Hidden fields for PersonID and OrderID, useful for backend processing -->
-                <input type="hidden" id="PersonID" name="PersonID" value="${p.personID}"/>
-                <input type="hidden" id="OrderID" name="OrderID" value="${p.personID}"/>
                 <!-- Display order ID from the order object -->
-                <p>Order ID: ${order.odID}</p>
+                <p>Order ID: ${OrderInfo.orderID}</p>
                 <!-- Display customer's name, email, and phone number -->
-                <p>Họ và tên: ${sessionScope.user.getName()}</p>
+                <p>Họ và tên: ${OrderInfo.name}</p>
                 <p>Email: ${sessionScope.user.getEmail()}</p>
-                <p>Số điện thoại: ${sessionScope.user.getPhone()}</p>
+                <p>Số điện thoại: ${OrderInfo.phone}</p>
                 <!-- Display shipping address -->
-                <p>Địa chỉ nhận hàng: ${address}</p>
+                <p>Địa chỉ nhận hàng: ${OrderInfo.address}</p>
                 <!-- Placeholder for payment method, this could be a dropdown or text -->
-                <p>Phương thức thanh toán:</p>
+                <p>Phương thức thanh toán: ${param.payment}</p>
+
                 <!-- Display total cost with discount and shipping fee (if any) -->
                 <p>Total Cost: ${total - (total / 10) + 30000}đ</p>
                 <!-- Display order status -->
-                <p>Order Status: Shipped</p>
+                <p>Order Status: ${OrderInfo.orderStatus}</p>
                 <!-- Display current date and time when the order was created -->
-                <p>Created Order: <input type="datetime-local" id="currentDate" readonly/></p>
+                <p>Order Date: <input type="datetime-local" id="currentDate" readonly/></p>
 
                 <!-- Payment Information Section -->
+                
                 <h3>Payment Information</h3>
                 <!-- Display bank information for payment transfer -->
-                <p><strong>Bank Name:</strong> ${bankName}</p>
-                <p><strong>Account Name:</strong> ${AccountName}</p>
-                <p><strong>Account Number:</strong> ${AccountNumber}</p>
+                <c:if test="${param.payment=='Chuyển khoản'}">
+                <select name="selectedBank">
+                    <c:forEach var="bank" items="${requestScope.banks}">
+                        <option value="${bank.bankName}">
+                            ${bank.accountName}  - ${bank.accountNumber} - ${bank.bankName}
+                        </option>
+                    </c:forEach>
+                </select>
+                </c:if>
                 <!-- Display total amount for payment -->
                 <p><strong></strong>Amount: $${total - (total / 10) + 30000}</p>
             </div>

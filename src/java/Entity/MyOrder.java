@@ -46,6 +46,20 @@ public class MyOrder {
         this.receivedPhone = receivedPhone;
         this.receivedAddress = receivedAddress;
     }
+
+    public MyOrder(Date orderDate, String personID, String showroomID, double totalMoney, int quatity, String method, String saleID, String status, String shipStatus) {
+        this.orderDate = orderDate;
+        this.personID = personID;
+        this.showroomID = showroomID;
+        this.totalMoney = totalMoney;
+        this.quatity = quatity;
+        this.method = method;
+        this.saleID = saleID;
+        this.status = status;
+        this.shipStatus = shipStatus;
+    }
+    
+    
    
     public MyOrder(String orderID, Date orderDate, String personID, String showroomID, double totalMoney, String method, String saleID, String status, String shipStatus, Date completeDate, Date exportedDate, Date inDeliveryDate, Date receivedDate, String productID, String img, String ProductName, double price) {
         this.orderID = orderID;

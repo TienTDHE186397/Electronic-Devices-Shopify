@@ -68,7 +68,7 @@ public class customerControl extends HttpServlet {
         
         List<Person> pr = dp.searchPerson(search, role, gender);
         if(search==null&&gender==null&&role==null){
-        List<Person> listP = dp.getAllPerson();
+        List<Person> listP = dp.getAllCustomer();
         request.setAttribute("listC", listP);
         request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
         } else{
