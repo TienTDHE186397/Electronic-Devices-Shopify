@@ -126,21 +126,25 @@ public class CustomerDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DAOCustomer customerDAO = new DAOCustomer();
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         String dob = request.getParameter("dateOfBirth");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
-        String image_id = request.getParameter("image_id");
+        String image_id = request.getParameter("imgEdit");
+        int id = Integer.parseInt(request.getParameter("id"));
         if(!image_id.equals("0")){
             int image = Integer.parseInt(image_id);
+            boolean check1 = customerDAO.updatePersonImage(id, image);
         }
-        int id = Integer.parseInt(request.getParameter("id"));
-        String userName = request.getParameter("userName");
         
+        
+        String userName = request.getParameter("userName");
+   
         //Update thông tin khách hàng
-        DAOCustomer customerDAO = new DAOCustomer();
+        
         HistoryChangeDAO historyDAO = new HistoryChangeDAO();
         SimpleDateFormat format = new SimpleDateFormat();
 

@@ -123,7 +123,7 @@ public class DAOCustomer extends DBContext {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 image.setImage_id(rs.getInt("image_id"));
-                image.setPerson(p);
+                image.setPerson(getPersonById(rs.getInt("PersonID")));
                 image.setImage_url(rs.getString("image_url"));
                 image.setAlt_text(rs.getString("alt_text"));
             }
@@ -131,9 +131,9 @@ public class DAOCustomer extends DBContext {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return ;
+        return image;
     }
-
+//==============================================================================================================
     public boolean updateCustomer(int id, String name, String gender, Date dob, String email) {
         String sql = "UPDATE Person SET [Name] = ?, Gender = ?, DateOfBirth = ?, Email = ? WHERE PersonID = ?";
         try {
@@ -206,13 +206,12 @@ public class DAOCustomer extends DBContext {
     }
 
     public boolean updatePersonImage(int id, int image_id) {
-        String updateSql = "UPDATE PersonImages SET IsPrimary = 0 WHERE PersonID = ? AND IsPrimary = 1";
+        String updateSql = "UPDATE PersonImages SET IsPrimary = 0 WHERE IsPrimary = 1";
         String insertSql = "UPDATE PersonImages SET IsPrimary = 1 WHERE PersonID = ? AND image_id = ?";
 
         try {
             // Thực hiện câu lệnh UPDATE để đặt IsPrimary = 0 cho các địa chỉ hiện tại
             PreparedStatement psUpdate = connection.prepareStatement(updateSql);
-            psUpdate.setInt(1, id);
             psUpdate.executeUpdate();
 
             // Thực hiện câu lệnh INSERT để thêm địa chỉ mới với IsPrimary = 1
@@ -269,11 +268,13 @@ public class DAOCustomer extends DBContext {
     public static void main(String[] args) {
         DAOCustomer cusDAO = new DAOCustomer();
         Person p1 = cusDAO.getPersonById(1);
-        System.out.println(p1);
-        List<PersonImage> image = cusDAO.getPersonImageByPersonId(1);
-        for (PersonImage p: image) {
-            System.out.println(p);
-        }
+//        System.out.println(p1);
+//        List<PersonImage> image = cusDAO.getPersonImageByPersonId(1);
+//        for (PersonImage p: image) {
+//            System.out.println(p);
+//        }
+        PersonImage images = cusDAO.getPersonImageByImageId(3);
+        System.out.println(images);
 
 ////        
 //        // Thông tin cần để cập nhật địa chỉ
