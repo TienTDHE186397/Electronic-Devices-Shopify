@@ -32,7 +32,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4>Thông tin khách hàng</h4>
-                        <form action="customer-detail" method="post">
+                        <form action="customer-detail" method="post" enctype="multipart/form-data">
                             <div class="row form-row">
                                 <div class="col-12 col-md-12">
                                     <div class="form-group">
@@ -40,12 +40,10 @@
                                             <div class="profile-img">
                                                 <img src="${customerDetail.getImage()}" alt="User Image">
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            
                                             <input name="id" type="hidden" class="form-control" value="${customerDetail.getPersonID()}">
                                             <input name="userName" type="hidden" class="form-control" value="${sessionScope.user.getName()}">
                                         </div>
@@ -90,18 +88,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="upload-img">
-                                <div class="change-photo-btn">
-                                    <span><i class="fa fa-upload"></i> Upload Photo</span>
-                                    <input type="file" class="upload">
-                                </div>
-                                <small class="form-text text-muted">Allowed JPG, GIF or PNG. Max
-                                    size of 2MB</small>
-                            </div>
-                            <select name="img">
-                                <option></option>
-                                <option></option>
+                            <label>Thay ảnh đại diện</label>        
+                            <select name="imgEdit">
+                                <option value="0">Ảnh đại diện</option>
+                                <c:forEach items="${listImages}" var="img">
+                                    <option value="${img.getImage_id()}" >${img.getAlt_text()}</option>
+                                </c:forEach>
                             </select>
+                            <div class="wrapper" style="margin: 20px;">                           
+                                <button type="button" class="btn btn-primary" onclick="addVideo()">Thêm Video</button>
+                                <button type="button" class="btn btn-primary" onclick="addImage()">Thêm Ảnh</button>
+                                <div id="attributeContainer" style="margin-top: 20px;"></div>
+                                <div id="attributeContainer" style="margin-top: 20px;"></div>
+                            </div>
+
                             <div class="submit-section">
                                 <button type="submit" class="btn btn-primary submit-btn">Lưu thông tin</button>
                             </div>
@@ -114,7 +114,17 @@
 
         <div class="container mt-4">
             <h2>Lịch sử thay đổi</h2>
-            <table class="table table-bordered">
+            <div>
+                <label><input type="checkbox" onclick="toggleColumn(0)" checked> ID người dùng</label>
+                <label><input type="checkbox" onclick="toggleColumn(1)" checked> Email</label>
+                <label><input type="checkbox" onclick="toggleColumn(2)" checked> Họ tên</label>
+                <label><input type="checkbox" onclick="toggleColumn(3)" checked> Giới tính</label>
+                <label><input type="checkbox" onclick="toggleColumn(4)" checked> Điện thoại</label>
+                <label><input type="checkbox" onclick="toggleColumn(5)" checked> Địa chỉ</label>
+                <label><input type="checkbox" onclick="toggleColumn(6)" checked> Người cập nhật</label>
+                <label><input type="checkbox" onclick="toggleColumn(7)" checked> Ngày cập nhật</label>
+            </div>
+            <table class="table table-bordered" id="table-history">
                 <thead>
                     <tr>
                         <th>Person ID</th>
@@ -165,4 +175,70 @@
             </c:forEach>
         </div>                               
     </body>
+    <script>
+        let attributeCount = 0; // Khởi tạo attributeCount bên ngoài hàm
+        function confirmDelete() {
+            console.log('Confirm delete called');
+            return confirm('Are you sure you want to delete this attribute?');
+        }
+
+        function addVideo() {
+            const attributeContainer = document.getElementById('attributeContainer');
+            const newRow = document.createElement('div');
+            newRow.classList.add('form-row', 'mb-2');
+            newRow.innerHTML = `
+                <div class="form-group col-md-5">
+                    <input type="text" placeholder="Nhập Tên Video" style="font-weight: bold;" name="vidName" class="form-control" required>
+                </div>
+                <div class="form-group col-md-5">
+                    <input name="vidValue" type="file" accept="video/*, image/*" class="form-control" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="button" class="btn btn-danger delete-button">Xóa</button>
+                </div>
+`;
+            attributeContainer.appendChild(newRow);
+            attributeCount++;
+
+            // Gán sự kiện xóa cho nút "Xóa" mới tạo
+            newRow.querySelector('.delete-button').addEventListener('click', function () {
+                newRow.remove();
+            });
+        }
+        function addImage() {
+            const attributeContainer = document.getElementById('attributeContainer');
+            const newRow = document.createElement('div');
+            newRow.classList.add('form-row', 'mb-2');
+            newRow.innerHTML = `
+                <div class="form-group col-md-5">
+                    <input type="text" placeholder="Nhập Tên Ảnh " style="font-weight: bold;" name="vidImageName" class="form-control" required>
+                </div>
+                <div class="form-group col-md-5">
+                    <input name="vidImageValue" type="file" accept="video/*, image/*" class="form-control" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="button" class="btn btn-danger delete-button">Xóa</button>
+                </div>
+`;
+            attributeContainer.appendChild(newRow);
+            attributeCount++;
+
+            // Gán sự kiện xóa cho nút "Xóa" mới tạo
+            newRow.querySelector('.delete-button').addEventListener('click', function () {
+                newRow.remove();
+            });
+        }
+
+        function toggleColumn(columnIndex) {
+            const table = document.getElementById("table-history");
+            const rows = table.rows;
+
+            for (let i = 0; i < rows.length; i++) {
+                const cell = rows[i].cells[columnIndex];
+                if (cell) {
+                    cell.style.display = cell.style.display === "none" ? "" : "none";
+                }
+            }
+        }
+    </script>
 </html>

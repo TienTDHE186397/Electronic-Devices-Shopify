@@ -2,37 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/SWP391/webdientu/src/java/Controller/CartController.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/web/ProductDetail.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/Filter/Sale.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/CartDAO.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/BlogListDAO.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/Filter/MKT.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/test/DAO/PersonDAOTest.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/DAO/DBContext.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/Filter/AdminFilter.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/src/java/Controller/ProductDetailServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/webdientu-master/test/EditProductTest.java</file>
-=======
-            <file>file:/D:/SWP391/webdientu/src/java/Controller/CartContact.java</file>
->>>>>>> e0d5b105aa9af99ed16cf31e8b9c2f514dc3c18a
             <file>file:/D:/SWP391/webdientu/web/CustomerDetail.jsp</file>
-            <file>file:/D:/SWP391/webdientu/src/java/DAO/PersonDAO.java</file>
-            <file>file:/D:/SWP391/webdientu/src/java/Entity/HistoryChange.java</file>
             <file>file:/D:/SWP391/webdientu/src/java/Controller/CartDetail.java</file>
             <file>file:/D:/SWP391/webdientu/web/CartContact.jsp</file>
             <file>file:/D:/SWP391/webdientu/src/java/DAO/DAOCustomer.java</file>
-            <file>file:/D:/SWP391/webdientu/src/java/DAO/HistoryChangeDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/LoginServlet.java</file>
             <file>file:/D:/SWP391/webdientu/src/java/Controller/CustomerDetail.java</file>
->>>>>>> d596dc01246c5ffbaf323c4903171241a914e7db
         </group>
->>>>>>> 9930e6c7d1451d527ad0126d4ae445f139e27d5f
     </open-files>
 </project-private>

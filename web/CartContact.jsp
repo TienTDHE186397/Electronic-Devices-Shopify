@@ -104,18 +104,15 @@
 
             .contact-table{
                 width: 100%;
-
                 margin: 50px 20px 10px 10px;
                 background-color: #d9d9d9;
                 border-radius: 10px;
                 border: 1px solid black;
-                padding: 20px;
+                padding: 40px;
                 object-fit: contain;
             }
 
             .contact-information{
-
-
                 margin: 20px 10px 0px 0px;
             }
 
@@ -131,6 +128,61 @@
                 width: 100%;
                 height: 20px;
                 border: 1px solid black;
+            }
+
+            /* CSS cho bảng sản phẩm */
+            #productTable {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #productTable th, #productTable td {
+                padding: 10px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            #productTable th {
+                background-color: #f2f2f2;
+                color: #333;
+            }
+
+            /* CSS cho phân trang */
+            #paginationControls {
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+                margin-top: 10px;
+            }
+
+            #paginationControls button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                border-radius: 3px;
+                font-size: 14px;
+                transition: background-color 0.3s;
+            }
+
+            #paginationControls button:hover {
+                background-color: #0056b3;
+            }
+
+            #paginationControls button:disabled {
+                background-color: #ddd;
+                color: #888;
+                cursor: default;
+            }
+
+            /* CSS cho lựa chọn số hàng */
+            #rowCount {
+                width: 50px;
+                padding: 3px;
+                border-radius: 3px;
+                border: 1px solid #ccc;
+                font-size: 14px;
             }
         </style>
 
@@ -175,9 +227,19 @@
                                 </form>
                             </div>
 
+                            <!-- Input chọn số hàng mỗi trang -->
                             <div class="price-table col-md-4">
-                                <div style="font-size: 20px;margin-top: 10px;">Thông tin đơn hàng</div>
-                                <table border="0">
+                                <div style="font-size: 20px; margin-top: 10px;">Thông tin đơn hàng</div>
+                                <div>
+                                    <label><input type="checkbox" onclick="toggleColumn(0)" checked> Tên SP</label>
+                                    <label><input type="checkbox" onclick="toggleColumn(1)" checked> SL</label>
+                                    <label><input type="checkbox" onclick="toggleColumn(2)" checked> Tổng</label>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <label for="rowCount">Số hàng hiển thị:</label>
+                                    <input type="number" id="rowCount" value="5" min="1" onchange="updatePagination()">
+                                </div>
+                                <table id="productTable" border="0">
                                     <thead>
                                         <tr>
                                             <th style="text-align: start;">Tên SP</th>
@@ -188,55 +250,47 @@
                                     <tbody>
                                         <c:forEach items="${cart.items}" var="item">
                                             <tr>
-                                                <td style="text-align: start;font-size: 12px;">${item.getProduct().getProductName()}</td>
-                                                <td style="text-align: center;font-size: 12px;">x${item.getQuantity()}</td>
-                                                <td style="text-align: end;font-size: 12px;">${item.getPrice()*item.getQuantity()}đ</td>
+                                                <td style="text-align: start; font-size: 12px;">${item.getProduct().getProductName()}</td>
+                                                <td style="text-align: center; font-size: 12px;">x${item.getQuantity()}</td>
+                                                <td style="text-align: end; font-size: 12px;">${item.getPrice() * item.getQuantity()}đ</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
-                                <c:set var="total" value="0" />
-                                <c:forEach items="${cart.items}" var="item">
-                                    <c:set var="total" value="${total + (item.price * item.quantity)}" />
-                                </c:forEach>
-                                <table border="0">
-
-                                    <tbody>
-                                        <tr>
-                                            <td style="text-align: start"><b>Ưu đãi</b></td>
-                                            <td style="text-align: end">-${total/10}đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: start"><b>Phí vận chuyển</b></td>
-                                            <td style="text-align: end">+30.000đ</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="text-align: start"><b>Thuế</b></td>
-                                            <td style="text-align: end">0đ</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
-                                <table border="0">                                  
-                                    <tbody>
-                                        <tr>
-
-                                            <td style="text-align: start"><b>Tổng đơn hàng</b></td>
-                                            <td style="text-align: end">${total - (total/10) + 30000}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div id="paginationControls"></div>
                             </div>
-                        </div>    
-                    </div>
-                    <div style="display: flex;justify-content: space-between">
-                        <a href="cart-detail" class="btn btn-primary">Thay đổi</a>
-                        <a href="cartCompletion" class="btn btn-primary">Thanh toán</a>
-
-
-                    </div>                  
+                            <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
+                            <c:set var="total" value="0" />
+                            <c:forEach items="${cart.items}" var="item">
+                                <c:set var="total" value="${total + (item.price * item.quantity)}" />
+                            </c:forEach>
+                            <table border="0">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: start"><b>Ưu đãi</b></td>
+                                        <td style="text-align: end">-${total/10}đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: start"><b>Phí vận chuyển</b></td>
+                                        <td style="text-align: end">+30.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: start"><b>Thuế</b></td>
+                                        <td style="text-align: end">0đ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
+                            <table border="0">                                  
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: start"><b>Tổng đơn hàng</b></td>
+                                        <td style="text-align: end">${total - (total/10) + 30000}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
                 </div>
                 <div class="col-lg-3">
                     <div class="sider drop-shadow">
@@ -279,6 +333,57 @@
             </div>            
         </div>
 
+        <script>
+            let currentPage = 1;
+
+            // Hàm ẩn/hiện cột
+            function toggleColumn(columnIndex) {
+                const table = document.getElementById("productTable");
+                const rows = table.rows;
+
+                for (let i = 0; i < rows.length; i++) {
+                    const cell = rows[i].cells[columnIndex];
+                    if (cell) {
+                        cell.style.display = cell.style.display === "none" ? "" : "none";
+                    }
+                }
+            }
+
+            // Hàm cập nhật phân trang
+            function updatePagination() {
+                const rowsPerPage = parseInt(document.getElementById("rowCount").value) || 5;
+                const rows = document.querySelectorAll("#productTable tbody tr");
+                const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) ? "" : "none";
+                });
+
+                renderPaginationControls(totalPages);
+            }
+
+            // Hàm tạo điều khiển phân trang
+            function renderPaginationControls(totalPages) {
+                const paginationControls = document.getElementById("paginationControls");
+                paginationControls.innerHTML = "";
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement("button");
+                    button.textContent = i;
+                    button.onclick = () => goToPage(i);
+                    button.disabled = i === currentPage;
+                    paginationControls.appendChild(button);
+                }
+            }
+
+            // Hàm chuyển trang
+            function goToPage(pageNumber) {
+                currentPage = pageNumber;
+                updatePagination();
+            }
+
+            document.addEventListener("DOMContentLoaded", updateRowCount);
+        </script>
         <%@include file="footer.jsp" %>
     </body>
 </html>
