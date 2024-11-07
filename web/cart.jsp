@@ -1,41 +1,53 @@
-<%-- 
-    Document   : CartContact
-    Created on : Oct 31, 2024, 7:08:45 PM
-    Author     : Dokkuhai
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Thông tin đặt hàng</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Ogani Template">
+        <meta name="keywords" content="Ogani, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <title>Giỏ hàng</title>
         <style>
-            body{
-                box-sizing: border-box;
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
             }
-            #subs {
-                background-color: #f7f7f7; /* Màu nền nhẹ */
-                padding-top: 5rem;
-                padding-bottom: 5rem;
-                margin-top: 70px;
-                margin-bottom: 30px;
+            th, td {
+                text-align: left;
+                padding: 10px;
+            }
+            th {
+                background-color: #3399ff;
+                color: white;
             }
 
-            .brand-name {
-                font-size: 4rem; /* Kích thước chữ lớn hơn */
-                font-weight: bold;
-                background: linear-gradient(45deg, #ff6, #f06, #f90, #6f9);
-                background-size: 300%;
-                color: transparent; /* Ẩn màu chữ gốc */
-                background-clip: text;
-                -webkit-background-clip: text;
-                animation: gradientAnimation 5s ease infinite;
-                text-transform: uppercase; /* Viết hoa toàn bộ chữ */
-                letter-spacing: 0.2rem; /* Khoảng cách giữa các chữ cái lớn hơn */
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng chữ */
+            .sider{
+                background-color: #ffffff;
+                width: 100%;
+                height: 100vh;
+                margin-top: 50px;
+                border-top: 1px solid black;
+                border-left: 1px solid black;
+
             }
+
 
             @keyframes gradientAnimation {
                 0% {
@@ -53,6 +65,27 @@
                 background-color: transparent; /* Làm nền trong suốt để hiển thị gradient phía sau */
             }
 
+            #subs {
+                background-color: #f7f7f7; /* Màu nền nhẹ */
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+                margin-top: 70px;
+
+            }
+
+            .brand-name {
+                font-size: 4rem; /* Kích thước chữ lớn hơn */
+                font-weight: bold;
+                background: linear-gradient(45deg, #ff6, #f06, #f90, #6f9);
+                background-size: 300%;
+                color: transparent; /* Ẩn màu chữ gốc */
+                background-clip: text;
+                -webkit-background-clip: text;
+                animation: gradientAnimation 5s ease infinite;
+                text-transform: uppercase; /* Viết hoa toàn bộ chữ */
+                letter-spacing: 0.2rem; /* Khoảng cách giữa các chữ cái lớn hơn */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng chữ */
+            }
             .search-item{
                 margin: 20px 20px;
             }
@@ -68,7 +101,7 @@
             table {
                 border-spacing: 0;
                 width: 100%;
-
+                border: 1px solid black;
             }
             td {
                 border: 1px solid black;
@@ -91,299 +124,117 @@
                 height: 50px;
                 object-fit: contain;
             }
-
-            .sider{
-                background-color: #ffffff;
-                width: 100%;
-                height: 100vh;
-                margin-top: 50px;
-                border-top: 1px solid black;
-                border-left: 1px solid black;
-
-            }
-
-            .contact-table{
-                width: 100%;
-                margin: 50px 20px 10px 10px;
-                background-color: #d9d9d9;
-                border-radius: 10px;
-                border: 1px solid black;
-                padding: 40px;
-                object-fit: contain;
-            }
-
-            .contact-information{
-                margin: 20px 10px 0px 0px;
-            }
-
-            .price-table{
-                margin-left: 0px;
-
-                background-color: white;
-                border-radius: 10px;
-
-            }
-
-            .input{
-                width: 100%;
-                height: 20px;
-                border: 1px solid black;
-            }
-
-            /* CSS cho bảng sản phẩm */
-            #productTable {
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            #productTable th, #productTable td {
-                padding: 10px;
-                text-align: center;
-                font-size: 14px;
-            }
-
-            #productTable th {
-                background-color: #f2f2f2;
-                color: #333;
-            }
-
-            /* CSS cho phân trang */
-            #paginationControls {
-                display: flex;
-                justify-content: center;
-                gap: 5px;
-                margin-top: 10px;
-            }
-
-            #paginationControls button {
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                padding: 5px 10px;
-                cursor: pointer;
-                border-radius: 3px;
-                font-size: 14px;
-                transition: background-color 0.3s;
-            }
-
-            #paginationControls button:hover {
-                background-color: #0056b3;
-            }
-
-            #paginationControls button:disabled {
-                background-color: #ddd;
-                color: #888;
-                cursor: default;
-            }
-
-            /* CSS cho lựa chọn số hàng */
-            #rowCount {
-                width: 50px;
-                padding: 3px;
-                border-radius: 3px;
-                border: 1px solid #ccc;
-                font-size: 14px;
-            }
         </style>
-
     </head>
     <body>
-        <%@include file="header.jsp" %>
+        <jsp:include page="header.jsp"></jsp:include>
+            <section id="subs" class="pt-5 pb-5 bg_light_1">
+                <div class="container text-center">
+                    <h1 class="brand-name">Shopify</h1>
+                </div>
+            </section>
+            <section class="hero">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9" style="margin-bottom: 20px">
+                            <h3><strong>Giỏ Hàng</strong></h3>
 
-        <section id="subs" class="pt-5 pb-5 bg_light_1">
-            <div class="container text-center">
-                <h1 class="brand-name">Shopify</h1>
-            </div>
-        </section>
 
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Hình Ảnh</th>
+                                        <th>Đơn giá</th>
+                                        <th>Số Lượng</th>
+                                        <th style="width: 170px">Cập Nhật Số Lượng</th>
+                                        <th>Tổng</th>                                         
+                                        <th style="text-align: center">Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${cart.items}" var="item">
+                                    <tr>
+                                        <td>${item.getProduct().getProductName()}</td>
+                                        <td><img style="width: 69px; height: 100px" src="${item.getProduct().getImg()}" alt="Product Image"></td>
+                                        <td style="color: red"><b>${item.getPrice()}đ</b></td>                                          
+                                <form action="update" method="get">
+                                    <td>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="contact-table container">
-                        <div class="row">
-                            <div class="contact-information col-md-7">
-                                <form action="action" method="get">
-                                    <h3>Thông tin đặt hàng</h3>
-                                    <label><b>Họ tên người nhận hàng</b></label><br>
-                                    <input type="text" name="name" value="${sessionScope.user.getName()}" class="input"/>
-                                    <div style="display: flex;justify-content: space-between">
-                                        <div style="width: 55%">
-                                            <label><b>Địa chỉ email</b></label><br>
-                                            <input type="text" name="email" value="${sessionScope.user.getEmail()}" class="input"/>
-                                        </div>
-                                        <div style="width: 35%">
-                                            <label><b>Số điện thoại</b></label><br>
-                                            <input type="text" name="phone" value="${sessionScope.user.getPhone()}" class="input"/>
-                                        </div>
-                                    </div>
-                                    <label><b>Địa chỉ nhận hàng</b></label><br>
-                                    <input type="text" name="address" value="${sessionScope.user.getAddress()}" class="input"/> 
-                                    <label><b>Phương thức thanh toán</b></label><br>
-                                    <select name="payment">
-                                        <option>Thanh toán bằng tiền mặt</option>
-                                        <option>Chuyển khoản</option>
-                                    </select>
+                                        <input type="hidden" name="ProductID" value="${item.getProduct().getProductID()}">
+                                        <input style="width: 50px" type="number" name="quantity" value="${item.getQuantity()}" min="1">
+
+                                    </td>
+                                    <td><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
                                 </form>
-                            </div>
+                                <td style="color: red"><b>${item.getPrice()*item.getQuantity()}đ</b></td>
 
-                            <!-- Input chọn số hàng mỗi trang -->
-                            <div class="price-table col-md-4">
-                                <div style="font-size: 20px; margin-top: 10px;">Thông tin đơn hàng</div>
-                                <div>
-                                    <label><input type="checkbox" onclick="toggleColumn(0)" checked> Tên SP</label>
-                                    <label><input type="checkbox" onclick="toggleColumn(1)" checked> SL</label>
-                                    <label><input type="checkbox" onclick="toggleColumn(2)" checked> Tổng</label>
-                                </div>
-                                <div style="margin-top: 10px;">
-                                    <label for="rowCount">Số hàng hiển thị:</label>
-                                    <input type="number" id="rowCount" value="5" min="1" onchange="updatePagination()">
-                                </div>
-                                <table id="productTable" border="0">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: start;">Tên SP</th>
-                                            <th style="text-align: center;">SL</th>
-                                            <th style="text-align: start;">Tổng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${cart.items}" var="item">
-                                            <tr>
-                                                <td style="text-align: start; font-size: 12px;">${item.getProduct().getProductName()}</td>
-                                                <td style="text-align: center; font-size: 12px;">x${item.getQuantity()}</td>
-                                                <td style="text-align: end; font-size: 12px;">${item.getPrice() * item.getQuantity()}đ</td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <div id="paginationControls"></div>
-                            </div>
-                            <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
+                                <td style="text-align: center">
+                                    <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-danger">Xóa</a>
+                                </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+
+                        <div style="display: flex;justify-content: space-between">
+                            <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-primary">Lưu</a>
+                            <a href="cartcontact" class="btn btn-dark">Đặt hàng</a>
                             <c:set var="total" value="0" />
                             <c:forEach items="${cart.items}" var="item">
                                 <c:set var="total" value="${total + (item.price * item.quantity)}" />
                             </c:forEach>
-                            <table border="0">
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: start"><b>Ưu đãi</b></td>
-                                        <td style="text-align: end">-${total/10}đ</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: start"><b>Phí vận chuyển</b></td>
-                                        <td style="text-align: end">+30.000đ</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: start"><b>Thuế</b></td>
-                                        <td style="text-align: end">0đ</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div style="border-bottom: 1px solid gray;margin: 0px -10px;"></div>
-                            <table border="0">                                  
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: start"><b>Tổng đơn hàng</b></td>
-                                        <td style="text-align: end">${total - (total/10) + 30000}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>    
-                </div>
-                <div class="col-lg-3">
-                    <div class="sider drop-shadow">
-                        <div class="search-item">
-                            <form action="product-list" method="get">
-                                <label><b>Tìm kiếm sản phẩm:</b></label>
-                                <input style="border-radius: 5px;width: 250px" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="${param.search_product}">
-                            </form>
-                        </div>
+                            <div style="color: red;font-size: 20px;"><b>Tổng cộng: ${total}</b></div>
 
-                        <div class="category-box">
-                            <h3>Phân Loại</h3>
-                            <table border="1" width="100">
-                                <tbody>
-                                    <c:forEach items="${listCategory}" var="listC">
-                                        <tr>
-                                            <td><a href="product-list?category=${listC.getCategoryID()}">${listC.getCategoryName()}</a></td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>                                    
-                            </table>
-                        </div>
+                        </div>  
 
-                        <div class="latest-product">
-                            <h3>Sản phẩm mới</h3>
-                            <c:forEach items="${listProductLatest}" var="listPL">
-                                <a href="product-detail?ProductID=${listPL.getProductID()}">
-                                    <div class="card-product">
-                                        <img src="${listPL.getImg()}" alt="...">
-                                        <div>
-                                            <div>${listPL.getProductName()}</div>
-                                            <div style="font-size: 10px;font-style: italic">Ngày cập nhật: ${listPL.getReleaseDate()}</div>
-                                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sider drop-shadow">
+                            <div class="search-item">
+                                <form action="product-list" method="get">
+                                    <label><b>Tìm kiếm sản phẩm:</b></label>
+                                    <input style="border-radius: 5px;width: 250px" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="${param.search_product}">
+                                </form>
+                            </div>
+                                
+                            <div class="category-box">
+                                <h3>Phân Loại</h3>
+                                <table border="1" width="100">
+                                    <tbody>
+                                        <c:forEach items="${listCategory}" var="listC">
+                                            <tr>
+                                                <td><a href="product-list?category=${listC.getCategoryID()}">${listC.getCategoryName()}</a></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>                                    
+                                </table>
+                            </div>
+                                
+                            <div class="latest-product">
+                                <h3>Sản phẩm mới</h3>
+                                <c:forEach items="${listProductLatest}" var="listPL">
+                                <div class="card-product">
+                                    <img src="${listPL.getImg()}" alt="...">
+                                    <div>
+                                        <div>${listPL.getProductName()}</div>
+                                        <div style="font-size: 10px;font-style: italic">Ngày cập nhật: ${listPL.getReleaseDate()}</div>
                                     </div>
-                                </a>
-                            </c:forEach>
-                        </div>    
+                                </div>
+                                </c:forEach>
+                            </div>    
+                        </div>
                     </div>
                 </div>
-            </div>            
-        </div>
-
-        <script>
-            let currentPage = 1;
-
-            // Hàm ẩn/hiện cột
-            function toggleColumn(columnIndex) {
-                const table = document.getElementById("productTable");
-                const rows = table.rows;
-
-                for (let i = 0; i < rows.length; i++) {
-                    const cell = rows[i].cells[columnIndex];
-                    if (cell) {
-                        cell.style.display = cell.style.display === "none" ? "" : "none";
-                    }
-                }
-            }
-
-            // Hàm cập nhật phân trang
-            function updatePagination() {
-                const rowsPerPage = parseInt(document.getElementById("rowCount").value) || 5;
-                const rows = document.querySelectorAll("#productTable tbody tr");
-                const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-                rows.forEach((row, index) => {
-                    row.style.display = (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) ? "" : "none";
-                });
-
-                renderPaginationControls(totalPages);
-            }
-
-            // Hàm tạo điều khiển phân trang
-            function renderPaginationControls(totalPages) {
-                const paginationControls = document.getElementById("paginationControls");
-                paginationControls.innerHTML = "";
-
-                for (let i = 1; i <= totalPages; i++) {
-                    const button = document.createElement("button");
-                    button.textContent = i;
-                    button.onclick = () => goToPage(i);
-                    button.disabled = i === currentPage;
-                    paginationControls.appendChild(button);
-                }
-            }
-
-            // Hàm chuyển trang
-            function goToPage(pageNumber) {
-                currentPage = pageNumber;
-                updatePagination();
-            }
-
-            document.addEventListener("DOMContentLoaded", updateRowCount);
-        </script>
-        <%@include file="footer.jsp" %>
+            </div>
+        </section>
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/mixitup.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
