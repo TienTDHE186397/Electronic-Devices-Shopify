@@ -18,8 +18,8 @@ import java.util.List;
  * @author nghie
  */
 public class DAOPerson extends DBContext {
-
-    public List<Person> getAllPerson() {
+    
+    public List<Person> getAllCustomer() {
         List<Person> list = new ArrayList<>();
         String sql = "select p.PersonID,pimg.image_url Image, p.Name, p.Gender, p.DateOfBirth, p.StartDate, coalesce(pa.Address,'không có thông tin') Address, p.Email,coalesce(pp.Phone,'không có thông tin') Phone, p.RoleID, p.Password\n"
                 + "FROM Person p\n"
@@ -27,6 +27,43 @@ public class DAOPerson extends DBContext {
                 + "LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
                 + "left join PersonImages pimg on p.PersonID = pimg.PersonID\n"
                 + "WHERE p.RoleID = 1  and pp.IsPrimary = 1 and pa.IsPrimary =1";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("startdate");
+                LocalDate localDate = (sqlDate != null) ? sqlDate.toLocalDate() : null; // Check for null
+
+                Person p = new Person(
+                        rs.getInt("PersonID"),
+                        rs.getString("Image"),
+                        rs.getString("Name"),
+                        rs.getString("Gender"),
+                        rs.getString("DateOfBirth"),
+                        localDate, // This can now be null if startdate is null
+                        rs.getString("Address"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getInt("RoleID"),
+                        rs.getString("Password")
+                );
+
+                list.add(p);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Person> getAllPerson() {
+        List<Person> list = new ArrayList<>();
+        String sql = "select p.PersonID,pimg.image_url Image, p.Name, p.Gender, p.DateOfBirth, p.StartDate, coalesce(pa.Address,'không có thông tin') Address, p.Email,coalesce(pp.Phone,'không có thông tin') Phone, p.RoleID, p.Password\n"
+                + "FROM Person p\n"
+                + "LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
+                + "LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
+                + "left join PersonImages pimg on p.PersonID = pimg.PersonID\n";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -91,6 +128,8 @@ while (rs.next()) {
         }
         return list;
     }
+    
+
 
     public List<Person> searchPerson(String search, String role, String gender) {
         List<Person> list = new ArrayList<>();

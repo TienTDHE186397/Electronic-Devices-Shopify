@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.*;
+import Email.MailSender;
 import Email.SendOrder;
 import Entity.*;
 import jakarta.servlet.ServletContext;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,14 +43,9 @@ public class CartCompletion extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (session != null && session.getAttribute("cart") != null) {
+
             String id = request.getParameter("PersonID");
-            String oid = request.getParameter("ProductID");
-            DAOAdmin da = new DAOAdmin();
-            Person pe = da.getPersonById(id);
-            PersonAddressDAO pad = new PersonAddressDAO();
-            PersonPhoneDAO ppd = new PersonPhoneDAO();
-            PersonAddress pa = pad.getAddressById(id);
-            PersonPhone pp = ppd.getPhoneById(id);
+
             Cart cart = (Cart) session.getAttribute("cart");
             Person person = (Person) session.getAttribute("user");
             Person p = new Person(person.getPersonID(),
@@ -62,34 +59,56 @@ public class CartCompletion extends HttpServlet {
                     person.getPhone(),
                     person.getRoleID(), person.getPasword());
             cart.setPerson(p);
+            MyOrderDAO mod = new MyOrderDAO();
+            String name = request.getParameter("name");
 
-//            CategoryDAO cDao = new CategoryDAO();
-//            ProductDAO pDao = new ProductDAO();
-//            List<Product> listProductLatest = pDao.getTop5ProductLatests();
-//            List<Categories> listC = cDao.getAllCategory();
-            session.setAttribute("address", pa);
-            session.setAttribute("phone", pp);
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            String paymentMethod = request.getParameter("payment");
+            OrderInformation oi = mod.getOrderInfo(person.getPersonID());
+            mod.createUpdateOrderDetailsProcedure();
+            mod.updateOrderDetails(person.getPersonID(), name, address, phone, paymentMethod, "Complete");
+            // Update the session's person with new values
+            person.setName(name);
+            person.setPhone(phone);
+            person.setAddress(address);
+            session.setAttribute("user", person);  // Update session with modified person object
             session.setAttribute("cart", cart);
-            session.setAttribute("person", pe);
+            String payment = (String) session.getAttribute("payment");
 
             ServletContext context = request.getServletContext();
-            String BankName = context.getInitParameter("bankName");
-            String AccountName = context.getInitParameter("AccountName");
-            String AccountNumber = context.getInitParameter("AccountNumber");
-            OrderProduct order = da.getOrderById(oid);
-            request.setAttribute("order", order);
-            request.setAttribute("p", p);
-            request.setAttribute("bankName", BankName);
-            request.setAttribute("AccountName", AccountName);
-            request.setAttribute("AccountNumber", AccountNumber);
+            List<Banks> banks = new ArrayList<>();
+            banks.add(new Banks(context.getInitParameter("bankName1"), context.getInitParameter("AccountName"), context.getInitParameter("AccountNumber")));
+            banks.add(new Banks(context.getInitParameter("bankName2"), context.getInitParameter("AccountName2"), context.getInitParameter("AccountNumber2")));
+            banks.add(new Banks(context.getInitParameter("bankName3"), context.getInitParameter("AccountName3"), context.getInitParameter("AccountNumber3")));
+            banks.add(new Banks(context.getInitParameter("bankName4"), context.getInitParameter("AccountName4"), context.getInitParameter("AccountNumber4")));
+            String selectedBank = request.getParameter("selectedBank");
+            Banks bank = new Banks();
+            if(selectedBank!=null&&selectedBank.equals("MB Bank")){
+                bank = new Banks(context.getInitParameter("bankName1"), context.getInitParameter("AccountName"), context.getInitParameter("AccountNumber"));
+            }
+            if(selectedBank!=null&&selectedBank.equals("Vietcombank")){
+                bank = new Banks(context.getInitParameter("bankName2"), context.getInitParameter("AccountName2"), context.getInitParameter("AccountNumber2"));
+                                    }
+            if(selectedBank!=null&&selectedBank.equals("Vietinbank")){
+                bank = new Banks(context.getInitParameter("bankName3"), context.getInitParameter("AccountName3"), context.getInitParameter("AccountNumber3"));
 
-            SendOrder so = new SendOrder();
-            so.send(p.getEmail(), order, BankName, AccountName, AccountNumber);
-//            request.setAttribute("listCategory", listC);
-//            request.setAttribute("listProductLatest", listProductLatest);
-        request.getRequestDispatcher("CartCompletion.jsp").forward(request, response);
+            }
+            if(selectedBank!=null&&selectedBank.equals("ABBank")){
+                bank = new Banks(context.getInitParameter("bankName4"), context.getInitParameter("AccountName4"), context.getInitParameter("AccountNumber4"));
+
+            }
+            
+            request.setAttribute("selectedBank", selectedBank);
+            request.setAttribute("OrderInfo", oi);
+            request.setAttribute("payment", payment);
+            request.setAttribute("p", p);
+            request.setAttribute("banks", banks);
+            MailSender.sendAccountBank(p.getEmail(), bank, oi);
+            request.getRequestDispatcher("CartCompletion.jsp").forward(request, response);
 //            PrintWriter out = response.getWriter();
-//            out.println(cart);
+//            out.println(p);
+//            out.print(oi);
 //            out.println(p.getEmail());
 //            out.println(order);
 //            out.println(pe);

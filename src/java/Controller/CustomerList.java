@@ -60,7 +60,7 @@ public class CustomerList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOPerson dp = new DAOPerson();
-        List<Person> listC = dp.getAllPerson();
+        List<Person> listC = dp.getAllCustomer();
         request.setAttribute("listC", listC);
         request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
     }
