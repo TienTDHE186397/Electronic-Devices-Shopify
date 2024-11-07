@@ -27,7 +27,7 @@ public class SaleEmpDAO {
         DBContext dbContext = new DBContext();
         this.connection = dbContext.connection;
     }
-
+//lấy ra số lượng tất cả order theo status được xác đinh bởi một saleStaff nhất định
     public List<OrderStatus> getOrderCountByStatusS(Integer SaleID) {
         List<OrderStatus> orderStatusList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class SaleEmpDAO {
 
         return orderStatusList;
     }
-
+//lấy ra danh sách của tất cả order cho trang SaleDashboard
     public List<SaleHomeOrder> getOrderS(Integer SaleID) {
         List<SaleHomeOrder> saleOrder = new ArrayList<>();
         String sql = "Select o.OrderID, o.OrderDate, p.Name as CustomerName, o.TotalMoney, o.[Status]\n"
@@ -81,7 +81,7 @@ public class SaleEmpDAO {
         }
         return saleOrder;
     }
-
+//lấy ra danh sách của tất cả đơn hàng cho OrderList
     public List<SaleOrderL> getOrderLS(Integer SaleID) {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT \n"
@@ -123,7 +123,7 @@ public class SaleEmpDAO {
         }
         return saleOrder;
     }
-
+//phương thức sử dụng để phân trang
     public List<SaleOrderL> pagingOrder(int index, Integer SaleID) {
         List<SaleOrderL> list = new ArrayList<>();
         String sql = " SELECT \n"
@@ -164,7 +164,7 @@ public class SaleEmpDAO {
         }
         return list;
     }
-
+//lấy ra tất cả các đơn hàng theo status được xác định bởi một SaleStaff
     public List<SaleOrderL> getOrderLByStatusS(String status, Integer SaleID) {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status "
@@ -193,7 +193,7 @@ public class SaleEmpDAO {
         }
         return saleOrder;
     }
-
+//phương thức sử dụng để search
     public List<SaleOrderL> searchOrdersS(String searchQuery, Integer SaleID) {
         List<SaleOrderL> orders = new ArrayList<>();
         String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status \n"
@@ -234,48 +234,7 @@ public class SaleEmpDAO {
         return orders;
     }
 
-//    public List<OrderByDay> getCompletedOrdersByDayOfWeekS(int SaleID) {
-//    List<OrderByDay> ordersByDay = new ArrayList<>();
-//    String sql = "SELECT \n"
-//        + " DATENAME(WEEKDAY, OrderDate) AS DayOfWeek,\n"
-//        + " COUNT(*) AS CompletedOrders\n"
-//        + "FROM \n"
-//        + " Orders\n"
-//        + "WHERE \n"
-//        + " [Status] = 'Complete'\n"
-//        + " AND OrderDate >= DATEADD(DAY, -7, GETDATE())\n"
-//        + " AND SaleID = ?\n"
-//        + "GROUP BY \n"
-//        + " DATENAME(WEEKDAY, OrderDate),\n"
-//        + " DATEPART(WEEKDAY, OrderDate)\n"
-//        + "ORDER BY \n"
-//        + " DATEPART(WEEKDAY, OrderDate)";
-//    
-//    try (PreparedStatement st = connection.prepareStatement(sql)) {
-//        st.setInt(1, SaleID);
-//        
-//        System.out.println("Executing query for SaleID: " + SaleID);
-//        
-//        try (ResultSet rs = st.executeQuery()) {
-//            while (rs.next()) {
-//                String dayOfWeek = rs.getString("DayOfWeek");
-//                int completedOrders = rs.getInt("CompletedOrders");
-//                ordersByDay.add(new OrderByDay(dayOfWeek, completedOrders));
-//                
-//                System.out.println("Day: " + dayOfWeek + ", Completed Orders: " + completedOrders);
-//            }
-//        }
-//        
-//        if (ordersByDay.isEmpty()) {
-//            System.out.println("No data found for the given criteria.");
-//        }
-//    } catch (SQLException e) {
-//        System.out.println("Error executing query: " + e.getMessage());
-//        e.printStackTrace();
-//    }
-//    
-//    return ordersByDay;
-//}
+//phương thức sử dụng để lấy ra số lượng các đơn hàng được hoàn thiện theo ngày
     public List<OrderByDay> getCompletedOrdersByDayOfWeekS(Integer SaleID) {
         List<OrderByDay> ordersByDay = new ArrayList<>();
         String sql = "SELECT \n"
@@ -312,7 +271,7 @@ public class SaleEmpDAO {
         return ordersByDay;
 
     }
-
+//phương thức sử đụng để lấy ra tất cả các đơn hàng được giao cho một SaleStaff nhất định
     public int getTotalOrderCount(Integer SaleID) {
         int totalCount = 0;
         String query = "SELECT COUNT(*) AS total FROM Orders Where SaleID = ?";
@@ -335,7 +294,7 @@ public class SaleEmpDAO {
 
         return totalCount;
     }
-
+// xác định nhân viên sale theo order
       public String getSaleIDByOrder(String orderID) {
         String query = "SELECT SaleID FROM [DBGR2Final].[dbo].[Orders] WHERE OrderID = ?";
         String saleID = "";

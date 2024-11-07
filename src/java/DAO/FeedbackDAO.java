@@ -22,7 +22,7 @@ import java.util.logging.Level;
  * @author admin
  */
 public class FeedbackDAO extends DBContext {
-
+ //lấy ra danh sách cùng những thông tin cần thiết của tất cả các feedaback cho trang FeedbackList
     public List<Feedback> getFeedbackList(String status, int rating) {
         List<Feedback> feedbackList = new ArrayList<>();
         String sql = "SELECT F.FeedbackID, P.ProductName, Pe.Name AS CustomerName, F.RatedStar, F.CreatedDate, F.Status FROM Feedback F JOIN Person Pe ON F.CustomerID = Pe.PersonID JOIN Products P ON F.ProductID = P.ProductID WHERE 1=1";
@@ -58,7 +58,7 @@ public class FeedbackDAO extends DBContext {
 
         return feedbackList;
     }
-
+//lấy ra thông tin chi tiết của của phản hồi
     public List<Feedback> getDetails(String feedbackID) {
         List<Feedback> detail = new ArrayList<>();
         String sql = "SELECT \n"
@@ -112,7 +112,7 @@ public class FeedbackDAO extends DBContext {
         }
         return detail;
     }
-
+//lấy ra tất cả nhân viên mkt
     public List<Person> getAllMkt() {
         List<Person> mktPersons = new ArrayList<>();
         String sql = "SELECT PersonID, Name, RoleID \n"
@@ -131,7 +131,7 @@ public class FeedbackDAO extends DBContext {
         }
         return mktPersons;
     }
-
+//phương thức sử dụng để update những thông tin cần thiết cho một phản hồi
     public void Update(Feedback s) {
         String sql = "UPDATE Feedback SET Status = ?, ProcessedBy = ?, ProcessedDate = GETDATE() WHERE FeedbackID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -148,11 +148,11 @@ public class FeedbackDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+    //phương thức để tạo một feedback
     public int createFeedback(Feedback feedback) throws SQLException {
     String insertSql = "INSERT INTO Feedback (CustomerID, ProductID, RatedStar, " +
                        "FeedbackContent, Status, CreatedDate) " +
-                       "VALUES (?, ?, ?, ?, 'New', GETDATE())";
+                       "VALUES (?, ?, ?, ?, 'New', GETDATE(),)";
                        
     try (PreparedStatement insertStmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
         insertStmt.setString(1, feedback.getCusID());
@@ -173,10 +173,10 @@ public class FeedbackDAO extends DBContext {
     }
     return -1;
 }
-
+//phương thức để lưu trữ các file media của một feedback
 public void saveFeedbackDetails(int feedbackId, String storedFileName,
                                 String originalFileName, String filePath,
-                                String fileType) throws SQLException {
+                                String fileType, String description) throws SQLException {
     String contentType; 
     if (storedFileName.toLowerCase().endsWith(".mp4")) { 
         contentType = "video/mp4";
@@ -190,7 +190,7 @@ public void saveFeedbackDetails(int feedbackId, String storedFileName,
          contentType = "application/octet-stream";// Giá trị mặc định nếu không xác định được loại tệp 
      }
     String sql = "INSERT INTO FeedbackDetails (FeedbackID, StoredFileName, " +
-                 "OriginalFileName, FilePath, FileType, ContentType ) VALUES (?, ?, ?, ?, ?, ?)";
+                 "OriginalFileName, FilePath, FileType, ContentType, DescriptionFB ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
         stmt.setInt(1, feedbackId);
@@ -199,11 +199,12 @@ public void saveFeedbackDetails(int feedbackId, String storedFileName,
         stmt.setString(4, filePath);
         stmt.setString(5, fileType);
         stmt.setString(6, contentType);
+        stmt.setString(7, description);
         stmt.executeUpdate();
     }
 }
 
-
+  
     public static void main(String[] args) {
         Connection connection = null;
         String feedbackID = "1";

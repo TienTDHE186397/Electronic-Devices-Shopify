@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.UUID;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -40,8 +41,8 @@ public class FeedbackService {
             throw new IllegalStateException("Upload directory is not writable: " + path);
         }
     }
-
-   public void processFeedback(Feedback feedback) throws Exception {
+//phương thức để xử lý feedback
+   public void processFeedback(Feedback feedback, String desimg, String desvid) throws Exception {
     logger.info("Starting feedback processing");
     try {
         // Bắt đầu transaction
@@ -50,6 +51,7 @@ public class FeedbackService {
 
         // Tạo bản ghi feedback
         int feedbackId = fbdao.createFeedback(feedback);
+        
         logger.info("Feedback created with ID: " + feedbackId);
 
         // Kiểm tra lại giá trị feedbackId trước khi tạo thư mục
@@ -69,13 +71,13 @@ public class FeedbackService {
         // Xử lý ảnh
         if (feedback.getImages() != null && !feedback.getImages().isEmpty()) {
             logger.info("Processing " + feedback.getImages().size() + " images");
-            processFiles(feedback.getImages(), feedbackId, feedbackDir, "image");
+            processFiles(feedback.getImages(), feedbackId, feedbackDir, "image",desimg);
         }
 
         // Xử lý video
         if (feedback.getVideos() != null && !feedback.getVideos().isEmpty()) {
             logger.info("Processing " + feedback.getVideos().size() + " videos");
-            processFiles(feedback.getVideos(), feedbackId, feedbackDir, "video");
+            processFiles(feedback.getVideos(), feedbackId, feedbackDir, "video",desvid);
         }
 
         // Commit transaction
@@ -103,11 +105,74 @@ public class FeedbackService {
             }
         }
     }
+}  
+   //phương thức sử dụng để thêm meida cho một feedback
+   public void addMediaFilesToFeedback(Feedback feedback, int feedbackId, String desimg, String desvid) throws Exception {
+   
+    try {
+        // Bắt đầu transaction
+        dBContext.connection.setAutoCommit(false);
+        logger.info("Transaction started for media files");
+
+        // Xác định đường dẫn thư mục cho feedback
+        String feedbackDir = uploadPath + File.separator + "feedback_" + feedbackId;
+        File directory = new File(feedbackDir);
+
+        // Kiểm tra hoặc tạo thư mục nếu chưa tồn tại
+        if (!directory.exists()) {
+            if (directory.mkdirs()) {
+                logger.info("Feedback directory created: " + feedbackDir);
+            } else {
+                throw new IllegalStateException("Could not create feedback directory: " + feedbackDir);
+            }
+        } else {
+            logger.info("Feedback directory exists: " + feedbackDir);
+        }
+
+        // Xử lý ảnh
+        if (feedback.getImages() != null && !feedback.getImages().isEmpty()) {
+            logger.info("Processing " + feedback.getImages().size() + " images");
+            processFiles(feedback.getImages(), feedbackId, feedbackDir, "image", desimg);
+        }
+
+        // Xử lý video
+        if (feedback.getVideos() != null && !feedback.getVideos().isEmpty()) {
+            logger.info("Processing " + feedback.getVideos().size() + " videos");
+            processFiles(feedback.getVideos(), feedbackId, feedbackDir, "video", desvid);
+        }
+
+
+        // Commit transaction
+        dBContext.connection.commit();
+        logger.info("Transaction committed successfully for media files");
+    } catch (Exception e) {
+        // Rollback trong trường hợp có lỗi
+        logger.severe("Error in addMediaFilesToFeedback: " + e.getMessage());
+        if (dBContext.connection != null) {
+            try {
+                dBContext.connection.rollback();
+                logger.info("Transaction rolled back for media files");
+            } catch (SQLException ex) {
+                logger.severe("Error rolling back transaction: " + ex.getMessage());
+            }
+        }
+        throw e;
+    } finally {
+        // Reset auto-commit
+        if (dBContext.connection != null) {
+            try {
+                dBContext.connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                throw new Exception("Error resetting auto-commit after media file addition", ex);
+            }
+        }
+    }
 }
 
 
 
-   private void processFiles(Collection<Part> files, int feedbackId, String directory, String fileType) throws Exception {
+//xử lý các file media
+   private void processFiles(Collection<Part> files, int feedbackId, String directory, String fileType, String des) throws Exception {
     for (Part file : files) {
         try {
             String originalFileName = getFileName(file);
@@ -125,7 +190,7 @@ public class FeedbackService {
             file.write(filePath);
 
             // Lưu thông tin tệp vào cơ sở dữ liệu
-            fbdao.saveFeedbackDetails(feedbackId, storedFileName, originalFileName, filePath, fileType);
+            fbdao.saveFeedbackDetails(feedbackId, storedFileName, originalFileName, filePath, fileType, des);
             logger.info("File details saved to database");
         } catch (Exception e) {
             logger.severe("Error processing file: " + e.getMessage());

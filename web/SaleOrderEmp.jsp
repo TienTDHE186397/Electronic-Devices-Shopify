@@ -250,13 +250,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <div class="hint-text">Showing<b>5</b> out of <b>${total}</b> Orders </div>
                             <ul class="pagination">
                                 <c:if test="${tagP > 1}">
-                                    <li class="page-item"><a href="SaleOrderEmp?index=${tagP - 1}}" class="page-link">Previous</a></li>
+                                    <li class="page-item"><a href="SaleOrderEmp?index=${tagP - 1}&SaleID=${param.SaleID}" class="page-link">Previous</a></li>
                                 </c:if>
                                 <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="page-item ${tagP == i ? "active" : ""}"><a href="SaleOrderEmp?index=${i}" class="page-link">${i}</a></li>
+                                <li class="page-item ${tagP == i ? "active" : ""}"><a href="SaleOrderEmp?index=${i}&SaleID=${param.SaleID}" class="page-link">${i}</a></li>
                                 </c:forEach>
                                 <c:if test="${tagP < endP}">  
-                                <li class="page-item"><a href="SaleOrderEmp?index=${tagP + 1}" class="page-link">Next</a></li>
+                                <li class="page-item"><a href="SaleOrderEmp?index=${tagP + 1}&SaleID=${param.SaleID}" class="page-link">Next</a></li>
                                 </c:if>
                             </ul>
                             

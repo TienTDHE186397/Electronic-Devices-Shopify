@@ -15,78 +15,88 @@
 
         <title>AdminHub</title>
         <style>
-    .media-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
-        padding: 1rem;
-    }
+            .media-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
 
-    .media-item {
-        position: relative;
-        cursor: pointer;
-    }
+            .media-item {
+                position: relative;
+                cursor: pointer;
+            }
 
-    .media-item img {
-        max-width: 100%;
-        height: auto;
-    }
+            .media-item img {
+                max-width: 100%;
+                height: auto;
+            }
 
-    .media-item video {
-        max-width: 100%;
-        height: auto;
-    }
+            .media-item video {
+                max-width: 100%;
+                height: auto;
+            }
 
-    .lightbox {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-    }
+            .lightbox {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.9);
 
-    .lightbox-content {
-        position: relative;
-        max-width: 90%;
-        height:  90vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: auto;
-    }
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+            }
 
-    .lightbox-close {
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        color: white;
-        font-size: 30px;
-        cursor: pointer;
-        z-index: 100;
-    }
+            .lightbox-content {
+                position: relative;
+                max-width: 90%;
+                height:  90vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: auto;
+            }
 
-    .video-container {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%; 
-    }
+            .lightbox-close {
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                color: white;
+                font-size: 30px;
+                cursor: pointer;
+                z-index: 100;
+            }
 
-    .video-container video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+            .video-container {
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%;
+            }
 
-</style>
+            .video-container video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .feedback-form {
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+        </style>
 
     </head>
     <body>
@@ -149,16 +159,6 @@
             <!-- NAVBAR -->
             <nav>
                 <i class='bx bx-menu' ></i>
-
-                <form action="#">
-                    <div class="form-input">
-                        <input type="search" placeholder="Search...">
-                        <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-                    </div>
-                </form>
-
-
-
             </nav>
             <!-- NAVBAR -->
 
@@ -231,6 +231,7 @@
                                             </c:forEach>
                                         </div>
 
+
                                         <div id="lightbox" class="lightbox">
                                             <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
                                             <div id="lightbox-content" class="lightbox-content"></div>
@@ -241,9 +242,10 @@
 
                                     </div>
                                     <form method="post" action="FeedbackDetail">
+                                        <input type="hidden" name="formType" value="updateStatus">
                                         <input type="hidden" name="feedbackID" value="${c.feedbackID}" />
                                         <div class="status-change">
-                                           <label for="${status.index}">Status:</label>
+                                            <label for="${status.index}">Status:</label>
                                             <select id="${status.index}" name="statusUpdate">
                                                 <option value="New" ${c.status == 'New' ? 'selected' : ''}>New</option>
                                                 <option value="Processing" ${c.status == 'Processing' ? 'selected' : ''}>Processing</option>
@@ -256,7 +258,7 @@
                                                     <c:when test="${c.mktEmp != null}" >
                                                         <!-- Hiển thị tên người xử lý nếu đã có -->
                                                         <option value="${c.mktID}">${c.mktEmp}</option>
-                                                        
+
                                                     </c:when>
                                                     <c:otherwise>
                                                         <!-- Nếu chưa có người xử lý, hiển thị tất cả nhân viên -->
@@ -271,7 +273,24 @@
                                             <button class="btn" type="submit">Cập nhật trạng thái</button>
                                             <a href="FeedbackList" class="btn">Trở về trang FeedbackList</a>
                                         </div>
-                                    </form>  
+                                    </form>
+                                    <form action="${pageContext.request.contextPath}/DetailMedia" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="formType" value="addMedia">
+                                        <input type="hidden" name="feedbackID" value="${c.feedbackID}" />
+                                        <div class="form-group">
+                                            <label for="images">Attach Images (Max 5 images, .jpg/.png only):</label>
+                                            <input type="file" id="images" name="images" accept="image/jpeg,image/png" multiple onchange="validateImages(this)">
+                                            <small class="text-muted">Select up to 5 images</small>
+                                            <input type="text" name="descriptionimg" placeholder="Write Your images description......." name="feedback" rows="1" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="videos">Attach Videos (Max 3 videos, 20MB each, .mp4 only):</label>
+                                            <input type="file" id="videos" name="videos" accept="video/mp4" multiple onchange="validateVideos(this)">
+                                            <small class="text-muted">Select up to 3 videos, max 10MB each</small>
+                                            <input type="text" name="descriptionvid" placeholder="Write Your video description......." name="feedback" rows="1" />
+                                        </div>
+                                        <button class="btn" type="submit">Thêm Media</button>
+                                    </form>     
                                 </div>
                             </c:forEach>
 
@@ -301,10 +320,6 @@
                     li.classList.add('active');
                 })
             });
-
-
-
-
             // TOGGLE SIDEBAR
             const menuBar = document.querySelector('#content nav .bx.bx-menu');
             const sidebar = document.getElementById('sidebar');
@@ -316,87 +331,68 @@
 
 
 
+        </script>
+      
+        <script>
+            function openLightbox(src, type) {
+                var lightbox = document.getElementById("lightbox");
+                var lightboxContent = document.getElementById("lightbox-content");
 
-
-
-            const searchButton = document.querySelector('#content nav form .form-input button');
-            const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-            const searchForm = document.querySelector('#content nav form');
-
-            searchButton.addEventListener('click', function (e) {
-                if (window.innerWidth < 576) {
-                    e.preventDefault();
-                    searchForm.classList.toggle('show');
-                    if (searchForm.classList.contains('show')) {
-                        searchButtonIcon.classList.replace('bx-search', 'bx-x');
-                    } else {
-                        searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                    }
+                if (type === 'image') {
+                    lightboxContent.innerHTML = '<img src="' + src + '" style="max-width: 100%; max-height: 90vh;">';
+                } else if (type === 'video') {
+                    lightboxContent.innerHTML = '<video width="70%" height="70%" controls autoplay>' +
+                            '<source src="' + src + '" type="video/mp4">' +
+                            'Your browser does not support the video tag.</video>';
                 }
-            });
 
-
-
-
-
-            if (window.innerWidth < 768) {
-                sidebar.classList.add('hide');
-            } else if (window.innerWidth > 576) {
-                searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                searchForm.classList.remove('show');
+                lightbox.style.display = "block";
             }
 
+            function closeLightbox() {
+                var lightbox = document.getElementById("lightbox");
+                lightbox.style.display = "none";
+            }
+        </script>
+        <script>
+            document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+                // Lấy giá trị của feedbackPerson
+                const feedbackPersonSelect = document.querySelector("select[name='feedbackPerson']");
+                const feedbackPersonHidden = document.getElementById("feedbackPersonHidden");
 
-            window.addEventListener('resize', function () {
-                if (this.innerWidth > 576) {
-                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                    searchForm.classList.remove('show');
+                // Nếu feedbackPerson có giá trị thì gán giá trị đó cho feedbackPersonHidden
+                if (feedbackPersonSelect.value) {
+                    feedbackPersonHidden.value = feedbackPersonSelect.value;
                 }
             });
-
-
-
-
         </script>
-        <script>
-            tinymce.init({
-                selector: '.tinymce',
-                plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak media',
-                toolbar_mode: 'floating'
-            });
-        </script>
-        <script>
-function openLightbox(src, type) {
-    var lightbox = document.getElementById("lightbox");
-    var lightboxContent = document.getElementById("lightbox-content");
-    
-    if (type === 'image') {
-        lightboxContent.innerHTML = '<img src="' + src + '" style="max-width: 100%; max-height: 90vh;">';
-    } else if (type === 'video') {
-        lightboxContent.innerHTML = '<video width="70%" height="70%" controls autoplay>' +
-            '<source src="' + src + '" type="video/mp4">' +
-            'Your browser does not support the video tag.</video>';
+        
+           <script>
+function validateImages(input) {
+    if (input.files.length > 5) {
+        alert('You can only upload up to 5 images');
+        input.value = '';
+        return false;
+    }
+    return true;
+}
+
+function validateVideos(input) {
+    if (input.files.length > 3) {
+        alert('You can only upload up to 3 videos');
+        input.value = '';
+        return false;
     }
     
-    lightbox.style.display = "block";
-}
-
-function closeLightbox() {
-    var lightbox = document.getElementById("lightbox");
-    lightbox.style.display = "none";
-}
-</script>
-   <script>
-    document.getElementById("feedbackForm").addEventListener("submit", function(event) {
-        // Lấy giá trị của feedbackPerson
-        const feedbackPersonSelect = document.querySelector("select[name='feedbackPerson']");
-        const feedbackPersonHidden = document.getElementById("feedbackPersonHidden");
-
-        // Nếu feedbackPerson có giá trị thì gán giá trị đó cho feedbackPersonHidden
-        if (feedbackPersonSelect.value) {
-            feedbackPersonHidden.value = feedbackPersonSelect.value;
+    for (let i = 0; i < input.files.length; i++) {
+        if (input.files[i].size > 20 * 1024 * 1024) { // 20MB in bytes
+            alert('Each video must be less than 20MB');
+            input.value = '';
+            return false;
         }
-    });
+    }
+    return true;
+}
 </script>
     </body>
 </html>

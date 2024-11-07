@@ -114,6 +114,7 @@ public class MyOrderInformationServlet extends HttpServlet {
         protected void doPost
         (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+              
                HttpSession session = request.getSession();
                Person user = (Person) session.getAttribute("user");
                String orderID = request.getParameter("orderID");
@@ -123,7 +124,7 @@ public class MyOrderInformationServlet extends HttpServlet {
                request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
                }
-               
+               //xác nhận đã nhận hàng
                MyOrderDAO mdao = new MyOrderDAO();
                try{
                    SaleOrderL s = new SaleOrderL(orderID);

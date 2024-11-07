@@ -226,11 +226,13 @@
                         <label for="images">Attach Images (Max 5 images, .jpg/.png only):</label>
                         <input type="file" id="images" name="images" accept="image/jpeg,image/png" multiple onchange="validateImages(this)">
                         <small class="text-muted">Select up to 5 images</small>
+                        <input type="text" name="descriptionimg" placeholder="Write Your images description......." name="feedback" rows="1" />
                     </div>
                     <div class="form-group">
                         <label for="videos">Attach Videos (Max 3 videos, 20MB each, .mp4 only):</label>
                         <input type="file" id="videos" name="videos" accept="video/mp4" multiple onchange="validateVideos(this)">
                         <small class="text-muted">Select up to 3 videos, max 10MB each</small>
+                        <input type="text" name="descriptionvid" placeholder="Write Your videos description......." name="feedback" rows="1" />
                     </div>
 
                     

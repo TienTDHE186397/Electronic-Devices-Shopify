@@ -1,12 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
 package Controller;
 
 import DAO.DBContext;
-import DAO.FeedbackDAO;
 import DAO.FeedbackService;
-import DAO.MyOrderDAO;
 import Entity.Feedback;
-import Entity.MyOrder;
-import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,23 +16,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Collection;
-import java.util.List;
+import java.util.logging.Logger;
 
-@WebServlet(name = "FeedbackformServlet", urlPatterns = {"/Feedback"})
-//Cấu hình các giới hạn kích thước cho tệp tải lên
+/**
+ *
+ * @author admin
+ */
+@WebServlet(name="DetailMediaServlet", urlPatterns={"/DetailMedia"})
+//xác định dung lượng cho phếp để lưu trữ file
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024, // 1 MB
     maxFileSize = 1024 * 1024 * 20,  // 20 MB
     maxRequestSize = 1024 * 1024 * 50 // 50 MB
 )
-public class FeedbackformServlet extends HttpServlet {
+public class DetailMediaServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(FeedbackformServlet.class.getName());
     private FeedbackService feedbackService; //Đối tượng dịch vụ xử lý phản hồi
     private static final String UPLOAD_DIRECTORY = "E:\\PEPRJ301P\\webdientu\\web\\uploadfeedback"; // Thư mục lưu trữ tệp tải lên (đường dẫn tuyệt đối trong hệ thống).
@@ -52,66 +54,61 @@ public class FeedbackformServlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FeedbackformServlet</title>");
+            out.println("<title>Servlet DetailMediaServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FeedbackformServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DetailMediaServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //Display information of user who want to submit feedback
-        HttpSession session = request.getSession();
-        Person user = (Person) session.getAttribute("user");
-        String orderID = request.getParameter("orderID");
-        if (user == null) {
-            response.sendRedirect("login");
-            return;
-        }
-       
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
-        MyOrderDAO dao = new MyOrderDAO();
-        List<MyOrder> orderProducts = dao.getProductListInfoByOrderID(orderID);
-        request.setAttribute("orderProducts", orderProducts);
-
-        request.getRequestDispatcher("Feedback.jsp").forward(request, response);
-    }
-
-    @Override 
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    // xử lý chức năng thêm file media cho một feedback
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        String orderID = request.getParameter("orderID");
-        String personID = request.getParameter("customerId");
-        String desimg = request.getParameter("descriptionimg");
-        String desvid = request.getParameter("descriptionvid");
-        try {
-            logger.info("Processing new feedback submission");
-            String customerIdStr = request.getParameter("customerId");
-            String productIdStr = request.getParameter("productId");
-            String ratingStr = request.getParameter("rating");
-
-            if (customerIdStr == null || productIdStr == null || ratingStr == null) {
-                throw new IllegalArgumentException("Required parameters are missing");
-            }
-
-            Feedback feedback = new Feedback();
-            feedback.setCusID(customerIdStr);
-            feedback.setProID(productIdStr);
-            feedback.setRate(Integer.parseInt(ratingStr));
-            feedback.setFeedContent(request.getParameter("feedback"));
+    throws ServletException, IOException {
+       String feedbackID = request.getParameter("feedbackID");  
+       String desvid = request.getParameter("descriptionvid");
+       String desimg = request.getParameter("descriptionimg");
+       
+       try {
+            Feedback feedback = new Feedback();           
 //                    xử lý file ảnh và video
             Collection<Part> parts = request.getParts();
             logger.info("Number of parts received: " + parts.size());
@@ -139,16 +136,22 @@ public class FeedbackformServlet extends HttpServlet {
             if (videoParts.size() > 3) {
                 throw new IllegalArgumentException("Maximum 3 videos allowed");
             }
-
+            
             feedback.setImages(imageParts);
             feedback.setVideos(videoParts);
+            if (feedbackID != null && !feedbackID.isEmpty()) {
+                feedbackService.addMediaFilesToFeedback(feedback,Integer.parseInt(feedbackID), desimg, desvid);
+            } else {
+                throw new IllegalArgumentException("fID ID is invalid");
+            }
 
-            feedbackService.processFeedback(feedback, desimg, desvid);
+            
 
             logger.info("Feedback processed successfully");
 
             request.setAttribute("message", "Feedback submitted successfully!");
-            response.sendRedirect("MyOrderInformation?personID=" + personID + "&orderID=" + orderID);
+            response.sendRedirect("FeedbackDetail?feedbackID=" + feedbackID + "&statusUpdate=success");
+            return;
 
         } catch (Exception e) {
             logger.severe("Error processing feedback: " + e.getMessage());
@@ -156,12 +159,18 @@ public class FeedbackformServlet extends HttpServlet {
 
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("error.jsp").forward(request, response);
+            return;
         }
-    } 
+    }  
+     
 
+    /** 
+     * Returns a short description of the servlet.
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }
-  

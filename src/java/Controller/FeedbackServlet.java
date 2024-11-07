@@ -59,6 +59,7 @@ public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //Display appropriate information of feedback
          String status = request.getParameter("status");
          String ratingStr = request.getParameter("rating");
          int rating = 0;

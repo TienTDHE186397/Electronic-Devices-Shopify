@@ -29,7 +29,7 @@ public class SaleDAO {
         DBContext dbContext = new DBContext();
         this.connection = dbContext.connection;
     }
-
+ //lấy số lượng đơn hàng theo status
     public List<OrderStatus> getOrderCountByStatus() {
         List<OrderStatus> orderStatusList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class SaleDAO {
 
         return orderStatusList;
     }
-
+//lấy tất cả order cho trang SaleDashBoard
     public List<SaleHomeOrder> getOrder() {
         List<SaleHomeOrder> saleOrder = new ArrayList<>();
         String sql = "Select o.OrderID, o.OrderDate, p.Name as CustomerName, o.TotalMoney, o.[Status]\n"
@@ -76,7 +76,7 @@ public class SaleDAO {
         }
         return saleOrder;
     }
-
+//Lấy tất cả order cho trang OrderList
     public List<SaleOrderL> getOrderL() {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT \n"
@@ -113,7 +113,7 @@ public class SaleDAO {
         }
         return saleOrder;
     }
-
+//lấy tất cả order theo status cho trang OrderList theo status
     public List<SaleOrderL> getOrderLByStatus(String status) {
         List<SaleOrderL> saleOrder = new ArrayList<>();
         String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status "
@@ -138,7 +138,7 @@ public class SaleDAO {
         }
         return saleOrder;
     }
-
+//phương thức tìm kiếm theo tên khách hàng và OrderId
     public List<SaleOrderL> searchOrders(String searchQuery) {
         List<SaleOrderL> orders = new ArrayList<>();
         String sql = "SELECT o.OrderID, o.OrderDate, p.Name AS CustomerName, r.ShowRoomName, o.TotalMoney, o.Method, s.Name AS SaleName, o.Status "
@@ -175,7 +175,7 @@ public class SaleDAO {
 
         return orders;
     }
-
+//lấy số lượng đơn hàng đã hoàn thiện theo ngày
     public List<OrderByDay> getCompletedOrdersByDayOfWeek() {
         List<OrderByDay> ordersByDay = new ArrayList<>();
         String sql = "SELECT \n"
@@ -208,7 +208,7 @@ public class SaleDAO {
         return ordersByDay;
 
     }
-
+//lấy số lượng của tất cả đơn hàng
     public int getTotalOrderCount() {
         int totalCount = 0;
         String query = "SELECT COUNT(*) AS total FROM Orders";
@@ -228,7 +228,7 @@ public class SaleDAO {
 
         return totalCount;
     }
-
+// lấy thông tin chi tiết của một đơn hàng được xác định theo orderId
     public List<SaleOrderL> getDetails(String orderID) {
         List<SaleOrderL> detail = new ArrayList<>();
         String sql = "SELECT \n"
@@ -288,7 +288,7 @@ public class SaleDAO {
         }
         return detail;
     }
-
+//lấy ra danh sách thông tin của tất cả sản phẩm có trong một đơn hàng
     public List<OrderProduct> getProDetails(String orderID) {
         List<OrderProduct> op = new ArrayList<>();
         String sql = " SELECT  \n"
@@ -329,7 +329,7 @@ public class SaleDAO {
         }
         return op;
     }
-
+  //phương thức sử dụng để lấy ra những thông tin có sẵn trong phần update nếu có
     public List<SaleOrderL> getUpdate(String orderID) {
         List<SaleOrderL> so = new ArrayList<>();
         String sql = "SELECT \n"
@@ -363,7 +363,7 @@ public class SaleDAO {
         }
         return so;
     }
-
+//phương thức sử dụng để lấy ra tất cả saleStaff sử dụng cho thẻ select 
     public List<Person> getAllSale() {
         List<Person> salePersons = new ArrayList<>();
         String sql = "SELECT PersonID, Name, RoleID \n"
@@ -382,7 +382,7 @@ public class SaleDAO {
         }
         return salePersons;
     }
-
+// phương thức để update trạng thái cùng những thông tin cần thiết cho một đơn hàng
     public void Update(SaleOrderL s) {
         String sql = """
             UPDATE Orders 
@@ -454,7 +454,7 @@ public class SaleDAO {
         }
         return 0;
     }
-
+//sử dụng để phân trang
     public List<SaleOrderL> pagingOrder(int index) {
         List<SaleOrderL> list = new ArrayList<>();
         String sql = " SELECT \n"

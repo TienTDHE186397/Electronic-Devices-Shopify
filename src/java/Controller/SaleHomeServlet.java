@@ -67,13 +67,13 @@ public class SaleHomeServlet extends HttpServlet {
         SaleDAO saleDAO = new SaleDAO();
         
         int totalCount = saleDAO.getTotalOrderCount();
-        
+        //lấy session của user
         HttpSession session = request.getSession();
-        
+        //lấy số lượng đơn hàng và những đơn hàng được hoàn thành theo ngày cho biểu đồ
         List<SaleHomeOrder> list = saleDAO.getOrder();
         List<OrderByDay> odbList = saleDAO.getCompletedOrdersByDayOfWeek();
         
-        
+        // lấy số lượng đơn hàng theo status 
         List<OrderStatus> orderStatusList = saleDAO.getOrderCountByStatus();
 
         

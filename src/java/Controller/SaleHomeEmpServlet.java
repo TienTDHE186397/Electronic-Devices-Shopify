@@ -67,17 +67,17 @@ public class SaleHomeEmpServlet extends HttpServlet {
       
          
         int SaleID = Integer.parseInt(request.getParameter("SaleID"));
-        
+        //lấy session của user
         HttpSession session = request.getSession();
         session.setAttribute("saleid", request.getParameter("SaleID"));
-       
+        //lấy số lượng đơn hàng và những đơn hàng được hoàn thành theo ngày cho biểu đồ
         int totalCount = saleEmpDAO.getTotalOrderCount(SaleID);
         
         List<SaleHomeOrder> list = saleEmpDAO.getOrderS(SaleID);
         
         List<OrderByDay> odbList = saleEmpDAO.getCompletedOrdersByDayOfWeekS(SaleID);
         
-        
+        // lấy số lượng đơn hàng theo status 
         List<OrderStatus> orderStatusList = saleEmpDAO.getOrderCountByStatusS(SaleID);
 
         
