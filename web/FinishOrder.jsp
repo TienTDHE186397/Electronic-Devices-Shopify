@@ -65,7 +65,7 @@
         
         <div class="cart-completion">
             <!-- Completion Message -->
-            <div><a href="http://localhost:9999/WebDienTu/home">Return to Home Page</a></div>
+            <div><a href="home">Return to Home Page</a></div>
             <section class="completion-message">
                 <h2>Order Complete!</h2>
                 <p>Thank you for your purchase! You’ll receive a confirmation email shortly.</p>

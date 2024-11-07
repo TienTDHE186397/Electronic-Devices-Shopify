@@ -196,7 +196,6 @@
             </div>
         </section>
 
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-9">
@@ -210,7 +209,8 @@
                                     <div style="display: flex;justify-content: space-between">
                                         <div style="width: 55%">
                                             <label><b>Địa chỉ email</b></label><br>
-                                            <input type="text" name="email" value="${sessionScope.user.getEmail()}" class="input"/>
+                                            <input type="email" name="email" id="email" value="${sessionScope.user.getEmail()}" class="input"/>
+                                            <span id="emailError" style="color: red; font-size: 12px;"></span>
                                         </div>
                                         <div style="width: 35%">
                                             <label><b>Số điện thoại</b></label><br>
@@ -253,7 +253,7 @@
                                                 <td style="text-align: start; font-size: 12px;">${item.getProduct().getProductName()}</td>
                                                 <td style="text-align: center; font-size: 12px;">x${item.getQuantity()}</td>
                                                 <td style="text-align: end; font-size: 12px;">
-                                                    <fmt:formatNumber value="${item.getPrice() * item.getQuantity()}" type="currency" />đ
+                                                    <fmt:formatNumber value="${item.getPrice() * item.getQuantity()}" />đ
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -287,7 +287,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="text-align: start"><b>Tổng đơn hàng</b></td>
-                                        <td style="text-align: end"><fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency" /></td>
+                                        <td style="text-align: end"><fmt:formatNumber value="${total - (total / 10) + 30000}" />đ</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -348,9 +348,6 @@
         </script>
         <script>
             let currentPage = 1;
-            
-            
-
             function validateForm() {
                 console.log("Validate form is called");
                 const nameInput = document.getElementById("name").value.trim();
@@ -379,6 +376,19 @@
                     alert("Vui lòng nhập số điện thoại hợp lệ (10 chữ số).");
                     return false;
                 }
+                const email = document.getElementById("email").value;
+                const emailError = document.getElementById("emailError");
+
+                // Regular expression for basic email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(email)) {
+                    emailError.textContent = "Please enter a valid email address.";
+                    return false; // Prevent form submission
+                }
+
+                emailError.textContent = ""; // Clear error message if valid
+                return true;
             }
 
             // Hàm ẩn/hiện cột
@@ -429,7 +439,7 @@
 
             document.addEventListener("DOMContentLoaded", updateRowCount);
 
-            
+
         </script>
 
     </body>

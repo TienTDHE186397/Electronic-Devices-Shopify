@@ -159,7 +159,7 @@
                                     <tr>
                                         <td>${item.getProduct().getProductName()}</td>
                                         <td><img style="width: 69px; height: 100px" src="${item.getProduct().getImg()}" alt="Product Image"></td>
-                                        <td style="color: red"><b><fmt:formatNumber value="${item.getPrice()}" type="currency" /></b></td>                                    
+                                        <td style="color: red"><b><fmt:formatNumber value="${item.getPrice()}" />đ</b></td>                                    
                                 <form action="update" method="get">
                                     <td>
                                         <input type="hidden" name="ProductID" value="${item.getProduct().getProductID()}">
@@ -167,7 +167,7 @@
                                     </td>
                                     <td><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
                                 </form>
-                               <td style="color: red"><b><fmt:formatNumber value="${item.getPrice() * item.getQuantity()}" type="currency" /></b></td>
+                               <td style="color: red"><b><fmt:formatNumber value="${item.getPrice() * item.getQuantity()}"/>đ</b></td>
 
                                 <td style="text-align: center">
                                     <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-danger">Xóa</a>
@@ -184,7 +184,7 @@
                             <c:forEach items="${cart.items}" var="item">
                                 <c:set var="total" value="${total + (item.price * item.quantity)}" />
                             </c:forEach>
-                            <div style="color: red; font-size: 20px;"><b>Tổng cộng: <fmt:formatNumber value="${total}" type="currency" /></b></div>
+                            <div style="color: red; font-size: 20px;"><b>Tổng cộng: <fmt:formatNumber value="${total}" />đ</b></div>
                         </div>  
 
                     </div>

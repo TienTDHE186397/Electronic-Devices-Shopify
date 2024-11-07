@@ -24,7 +24,7 @@ import jdk.jfr.Category;
  *
  * @author Dokkuhai
  */
-@WebServlet(name = "CartDetail", urlPatterns = {"/cart-detail"})
+    @WebServlet(name = "CartDetail", urlPatterns = {"/cart-detail"})
 public class CartDetail extends HttpServlet{
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
