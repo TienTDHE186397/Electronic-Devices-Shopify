@@ -5,6 +5,7 @@
         <group>
             <file>file:/D:/SWP391/webdientu/web/CustomerDetail.jsp</file>
             <file>file:/D:/SWP391/webdientu/src/java/DAO/DAOCustomer.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/HistoryChangeDAO.java</file>
             <file>file:/D:/SWP391/webdientu/src/java/Controller/CustomerDetail.java</file>
         </group>
     </open-files>
