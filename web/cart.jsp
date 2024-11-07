@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -86,6 +87,7 @@
                 letter-spacing: 0.2rem; /* Khoảng cách giữa các chữ cái lớn hơn */
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng chữ */
             }
+
             .search-item{
                 margin: 20px 20px;
             }
@@ -103,12 +105,13 @@
                 width: 100%;
                 border: 1px solid black;
             }
+
             td {
                 border: 1px solid black;
-
                 padding: 8px;
                 text-align: center;
             }
+
             .latest-product{
                 margin: 20px 20px;
             }
@@ -119,6 +122,7 @@
                 border: 1px solid black;
                 margin: 10px 0px;
             }
+
             .card-product img{
                 width: 50px;
                 height: 50px;
@@ -138,8 +142,6 @@
                     <div class="row">
                         <div class="col-lg-9" style="margin-bottom: 20px">
                             <h3><strong>Giỏ Hàng</strong></h3>
-
-
                             <table>
                                 <thead>
                                     <tr>
@@ -157,17 +159,15 @@
                                     <tr>
                                         <td>${item.getProduct().getProductName()}</td>
                                         <td><img style="width: 69px; height: 100px" src="${item.getProduct().getImg()}" alt="Product Image"></td>
-                                        <td style="color: red"><b>${item.getPrice()}đ</b></td>                                          
+                                        <td style="color: red"><b><fmt:formatNumber value="${item.getPrice()}" type="currency" /></b></td>                                    
                                 <form action="update" method="get">
                                     <td>
-
                                         <input type="hidden" name="ProductID" value="${item.getProduct().getProductID()}">
                                         <input style="width: 50px" type="number" name="quantity" value="${item.getQuantity()}" min="1">
-
                                     </td>
                                     <td><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
                                 </form>
-                                <td style="color: red"><b>${item.getPrice()*item.getQuantity()}đ</b></td>
+                               <td style="color: red"><b><fmt:formatNumber value="${item.getPrice() * item.getQuantity()}" type="currency" /></b></td>
 
                                 <td style="text-align: center">
                                     <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-danger">Xóa</a>
@@ -184,8 +184,7 @@
                             <c:forEach items="${cart.items}" var="item">
                                 <c:set var="total" value="${total + (item.price * item.quantity)}" />
                             </c:forEach>
-                            <div style="color: red;font-size: 20px;"><b>Tổng cộng: ${total}</b></div>
-
+                            <div style="color: red; font-size: 20px;"><b>Tổng cộng: <fmt:formatNumber value="${total}" type="currency" /></b></div>
                         </div>  
 
                     </div>
@@ -197,7 +196,7 @@
                                     <input style="border-radius: 5px;width: 250px" id ="myInput" name="search_product" type="text" placeholder="Nhập thông tin sản phẩm cần tìm..." class="form-input" value="${param.search_product}">
                                 </form>
                             </div>
-                                
+
                             <div class="category-box">
                                 <h3>Phân Loại</h3>
                                 <table border="1" width="100">
@@ -210,17 +209,20 @@
                                     </tbody>                                    
                                 </table>
                             </div>
-                                
+
                             <div class="latest-product">
                                 <h3>Sản phẩm mới</h3>
                                 <c:forEach items="${listProductLatest}" var="listPL">
-                                <div class="card-product">
-                                    <img src="${listPL.getImg()}" alt="...">
-                                    <div>
-                                        <div>${listPL.getProductName()}</div>
-                                        <div style="font-size: 10px;font-style: italic">Ngày cập nhật: ${listPL.getReleaseDate()}</div>
-                                    </div>
-                                </div>
+
+                                    <a style="border: none" href="product-detail?ProductID=${listPL.getProductID()}">
+                                        <div class="card-product">
+                                            <img src="${listPL.getImg()}" alt="...">
+                                            <div>
+                                                <div>${listPL.getProductName()}</div>
+                                                <div style="font-size: 10px;font-style: italic">Ngày cập nhật: ${listPL.getReleaseDate()}</div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </c:forEach>
                             </div>    
                         </div>

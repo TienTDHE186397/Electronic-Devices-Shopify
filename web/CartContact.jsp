@@ -3,7 +3,7 @@
     Created on : Oct 31, 2024, 7:08:45 PM
     Author     : Dokkuhai
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -203,10 +203,10 @@
                     <div class="contact-table container">
                         <div class="row">
                             <div class="contact-information col-md-7">
-                                <form action="action" method="get">
+                                <form action="action" method="get" onchange="return validateForm()">
                                     <h3>Thông tin đặt hàng</h3>
                                     <label><b>Họ tên người nhận hàng</b></label><br>
-                                    <input type="text" name="name" value="${sessionScope.user.getName()}" class="input"/>
+                                    <input type="text" name="name" id="name" value="${sessionScope.user.getName()}" class="input"/>
                                     <div style="display: flex;justify-content: space-between">
                                         <div style="width: 55%">
                                             <label><b>Địa chỉ email</b></label><br>
@@ -214,7 +214,7 @@
                                         </div>
                                         <div style="width: 35%">
                                             <label><b>Số điện thoại</b></label><br>
-                                            <input type="text" name="phone" value="${sessionScope.user.getPhone()}" class="input"/>
+                                            <input type="text" name="phone" id="phone" value="${sessionScope.user.getPhone()}" class="input"/>
                                         </div>
                                     </div>
                                     <label><b>Địa chỉ nhận hàng</b></label><br>
@@ -252,7 +252,9 @@
                                             <tr>
                                                 <td style="text-align: start; font-size: 12px;">${item.getProduct().getProductName()}</td>
                                                 <td style="text-align: center; font-size: 12px;">x${item.getQuantity()}</td>
-                                                <td style="text-align: end; font-size: 12px;">${item.getPrice() * item.getQuantity()}đ</td>
+                                                <td style="text-align: end; font-size: 12px;">
+                                                    <fmt:formatNumber value="${item.getPrice() * item.getQuantity()}" type="currency" />đ
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -268,7 +270,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="text-align: start"><b>Ưu đãi</b></td>
-                                        <td style="text-align: end">-${total/10}đ</td>
+                                        <td style="text-align: end">-<fmt:formatNumber value="${total/10}"/>đ</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: start"><b>Phí vận chuyển</b></td>
@@ -285,7 +287,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="text-align: start"><b>Tổng đơn hàng</b></td>
-                                        <td style="text-align: end">${total - (total/10) + 30000}</td>
+                                        <td style="text-align: end"><fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency" /></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -296,8 +298,6 @@
                         <input type="submit" id="payForm" value="Thanh toán" class="btn btn-primary"/>
                         <!--                        <a href="cartCompletion" id="payForm" class="btn btn-primary">Thanh toán</a>-->
                     </div>
-
-
 
                 </div>    
                 <div class="col-lg-3">
@@ -343,6 +343,36 @@
 
         <script>
             let currentPage = 1;
+
+            function validateForm() {
+                console.log("Validate form is called");
+                const nameInput = document.getElementById("name").value.trim();
+
+                if (nameInput === "") {
+                    alert("Tên không được để trống.");
+                    return false;
+                }
+
+                if (nameInput.length < 2) {
+                    alert("Tên phải có ít nhất 2 ký tự.");
+                    return false;
+                }
+
+                // Kiểm tra nếu tên chứa số hoặc ký tự đặc biệt
+                const namePattern = /^[A-Za-zÀ-ỹà-ỹ\s]+$/u; // Cho phép các chữ cái (cả dấu) và khoảng trắng
+                if (!namePattern.test(nameInput)) {
+                    alert("Tên chỉ được chứa các chữ cái.");
+                    return false;
+                }
+
+                // Kiểm tra số điện thoại
+                const phoneInput = document.getElementById("phone").value.trim();
+                const phonePattern = /^\d{10}$/;  // Giới hạn là 10 chữ số (có thể thay đổi theo yêu cầu)
+                if (!phonePattern.test(phoneInput)) {
+                    alert("Vui lòng nhập số điện thoại hợp lệ (10 chữ số).");
+                    return false;
+                }
+            }
 
             // Hàm ẩn/hiện cột
             function toggleColumn(columnIndex) {
