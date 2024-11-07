@@ -71,7 +71,7 @@
                                                value="${customerDetail.getEmail()}">
                                         <label>Ngày tháng năm sinh</label>
                                         <div class="cal-icon">
-                                            <input type="text" name="dateOfBirth" class="form-control datetimepicker"
+                                            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control datetimepicker"
                                                    value="${customerDetail.getDateOfBirth()}">
                                         </div>
                                     </div>
@@ -208,6 +208,21 @@
                 return false;
             }
 
+            // Kiểm tra ngày sinh
+            const dateOfBirthInput = document.getElementById("dateOfBirth").value.trim();
+            if (dateOfBirthInput === "") {
+                alert("Ngày sinh không được để trống.");
+                return false;
+            }
+
+            // Kiểm tra nếu ngày sinh hợp lệ
+            const today = new Date();
+            const dateOfBirth = new Date(dateOfBirthInput);
+            if (dateOfBirth >= today) {
+                alert("Ngày sinh phải là ngày trong quá khứ.");
+                return false;
+            }
+
             return true; // Form is valid
         }
 
@@ -275,6 +290,11 @@
             }
         }
 
-
+        $(document).ready(function () {
+            $('.datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD', // Định dạng ngày
+                maxDate: new Date(), // Chỉ cho phép chọn ngày trong quá khứ
+            });
+        });
     </script>
 </html>
