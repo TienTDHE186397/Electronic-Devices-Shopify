@@ -92,9 +92,10 @@ public class CartController extends HttpServlet {
             int productId = Integer.parseInt(request.getParameter("ProductID"));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             Product product = productDAO.getProductsById(productId); // Lấy thông tin sản phẩm
-
+            
             if (product != null) {
-                cartItemDAO.addCartItem(cartId, product, quantity); // Thêm sản phẩm vào giỏ hàng
+                int price = product.getProductID();
+                cartItemDAO.addCartItem(cartId, product, quantity, price); // Thêm sản phẩm vào giỏ hàng
             }
 
             response.sendRedirect(request.getContextPath() + "/cart"); // Chuyển hướng về giỏ hàng

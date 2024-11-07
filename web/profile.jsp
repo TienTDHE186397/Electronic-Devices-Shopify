@@ -98,13 +98,30 @@
                     <td></td>
                 </tr>
                 <tr>
+                    <td>Hình ảnh</td>
+                    <td><img src="<%= loggedInPerson.getImage()%>" width="100px" height="100px"/></td>
+                    <td></td>
+                </tr>
+                
+                <tr>
                     <td>Giới tính</td>
                     <td><input type="text" name="gender" value="<%= loggedInPerson.getGender() %>" placeholder="Gender"></td>
                     <td></td>
                 </tr>
                 <tr>
+                    <td>Ngày sinh</td>
+                     <td><input type="text" name="name" value="<%= loggedInPerson.getDateOfBirth() %>" placeholder="Name"></td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>Ngày bắt đầu</td>
                     <td><input type="text" name="startDate" value="<%= loggedInPerson.getStartDate() %>" placeholder="Start Date"></td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <td>Địa chỉ</td>
+                     <td><input type="text" name="name" value="<%= loggedInPerson.getAddress() %>" placeholder="Name"></td>
                     <td></td>
                 </tr>
                
@@ -113,16 +130,16 @@
                     <td><input type="text" name="email" value="<%= loggedInPerson.getEmail() %>" placeholder="Email"></td>
                     <td></td>
                 </tr>
-               
+                
                 <tr>
-                    <td>Vai trò</td>
-                    <td><input type="text" name="role" value="<%= loggedInPerson.getRoleID() %>" placeholder="Role"></td>
-                    <td></td>
+                    <td>Số điện thoại</td>
+                     <td><input type="text" name="name" value="<%= loggedInPerson.getPhone() %>" placeholder="Name"></td>
+                    <td><button type="button" id="changePasswordBtn">Đổi mật khẩu</button></td>
                 </tr>
                 <tr>
                     <td>Mật khẩu</td>
                     <td><input type="text" name="password" value="<%= pass %>" placeholder="Password"></td>
-                    <td><button type="button" id="changePasswordBtn">Đổi mật khẩu</button></td>
+                    <td><a href="home">Return to home page</a></td>
                 </tr>
             </tbody>
         </table>

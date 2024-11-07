@@ -58,10 +58,16 @@ public class CartCompletion extends HttpServlet {
                     person.getEmail(),
                     person.getPhone(),
                     person.getRoleID(), person.getPasword());
+            double total = 0;
+            for (CartItem cartitems : cart.getItems()) {
+                double price = cartitems.getPrice();
+                int quantity = cartitems.getQuantity();
+                total+=price*quantity;
+            }
+            double amount = total - (total / 10) + 30000;
             cart.setPerson(p);
             MyOrderDAO mod = new MyOrderDAO();
             String name = request.getParameter("name");
-
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
             String paymentMethod = request.getParameter("payment");
@@ -75,7 +81,6 @@ public class CartCompletion extends HttpServlet {
             session.setAttribute("user", person);  // Update session with modified person object
             session.setAttribute("cart", cart);
             String payment = (String) session.getAttribute("payment");
-
             ServletContext context = request.getServletContext();
             List<Banks> banks = new ArrayList<>();
             banks.add(new Banks(context.getInitParameter("bankName1"), context.getInitParameter("AccountName"), context.getInitParameter("AccountNumber")));
@@ -84,27 +89,27 @@ public class CartCompletion extends HttpServlet {
             banks.add(new Banks(context.getInitParameter("bankName4"), context.getInitParameter("AccountName4"), context.getInitParameter("AccountNumber4")));
             String selectedBank = request.getParameter("selectedBank");
             Banks bank = new Banks();
-            if(selectedBank!=null&&selectedBank.equals("MB Bank")){
+            if (selectedBank != null && selectedBank.equals("MB Bank")) {
                 bank = new Banks(context.getInitParameter("bankName1"), context.getInitParameter("AccountName"), context.getInitParameter("AccountNumber"));
             }
-            if(selectedBank!=null&&selectedBank.equals("Vietcombank")){
+            if (selectedBank != null && selectedBank.equals("Vietcombank")) {
                 bank = new Banks(context.getInitParameter("bankName2"), context.getInitParameter("AccountName2"), context.getInitParameter("AccountNumber2"));
-                                    }
-            if(selectedBank!=null&&selectedBank.equals("Vietinbank")){
+            }
+            if (selectedBank != null && selectedBank.equals("Vietinbank")) {
                 bank = new Banks(context.getInitParameter("bankName3"), context.getInitParameter("AccountName3"), context.getInitParameter("AccountNumber3"));
 
             }
-            if(selectedBank!=null&&selectedBank.equals("ABBank")){
+            if (selectedBank != null && selectedBank.equals("ABBank")) {
                 bank = new Banks(context.getInitParameter("bankName4"), context.getInitParameter("AccountName4"), context.getInitParameter("AccountNumber4"));
 
             }
-            
+
             request.setAttribute("selectedBank", selectedBank);
             request.setAttribute("OrderInfo", oi);
             request.setAttribute("payment", payment);
             request.setAttribute("p", p);
             request.setAttribute("banks", banks);
-            MailSender.sendAccountBank(p.getEmail(), bank, oi);
+            MailSender.sendAccountBank(p.getEmail(), bank, oi, amount);
             request.getRequestDispatcher("CartCompletion.jsp").forward(request, response);
 //            PrintWriter out = response.getWriter();
 //            out.println(p);

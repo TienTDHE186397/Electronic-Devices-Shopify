@@ -11,16 +11,19 @@ import java.util.List;
 public class CartItemDAO extends DBContext {
 
     // Thêm sản phẩm vào giỏ hàng
-    public void addCartItem(int cartId, Product product, int quantity) {
-        String query = "INSERT INTO CartItem (CartID, ProductID, Quantity) VALUES (?, ?, ?)";
+    public boolean addCartItem(int cartId, Product product, int quantity, int price) {
+        String query = "INSERT INTO CartItem (CartID, ProductID, Quantity, Price) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, cartId);
             stmt.setInt(2, product.getProductID());
             stmt.setInt(3, quantity);
+            stmt.setInt(4, price);
             stmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     // Lấy danh sách sản phẩm trong giỏ hàng theo CartID
@@ -75,6 +78,14 @@ public class CartItemDAO extends DBContext {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        CartItemDAO cid = new CartItemDAO();
+        ProductDAO pd = new ProductDAO();
+        Product product = pd.getProductsById(1);
+        if(cid.addCartItem(1, product, 0, 0)){
+            System.out.println("success");
         }
     }
 }

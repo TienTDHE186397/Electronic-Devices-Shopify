@@ -3,6 +3,7 @@
     Created on : Oct 25, 2024, 2:32:40 PM
     Author     : nghie
 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -104,6 +105,9 @@
 
             <!-- Cart Items Section -->
             <div class="cart-items">
+                <c:forEach items="${cart.items}" var="item">
+                    <c:set var="total" value="${total + (item.price * item.quantity)}" />
+                </c:forEach>
                 <h2>Cart Completion</h2>
                 <table>
                     <thead>
@@ -114,6 +118,8 @@
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
+                            <th>Ưu đãi</th>
+                            <th>Phí vận chuyển</th>
                             <th>Tổng</th>
                         </tr>
                     </thead>
@@ -128,11 +134,13 @@
                                 <!-- Display product name -->
                                 <td>${item.getProduct().getProductName()}</td>
                                 <!-- Static price per item (here it is set as $10, but should be dynamically calculated) -->
-                                <td>$10</td>
+                                <td><fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency"/></td>
                                 <!-- Display quantity of each product in the cart -->
                                 <td>x${item.getQuantity()}</td>
+                                <td>-<fmt:formatNumber value="${item.getProduct().getPrice()*(10/100)}" type="currency"/></td>
+                                <td>30.000đ</td>
                                 <!-- Display total cost for each product (price * quantity) -->
-                                <td>${item.getPrice() * item.getQuantity()}đ</td>
+                                <td><fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency"/></td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -142,9 +150,7 @@
             <!-- Order Details Section -->
             <div class="order-details">
                 <!-- Calculate the total cost of all items in the cart -->
-                <c:forEach items="${cart.items}" var="item">
-                    <c:set var="total" value="${total + (item.price * item.quantity)}" />
-                </c:forEach>
+
 
                 <!-- Display general order information -->
                 <h3>Order Information</h3>
@@ -152,36 +158,42 @@
                 <!-- Display order ID from the order object -->
                 <p>Order ID: ${OrderInfo.orderID}</p>
                 <!-- Display customer's name, email, and phone number -->
-                <p>Họ và tên: ${OrderInfo.name}</p>
-                <p>Email: ${sessionScope.user.getEmail()}</p>
-                <p>Số điện thoại: ${OrderInfo.phone}</p>
+                <p>Họ và tên: ${param.name}</p>
+                <p>Email: ${param.email}</p>
+                <p>Số điện thoại: ${param.phone}</p>
                 <!-- Display shipping address -->
-                <p>Địa chỉ nhận hàng: ${OrderInfo.address}</p>
+                <p>Địa chỉ nhận hàng: ${param.address}</p>
                 <!-- Placeholder for payment method, this could be a dropdown or text -->
                 <p>Phương thức thanh toán: ${param.payment}</p>
 
                 <!-- Display total cost with discount and shipping fee (if any) -->
-                <p>Total Cost: ${total - (total / 10) + 30000}đ</p>
+                <p>Total Cost: <fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency"/></p>
                 <!-- Display order status -->
                 <p>Order Status: ${OrderInfo.orderStatus}</p>
                 <!-- Display current date and time when the order was created -->
                 <p>Order Date: <input type="datetime-local" id="currentDate" readonly/></p>
 
                 <!-- Payment Information Section -->
-                
+
                 <h3>Payment Information</h3>
                 <!-- Display bank information for payment transfer -->
-                <c:if test="${param.payment=='Chuyển khoản'}">
-                <select name="selectedBank">
-                    <c:forEach var="bank" items="${requestScope.banks}">
-                        <option value="${bank.bankName}">
-                            ${bank.accountName}  - ${bank.accountNumber} - ${bank.bankName}
-                        </option>
-                    </c:forEach>
-                </select>
+                <form action="finishOrder" method="get" id="cartForm">
+                    <c:if test="${param.payment=='Chuyển khoản'}">
+                        
+                    <select name="selectedBank">
+                        <c:forEach var="bank" items="${requestScope.banks}">
+                            <option value="${bank.bankName}">
+                                ${bank.accountName}  - ${bank.accountNumber} - ${bank.bankName}
+                            </option>
+                        </c:forEach>
+                    </select>
+                            
                 </c:if>
+                    </form>
+                
+                
                 <!-- Display total amount for payment -->
-                <p><strong></strong>Amount: $${total - (total / 10) + 30000}</p>
+                <p><strong></strong>Amount: <fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency"/></p>
             </div>
         </div>
 
@@ -190,12 +202,21 @@
             <!-- Button to continue shopping, redirects to the home page -->
             <button onclick="window.location.href = 'home'">Continue Shopping</button>
             <!-- Button to complete the payment process, redirects to the finishOrder page -->
-            <button onclick="window.location.href = 'finishOrder'">Completed the Payment</button>
+<!--            <button onclick="window.location.href = 'finishOrder'" id="submit">Completed the Payment</button>-->
+                    <input type="submit" id="payForm" value="Completed the Payment"/>
         </div>
+
 
         <!-- Script Section -->
         <script>
+            document.getElementById("payForm").onclick = function () {
+                document.getElementById("cartForm").submit();
+            }
+        </script>
+        <script>
             const now = new Date();
+            
+            
 
             // Chuyển đổi thời gian hiện tại thành định dạng phù hợp cho datetime-local (YYYY-MM-DDTHH:mm)
             const currentDateTime = now.toISOString().slice(0, 16);

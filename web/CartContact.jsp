@@ -203,7 +203,7 @@
                     <div class="contact-table container">
                         <div class="row">
                             <div class="contact-information col-md-7">
-                                <form action="action" method="get" onchange="return validateForm()">
+                                <form action="cartCompletion" method="get" id="cartForm" onchange="return validateForm()">
                                     <h3>Thông tin đặt hàng</h3>
                                     <label><b>Họ tên người nhận hàng</b></label><br>
                                     <input type="text" name="name" id="name" value="${sessionScope.user.getName()}" class="input"/>
@@ -221,8 +221,8 @@
                                     <input type="text" name="address" value="${sessionScope.user.getAddress()}" class="input"/> 
                                     <label><b>Phương thức thanh toán</b></label><br>
                                     <select name="payment">
-                                        <option>Thanh toán bằng tiền mặt</option>
-                                        <option>Chuyển khoản</option>
+                                        <option value="Tiền mặt" ${param.payment == 'Tiền mặt' ? 'selected' : ''}>Thanh toán bằng tiền mặt</option>
+                                        <option value="Chuyển khoản" ${param.payment == 'Chuyển khoản' ? 'selected' : ''}>Chuyển khoản</option>
                                     </select>
                                 </form>
                             </div>
@@ -340,9 +340,16 @@
                 </div>
             </div>            
         </div>
-
+        <%@include file="footer.jsp" %>
+        <script>
+            document.getElementById("payForm").onclick = function () {
+                document.getElementById("cartForm").submit();
+            }
+        </script>
         <script>
             let currentPage = 1;
+            
+            
 
             function validateForm() {
                 console.log("Validate form is called");
@@ -421,7 +428,9 @@
             }
 
             document.addEventListener("DOMContentLoaded", updateRowCount);
+
+            
         </script>
-        <%@include file="footer.jsp" %>
+
     </body>
 </html>

@@ -450,7 +450,7 @@ public class MyOrderDAO extends DBContext {
                 + "  join PersonAddress pa on p.PersonID = pa.PersonID\n"
                 + "  join PersonPhone pp on p.PersonID = pp.PersonID\n"
                 + " \n"
-                + "  where pa.IsPrimary = pp.IsPrimary and pp.IsPrimary = 1 and p.PersonID = " + id;
+                + "  where  pa.IsPrimary = pp.IsPrimary and pp.IsPrimary = 1 and p.PersonID = " + id;
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
