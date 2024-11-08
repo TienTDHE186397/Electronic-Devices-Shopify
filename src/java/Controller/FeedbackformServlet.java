@@ -34,7 +34,7 @@ import java.util.List;
 public class FeedbackformServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(FeedbackformServlet.class.getName());
     private FeedbackService feedbackService; //Đối tượng dịch vụ xử lý phản hồi
-    private static final String UPLOAD_DIRECTORY = "E:\\PEPRJ301P\\webdientu\\web\\uploadfeedback"; // Thư mục lưu trữ tệp tải lên (đường dẫn tuyệt đối trong hệ thống).
+    private static final String UPLOAD_DIRECTORY = "D:\\SWP_Presentation\\webdientu\\web\\uploadfeeback"; // Thư mục lưu trữ tệp tải lên (đường dẫn tuyệt đối trong hệ thống).
 
     @Override
     public void init() throws ServletException {

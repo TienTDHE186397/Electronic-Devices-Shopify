@@ -51,13 +51,9 @@ public class addPostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         BlogListDAO blogDAO = new BlogListDAO();
-
         List<String> listBlogType = blogDAO.getDistinctOfBlogType();
-
         request.setAttribute("listType", listBlogType);
-
         request.getRequestDispatcher("addPost.jsp").forward(request, response);
 
     }
@@ -68,7 +64,6 @@ public class addPostServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         String err1 = "";
-        String err2 = "";
         boolean check = true;
         String blog_type = request.getParameter("blogtype");
         String blog_tittle = request.getParameter("blogtittle");
@@ -103,6 +98,8 @@ public class addPostServlet extends HttpServlet {
             blog_flag_i = Integer.parseInt(blog_flag);
         } catch (Exception e) {
         }
+        
+        
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

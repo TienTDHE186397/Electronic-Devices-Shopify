@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/webdientu/web/CustomerDetail.jsp</file>
-            <file>file:/D:/SWP391/webdientu/src/java/DAO/DAOCustomer.java</file>
-            <file>file:/D:/SWP391/webdientu/src/java/DAO/HistoryChangeDAO.java</file>
-            <file>file:/D:/SWP391/webdientu/src/java/Controller/CustomerDetail.java</file>
+            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/PostListServlet.java</file>
+            <file>file:/D:/SWP_Presentation/webdientu/web/PostList.jsp</file>
+            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/addPostServlet.java</file>
+            <file>file:/D:/SWP_Presentation/webdientu/web/addPost.jsp</file>
         </group>
     </open-files>
 </project-private>

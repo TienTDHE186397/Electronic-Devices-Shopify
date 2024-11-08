@@ -67,11 +67,8 @@
 
                     <div style="color: red"><b>${mess}</b></div>
 
-<<<<<<< HEAD
-                    <button type="submit" style="background-color:  #b22222">Đăng Nhập</button>
-=======
+
                     <button type="submit" name="submit1" style="background-color:  #b22222">Đăng Nhập</button>
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
                 </form>
             </div>
 

@@ -13,32 +13,6 @@
         <!-- My CSS -->
         <link rel="stylesheet" href="css/styleFeedback.css">
         <title>FeedbackList</title>
-<<<<<<< HEAD
-        
-    </head>
-    <style>
-    #pagination-controls {
-        margin-top: 20px;
-    }
-    #rowsPerPage {
-        width: 60px;
-        margin-right: 10px;
-    }
-    #pagination-buttons button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
-    #pagination-buttons button.active {
-        font-weight: bold;
-        background-color: #007bff;
-        color: white;
-    }
-</style>
-    <body>
-
-
-=======
 
     </head>
     <style>
@@ -169,12 +143,14 @@
             background: white;
             z-index: 1;
         }
+        .number {
+            color: green;
+        }
 
 
 
     </style>
     <body>
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
         <!-- SIDEBAR -->
         <section id="sidebar">
             <a href="#" class="brand">
@@ -183,17 +159,7 @@
             </a>
             <ul class="side-menu top">
                 <li class="active">
-<<<<<<< HEAD
-                    
                     <a href="mktdashboard">
-=======
-<<<<<<< HEAD
-                    <a href="mktdashboard" >
-=======
-                    
-                    <a href="mktdashboard">
->>>>>>> 0b6be8a00745b8b32ad85e25a4b913010e860ae0
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
                         <i class='bx bxs-dashboard' ></i>
                         <span class="text">Dashboard</span>
                     </a>
@@ -239,135 +205,8 @@
                 </li>
             </ul>
         </section>
-<<<<<<< HEAD
         <!-- SIDEBAR -->
 
-
-
-        <!-- CONTENT -->
-        <section id="content">
-            <!-- NAVBAR -->
-            <nav>
-                <i class='bx bx-menu' ></i>
-
-                <form action="#">
-                    <div class="form-input">
-                        <input type="search" id="searchInput" placeholder="Search...">
-                        <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-                    </div>
-                </form>
-
-            </nav>
-            <!-- NAVBAR -->
-
-            <!-- MAIN -->
-            <main>
-                <div class="head-title">
-                    <div class="left">
-                        <h1>FeedBack</h1>
-
-                    </div>
-                </div>
-
-
-
-                <div class="table-data">
-                    <div class="order">
-                        <div class="head">
-                            <h3>Feedback List</h3>
-                            <div class="filter">
-
-                                <h3>Status</h3>
-                                <select id="statusFilter" class="table-filter">
-                                    <option value="all">Tất cả</option>
-                                    <option value="New">New</option>
-                                    <option value="Resolved">Resolved</option>
-                                </select>
-
-                                <h3>Rated_star</h3>
-                                <select id="ratingFilter" name="ratingFilter"> 
-                                    <option value="all">Tất cả</option>
-                                    <option value="5">5 star</option>
-                                    <option value="4">4 star</option>
-                                    <option value="3">3 star</option>
-                                    <option value="2">2 star</option>
-                                    <option value="1">1 star</option>
-                                </select>
-                            </div>
-                            <div id="pagination-controls">
-                                <label for="rowsPerPage">Number of row:</label>
-                                <input type="number" id="rowsPerPage" min="1" value="10">
-                                <div id="pagination-buttons"></div>
-                            </div>
-
-                        </div>
-
-                        <table id="feedback-table">
-                            <thead>
-                                <tr>
-                                    <th>FID</th>
-                                    <th>Product Name</th>
-                                    <th>Customer Name</th>
-                                    <th>Rate</th>
-                                    <th>Created Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <c:forEach var="c" items="${requestScope.fList}">
-                                <tbody >
-                                    <tr>
-                                        <td>${c.feedbackID}</td>
-                                        <td>${c.proName}</td> 
-                                        <td>${c.cusName}</td> 
-                                        <td>
-                                            <div class="star-rating">
-                                                <c:forEach begin="1" end="5" var="i">
-                                                    <span ${i <= c.rate ? 'class="filled"' : ''}>☆</span>
-                                                </c:forEach>
-                                            </div>
-                                        </td>
-                                        <td>${c.createDate}</td>
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${c.status == 'New'}">
-                                                    ${c.status}</span
-                                                </c:when>
-                                                <c:when test="${c.status == 'Resolved'}">
-                                                    ${c.status}
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="status unknown">${c.status}</span>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                        <td>
-                                              <a href="FeedbackDetails?feedbackID=${c.feedbackID}" class="btn-details">Details</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </c:forEach>
-
-                        </table>
-
-                    </div>
-
-                </div>
-            </main>
-            <!-- MAIN -->
-        </section>
-        <!-- CONTENT -->
-
-
-        <script>
-
-            const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-
-            allSideMenu.forEach(item => {
-                const li = item.parentElement;
-
-=======
         <!-- Content -->
         <section id="content">
             <div class="dashboard">
@@ -378,9 +217,9 @@
 
                             <div class="date-picker">
                                 <label>Từ ngày:</label>
-                                <input type="date" name="fromdate" id="start-date" >
+                                <input type="date" name="fromdate" id="start-date" value="${requestScope.fromdate}">
                                 <label>Đến ngày:</label>
-                                <input type="date" name="todate" id="end-date" >
+                                <input type="date" name="todate" id="end-date" value="${requestScope.todate}" >
                             </div>
 
                             <input type="submit" value="CHANGE">
@@ -392,23 +231,19 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>Tổng số bài đăng</h3>
-                        <div class="number">${requestScope.listAllBlog.size()}</div>
-                        <div class="trend">+12% so với tuần trước</div>
+                        <div class="number" style="color: green;">${requestScope.listAllBlog.size()}</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Sản phẩm mới</h3>
-                        <div class="number">${requestScope.listAllProduct.size()}</div>
-                        <div class="trend">+5% so với tuần trước</div>
+                        <h3>Tổng số Sản phẩm</h3>
+                        <div class="number" style="color: green;">${requestScope.listAllProduct.size()}</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Khách hàng mới</h3>
-                        <div class="number">156</div>
-                        <div class="trend negative">-3% so với tuần trước</div>
+                        <h3>Tổng số Khách hàng</h3>
+                        <div class="number" style="color: green;">${requestScope.listAllPerson.size()}</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Phản hồi khách hàng</h3>
-                        <div class="number">89</div>
-                        <div class="trend">+18% so với tuần trước</div>
+                        <h3>Tổng số Phản hồi khách hàng</h3>
+                        <div class="number" style="color: green;">${requestScope.listAllFeedBack.size()}</div>
                     </div>
                 </div>
 
@@ -426,10 +261,13 @@
                                     </td> 
                                     <td>${b.blog_tittle}</td> 
                                     <td>${b.blog_update_time}</td> 
-                                    <td>new</td> 
                                 </tr>
                             </c:forEach>
                         </table>
+                        <c:if test="${requestScope.listB.size() == 0}">
+                            </br>
+                            <center> <h3 style="color: grey;">Chưa có bài đăng mới thêm hoặc chỉnh sửa nào</h3> </center>
+                        </c:if>
                     </div>
                 </div>
                 <%id = 0;%>
@@ -446,26 +284,37 @@
                                     </td> 
                                     <td>${p.productName}</td>
                                     <td>${p.releaseDate}</td>
-                                    <td>new</td>
 
                                 </tr>
                             </c:forEach>
                         </table>
+                        <c:if test="${requestScope.listP.size() == 0}">
+                            </br>
+                            <center> <h3 style="color: grey;">Chưa có sản phẩm mới thêm hoặc chỉnh sửa nào</h3> </center>
+                        </c:if>
                     </div>
                 </div>
-
+                <%id = 0;%>
                 <div class="chart-container">
                     <h2>Phản Hồi Khách Hàng Gần Đây</h2>
                     <div class="chart-wrapper">
                         <table style="width: 100%">
-                            <tr>
-                                <td>1</td> 
-                                <td>1</td> 
-                                <td>1</td> 
-                                <td>1</td> 
-                                <td>1</td> 
-                            </tr>
+                            <c:forEach items="${requestScope.listF}" var="f">
+                                <%id++;%>
+                                <tr>
+                                    <td><%=id%></td> 
+                                    <td>${f.cusName}</td>
+                                    <td>${f.proName}</td>
+                                    <td>${f.rate}</td>
+                                    <td>${f.createDate}</td>
+                                    <td>${f.status}</td>
+                                </tr>
+                            </c:forEach>
                         </table>
+                        <c:if test="${requestScope.listF.size() == 0}">
+                            </br>
+                            <center> <h3 style="color: grey;">Chưa có phản hồi mới thêm hoặc chỉnh sửa nào</h3> </center>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -474,7 +323,6 @@
             const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
             allSideMenu.forEach(item => {
                 const li = item.parentElement;
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
                 item.addEventListener('click', function () {
                     allSideMenu.forEach(i => {
                         i.parentElement.classList.remove('active');
@@ -482,30 +330,7 @@
                     li.classList.add('active');
                 })
             });
-<<<<<<< HEAD
 
-
-
-
-// TOGGLE SIDEBAR
-            const menuBar = document.querySelector('#content nav .bx.bx-menu');
-            const sidebar = document.getElementById('sidebar');
-
-            menuBar.addEventListener('click', function () {
-                sidebar.classList.toggle('hide');
-            })
-
-
-
-
-
-
-
-            const searchButton = document.querySelector('#content nav form .form-input button');
-            const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-            const searchForm = document.querySelector('#content nav form');
-
-=======
             const menuBar = document.querySelector('#content nav .bx.bx-menu');
             const sidebar = document.getElementById('sidebar');
             menuBar.addEventListener('click', function () {
@@ -514,7 +339,6 @@
             const searchButton = document.querySelector('#content nav form .form-input button');
             const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
             const searchForm = document.querySelector('#content nav form');
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
             searchButton.addEventListener('click', function (e) {
                 if (window.innerWidth < 576) {
                     e.preventDefault();
@@ -526,20 +350,14 @@
                     }
                 }
             })
-<<<<<<< HEAD
 
-=======
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
             if (window.innerWidth < 768) {
                 sidebar.classList.add('hide');
             } else if (window.innerWidth > 576) {
                 searchButtonIcon.classList.replace('bx-x', 'bx-search');
                 searchForm.classList.remove('show');
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
             window.addEventListener('resize', function () {
                 if (this.innerWidth > 576) {
                     searchButtonIcon.classList.replace('bx-x', 'bx-search');
@@ -547,17 +365,9 @@
                 }
             })
 
-<<<<<<< HEAD
-
-
 
         </script>
-        
-=======
-        </script>
 
 
-
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
     </body>
 </html>

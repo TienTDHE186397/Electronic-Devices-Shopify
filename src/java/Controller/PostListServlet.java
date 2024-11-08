@@ -43,24 +43,20 @@ public class PostListServlet extends HttpServlet {
         BlogListDAO blogDAO = new BlogListDAO();
         String tittlewrite = request.getParameter("tittlewrite");
         String authorwrite = request.getParameter("authorwrite");
-        String type = request.getParameter("type");
+        String type1 = request.getParameter("type1");
         String statusf = request.getParameter("statusf");
         String sort = request.getParameter("sort");
         String event = request.getParameter("event");
         String page = request.getParameter("page");
-
         String numberofpage = request.getParameter("numberofpage");
         String[] col = request.getParameterValues("col");
         request.setAttribute("nof", numberofpage);
-        
-        
         request.setAttribute("tittlewrite", tittlewrite);
         request.setAttribute("authorwirte", authorwrite);
-        request.setAttribute("type", type);
+        request.setAttribute("type1", type1);
         request.setAttribute("statusf", statusf);
         request.setAttribute("sort", sort);
         request.setAttribute("event", event);
-
         if (page == null || page.equals("")) {
             page = "1";
         }
@@ -75,14 +71,13 @@ public class PostListServlet extends HttpServlet {
                 numberofpage = String.valueOf(blogDAO.getAllBlog().size());
             }
         }
-
         String uri = request.getRequestURI();
         String queryString = request.getQueryString();
 
         request.setAttribute("uri", uri);
         request.setAttribute("queryString", queryString);
 
-        if (tittlewrite == null && authorwrite == null && type == null && statusf == null && sort == null && event == null && numberofpage == null) {
+        if (tittlewrite == null && authorwrite == null && type1 == null && statusf == null && sort == null && event == null && numberofpage == null) {
 
             List<Blog> listB = blogDAO.getAllBlog();
             List<String> listBlogType = blogDAO.getDistinctOfBlogType();
@@ -100,29 +95,22 @@ public class PostListServlet extends HttpServlet {
             request.getRequestDispatcher("PostList.jsp").forward(request, response);
 
         } else {
-
             try {
-
                 int postPerPage = Integer.parseInt(numberofpage);
-                List<Blog> listB2 = blogDAO.searchBlogList2(tittlewrite, authorwrite, type, statusf, sort, event, page);
+                List<Blog> listB2 = blogDAO.searchBlogList2(tittlewrite, authorwrite, type1, statusf, sort, event, page);
                 List<Blog> listB = blogDAO.getAllBlog();
-                List<Blog> listBp = blogDAO.searchBlogList(tittlewrite, authorwrite, type, statusf, sort, event, page, postPerPage);
+                List<Blog> listBp = blogDAO.searchBlogList(tittlewrite, authorwrite, type1, statusf, sort, event, page, postPerPage);
                 List<String> listBlogType = blogDAO.getDistinctOfBlogType();
-
                 int totalpage = (int) Math.ceil((double) listB2.size() / postPerPage);
-
                 request.setAttribute("listB", listB);
                 request.setAttribute("totalP", String.valueOf(totalpage));
                 request.setAttribute("listBp", listBp);
                 request.setAttribute("listBlogType", listBlogType);
-
                 request.getRequestDispatcher("PostList.jsp").forward(request, response);
             } catch (Exception e) {
                 System.out.println(e);
             }
-
         }
-
     }
 
     @Override
