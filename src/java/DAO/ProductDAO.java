@@ -132,6 +132,43 @@ CategoryDAO cDAO = new CategoryDAO();
         }
         return listP;
     }
+//==============================================================================    
+    public List<Product> getListProductBestSellerCategory(int id) {
+        List<Product> listP = new ArrayList<>();
+        String sql = "Select TOP 10 * from Products WHERE CategoryID = ? order by QuantitySold desc";
+        try {
+            
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Categories cate = cDAO.getCategoriesById(rs.getInt("CategoryID"));
+                Product p = new Product(
+                        rs.getInt("ProductID"),
+                        rs.getString("title"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Views"), 
+                        rs.getDate("releaseDate"),
+                        rs.getInt("QuantitySold"),
+                        cate,
+                        rs.getInt("Quantity"),
+                        rs.getInt("Sale"),
+                        rs.getString("img"),
+                        rs.getDouble("price"),
+                        rs.getString("publisher"),
+                        rs.getString("sortDescription"),
+                        rs.getString("description"),
+                        rs.getString("status"),
+                        rs.getString("brand"));
+                        listP.add(p);
+            }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return listP;
+    }    
 //============================================================================== 
     public List<String> getBrandByCategory(int cateId){
         List<String> listBrand = new ArrayList<>();
@@ -279,10 +316,10 @@ CategoryDAO cDAO = new CategoryDAO();
     public static void main(String[] args) {
         //TEST Function getAllProduct
         ProductDAO pDAO = new ProductDAO();
-          List<ProductAttribute> list = pDAO.getAllProductAttributeById(1);
+          List<Product> list = pDAO.getListProductBestSellerCategory(1);
 //        Product p1 = pDAO.getProductsById(3);
 //        List<String> list = pDAO.getBrandByCategory(2);
-        for(ProductAttribute p: list){
+        for(Product p: list){
             System.out.println(p);
         }
     }

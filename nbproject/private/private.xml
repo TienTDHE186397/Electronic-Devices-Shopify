@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/PostListServlet.java</file>
             <file>file:/D:/SWP_Presentation/webdientu/web/PostList.jsp</file>
             <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/addPostServlet.java</file>
             <file>file:/D:/SWP_Presentation/webdientu/web/addPost.jsp</file>
+=======
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/ProductDAOPublic.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/DAOCustomer.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/ProductDAO.java</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Controller/LoginServlet.java</file>
+>>>>>>> cedc6a507535306ad618c41f897e86148cb42e28
         </group>
     </open-files>
 </project-private>
