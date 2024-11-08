@@ -83,7 +83,7 @@ public class HomeServlet extends HttpServlet {
 //==============================================================================
 // Lấy danh sách sản phẩm và thương hiệu cho Phone và Tablet
         List<String> listBPhoneAndTablet = pDao.getBrandByCategory(1);  // Lấy danh sách thương hiệu cho danh mục 1 (Phone và Tablet)
-        List<Product> listPhoneAndTablet = pDao.getProductByCategory(1); // Lấy danh sách sản phẩm cho danh mục 1
+        List<Product> listPhoneAndTablet = pDao.getListProductBestSellerCategory(1); // Lấy danh sách sản phẩm cho danh mục 1
         if (cateId == 1 && !brand.equals("all")) { // Nếu cateId là 1 và brand khác "all", lọc sản phẩm theo brand
             listPhoneAndTablet = pDao.getProductByBrand(cateId, brand);
         }
