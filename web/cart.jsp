@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="Entity.Cart" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
@@ -142,6 +143,7 @@
                     <div class="row">
                         <div class="col-lg-9" style="margin-bottom: 20px">
                             <h3><strong>Giỏ Hàng</strong></h3>
+
                             <table>
                                 <thead>
                                     <tr>
@@ -167,7 +169,7 @@
                                     </td>
                                     <td><button type="submit" class="btn btn-primary">Cập Nhật</button></td>
                                 </form>
-                               <td style="color: red"><b><fmt:formatNumber value="${item.getPrice() * item.getQuantity()}"/>đ</b></td>
+                                <td style="color: red"><b><fmt:formatNumber value="${item.getPrice() * item.getQuantity()}"/>đ</b></td>
 
                                 <td style="text-align: center">
                                     <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-danger">Xóa</a>
@@ -179,7 +181,7 @@
 
                         <div style="display: flex;justify-content: space-between">
                             <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-primary">Lưu</a>
-                            <a href="cartcontact" class="btn btn-dark">Đặt hàng</a>
+                        <a href="cartcontact" class="btn btn-dark" id="orderButton">Đặt hàng</a>
                             <c:set var="total" value="0" />
                             <c:forEach items="${cart.items}" var="item">
                                 <c:set var="total" value="${total + (item.price * item.quantity)}" />
@@ -230,6 +232,23 @@
                 </div>
             </div>
         </section>
+        <% 
+            // Kiểm tra xem giỏ hàng có trong session không
+            boolean isCartEmpty = session.getAttribute("cart") == null || ((Cart) session.getAttribute("cart")).getItems().isEmpty();
+
+        %>
+        <script>
+            // Kiểm tra giỏ hàng có rỗng hay không
+            var isCartEmpty = <%= isCartEmpty %>; // Lấy giá trị từ JSP sang JavaScript
+
+            document.getElementById("orderButton").onclick = function (event) {
+                if (isCartEmpty) {
+                    // Hiển thị thông báo lỗi và ngừng hành động
+                    alert("Giỏ hàng của bạn đang rỗng. Vui lòng thêm sản phẩm trước khi đặt hàng.");
+                    event.preventDefault(); // Ngừng chuyển hướng tới trang giỏ hàng
+                }
+            };
+        </script>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.nice-select.min.js"></script>

@@ -93,7 +93,7 @@ public class AddToCartController extends HttpServlet {
                             item.setQuantity(item.getQuantity() + quantity);
                             check = true;
                         }
-                    }
+                    }      
                     if(check ==false){
                         CartItem item = new CartItem();
                         item.setQuantity(quantity);
