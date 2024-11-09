@@ -212,10 +212,10 @@
                                                 <source src="${pageContext.request.contextPath}/${video.img_video_url}" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
-                                            
-                                            <input name="vid${status.index}" type="file" class="form-control file-input mt-2">
+                                            <input type="hidden" name="videoID" value="${video.img_video_id}"> 
+
                                             <input name="vidTitle${status.index}" type="text" value="${video.alt_text}" class="form-control title-input mt-2">
-                                            <button type="submit" class="btn btn-primary" name="delete" style="background-color: red">Xóa</button>
+                                            <button type="submit" class="btn btn-primary" name="deleteVideo" style="background-color: red">Xóa</button>
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -226,8 +226,10 @@
                                         <div class="image-item">
                                             <label class="image-label">Image ${status.index + 1}</label>
                                             <img src="${pageContext.request.contextPath}/${image.img_video_url}" alt="Image ${status.index + 1}" class="image-preview">
+                                            <input type="hidden" name="imageID" value="${image.img_video_id}"> 
                                             <input name="img${status.index}" type="file" class="form-control file-input mt-2">
                                             <input name="imgTitle${status.index}" type="text" value="${image.alt_text}" class="form-control title-input mt-2">
+                                              <button type="submit" class="btn btn-primary" name="deleteImage" style="background-color: red">Xóa</button>
                                         </div>
                                     </c:forEach>
                                 </div>

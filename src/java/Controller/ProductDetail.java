@@ -114,6 +114,38 @@ public class ProductDetail extends HttpServlet {
         String productName = request.getParameter("productName");
         Part imagePart = request.getPart("image");
         String image = "img/default-phone.jpg";
+
+// Khởi tạo các biến với giá trị mặc định hoặc xử lý khi tham số không có
+        int videoID = -1;
+        int imageID = -1;
+
+// Kiểm tra xem tham số videoID hoặc imageID có trong yêu cầu không
+        String videoIDParam = request.getParameter("videoID");
+        String imageIDParam = request.getParameter("imageID");
+
+        DAOimgVideo div = new DAOimgVideo();
+
+// Nếu video cần xóa
+        if (request.getParameter("deleteVideo") != null && videoIDParam != null) {
+            try {
+                videoID = Integer.parseInt(videoIDParam); // Chỉ phân tích cú pháp khi tham số không phải null
+                div.deleteVidByProductID(id, videoID);
+            } catch (NumberFormatException e) {
+                // Log hoặc xử lý ngoại lệ nếu videoID không hợp lệ
+                e.printStackTrace();
+            }
+        }
+
+// Nếu ảnh cần xóa
+        if (request.getParameter("deleteImage") != null && imageIDParam != null) {
+            try {
+                imageID = Integer.parseInt(imageIDParam); // Chỉ phân tích cú pháp khi tham số không phải null
+                div.deleteImageByProductID(id, imageID);
+            } catch (NumberFormatException e) {
+                // Log hoặc xử lý ngoại lệ nếu imageID không hợp lệ
+                e.printStackTrace();
+            }
+        }
         String realImagePath = request.getServletContext().getRealPath("/img");
         String realVideoPath = request.getServletContext().getRealPath("/img");
         DAOProduct dp = new DAOProduct();
@@ -300,6 +332,7 @@ public class ProductDetail extends HttpServlet {
             // Xử lý khi danh sách null hoặc không cùng kích thước
             System.out.println("Danh sách videoNotes hoặc videoPaths null hoặc không cùng kích thước.");
         }
+
         if (a || insertSuccessful) {
 
             // After all attributes are added, set a success message and forward
