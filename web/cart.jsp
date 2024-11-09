@@ -178,7 +178,6 @@
                             </c:forEach>
                             </tbody>
                         </table>
-
                         <div style="display: flex;justify-content: space-between">
                             <a href="delete?ProductID=${item.getProduct().getProductID()}" class="btn btn-primary">Lưu</a>
                         <a href="cartcontact" class="btn btn-dark" id="orderButton">Đặt hàng</a>
@@ -188,7 +187,6 @@
                             </c:forEach>
                             <div style="color: red; font-size: 20px;"><b>Tổng cộng: <fmt:formatNumber value="${total}" />đ</b></div>
                         </div>  
-
                     </div>
                     <div class="col-lg-3">
                         <div class="sider drop-shadow">
