@@ -96,19 +96,19 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-                
+
             <div class="container mt-5">
                 <div class="main">
-                   
+
                     <section class="hero">
-                       
+
                         <form action="ProductDetail" method="post" class="p-4 border rounded" enctype="multipart/form-data">
                             <input style="background-color: #ddd" type="hidden" name="idhi" value="${pro.getProductID()}"> 
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Product</h4>
                             <button style="background-color: #ddd" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                            <h3>${mess}</h3>
+                        <h3>${mess}</h3>
                         <div class="modal-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -179,8 +179,12 @@
 
                                 <div class="form-group col-md-6"> 
                                     <label>Status</label>
-                                    <input name="status"  style="background-color: #ddd" value="${pro.getStatus()}" type="text" class="form-control" required>
-                                </div> 
+                                    <select name="status" style="background-color: #ddd" class="form-control" required>
+                                        <option value="Available" ${pro.getStatus() == 'Available' ? 'selected' : ''}>Available</option>
+                                        <option value="Sold Out" ${pro.getStatus() == 'Sold Out' ? 'selected' : ''}>Sold Out</option>
+                                        <option value="Hided" ${pro.getStatus() == 'Hided' ? 'selected' : ''}>Hided</option>
+                                    </select>
+                                </div>
 
                             </div>
                             <div class="form-group col-md-6"">
@@ -190,7 +194,7 @@
                             <c:forEach items="${ivideo}" var="i">
                                 <option value="${c.categoryID}" ${(c.categoryID == pro.category.categoryID) ? "selected" : "" } >${c.categoryName}</option>
                             </c:forEach>
-                               
+
                             <c:forEach items="${attribute}" var="a">
                                 <div class="form-row" id="row-${a.getAttributeID()}">
 
@@ -205,7 +209,7 @@
                                     <div class="form-group col-md-1">
 
                                         <form action="DeleteAttributeServlet" method="post" onsubmit="return confirmDelete();">
-                                        <input type="hidden" name="idhi" value="${pro.getProductID()}"> 
+                                            <input type="hidden" name="idhi" value="${pro.getProductID()}"> 
                                             <input type="hidden" name="attributeID" value="${a.getAttributeID()}">
                                             <button type="submit" class="btn btn-danger" onclick="return confirmDelete();">Delete</button>
                                         </form>
