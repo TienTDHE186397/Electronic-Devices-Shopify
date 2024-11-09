@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Email.*;
+import Controller.*;
 import DAO.PersonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

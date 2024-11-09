@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Email.MailSender;
+import Controller.MailSender;
 import Entity.OrderInformation;
 import Entity.Person;
 import jakarta.servlet.ServletContext;
