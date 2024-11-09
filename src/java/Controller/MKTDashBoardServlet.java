@@ -48,7 +48,6 @@ public class MKTDashBoardServlet extends HttpServlet {
         ProductListDAO pDAO = new ProductListDAO();
         FeedbackDAO fDAO = new FeedbackDAO();
         DAOPerson perDAO = new DAOPerson();
-
         // Gán Ngày Bắt Đầu Và Ngày Kết Thức
         String fromdate = request.getParameter("fromdate");
         String todate = request.getParameter("todate");
@@ -66,10 +65,8 @@ public class MKTDashBoardServlet extends HttpServlet {
         if (todate == null || todate.isBlank()) {
             todate = currentDate.format(formatter);
         }
-
         request.setAttribute("fromdate", fromdate);
         request.setAttribute("todate", todate);
-
         // Lấy năm tháng ngày của 2 mốc thời gian fromdate và todate
         String[] date1 = fromdate.split("-");
         String[] date2 = todate.split("-");
@@ -79,12 +76,10 @@ public class MKTDashBoardServlet extends HttpServlet {
         if (Integer.parseInt(date1[0]) - Integer.parseInt(date2[0]) > 0) {
             check = true;
         }
-
         if (Integer.parseInt(date1[1]) - Integer.parseInt(date2[1]) > 0) {
             check = true;
             checkMonth = true;
         }
-
         if (checkMonth) {
             if (Integer.parseInt(date1[2]) - Integer.parseInt(date2[2]) > 0) {
                 check = true;
@@ -115,7 +110,6 @@ public class MKTDashBoardServlet extends HttpServlet {
         //List All Person and Person (FromDate -> ToDate)
         List<Person> listAllPerson = perDAO.getAllPerson();
         request.setAttribute("listAllPerson", listAllPerson);
-
         request.getRequestDispatcher("mktdashboard.jsp").forward(request, response);
     }
 

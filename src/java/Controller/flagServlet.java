@@ -39,13 +39,14 @@ public class flagServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
+        // Lấy ID để set giá trị đầu vào
         BlogListDAO blogDAO = new BlogListDAO();
         String id_raw = request.getParameter("id");
 
         try {
             int id = Integer.parseInt(id_raw);
             Blog b = blogDAO.getBlogById(id);
+            // Change Blog Flag 
             blogDAO.changeBlogFlag(b);
 
         } catch (Exception e) {

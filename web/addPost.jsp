@@ -92,7 +92,7 @@
                 <select name="blogtype" id="customSelect" >
                     <option value="">Select Blog Type</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
-                        <option value="${listType.get(c)}" ${(listType.get(c) == param.type) ? "selected" : ""} >${listType.get(c)}</option>
+                        <option value="${listType.get(c).categoryName}" ${(listType.get(c).categoryName == param.blogtype) ? "selected" : ""} >${listType.get(c).categoryName}</option>
                     </c:forEach>
                 </select>
 

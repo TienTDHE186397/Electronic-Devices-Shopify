@@ -38,27 +38,31 @@ public class PostDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Lấy Id Blog
         BlogListDAO blogDAO = new BlogListDAO();
         String id_raw = request.getParameter("id");
+        // Gọi đến bài đăng liên quan (related Blog)
         List<Blog> listRB;
+        // Lấy giá trị của cờ 0 hoặc 1
         String flag_raw = request.getParameter("flag");
-
+        // Nếu như thay đổi cờ của bài đăng thì thực hiện yêu cầu dưới
         if (flag_raw != null) {
-
             try {
-
+                // Lấy ID của flag
                 int id = Integer.parseInt(flag_raw);
+                // Lấy Blog Detail Bằng ID truyền Vào
                 Blog blog = blogDAO.getBlogById(id);
+                // Thay đổi cờ của bài đăng
                 blogDAO.changeBlogFlag(blog);
+                // Lấy các bài đăng liên quan
                 listRB = blogDAO.getRelatedBlog(blog);
                 request.setAttribute("blog", blog);
                 request.setAttribute("listRB", listRB);
                 response.sendRedirect("PostDetail?id=" + id);
             } catch (Exception e) {
-
             }
-
         } else {
+            // Thực hiện yêu cầu nếu flag nhận vào không = null
             try {
                 int id = Integer.parseInt(id_raw);
                 Blog blog = blogDAO.getBlogById(id);

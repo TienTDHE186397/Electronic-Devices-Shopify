@@ -38,14 +38,14 @@ public class SliderDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        // Lấy id truyền vào
         String id_raw = request.getParameter("id");
 
         SliderListDAO sDAO = new SliderListDAO();
-
+        
         try {
             int id = Integer.parseInt(id_raw);
-
+            // Lấy Slider theo id
             Slider slider = sDAO.getSliderById(id);
             
             request.setAttribute("slider", slider);

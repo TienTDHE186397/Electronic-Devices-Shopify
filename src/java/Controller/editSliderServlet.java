@@ -50,7 +50,7 @@ public class editSliderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        // Lấy ID của Slider
         String id_raw = request.getParameter("id");
 
         SliderListDAO sDAO = new SliderListDAO();
@@ -78,12 +78,12 @@ public class editSliderServlet extends HttpServlet {
         String err1 = "";
         String err2 = "";
         boolean check = true;
-
+        // Lấy thông tin đầu vào của Slider
         String slider_tittle = request.getParameter("slidertittle");
         String slider_backlink = request.getParameter("sliderbacklink");
         String slider_status = request.getParameter("sliderstatus");
         String slider_note = request.getParameter("slidernote");
-//-------------------------------------------image--------------------------------------------------------
+        // Lấy đường dẫn ảnh của Slider
         Part part = request.getPart("sliderimage");
         String image = "";
         String realPath = "";
@@ -101,7 +101,7 @@ public class editSliderServlet extends HttpServlet {
                 image = realPath.substring(realPath.length() - 12, realPath.length()) + "/" + filename;
             }
         }
-//--------------------------------------------video-------------------------------------------------
+        // Lấy đường dẫn Video của Slider
         Part part2 = request.getPart("slidervideo");
         String video = "";
         String realPath2 = "";
@@ -119,49 +119,44 @@ public class editSliderServlet extends HttpServlet {
                 video = realPath2.substring(realPath2.length() - 12, realPath2.length()) + "/" + filename2;
             }
         }
-//--------------------------------------------------------------------------------------------------
+        // Lấy thông tin ngày hiện tại của Slider
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
-
+        //Lấy thông tin của người dùng
+        HttpSession session = request.getSession();
         DAOPerson perDAO = new DAOPerson();
-        Person person = perDAO.getPersonById("6");
+        Person p = (Person) session.getAttribute("user");
+        Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
+        // Lấy Slider sDAO
         SliderListDAO sDAO = new SliderListDAO();
         String id_raw = request.getParameter("id");
 
         try {
+            // Set Các Slider
             int id = Integer.parseInt(id_raw);
-
             Slider s = sDAO.getSliderById(id);
-
             if (image.equals("")) {
-
             } else {
                 s.setSlider_image(image);
             }
-
             if (video.equals("")) {
-
             } else {
                 s.setSlider_video(video);
             }
-
             s.setSlider_tittle(slider_tittle);
             s.setSlider_backlink(slider_backlink);
             s.setSlider_date(formattedDate);
             s.setSlider_note(slider_note);
             s.setSlider_status(slider_status);
-            
 
             sDAO.updateSlider(s, person);
 
         } catch (Exception e) {
-            
 
         }
-        
+
         response.sendRedirect("SliderListMKT");
-        
 
     }
 

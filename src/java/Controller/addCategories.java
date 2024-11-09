@@ -52,9 +52,9 @@ public class addCategories extends HttpServlet {
         CategoryDAO cDAO = new CategoryDAO();
         
         String name = request.getParameter("name");
-        
+        // Lấy danh sách Categories
         List<Categories> list = cDAO.getAllCategory();
-        
+        // Thêm mới categories
         Categories c = new Categories(list.size() + 1, name);
         
         cDAO.addNewCategories(c);

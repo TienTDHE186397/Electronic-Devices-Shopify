@@ -51,8 +51,9 @@ public class addPostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BlogListDAO blogDAO = new BlogListDAO();
-        List<String> listBlogType = blogDAO.getDistinctOfBlogType();
+        // Blog List 
+        CategoryDAO cDAO = new CategoryDAO();
+        List<Categories> listBlogType = cDAO.getAllCategory();
         request.setAttribute("listType", listBlogType);
         request.getRequestDispatcher("addPost.jsp").forward(request, response);
 
@@ -65,6 +66,7 @@ public class addPostServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String err1 = "";
         boolean check = true;
+        // Nhận Các Giá Trị Đầu Vào Từ Add New Blog
         String blog_type = request.getParameter("blogtype");
         String blog_tittle = request.getParameter("blogtittle");
         String blog_summary = request.getParameter("blogsummary");
@@ -72,7 +74,7 @@ public class addPostServlet extends HttpServlet {
         String blog_status = request.getParameter("blogstatus");
         String blog_flag = request.getParameter("blogflag");
         String image_tittle = request.getParameter("imagetittle");
-//-------------------------------------------image--------------------------------------------------------
+        // Nhận Ảnh đầu vào từ input file
         Part part = request.getPart("blogimage");
         String blog_image = "";
         String realPath = "";
@@ -90,30 +92,31 @@ public class addPostServlet extends HttpServlet {
                 blog_image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
             }
         }
-//--------------------------------------------video-------------------------------------------------
-      //-------------------------------------------------------------------------------------
-
+        // Gắn Cờ Cho Bài Blog
         int blog_flag_i = 0;
         try {
             blog_flag_i = Integer.parseInt(blog_flag);
         } catch (Exception e) {
         }
-        
-        
-
+        // Lầy thời gian cho ngày hiện tại
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
-
+        // Lấy Session của người dùng
         HttpSession session = request.getSession();
         DAOPerson perDAO = new DAOPerson();
-        //    session.setAttribute("user", user);
         Person p = (Person)session.getAttribute("user");
         Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
-
+        // Lấy danh sách các bài Blog
         BlogListDAO blogDAO = new BlogListDAO();
         List<Blog> list = blogDAO.getAllBlog();
-
+        //Validate
+        if(!check) {
+            request.setAttribute("err1", err1);
+            
+            
+        }
+        // Tạo Blog Mới
         Blog b = new Blog(list.size() + 1,
                 blog_image,
                 image_tittle,
@@ -126,11 +129,9 @@ public class addPostServlet extends HttpServlet {
                 blog_status,
                 blog_flag_i,
                 person);
-
+        // Insert bài Blog Mới 
         blogDAO.insertBlog(b, person);
-
         response.sendRedirect("PostListMKT");
-
     }
 
     @Override
