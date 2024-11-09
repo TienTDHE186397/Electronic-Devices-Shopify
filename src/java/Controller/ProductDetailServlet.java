@@ -7,7 +7,7 @@ package Controller;
 import DAO.CommentDAO;
 import DAO.DAOimgVideo;
 import DAO.ProductDAO;
-import Email.PasswordUtils;
+import Controller.PasswordUtils;
 import Entity.CommentPerson;
 import Entity.ImageVideo;
 import Entity.Person;

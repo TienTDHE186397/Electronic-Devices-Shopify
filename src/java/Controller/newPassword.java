@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Email;
+package Controller;
 
+import Email.*;
 import DAO.PersonDAO;
-import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
-public class ChangePassword extends HttpServlet {
+@WebServlet(name = "newPassword", urlPatterns = {"/newPassword"})
+public class newPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class ChangePassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePassword</title>");
+            out.println("<title>Servlet newPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet newPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +60,7 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -75,48 +74,32 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        System.out.println("Session ChangePassword" + session.getAttribute("user"));
-        if (session != null) {
-            System.out.println("Session ID: " + session.getId());
-        } else {
-            System.out.println("No session found");
-        }
-        Person person = (Person) session.getAttribute("user");
-        String oldpass = (String) request.getParameter("oldpass");
-        String newpass = (String) request.getParameter("pass");
+        String pass = (String) request.getParameter("pass");
         String repass = (String) request.getParameter("repass");
-        PersonDAO pd = new PersonDAO();
-        if (!newpass.equals(repass)) {
-            request.setAttribute("error", "Mật khẩu không khớp");
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-        }
-        System.out.println("PersonInChange " + person);
-        if (person == null) {
-            request.setAttribute("error", "Vui long dang nhap lai");
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response); // Nếu không có người dùng trong session, chuyển hướng về trang đăng nhập
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+        PasswordUtils pw = new PasswordUtils();
+        String passCom = pw.shiftPassword(pass);
+        System.out.println("pass " + pass);
+        System.out.println("repass " + repass);
+        if (pass == null || repass == null || !pass.equals(repass)) {
+            request.setAttribute("error", "Mật khẩu không khớp!");
+            request.getRequestDispatcher("newPassword.jsp").forward(request, response);
             return;
-        } else {
-            PasswordUtils pw = new PasswordUtils();
-            String reversePass = pw.ReverPassword(person.getPasword());
-            String passCom = pw.shiftPassword(newpass);
-            String email = person.getEmail();
-            System.out.println(email);
-            if (!reversePass.equals(oldpass)) {
-                request.setAttribute("error", "Mật khẩu đăng nhập sai ");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-            } else {
-                boolean update = pd.updatePassword(email, passCom);
-                if (update) {
-                    request.setAttribute("message", "Cập nhật thành công");
-                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("error", "Cập nhật thấy bại");
-                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-                }
-            }
-
         }
+        PersonDAO personDAO = new PersonDAO();
+        boolean add = personDAO.updatePassword(email, passCom);  // Thêm người dùng vào database
+        if (add) {
+            request.setAttribute("message", "Cập nhật mật khẩu thành công");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+            System.out.println("Cập Nhật Thành Công");
+
+        } else {
+            System.out.println("Cập Nhật Mật Khẩu Thất Bại");
+        }
+        // Xóa thông tin tạm thời trong session
+        session.removeAttribute("verificationCode");
+        session.removeAttribute("tempEmail");
 
     }
 

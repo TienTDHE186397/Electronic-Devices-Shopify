@@ -1,7 +1,7 @@
 package Controller;
 
 import DAO.PersonDAO;
-import Email.PasswordUtils;
+import Controller.PasswordUtils;
 
 import Entity.Person;
 import Entity.Person;

@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Email;
+package Controller;
 
 /**
  *
  * @author admin
  */
 // PasswordUtils.java
+
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 
