@@ -67,20 +67,21 @@ public class CartContact extends HttpServlet {
         CategoryDAO cDao = new CategoryDAO();
         ProductDAO pDao = new ProductDAO();
 
-// Lấy danh sách 5 sản phẩm mới nhất từ ProductDAO
+        // Lấy danh sách 5 sản phẩm mới nhất từ ProductDAO  
         List<Product> listProductLatest = pDao.getTop5ProductLatests();
 
-// Lấy danh sách tất cả danh mục sản phẩm từ CategoryDAO
+        // Lấy danh sách tất cả danh mục sản phẩm từ CategoryDAO
         List<Categories> listC = cDao.getAllCategory();
 
-// Thiết lập các attribute để truyền dữ liệu sang trang JSP
+        // Thiết lập các attribute để truyền dữ liệu sang trang JSP
         request.setAttribute("listCategory", listC);            // Gán danh sách danh mục vào attribute
         request.setAttribute("listProductLatest", listProductLatest); // Gán danh sách 5 sản phẩm mới nhất vào attribute
-
-// Chuyển tiếp request và response đến trang `CartContact.jsp` để hiển thị dữ liệu
+        // Chuyển tiếp request và response đến trang `CartContact.jsp` để hiển thị dữ liệu
         request.getRequestDispatcher("CartContact.jsp").forward(request, response);
-//PrintWriter out = response.getWriter();
-//out.print(payment);
+        //PrintWriter out = response.getWriter();
+        //out.print(payment);
+        
+        
     }
 
     /**
