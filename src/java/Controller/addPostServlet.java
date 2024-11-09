@@ -65,6 +65,8 @@ public class addPostServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         String err1 = "";
+        String err2 = "";
+        String err3 = "";
         boolean check = true;
         // Nhận Các Giá Trị Đầu Vào Từ Add New Blog
         String blog_type = request.getParameter("blogtype");
@@ -78,19 +80,33 @@ public class addPostServlet extends HttpServlet {
         Part part = request.getPart("blogimage");
         String blog_image = "";
         String realPath = "";
-        if (part != null && part.getSize() > 0) {
-            realPath = request.getServletContext().getRealPath("blogimages");
-            String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
-            if (!Files.exists(Path.of(realPath))) {
-                Files.createDirectory(Path.of(realPath));
-            }
-            part.write(realPath + "\\" + filename);
-            if (!filename.endsWith(".jpg")) {
-                err1 = "File ảnh phải kết thúc với đuôi .jpg";
-                check = false;
+        try {
+            if (part != null && part.getSize() > 0) {
+                realPath = request.getServletContext().getRealPath("blogimages");
+                String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+                if (!Files.exists(Path.of(realPath))) {
+                    Files.createDirectory(Path.of(realPath));
+                }
+                part.write(realPath + "\\" + filename);
+                if (!filename.endsWith(".jpg") || filename == null) {
+                    err1 = "File ảnh phải kết thúc với đuôi .jpg<br/>";
+                    check = false;
+                } else {
+                    blog_image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
+                }
             } else {
-                blog_image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
+                err1 = "Image Blog không được để thiếu !!<br/>";
+                check = false;
             }
+        } catch (Exception e) {
+            check = false;
+            err1 = "File truyền vào không hợp lệ!!<br/>";
+        }
+        // Check -- Validate
+
+        if (blog_type.equals("")) {
+            err2 = "Hãy chọn Type Blog ! <br/>";
+            check = false;
         }
         // Gắn Cờ Cho Bài Blog
         int blog_flag_i = 0;
@@ -103,19 +119,39 @@ public class addPostServlet extends HttpServlet {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
         // Lấy Session của người dùng
+
         HttpSession session = request.getSession();
         DAOPerson perDAO = new DAOPerson();
-        Person p = (Person)session.getAttribute("user");
-        Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
+        Person p = (Person) session.getAttribute("user");
+
+        if (p == null) {
+            check = false;
+            err3 = "Lỗi hệ thống vui lòng đăng nhập lại để thực hiện chức năng !! <br/>";
+            request.setAttribute("err3", err3);
+            doGet(request, response);
+            return;
+        }
         // Lấy danh sách các bài Blog
         BlogListDAO blogDAO = new BlogListDAO();
         List<Blog> list = blogDAO.getAllBlog();
-        //Validate
-        if(!check) {
+        //Xử Lý -- Validate
+        if (!check) {
+            // Set Lỗi
             request.setAttribute("err1", err1);
-            
-            
+            request.setAttribute("err2", err2);
+
+            // Gán lại giá trị đã nhập vào
+            request.setAttribute("blog_tittle", blog_tittle);
+            request.setAttribute("blog_summary", blog_summary);
+            request.setAttribute("blog_detail", blog_detail);
+            request.setAttribute("image_tittle", image_tittle);
+
+            doGet(request, response);
+            return;
         }
+
+        Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
+
         // Tạo Blog Mới
         Blog b = new Blog(list.size() + 1,
                 blog_image,

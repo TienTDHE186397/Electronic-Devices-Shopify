@@ -76,30 +76,32 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add New Blog</title>
+        <title>Edit A Blog</title>
         <link rel="stylesheet" href="styles.css">
-
         <script src="https://cdn.tiny.cloud/1/qnmf6c0u3j7wk6wsljsqwke06htozhifzb9v9fs3pw2ed7vx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
-
-
     </head>
 
     <body>
-
-
         <c:set value="${requestScope.listType}" var="listType" />
         <c:set value="${requestScope.blog}" var="b" />
-
         <div class="container">
             <h2>Edit Blog</h2>
             <form action="editPost" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="${b.blogID}">
-                <label for="blogtype">Blog Type: <a href="addBlogType.jsp">(ADD NEW BLOG TYPE +)</a></label>
+                <label for="blogtype">Blog Type: <a href="addCategory?type=blog">(ADD NEW BLOG TYPE +)</a>
+                    <c:if test="${err2 != null}">
+                        <p style="color: red">${err2}</p>
+                    </c:if>
+
+                    <c:if test="${err3 != null}">
+                        <p style="color: red">${err3}</p>
+                    </c:if>
+                </label>
+                
                 <select name="blogtype" id="customSelect" >
                     <option value="">Select Blog Type</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
-                        <option value="${listType.get(c)}" ${(b.blog_type == listType.get(c)) ? "selected" : ""} >${listType.get(c)}</option>
+                        <option value="${listType.get(c).categoryName}" ${(b.blog_type == listType.get(c).categoryName) ? "selected" : ""} >${listType.get(c).categoryName}</option>
                     </c:forEach>
                 </select>
 
@@ -131,6 +133,10 @@
                         <option value="1" ${(b.blog_flag == "1") ? "selected" : ""}>Yes</option>
                     </select>
                 </div>
+                    
+                     <c:if test="${err1 != null}">
+                    <p style="color: red">${err1}</p>
+                </c:if>
                 
                 
                 <button type="submit">Edit Blog</button>

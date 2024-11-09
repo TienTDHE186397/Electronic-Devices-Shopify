@@ -88,7 +88,15 @@
             <h2>Add New Blog</h2>
             <form action="addPost" method="post"  enctype="multipart/form-data">
 
-                <label for="blogtype">Blog Type: <a href="addCategory">(ADD NEW BLOG TYPE +)</a></label>
+                <label for="blogtype">Blog Type: <a href="addCategory?type=blog">(ADD NEW BLOG TYPE +)</a>
+                    <c:if test="${err2 != null}">
+                        <p style="color: red">${err2}</p>
+                    </c:if>
+
+                    <c:if test="${err3 != null}">
+                        <p style="color: red">${err3}</p>
+                    </c:if>
+                </label>
                 <select name="blogtype" id="customSelect" >
                     <option value="">Select Blog Type</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
@@ -97,14 +105,15 @@
                 </select>
 
                 <label for="blogTitle">Blog Title:</label>
-                <input type="text" id="blogTitle" name="blogtittle" placeholder="Tittle Blog....." required>
-                
-                <label for="blogSummary">Blog Summary Information:</label>
-                <input type="text" id="blogTitle" name="blogsummary" placeholder="Summary Blog......" required>
+                <input type="text" id="blogTitle" name="blogtittle" placeholder="Tittle Blog....." value="${blog_tittle}" required>
 
+                <label for="blogSummary">Blog Summary Information:</label>
+                <input type="text" id="blogTitle" name="blogsummary" placeholder="Summary Blog......" value="${blog_summary}" required>
+                
+                
                 <!-- comment -->
                 <label for="blogDetail">Blog Detail:</label>
-                <textarea style="height: 200px;"  class="tinymce" placeholder="Write A Blog......." name="blogdetail" rows="6"></textarea>
+                <textarea style="height: 200px;"  class="tinymce" placeholder="Write A Blog......." name="blogdetail" rows="6">${blog_detail}</textarea>
                 <br/>
                 <!-- comment -->
 
@@ -117,22 +126,24 @@
                 <div class="form-group">
                     <label>Image Blog</label>
                     <input type="file" class="form-control" id="centeredInput" accept=".jpg" name="blogimage">
-                    <input type="text" class="form-control" id="centeredInput" name="imagetittle" style="width: 367px; height: 23px;" placeholder="Tittle Image..." required>
+                    <input type="text" class="form-control" id="centeredInput" name="imagetittle" value="${image_tittle}" style="width: 367px; height: 23px;" placeholder="Tittle Image..." required>
 
-                     <b>Blog Flag:</b> <select name="blogflag" id="customSelect">
+                    <b>Blog Flag:</b> <select name="blogflag" id="customSelect">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
                 </div>
-                
-                
+                <c:if test="${err1 != null}">
+                    <p style="color: red">${err1}</p>
+                </c:if>
+
                 <button type="submit">Add Blog</button>
             </form>
         </div>
 
     </body>
-    
-    
+
+
     <script>
         tinymce.init({
             selector: '.tinymce',

@@ -90,7 +90,6 @@ public class PostDetailHomeServlet extends HttpServlet {
             Blog blog = blogDAO.getBlogById(id);
             Person p = (Person) session.getAttribute("user");
             Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
-            
             // Lấy tất cả bài đăng
             List<Blog> list = blogDAO.getAllBlog();
             // Tạo Commnent Blog Mới
