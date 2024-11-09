@@ -282,7 +282,7 @@
                                     </div>
                                     <br/>
                                     <div class="col-md-7">
-                                        <b>Number Per Page:</b>  <input type="number" name="numberofpage" value="${nof}" placeholder="Number of page ...."> <br/>
+                                        <b>Number Per Page:</b>  <input type="number" name="numberofpage" min="0" value="${nof}" placeholder="Number of page ...."> <br/>
                                         <b>Hide:  </b>
 
                                         <input type="checkbox" name="col" value="image" ${(image != null) ? "checked" : ""}> Image

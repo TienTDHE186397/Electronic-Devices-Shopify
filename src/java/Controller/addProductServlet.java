@@ -48,7 +48,7 @@ public class addProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        // Lấy danh sách Category
         CategoryDAO cDAO = new CategoryDAO();
         List<Categories> listC = cDAO.getAllCategory();
 
@@ -64,7 +64,7 @@ public class addProductServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String err1 = "";
         boolean check = true;
-
+        // Lấy Thông tin đầu vào của product
         String product_tittle = request.getParameter("tittle");
         String product_name = request.getParameter("name");
         String product_quantity = request.getParameter("quantity");
@@ -76,8 +76,8 @@ public class addProductServlet extends HttpServlet {
         String product_status = request.getParameter("status");
         String product_sale = request.getParameter("sale");
         String product_category_id = request.getParameter("categoryid");
-
-//-------------------------------------------image--------------------------------------------------------
+        
+        // Lấy đường dẫn ảnh của Product
         Part part = request.getPart("productimage");
         String image = "";
         String realPath = "";
@@ -95,27 +95,26 @@ public class addProductServlet extends HttpServlet {
                 image = realPath.substring(realPath.length() - 13, realPath.length()) + "/" + filename;
             }
         }
-        //-------------------------------------------------------------------------------------
+        
+        //Lấy Thông tin ngày hiện tại
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
-
+        //Format Date
         java.sql.Date releaseDate = java.sql.Date.valueOf(formattedDate);
 
         ProductListDAO pDAO = new ProductListDAO();
         CategoryDAO cDAO = new CategoryDAO();
-
+        // Lấy Category
         Categories c = cDAO.getCategoriesById(Integer.parseInt(product_category_id));
-
+        // Lấy Tất Cả Bài Đăng
         List<Product> list = pDAO.getAllProduct();
-
         try {
-            
+            //Parse giá trị sang int
             int product_quantity_int = Integer.parseInt(product_quantity);
             int product_sale_int = Integer.parseInt(product_sale);
             int product_price_int = Integer.parseInt(product_price);
-            
-            
+            // Tạo Product Mới
             Product p = new Product(list.get(list.size() - 1).getProductID() + 1,
                     product_tittle,
                     product_name,
@@ -133,16 +132,12 @@ public class addProductServlet extends HttpServlet {
                     product_status,
                     product_brand);
             
-            
-             pDAO.addNewProduct(p, c);
+            // Thêm mới Product
+            pDAO.addNewProduct(p, c);
 
         response.sendRedirect("ProductMKT");
-
         } catch (Exception e) {
-
         }
-
-
        
     }
 

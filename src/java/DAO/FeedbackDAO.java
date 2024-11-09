@@ -22,6 +22,54 @@ import java.util.logging.Level;
  * @author admin
  */
 public class FeedbackDAO extends DBContext {
+    
+    
+     public List<Feedback> getAllFeedbacks() {
+
+        List<Feedback> feedbackList = new ArrayList<>();
+        String sql = "SELECT F.FeedbackID, P.ProductName, Pe.Name AS CustomerName, F.RatedStar, F.CreatedDate, F.Status FROM Feedback F JOIN Person Pe ON F.CustomerID = Pe.PersonID JOIN Products P ON F.ProductID = P.ProductID WHERE 1=1";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Feedback feedback = new Feedback(rs.getString("FeedbackID"), rs.getString("ProductName"), rs.getString("CustomerName"), rs.getInt("RatedStar"), rs.getDate("CreatedDate"), rs.getString("Status"));
+                feedbackList.add(feedback);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return feedbackList;
+    }
+    
+    public List<Feedback> getFeedBackMKTDashBoard(String fromdate,String todate) {
+
+        List<Feedback> feedbackList = new ArrayList<>();
+        String sql = "SELECT F.FeedbackID, P.ProductName, Pe.Name AS CustomerName, F.RatedStar, F.CreatedDate, F.Status FROM Feedback F JOIN Person Pe ON F.CustomerID = Pe.PersonID JOIN Products P ON F.ProductID = P.ProductID WHERE F.CreatedDate BetWeen '"+ fromdate + "' AND '"+todate+" 23:59:59'";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Feedback feedback = new Feedback(rs.getString("FeedbackID"), rs.getString("ProductName"), rs.getString("CustomerName"), rs.getInt("RatedStar"), rs.getDate("CreatedDate"), rs.getString("Status"));
+                feedbackList.add(feedback);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return feedbackList;
+    }
+    
+    
+    
+    
+    
  //lấy ra danh sách cùng những thông tin cần thiết của tất cả các feedaback cho trang FeedbackList
     public List<Feedback> getFeedbackList(String status, int rating) {
         List<Feedback> feedbackList = new ArrayList<>();

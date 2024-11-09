@@ -1,8 +1,10 @@
 package Controller;
 
 import DAO.BlogListDAO;
+import DAO.CategoryDAO;
 import DAO.DAOPerson;
 import Entity.Blog;
+import Entity.Categories;
 import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,19 +47,18 @@ public class editPostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        CategoryDAO cDAO = new CategoryDAO();
         BlogListDAO blogDAO = new BlogListDAO();
-
-        List<String> listBlogType = blogDAO.getDistinctOfBlogType();
-
+        // Lấy Type Của Bài Đăng
+        List<Categories> listBlogType = cDAO.getAllCategory();
+        // Lấy ID
         String id_raw = request.getParameter("id");
-
+        // Parse ID
         try {
             int id = Integer.parseInt(id_raw);
             Blog b = blogDAO.getBlogById(id);
             request.setAttribute("blog", b);
-
         } catch (Exception e) {
-
         }
 
         request.setAttribute("listType", listBlogType);
@@ -73,7 +74,10 @@ public class editPostServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String err1 = "";
         String err2 = "";
+        String err3 = "";
         boolean check = true;
+
+        // Lấy Thông tin của Bài Đăng Được Thêm Vào
         String blog_type = request.getParameter("blogtype");
         String blog_tittle = request.getParameter("blogtittle");
         String blog_summary = request.getParameter("blogsummary");
@@ -81,51 +85,83 @@ public class editPostServlet extends HttpServlet {
         String blog_status = request.getParameter("blogstatus");
         String blog_flag = request.getParameter("blogflag");
         String image_tittle = request.getParameter("imagetittle");
-//-------------------------------------------image--------------------------------------------------------
+        // Lấy Part Của Ảnh Được Thêm Vào
         Part part = request.getPart("blogimage");
         String blog_image = "";
         String realPath = "";
-        if (part != null && part.getSize() > 0) {
-            realPath = request.getServletContext().getRealPath("blogimages");
-            String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
-            if (!Files.exists(Path.of(realPath))) {
-                Files.createDirectory(Path.of(realPath));
+
+        try {
+
+            if (part != null && part.getSize() > 0) {
+                realPath = request.getServletContext().getRealPath("blogimages");
+                String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+                if (!Files.exists(Path.of(realPath))) {
+                    Files.createDirectory(Path.of(realPath));
+                }
+                part.write(realPath + "\\" + filename);
+                if (!filename.endsWith(".jpg")) {
+                    err1 = "File ảnh phải kết thúc với đuôi .jpg<br/>";
+                    check = false;
+                } else {
+                    blog_image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
+                }
             }
-            part.write(realPath + "\\" + filename);
-            if (!filename.endsWith(".jpg")) {
-                err1 = "File ảnh phải kết thúc với đuôi .jpg";
-                check = false;
-            } else {
-                blog_image = realPath.substring(realPath.length() - 10, realPath.length()) + "/" + filename;
-            }
+
+        } catch (Exception e) {
+            check = false;
+            err1 = "File truyền vào không hợp lệ!!<br/>";
         }
-//--------------------------------------------------------------------------------------------------
+
+        if (blog_type.equals("")) {
+            err2 = "Hãy chọn Type Blog ! <br/>";
+            check = false;
+        }
+
+        // Parse Flag
         int blog_flag_i = 0;
         try {
             blog_flag_i = Integer.parseInt(blog_flag);
         } catch (Exception e) {
         }
-
+        // Lấy thông tin ngày hiện tại
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
 
+        // Lấy thông tin của người dùng
         HttpSession session = request.getSession();
-
         DAOPerson perDAO = new DAOPerson();
+        Person p = (Person) session.getAttribute("user");
 
-        Person person = perDAO.getPersonById("6");
+        if (p == null) {
+            check = false;
+            err3 = "Hệ thống đang gặp lỗi vui lòng đăng nhập lại để thực hiện chức năng! <br/>";
+            request.setAttribute("err3", err3);
+            doGet(request, response);
+            return;
+        }
+        
+        
+        if (!check) {
+            // Set Lỗi
+            request.setAttribute("err1", err1);
+            request.setAttribute("err2", err2);
+
+            doGet(request, response);
+            return;
+        }
+
+        Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
 
         BlogListDAO blogDAO = new BlogListDAO();
 
+        // Lấy id của bài đăng
         String id_raw = request.getParameter("id");
-        
-
         try {
             int id = Integer.parseInt(id_raw);
             Blog b = blogDAO.getBlogById(id);
+            // Nếu như không truyền image vào thì sẽ mặc định là ảnh hiện tại của Blog
             if (blog_image.equals("")) {
-
             } else {
                 b.setBlog_img(blog_image);
             }
@@ -137,12 +173,9 @@ public class editPostServlet extends HttpServlet {
             b.setBlog_detail(blog_detail);
             b.setBlog_status(blog_status);
             b.setBlog_flag(blog_flag_i);
-
-            
             blogDAO.editBlog(b, person);
 
         } catch (Exception e) {
-
         }
 
         response.sendRedirect("PostListMKT");

@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 public class ProductListDAO extends DBContext {
 
     CategoryDAO cDAO = new CategoryDAO();
-
+    // Lấy Tất Cả Product
     public List<Product> getAllProduct() {
         List<Product> listP = new ArrayList<>();
         String sql = "Select * from Products";
@@ -43,7 +43,7 @@ public class ProductListDAO extends DBContext {
         }
         return listP;
     }
-
+    // Tìm Kiếm Product
     public List<Product> searchProduct(String search, String fromprice,
             String toprice, String shortdescription,
             String category_id, String status,
@@ -153,7 +153,6 @@ public class ProductListDAO extends DBContext {
         }
         return listP;
     }
-
     public List<Product> searchProduct2(String search, String fromprice,
             String toprice, String shortdescription,
             String category_id, String status,
@@ -253,7 +252,7 @@ public class ProductListDAO extends DBContext {
         }
         return listP;
     }
-
+    // Thêm Mới Bài Đăng
     public void addNewProduct(Product p, Categories c) {
 
         String sql = "INSERT INTO [dbo].[Products]\n"
@@ -300,7 +299,7 @@ public class ProductListDAO extends DBContext {
         }
 
     }
-
+    // Lấy Product từ Ngày Nào Đến Ngày Nào
     public List<Product> getProductMKTDashBoard(String fromdate, String todate) {
 
         List<Product> list = new ArrayList<>();

@@ -20,8 +20,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="js/bootstrap.bundle.min.js"></script>
-
-
         <style>
             body {
                 font-family: Roboto;
@@ -246,37 +244,22 @@
 
 
         </style>
-
     </head>
-
-
     <body>
-
         <c:set value="${requestScope.listCategory}" var="cate" />
-
-
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
                 <a href="mktdashboard"><h1 class="brand-name"> MKT DashBoard</h1></a>   
             </div>
         </section>
-
-
-
         <section class="product-list container">
-
             <c:set value="${requestScope.listBlogType}" var="listType"/>
             <c:set value="${requestScope.totalP}" var="totalpage"/>
-
-
             <div>
-
                 <div  style="margin-top: 15px">
                     <div class="row">
                         <div class="col-12 mb-3 mb-lg-"> 
-
                             <form id="f1" action="PostListMKT" method="get">
-
                                 <div>
                                     <div style="margin-bottom: 5px">
                                         <center>   <h1>POST LIST</h1> <center>
@@ -295,19 +278,16 @@
                                                             <input style="background: orange;" id ="myInput" name="authorwrite" type="text" class="form-control" placeholder="Enter your Author" value="${param.authorwrite == null ? "":param.authorwrite}">
                                                         </div>  
                                                     </div>
-
                                                 </span>
                                                 <div class="row">
-
-
                                                     <div class="col-md-6">
                                                         <div>
                                                             <b>Filter :</b>
                                                             <div>
-                                                                <select name="type" id="customSelect" onchange="document.getElementById('f1').submit()">
+                                                                <select name="type1" id="customSelect" onchange="document.getElementById('f1').submit()">
                                                                     <option value="">All</option>
                                                                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">
-                                                                        <option value="${listType.get(c)}" ${(listType.get(c) == param.type) ? "selected" : ""} >${listType.get(c)}</option>
+                                                                        <option value="${listType.get(c)}" ${(listType.get(c) == param.type1) ? "selected" : ""} >${listType.get(c)}</option>
                                                                     </c:forEach>
                                                                 </select>
                                                                 <select id="customSelect" name="statusf" onchange="document.getElementById('f1').submit()">
@@ -317,30 +297,22 @@
                                                                 </select>
                                                             </div>  
                                                         </div> 
-
                                                         <div>
                                                             <b>Sort By :</b>                                                                              
                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                             <b>Event :</b>
-
                                                             <div>
                                                                 <select id="customSelect" name="sort" onchange="document.getElementById('f1').submit()">
                                                                     <option value="" class="col-auto mobile">List Default</option>
                                                                     <option value="tittleu" ${(param.sort == "tittleu")? "selected" : ""} class="col-auto mobile">Tittle(A - Z)</option>
                                                                     <option value="tittled" ${(param.sort == "tittled")? "selected" : ""} class="col-auto mobile">Tittle(Z - A)</option>
-
                                                                     <option value="typeu" ${(param.sort == "typeu")? "selected" : ""} class="col-auto mobile">Type(A - Z)</option>
                                                                     <option value="typed" ${(param.sort == "typed")? "selected" : ""}  class="col-auto mobile">Type(Z - A)</option>
-
                                                                     <option value="authoru" ${(param.sort == "authoru")? "selected" : ""} class="col-auto mobile">Author(A - Z)</option>
                                                                     <option value="authord" ${(param.sort == "authord")? "selected" : ""} class="col-auto mobile">Author(Z - A)</option>
-
                                                                     <option value="viewsu" ${(param.sort == "viewsu")? "selected" : ""} class="col-auto mobile">Views(Increase)</option>
                                                                     <option value="viewsd" ${(param.sort == "viewsd")? "selected" : ""} class="col-auto mobile">Views(Decrease)</option>
-
                                                                 </select>
-
-
                                                                 <select style="width: 293px;" id="customSelect" name="event" onchange="document.getElementById('f1').submit()">
                                                                     <option value="" class="col-auto mobile">Event</option>
                                                                     <option value="phunu" ${(param.event == "phunu")? "selected" : ""} class="col-auto mobile">Ngày Quốc tế Phụ nữ</option>
@@ -349,18 +321,11 @@
                                                                     <option value="namgioi" ${(param.event == "namgioi")? "selected" : ""} class="col-auto mobile">Ngày Quốc Tế Nam Giới 19-11</option>
                                                                     <option value="thieunhi" ${(param.event == "thieunhi")? "selected" : ""} class="col-auto mobile">Ngày Quốc tế Thiếu nhi 1-6</option>
                                                                 </select>
-
-
-
                                                             </div> 
                                                         </div> 
                                                     </div>
-
                                                     <div class="col-md-6">
                                                         <button style="float: right; position: relative;"><a href="addPost">ADD NEW POST <i class="fa-solid fa-circle-plus"> </i></a></button>
-
-
-
                                                         <div>
                                                             <b>Number Per Page:</b>  <input type="number" name="numberofpage" value="${nof}" placeholder="Number of page ...."> <br/>
                                                             <b>Column To Hide:</b>
@@ -373,25 +338,14 @@
                                                             <input type="checkbox" name="col" value="updatetime" ${(updatetime != null) ? "checked" : ""}> Update Time
                                                             <input type="checkbox" name="col" value="views" ${(views != null) ? "checked" : ""}> Views 
                                                             <input type="checkbox" name="col" value="status" ${(status != null) ? "checked" : ""}> Status 
-
                                                             <br/>
                                                             <input type="submit" value="Apply">
                                                         </div>
-
                                                         <input type="hidden" name="page" value="${param.page}">
-
-
                                                     </div>
-
-
-
-
                                                 </div>
-
                                                 </div>
                                                 </form>
-
-
                                                 <div class="table-responsive">  
                                                     <table class="table mb-0"> <!-- comment -->
                                                         <thead class="text-uppercase bg-body text-muted">
@@ -423,19 +377,16 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-
                                                             <c:forEach items="${requestScope.listBp}" var="blog">
                                                                 <tr>
                                                                     <c:if test="${id == null}">
                                                                         <td>${blog.blogID}</td>
                                                                     </c:if>
-
                                                                     <c:if test="${image == null}">
                                                                         <td>
                                                                             <img src="${blog.blog_img}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
                                                                         </td>
                                                                     </c:if>
-
                                                                     <c:if test="${tittle == null}">
                                                                         <c:if test="${blog.blog_flag == 0}">
                                                                             <td><b>${blog.blog_tittle}</b></td>
@@ -444,27 +395,21 @@
                                                                             <td style="color: red;"><b>${blog.blog_tittle}</b></td>
                                                                                 </c:if>
                                                                             </c:if>
-
                                                                     <c:if test="${type == null}">
                                                                         <td>${blog.blog_type}</td>
                                                                     </c:if>
-
                                                                     <c:if test="${author == null}">
                                                                         <td>${blog.person.name}</td>
                                                                     </c:if>
-
                                                                     <c:if test="${updatetime == null}">
                                                                         <td>${blog.blog_update_time}</td>
                                                                     </c:if>
-
                                                                     <c:if test="${views == null}">
                                                                         <td>${blog.blog_views}</td>
                                                                     </c:if>
-
                                                                     <c:if test="${status == null}">
                                                                         <td>${blog.blog_status}</td>
                                                                     </c:if>
-
                                                                     <td><a href="PostDetail?id=${blog.blogID}"><i class="fa-regular fa-eye"></i></a>
                                                                         &nbsp;
                                                                         <a href="editPost?id=${blog.blogID}"><i class="fa-solid fa-pen"></i></a>
@@ -477,15 +422,11 @@
                                                                             </c:if>
                                                                     </td>
                                                                 </tr>
-
                                                             </c:forEach>
-
                                                         </tbody>
-
                                                     </table>
                                                 </div>
                                                 <br/> 
-
                                                 <div class="pagination">
                                                     <c:if test="${totalpage > 1}">
                                                         <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
@@ -493,8 +434,6 @@
                                                         </c:forEach>
                                                     </c:if>
                                                 </div>
-
-
                                                 <form id="paginationForm" action="PostListMKT" method="get">
                                                     <input type="hidden" name="tittlewrite" value="${param.tittlewrite}">
                                                     <input type="hidden" name="authorwrite" value="${param.authorwrite}">
@@ -503,7 +442,6 @@
                                                     <input type="hidden" name="sort" value="${param.sort}">
                                                     <input type="hidden" name="event" value="${param.event}">
                                                     <input type="hidden" name="numberofpage" value="${param.numberofpage}">
-
                                                     <c:if test="${id != null}">
                                                         <input type="hidden" name="col" value="${id}">
                                                     </c:if>
@@ -530,32 +468,19 @@
                                                     </c:if>
                                                     <input type="hidden" name="page" id="pageInput" value="1">
                                                 </form>
-
-
                                                 </div>
                                                 </div>
                                                 </div>
                                                 </div>
-
-
                                                 </section>
-
                                                 <!-- Footer start -->
                                                 <%@include file="footer.jsp" %>
                                                 <!-- Footer end -->
                                                 </body>
-
-
                                                 <script>
-
                                                     function goToPage(pageNumber) {
-
                                                         document.getElementById('pageInput').value = pageNumber;
-
                                                         document.getElementById('paginationForm').submit();
-
                                                     }
-
                                                 </script>
-
                                                 </html>

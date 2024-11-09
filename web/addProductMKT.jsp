@@ -85,7 +85,7 @@
             <h2>Add New Product</h2>
             <form action="addProductMKT" method="post"  enctype="multipart/form-data">
 
-                <label for="blogtype">Product Type: <a href="addCategory">(ADD NEW CATEGORY +)</a></label>
+                <label for="blogtype">Product Type: <a href="addCategory?type=product">(ADD NEW CATEGORY +)</a></label>
                 <select name="categoryid" id="customSelect" >
                     <option value="">Select Category</option>
                     <c:forEach var="c" begin="0" end="${listType.size() -1}" step ="1">

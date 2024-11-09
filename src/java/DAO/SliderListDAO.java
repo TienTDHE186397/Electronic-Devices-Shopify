@@ -16,6 +16,7 @@ public class SliderListDAO extends DBContext {
 
     DAOPerson pDAO = new DAOPerson();
 
+    // Lấy Tất Cả Slider
     public List<Slider> getAllSlider() {
 
         List<Slider> list = new ArrayList<>();
@@ -49,6 +50,7 @@ public class SliderListDAO extends DBContext {
         return list;
     }
 
+    // Tìm kiếm slider
     public List<Slider> searchSlider(String search, String filter, int page, int perpage) {
 
         List<Slider> list = new ArrayList<>();
@@ -96,6 +98,7 @@ public class SliderListDAO extends DBContext {
         return list;
     }
 
+    // Lấy Slider Theo ID
     public Slider getSliderById(int id) {
 
         String sql = "Select * From Slider WHERE SliderID = " + id;
@@ -128,6 +131,7 @@ public class SliderListDAO extends DBContext {
 
     }
 
+    // Insert Slider
     public void insertSlider(Slider s, Person o) {
         String sql = "INSERT INTO [dbo].[Slider]\n"
                 + "           ([SliderTittle]\n"
@@ -164,6 +168,7 @@ public class SliderListDAO extends DBContext {
         }
     }
 
+    // Update Slider
     public void updateSlider(Slider s, Person o) {
         String sql = "UPDATE [dbo].[Slider]\n"
                 + "   SET [SliderTittle] = ?\n"
@@ -192,6 +197,7 @@ public class SliderListDAO extends DBContext {
         }
     }
 
+    // Lấy danh sách Slider Mỗi Trang
     public List<Slider> getSliderPerPage(int page, int perpage) {
 
         List<Slider> list = new ArrayList<>();
@@ -238,7 +244,8 @@ public class SliderListDAO extends DBContext {
         return list;
 
     }
-    
+    // Lấy Tất Cả Slider Published
+
     public List<Slider> getAllSliderPublished() {
 
         List<Slider> list = new ArrayList<>();
@@ -271,12 +278,12 @@ public class SliderListDAO extends DBContext {
 
         return list;
     }
-    
+
     public static void main(String[] args) {
         SliderListDAO slDao = new SliderListDAO();
-        
-        List<Slider> list= slDao.getAllSliderPublished();
-        for(Slider sl : list){
+
+        List<Slider> list = slDao.getAllSliderPublished();
+        for (Slider sl : list) {
             System.out.println(sl);
         }
     }

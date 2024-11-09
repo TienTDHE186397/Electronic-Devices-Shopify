@@ -14,9 +14,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class BlogListDAO extends DBContext {
-
+    
+    // Lấy DAO của Person
     DAOPerson pDAO = new DAOPerson();
-
+    // Lấy Dữ Liệu Tất Cả Bài Đăng
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog";
@@ -40,7 +41,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Lấy Bài Đăng Mỗi Trang Trong MKT DASHBORAD
     public List<Blog> getBlogPerPage(int page, int perpage) {
 
         List<Blog> list = new ArrayList<>();
@@ -93,14 +94,69 @@ public class BlogListDAO extends DBContext {
         return list;
 
     }
+    // Lấy Bài Đăng Mỗi Trang Trong Post List Home
+    
+     public List<Blog> getBlogPerPageHome(int page, int perpage) {
 
+        List<Blog> list = new ArrayList<>();
+
+        int pageget = (page * perpage - perpage);
+
+        String sql = "SELECT b.[BlogID]\n"
+                + "      ,b.[Blog_Type]\n"
+                + "      ,b.[Blog_img]\n"
+                + "      ,b.[Blog_img_tittle]\n"
+                + "      ,b.[Blog_Tittle]\n"
+                + "      ,b.[Blog_Summary_Information]\n"
+                + "      ,b.[Blog_Update_Time]\n"
+                + "      ,b.[Blog_Detail]\n"
+                + "      ,b.[Blog_Views]\n"
+                + "      ,b.[Blog_Status]\n"
+                + "      ,b.[Blog_Flag]\n"
+                + "      ,b.[PersonID]\n"
+                + "FROM Blog b, Person p\n"
+                + "WHERE b.PersonID = p.PersonID AND b.Blog_Status = 'Published'\n"
+                + "ORDER BY b.BlogID \n"
+                + "OFFSET ? ROWS\n"
+                + "FETCH NEXT ? ROWS ONLY";
+
+        try {
+
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pageget);
+            st.setInt(2, perpage);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                Person person = pDAO.getPersonById(rs.getString("PersonID"));
+
+                Blog blog = new Blog(rs.getInt("BlogID"), rs.getString("Blog_img"), rs.getString("Blog_img_tittle"), rs.getString("Blog_Tittle"),
+                        rs.getString("Blog_Type"), rs.getString("Blog_Summary_Information"),
+                        rs.getString("Blog_Update_Time"),
+                        rs.getString("Blog_Detail"), rs.getInt("Blog_Views"),
+                        rs.getString("Blog_Status"), rs.getInt("Blog_Flag"), person);
+
+                list.add(blog);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+
+    }
+    
+    // Tìm Kiếm Bài Đăng Theo Từng Key Word Bằng Dấu " " 
     public List<Blog> searchBlogListHome2(String search, String page) {
 
         List<Blog> list = new ArrayList<>();
 
         String[] arr = search.split(" ");
 
-        String sql = "Select * From Blog Where 1=1 ";
+        String sql = "Select * From Blog Where 1=1 AND Blog_Status = 'Published' ";
         int count = 0;
         for (String m : arr) {
             if (count == 0) {
@@ -136,7 +192,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Tìm Kiếm Bài Đăng Ở Trang Home
     public List<Blog> searchBlogListHome(String search, String page, int perpage) {
         List<Blog> list = new ArrayList<>();
 
@@ -144,7 +200,7 @@ public class BlogListDAO extends DBContext {
 
         int pageget = (Integer.parseInt(page) * perpage - perpage);
 
-        String sql = "Select * From Blog Where 1=1 ";
+        String sql = "Select * From Blog Where 1=1 AND Blog_Status = 'Published' ";
         int count = 0;
         for (String m : arr) {
             if (count == 0) {
@@ -185,13 +241,13 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Tìm Blog Đang Treding Theo Views Ở Trang HOME
     public List<Blog> trendingBlogList() {
 
         List<Blog> list = new ArrayList<>();
 
         String sql = "select *\n"
-                + "from Blog\n"
+                + "from Blog Where Blog_Status = 'Published'\n"
                 + "Order BY Blog_Views desc";
 
         try {
@@ -210,8 +266,7 @@ public class BlogListDAO extends DBContext {
         }
         return list;
     }
-    
-    
+    // Lấy Danh Sách Bài Đăng Từ Ngày Nào Đến Ngầy Nào
     public List<Blog> getBlogMKTDashBoard(String fromdate, String todate) {
         
         List<Blog> list = new ArrayList<>();
@@ -312,7 +367,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Lấy ID của Bài Đăng 
     public Blog getBlogById(int id) {
 
         String sql = "select *"
@@ -342,7 +397,7 @@ public class BlogListDAO extends DBContext {
         return null;
 
     }
-
+    // Thêm mới Bài Đăng Vào DB
     public void insertBlog(Blog b, Person o) {
 
         String sql = "INSERT INTO [dbo].[Blog]\n"
@@ -393,7 +448,7 @@ public class BlogListDAO extends DBContext {
         }
 
     }
-
+    // Thêm Comment Của Bài Đăng
     public void addCommentBlog(CommentBlog c, Blog b, Person o) {
 
         String sql = "INSERT INTO [dbo].[CommentBlog]\n"
@@ -419,7 +474,7 @@ public class BlogListDAO extends DBContext {
         }
 
     }
-
+    // Lấy Tất Cả Comment Từ Một Bài Đăng
     public List<CommentBlog> getAllCommetFromBlog(int id) {
 
         BlogListDAO bDao = new BlogListDAO();
@@ -452,7 +507,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Chỉnh Sửa Blog
     public void editBlog(Blog b, Person o) {
 
         String sql = "UPDATE [dbo].[Blog]\n"
@@ -494,7 +549,7 @@ public class BlogListDAO extends DBContext {
         }
 
     }
-
+    // Tìm Kiếm Bài Đăng
     public List<Blog> searchBlogList2(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page) {
 
         List<Blog> list = new ArrayList<>();
@@ -638,7 +693,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Chỉnh Sửa Cờ Của Bài Đăng
     public void changeBlogFlag(Blog b) {
 
         String sql = "UPDATE [dbo].[Blog]\n"
@@ -660,7 +715,7 @@ public class BlogListDAO extends DBContext {
         }
 
     }
-
+    // Search Blog
     public List<Blog> searchBlogList(String tittlewrite, String authorwrite, String type, String statusf, String sort, String event, String page, int perpage) {
 
         List<Blog> list = new ArrayList<>();
@@ -811,7 +866,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Lấy Các Giá trị Type Của Blog
     public List<String> getDistinctOfBlogType() {
 
         List<String> list = new ArrayList();
@@ -829,7 +884,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Lấy Các Bài Đăng Có Liên Quan
     public List<Blog> getRelatedBlog(Blog b) {
 
         List<Blog> list = new ArrayList<>();
@@ -871,7 +926,7 @@ public class BlogListDAO extends DBContext {
 
         return list;
     }
-
+    // Tăng lượt view của bài đăng
     public void increaseViewBlog(Blog b) {
 
         String sql = "UPDATE [dbo].[Blog]\n"
@@ -892,8 +947,8 @@ public class BlogListDAO extends DBContext {
         }
 
     }
-    
-    //=============================================
+        
+    // Lấy bài Đăng mới Nhất
         public List<Blog> getLatestBlog() {
         List<Blog> list = new ArrayList<>();
         String sql = "select top 7 * from Blog order by Blog_Update_Time DESC";
