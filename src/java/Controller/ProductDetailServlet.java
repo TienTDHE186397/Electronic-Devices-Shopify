@@ -5,9 +5,11 @@
 package Controller;
 
 import DAO.CommentDAO;
+import DAO.DAOimgVideo;
 import DAO.ProductDAO;
 import Email.PasswordUtils;
 import Entity.CommentPerson;
+import Entity.ImageVideo;
 import Entity.Person;
 import Entity.Product;
 import Entity.ProductAttribute;
@@ -119,12 +121,16 @@ public class ProductDetailServlet extends HttpServlet {
         List<CommentPerson> commentsOnPage = allComments.subList(startIndex, endIndex);
 
 // Lưu danh sách bình luận vào request
+        DAOimgVideo imdao = new DAOimgVideo();
+        List<ImageVideo> video = imdao.getVidByProductID(productid);
         request.setAttribute("comment", commentsOnPage);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
 
 // Thiết lập các attribute để truyền dữ liệu sang trang JSP
-        request.setAttribute("productDetail", p);         // Gán chi tiết sản phẩm vào attribute
+        request.setAttribute("productDetail", p);
+        // Gán chi tiết sản phẩm vào attribute
+        request.setAttribute("listVideo", video);
         request.setAttribute("listImage", listImage);     // Gán danh sách hình ảnh sản phẩm vào attribute
         request.setAttribute("listAttribute", listAttribute); // Gán danh sách thuộc tính sản phẩm vào attribute
 
