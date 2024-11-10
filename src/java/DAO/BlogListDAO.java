@@ -694,7 +694,7 @@ public class BlogListDAO extends DBContext {
         return list;
     }
     // Chỉnh Sửa Cờ Của Bài Đăng
-    public void changeBlogFlag(Blog b) {
+    public void changeBlogFlag(Blog b) { 
 
         String sql = "UPDATE [dbo].[Blog]\n"
                 + "   SET [Blog_Flag] = ?\n"

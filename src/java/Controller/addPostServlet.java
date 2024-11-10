@@ -56,7 +56,6 @@ public class addPostServlet extends HttpServlet {
         List<Categories> listBlogType = cDAO.getAllCategory();
         request.setAttribute("listType", listBlogType);
         request.getRequestDispatcher("addPost.jsp").forward(request, response);
-
     }
 
     @Override
@@ -139,7 +138,6 @@ public class addPostServlet extends HttpServlet {
             // Set Lỗi
             request.setAttribute("err1", err1);
             request.setAttribute("err2", err2);
-
             // Gán lại giá trị đã nhập vào
             request.setAttribute("blog_tittle", blog_tittle);
             request.setAttribute("blog_summary", blog_summary);
@@ -149,9 +147,7 @@ public class addPostServlet extends HttpServlet {
             doGet(request, response);
             return;
         }
-
         Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
-
         // Tạo Blog Mới
         Blog b = new Blog(list.size() + 1,
                 blog_image,

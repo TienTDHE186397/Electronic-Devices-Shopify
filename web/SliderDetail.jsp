@@ -282,13 +282,7 @@
         <!-- Back Button -->
         <c:set value="${requestScope.slider}" var="slider"/>      
         <c:set value="${requestScope.listRB}" var="RB"/>
-
-
-
         <div class="container row">
-
-
-
             <div>
                 <button id="backButton"> 
                     <a href="SliderListMKT">Back</a>
@@ -298,10 +292,10 @@
             <div class="main-content ">
                 <center><h1>${slider.slider_tittle}</h1><center>
                         <br/>
-                        <h2>Slider Image:</h2><br/>  
-                        <img src="${slider.slider_image}" style="width: 500px;height: 300px;" alt="Laptop with code" class="post-image">
-                        <br/><h2 >Slider Video:</h2><br/>
-                        <c:if test="${slider.slider_video == null}">Not Video</c:if>
+                        <h2 style="color: black;">Slider Image:</h2><br/>  
+                        <img src="${slider.slider_image}" style="width: 500px;height: 300px; " alt="Laptop with code" class="post-image">
+                        <br/><h2 style="color: black;">Slider Video:</h2><br/>
+                        <c:if test="${slider.slider_video == null}"> <h3 style="color: black;">Not Video</h3></c:if>
                         <c:if test="${slider.slider_video != null}">
 
                             <video style="width: 500px;height: 300px;" controls autoplay loop muted >
@@ -313,13 +307,12 @@
                         <br/>
                         <br/>
                         <div class="meta">
-                            <img src="https://m.yodycdn.com/blog/jerry-meme-yodyvn10.jpg" style="width: 50px;height: 50px;" alt="Author Image">
                             <span>${slider.person.name}</span>
                             <span><i style="color: grey;">${slider.slider_date}</i></span>
                         </div>
                         <br/>
                         <h3>Slider BackLink:  </h3> 
-                        <p><a href="${slider.slider_backlink}" target="_blank">${slider.slider_backlink}</a></p>
+                        <p><a style="color: black;" href="${slider.slider_backlink}" target="_blank">${slider.slider_backlink}</a></p>
                         <br/>
                         <h3>Slider Note:</h3>
                         <p>${slider.slider_note}</p>

@@ -21,7 +21,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="js/bootstrap.bundle.min.js"></script>
 
-
         <style>
             body {
                 font-family: Roboto;
@@ -251,37 +250,25 @@
 
 
     <body>
-
         <c:set value="${requestScope.listCategory}" var="cate" />
-
-
         <section id="subs" class="pt-5 pb-5 bg_light_1">
             <div class="container text-center">
                 <a href="mktdashboard"><h1 class="brand-name"> MKT DashBoard</h1></a>   
             </div>
         </section>
-
-
-
         <section class="product-list container">
-
             <c:set value="${requestScope.listBlogType}" var="listType"/>
             <c:set value="${requestScope.listS}" var="listS"/>
-
-
             <div>
-
                 <div  style="margin-top: 15px">
                     <div class="row">
                         <div class="col-12 mb-3 mb-lg-"> 
                             <div>
-
                                 <div style="margin-bottom: 5px">
                                     <center>   <h1>SLIDER LIST</h1> <center>
                                             <span style="background-color: #eeecfd; padding:5px;">TOTAL SLIDER: <b>${list.size()}</b></span>
                                             </div>
                                             <br/>
-
                                             <div class="search-filter">
                                                 <form action="SliderListMKT" method="get" id="f1">     
                                                     <span style="margin: 2px;" >      
@@ -371,14 +358,18 @@
 
                                                                     <c:if test="${image == null}">
                                                                         <td>
-                                                                            <img src="${slider.slider_image}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
-                                                                        </td>
+                                                                            <c:if test="${slider.slider_image == null}">
+                                                                                Not Image
+                                                                            </c:if>
+                                                                            <c:if test="${slider.slider_image != null}">
+                                                                                <img src="${slider.slider_image}" class="img-radius" alt="${b.blog_tittle}" width="100px" height="100px">
+                                                                            </c:if>
+                                                                        </td> 
                                                                     </c:if>
                                                                     <c:if test="${video == null}">
                                                                         <td>
                                                                             <c:if test="${slider.slider_video == null}">Not Video</c:if>
                                                                             <c:if test="${slider.slider_video != null}">
-
                                                                                 <video style="width: 100px; height: 100px;" controls autoplay loop muted poster="poster-image.jpg">
                                                                                     <source  src="${slider.slider_video}" type="video/mp4">
                                                                                 </video>
@@ -401,7 +392,6 @@
                                                             </c:forEach>
                                                         </tbody>
                                                     </table>
-
                                                     <div class="pagination">
                                                         <c:if test="${totalpage > 1}">
                                                             <c:forEach var="c" begin="1" end="${totalpage}" step ="1">
@@ -409,7 +399,6 @@
                                                             </c:forEach>
                                                         </c:if>
                                                     </div>
-
                                                     <form id="paginationForm" action="SliderListMKT" method="get">
                                                         <input type="hidden" name="search" value="${param.search}">
                                                         <input type="hidden" name="status" value="${param.status}">

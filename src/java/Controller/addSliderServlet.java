@@ -70,7 +70,7 @@ public class addSliderServlet extends HttpServlet {
         } else {
             // Lấy Đường Dẫn Ảnh của Slider
             Part part = request.getPart("sliderimage");
-            String image = "";
+            String image = null;
             String realPath = "";
             if (part != null && part.getSize() > 0) {
                 realPath = request.getServletContext().getRealPath("sliderimages");
@@ -80,15 +80,16 @@ public class addSliderServlet extends HttpServlet {
                 }
                 part.write(realPath + "\\" + filename);
                 if (!filename.endsWith(".jpg")) {
-                    err1 = "File ảnh phải kết thúc với đuôi .jpg";
+                    err1 += "File ảnh phải kết thúc với đuôi .jpg <br/>";
                     check = false;
+                    image = "";
                 } else {
                     image = realPath.substring(realPath.length() - 12, realPath.length()) + "/" + filename;
                 }
             }
             // Lấy Đường Dẫn Video Của Slider
             Part part2 = request.getPart("slidervideo");
-            String video = "";
+            String video = null;
             String realPath2 = "";
             if (part2 != null && part2.getSize() > 0) {
                 realPath2 = request.getServletContext().getRealPath("slidervideos");
@@ -98,21 +99,45 @@ public class addSliderServlet extends HttpServlet {
                 }
                 part2.write(realPath2 + "\\" + filename2);
                 if (!filename2.endsWith(".mp4")) {
-                    err1 = "File ảnh phải kết thúc với đuôi .mp4";
+                    err1 += "File ảnh phải kết thúc với đuôi .mp4 <br/>";
                     check = false;
+                    video = "";
                 } else {
                     video = realPath2.substring(realPath2.length() - 12, realPath2.length()) + "/" + filename2;
                 }
             }
+            if (image == null && video == null) {
+                err1 += "Hình ảnh hoặc Video Một Trong 2 Cái Không Được Để Trống! <br/>";
+                check = false;
+            }
+
             // Lây Thông tin ngày hiện tại
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = currentDate.format(formatter);
-            
             // Lấy thông tin của người dùng thêm mới
             HttpSession session = request.getSession();
+            Person p = (Person) session.getAttribute("user");
+
+            if (p == null) {
+                err2 = "Hệ thống đang bị lỗi vui lòng đăng nhập lại để thực hiện chức năng!<br/>";
+                request.setAttribute("err2", err2);
+                doGet(request, response);
+                return;
+            }
+
+            if (!check) {
+                request.setAttribute("err1", err1);
+                // Đặt Lại Các Giá Trị Truyền Vào
+                request.setAttribute("slider_tittle", slider_tittle);
+                request.setAttribute("slider_backlink", slider_backlink);
+                request.setAttribute("slider_status", slider_status);
+                request.setAttribute("slider_note", slider_note);
+
+                doGet(request, response);
+                return;
+            }
             DAOPerson perDAO = new DAOPerson();
-            Person p = (Person)session.getAttribute("user");
             Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
 
             SliderListDAO sDAO = new SliderListDAO();

@@ -65,9 +65,6 @@ public class SliderListServlet extends HttpServlet {
                 numberofpage = String.valueOf(sDAO.getAllSlider().size());
             }
         }
-        
-        
-        
         // Nếu như giá trị có truyền vào thì thực hiện yêu câu dưới
         if (search != null && status != null && (numberofpage != null && !numberofpage.isEmpty())) {
             // Lấy danh sách theo search

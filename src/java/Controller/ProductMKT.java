@@ -74,7 +74,6 @@ public class ProductMKT extends HttpServlet {
             request.setAttribute("listP", listP);
             request.setAttribute("listCategory", listCategory);
             request.getRequestDispatcher("productList.jsp").forward(request, response);
-
         } else {
             // Nếu như truyền giá trị vào thì thực hiện yêu cầu dưới
             ProductListDAO plDao = new ProductListDAO();

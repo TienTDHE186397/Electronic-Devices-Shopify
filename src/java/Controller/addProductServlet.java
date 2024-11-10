@@ -51,9 +51,7 @@ public class addProductServlet extends HttpServlet {
         // Lấy danh sách Category
         CategoryDAO cDAO = new CategoryDAO();
         List<Categories> listC = cDAO.getAllCategory();
-
         request.setAttribute("listType", listC);
-
         request.getRequestDispatcher("addProductMKT.jsp").forward(request, response);
     }
 
@@ -63,6 +61,7 @@ public class addProductServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         String err1 = "";
+        String err2 = "";
         boolean check = true;
         // Lấy Thông tin đầu vào của product
         String product_tittle = request.getParameter("tittle");
@@ -71,31 +70,70 @@ public class addProductServlet extends HttpServlet {
         String product_brand = request.getParameter("brand");
         String product_price = request.getParameter("price");
         String product_publisher = request.getParameter("publisher");
-        String product_shortdescription = request.getParameter("shordescription");
+        String product_shortdescription = request.getParameter("shortdescription");
         String product_description = request.getParameter("description");
         String product_status = request.getParameter("status");
         String product_sale = request.getParameter("sale");
         String product_category_id = request.getParameter("categoryid");
-        
+
         // Lấy đường dẫn ảnh của Product
         Part part = request.getPart("productimage");
         String image = "";
         String realPath = "";
-        if (part != null && part.getSize() > 0) {
-            realPath = request.getServletContext().getRealPath("productimages");
-            String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
-            if (!Files.exists(Path.of(realPath))) {
-                Files.createDirectory(Path.of(realPath));
-            }
-            part.write(realPath + "\\" + filename);
-            if (!filename.endsWith(".jpg")) {
-                err1 = "File ảnh phải kết thúc với đuôi .jpg";
-                check = false;
+
+        try {
+
+            if (part != null && part.getSize() > 0) {
+                realPath = request.getServletContext().getRealPath("productimages");
+                String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+                if (!Files.exists(Path.of(realPath))) {
+                    Files.createDirectory(Path.of(realPath));
+                }
+                part.write(realPath + "\\" + filename);
+                if (!filename.endsWith(".jpg")) {
+                    err2 = "File ảnh phải kết thúc với đuôi .jpg !";
+                    check = false;
+                } else {
+                    image = realPath.substring(realPath.length() - 13, realPath.length()) + "/" + filename;
+                }
             } else {
-                image = realPath.substring(realPath.length() - 13, realPath.length()) + "/" + filename;
+                err2 = "Hãy chọn đường dẫn !<br/>";
+                check = false;
             }
+
+        } catch (Exception e) {
+            err2 = "Đường dẫn bạn gửi vào không đúng! <br/>";
+            check = false;
         }
-        
+
+        if (product_category_id.equals("")) {
+            check = false;
+            err1 = "Hãy chọn category ! <br/>";
+        }
+
+       
+        if (!check) {
+            // Set up lỗi
+            request.setAttribute("err1", err1);
+            request.setAttribute("err2", err2);
+            //Set Trả lại các giá trị nhập vào 
+            request.setAttribute("product_tittle", product_tittle);
+            request.setAttribute("product_name", product_name);
+            request.setAttribute("product_quantity", product_quantity);
+            request.setAttribute("product_brand", product_brand);
+            request.setAttribute("product_price", product_price);
+            request.setAttribute("product_publisher", product_publisher);
+            request.setAttribute("product_shortdescription", product_shortdescription);
+            request.setAttribute("product_description", product_description);
+            request.setAttribute("product_status", product_status);
+            request.setAttribute("product_sale", product_sale);
+            request.setAttribute("product_status", product_status);
+            request.setAttribute("product_category_id", product_category_id);
+            
+            doGet(request, response);
+            return;
+        }
+
         //Lấy Thông tin ngày hiện tại
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -131,14 +169,14 @@ public class addProductServlet extends HttpServlet {
                     product_description,
                     product_status,
                     product_brand);
-            
+
             // Thêm mới Product
             pDAO.addNewProduct(p, c);
 
-        response.sendRedirect("ProductMKT");
+            response.sendRedirect("ProductMKT");
         } catch (Exception e) {
         }
-       
+
     }
 
     @Override

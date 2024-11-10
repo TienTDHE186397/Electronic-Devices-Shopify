@@ -304,11 +304,10 @@
 
                         <c:if test="${B.blog_flag == 1}">
                             <h1 style="color: red;">${B.blog_tittle}</h1>
-
                         </c:if>
 
                         <div class="meta">
-                            <img src="https://via.placeholder.com/50" alt="Author Image">
+                            <br/>
                             <span>${B.person.name}</span>
                             <span>${B.blog_update_time}</span>
                         </div>

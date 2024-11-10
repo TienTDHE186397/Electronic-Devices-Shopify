@@ -92,7 +92,6 @@
                     <c:if test="${err2 != null}">
                         <p style="color: red">${err2}</p>
                     </c:if>
-
                     <c:if test="${err3 != null}">
                         <p style="color: red">${err3}</p>
                     </c:if>
@@ -137,8 +136,6 @@
                      <c:if test="${err1 != null}">
                     <p style="color: red">${err1}</p>
                 </c:if>
-                
-                
                 <button type="submit">Edit Blog</button>
             </form>
         </div>

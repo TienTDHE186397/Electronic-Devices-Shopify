@@ -84,7 +84,7 @@ public class ProductListDAO extends DBContext {
             if (!shortdescription.isEmpty()) {
                 sql += "AND p.sortDescription like N'%" + shortdescription + "%' ";
             }
-            if (!category_id.equals("0") && !category_id.isEmpty()) {
+            if (!category_id.equals("0")) {
                 sql += "AND p.CategoryID = " + Integer.parseInt(category_id) + " ";
             }
             if (!status.isEmpty()) {

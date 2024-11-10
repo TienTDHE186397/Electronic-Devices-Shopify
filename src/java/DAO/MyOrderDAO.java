@@ -161,10 +161,12 @@ public class MyOrderDAO extends DBContext {
 
     public String getImgByPersonID(String personID) {
         String img = null;
-        String query = "SELECT pi.image_url \n"
-                + "FROM PersonImages pi \n"
-                + "JOIN Person p ON pi.PersonID = p.PersonID \n"
-                + "WHERE pi.PersonID = ?";
+        String query = """
+                       SELECT pi.image_url 
+                        FROM PersonImages pi 
+                       JOIN Person p ON pi.PersonID = p.PersonID 
+                       WHERE pi.PersonID = ? and IsPrimary = 1
+                       """;
 
         try {
             PreparedStatement st = connection.prepareStatement(query);
@@ -442,6 +444,8 @@ public class MyOrderDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
+    
 
     public OrderInformation getOrderInfo(int id) {
         String sql = "  select o.OrderID, p.Name, p.Email, pp.Phone, pa.Address, o.Method, o.Status\n"

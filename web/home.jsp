@@ -306,7 +306,7 @@
                             Slider slider = sliders.get(i);
                     %>
                     <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
-                        <img class="d-block w-100" src="<%= slider.getSlider_image() %>" alt="<%= slider.getSlider_tittle() %>">
+                        <img class="d-block w-100" src="<%= slider.getSlider_image() %>" alt="<%= slider.getSlider_tittle() %>" width="500px" height="800px">
                         <div class="carousel-caption d-none d-md-block">
                             <h5><%= slider.getSlider_tittle() %></h5>
                             <p><%= slider.getSlider_note() %></p>

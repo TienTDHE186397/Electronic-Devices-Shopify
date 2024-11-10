@@ -96,7 +96,7 @@
                 <input type="text" id="blogTitle" name="sliderbacklink" value="${slider.slider_backlink}" placeholder="Tittle Backlink....." required>
 
                 <label for="slidernote">Slider Note:</label>
-                <input type="text" id="blogTitle" name="slidernote" value="${slider.slider_note}" placeholder="Note Slider.....">
+                <input type="text" id="blogTitle" name="slidernote" value="${slider.slider_note}" placeholder="Note Slider....." required>
 
                 <label for="sliderstatus">Slider Status:</label>
                 <select id="blogStatus" name="sliderstatus" required>

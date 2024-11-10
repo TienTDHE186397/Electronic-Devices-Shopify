@@ -6,6 +6,7 @@ package Controller;
 
 import Entity.Categories;
 import DAO.BlogListDAO;
+import DAO.MyOrderDAO;
 import Entity.Blog;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -87,6 +88,9 @@ public class PostListServlet extends HttpServlet {
         String queryString = request.getQueryString();
         request.setAttribute("uri", uri);
         request.setAttribute("queryString", queryString);
+        
+        
+        
         // Lấy không lấy các trị của trang web 
         if (tittlewrite == null && authorwrite == null && type1 == null && statusf == null && sort == null && event == null && numberofpage == null) {
 
