@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/final%20SWP391/webdientu/src/java/DAO/MyOrderDAO.java</file>
             <file>file:/E:/final%20SWP391/webdientu/src/java/DAO/FeedbackDAO.java</file>
             <file>file:/E:/final%20SWP391/webdientu/src/java/Controller/CartCompletion.java</file>
@@ -10,6 +11,11 @@
             <file>file:/E:/final%20SWP391/webdientu/web/CartCompletion.jsp</file>
             <file>file:/E:/final%20SWP391/webdientu/src/java/DAO/PersonDAO.java</file>
             <file>file:/E:/final%20SWP391/webdientu/web/CartContact.jsp</file>
+=======
+            <file>file:/D:/SWP_Presentation/webdientu/src/java/DAO/ProductListDAO.java</file>
+            <file>file:/D:/SWP_Presentation/webdientu/src/java/DAO/BlogListDAO.java</file>
+            <file>file:/D:/SWP_Presentation/webdientu/src/java/DAO/SliderListDAO.java</file>
+>>>>>>> 48f5807a00aa9bf13aa84a2803941097f515c864
         </group>
     </open-files>
 </project-private>

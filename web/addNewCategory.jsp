@@ -85,12 +85,15 @@
         <div class="container">
             <h2>New Category</h2>
             <form action="addCategory" method="post" >
+                <input name="type" value="${param.type}" hidden>
                 <label for="blogtype">Category Type:</label>
-                <input type="text" class="form-control" id="centeredInput" value="${blog.blog_img_tittle}" name="name" style="width: 95%; height: 23px;" placeholder="Category Type Name..." required>
+                <input type="text" class="form-control" id="centeredInput" value="${namec}" name="name" style="width: 95%; height: 23px;" placeholder="Category Type Name..." required>
+                <c:if test="${err != null}">
+                    <p style="color: red">${err}</p>
+                </c:if>
                 <center>     <button type="submit" style="width: 150px;">Add New Category</button> </center>
             </form>
         </div>
-
     </body>
 
 

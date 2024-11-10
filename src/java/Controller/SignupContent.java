@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Email;
+package Controller;
 
-import jakarta.servlet.RequestDispatcher;
+
+import DAO.PersonDAO;
+import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,21 +14,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.Properties;
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "SendMailServlet", urlPatterns = {"/SendMailServlet"})
-public class SendMailServlet extends HttpServlet {
+@WebServlet(name = "SignupContent", urlPatterns = {"/signupWithGG"})
+public class SignupContent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +41,10 @@ public class SendMailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SendMailServlet</title>");
+            out.println("<title>Servlet SignupContent</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SendMailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SignupContent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,7 +62,7 @@ public class SendMailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
+        request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
     }
 
     /**
@@ -80,30 +76,44 @@ public class SendMailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String recipient = request.getParameter("email");
+        String dateString = request.getParameter("date");
 
-        if (recipient == null || recipient.isEmpty()) {
-            response.getWriter().println("Invalid email address");
+        try {
+            LocalDate birthDate = LocalDate.parse(dateString);
+            LocalDate currentDate = LocalDate.now();
+            int age = Period.between(birthDate, currentDate).getYears();
+            if (age < 18) {
+                request.setAttribute("errorMessage", "Bạn phải lớn hơn 18 tuổi.");
+                request.getRequestDispatcher("SignupContent").forward(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            request.setAttribute("errorMessage", "Ngày sinh không hợp lệ.");
+            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
             return;
         }
 
-        // Tạo token ngẫu nhiên
-        SecureRandom random = new SecureRandom();
-        String token = new BigInteger(130, random).toString(32);
+        String name = request.getParameter("name");
+        String password = request.getParameter("pass");
+        String repassword = request.getParameter("repass");
+        String gender = request.getParameter("gender");
+        String age = request.getParameter("date");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+         LocalDate startDate = LocalDate.now();
+//      public Person(String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int roleID, String Pasword) {
+        Person person = new Person(name, gender, age, startDate, address, email, phone,1, password);
+        PersonDAO personDAO = new PersonDAO();
+        boolean personAdded = personDAO.addPerson(person);
 
-        // Gửi email xác thực với token
-        MailSender.sendVerificationEmail(recipient, token);
-
-        // Phản hồi cho người dùng
-        request.setAttribute("message", "Verification email sent successfully to " + recipient);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("verifyEmail.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private boolean validateToken(String token) {
-        // Thực hiện kiểm tra token (ví dụ: kiểm tra trong cơ sở dữ liệu)
-        // Trả về true nếu token hợp lệ, false nếu không hợp lệ
-        return true; // Thay đổi theo cách bạn kiểm tra token
+        if (personAdded) {
+            request.setAttribute("message", "Đăng ký thành công! Vui lòng click nút bên dưới để quay lại trang đăng nhập.");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+        } else {
+            request.setAttribute("error", "Có lỗi xảy ra khi tạo tài khoản.");
+            request.getRequestDispatcher("signupWithGG.jsp").forward(request, response);
+        }
     }
 
     /**

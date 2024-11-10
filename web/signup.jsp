@@ -43,9 +43,10 @@
                     <input type="email" id="email" name="email" " value="<%= request.getParameter("email") != null ? request.getParameter("email") : ""%>" placeholder="email" >
                     <input name="phone" type="tel" id="user-phone" class="form-control" placeholder="Số điện thoại" value="<%= request.getParameter("phone") != null ? request.getParameter("phone") : ""%>" required>
                     <input type="address" id="address" name="address" " value="<%= request.getParameter("address") != null ? request.getParameter("address") : ""%>" placeholder="address" >
-                    <button type="button" class="btn btn-primary" onclick="addVideo()">Thêm Video</button>
-
-                    <button type="button" class="btn btn-primary" onclick="addImage()">Thêm Ảnh</button>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-primary" onclick="addVideo()">Thêm Video</button>
+                        <button type="button" class="btn btn-primary" onclick="addImage()">Thêm Ảnh</button>
+                    </div>
                     <div id="attributeContainer" style="margin-top: 20px;"></div>
                     <div id="attributeContainer" style="margin-top: 20px;"></div>
 
@@ -57,11 +58,9 @@
                     %>
                     <h4><%= error != null ? error : ""%></h4>
 
-<<<<<<< HEAD
+
                     <button type="submit " style="background-color:  #b22222">Đăng Kí</button>
-=======
-                    <button type="submit " name="submit1" style="background-color:  #b22222">Đăng Kí</button>
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
+
                 </form>
             </div>
 

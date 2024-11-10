@@ -6,6 +6,7 @@ package Controller;
 
 import DAO.BlogListDAO;
 import DAO.DAOPerson;
+import DAO.MyOrderDAO;
 import Entity.Blog;
 import Entity.CommentBlog;
 import Entity.Person;
@@ -40,7 +41,7 @@ public class PostDetailHomeServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,6 +49,7 @@ public class PostDetailHomeServlet extends HttpServlet {
         BlogListDAO blogDAO = new BlogListDAO();
         String id_raw = request.getParameter("id");
         List<Blog> listRB;
+        MyOrderDAO mDAO = new MyOrderDAO();
         // Lấy Bài Blog Theo ID và Comment Blog 
         try {
             int id = Integer.parseInt(id_raw);
@@ -55,9 +57,18 @@ public class PostDetailHomeServlet extends HttpServlet {
             listRB = blogDAO.getRelatedBlog(blog);
             // Lấy Comment Blog
             List<CommentBlog> listC = blogDAO.getAllCommetFromBlog(id);
+            // Lấy Ảnh Của Tác Giả
+            String imgAuthor = mDAO.getImgByPersonID(String.valueOf(blog.getPerson().getPersonID()));
+
+            List<String> listI = new ArrayList<>();
+            for (int i = 0; i < listC.size(); i++) {
+                listI.add(mDAO.getImgByPersonID(String.valueOf(listC.get(i).getPerson().getPersonID())));
+            }
+
             // Tăng Views Blogs
             blogDAO.increaseViewBlog(blog);
-
+            request.setAttribute("imgAuthor", imgAuthor);
+            request.setAttribute("listImg", listI);
             request.setAttribute("listC", listC);
             request.setAttribute("blog", blog);
             request.setAttribute("listRB", listRB);
@@ -82,7 +93,7 @@ public class PostDetailHomeServlet extends HttpServlet {
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = currentDate.format(formatter);
-            
+
             BlogListDAO blogDAO = new BlogListDAO();
             DAOPerson perDAO = new DAOPerson();
             // Tạo session và lấy session của người dùng 
@@ -90,7 +101,6 @@ public class PostDetailHomeServlet extends HttpServlet {
             Blog blog = blogDAO.getBlogById(id);
             Person p = (Person) session.getAttribute("user");
             Person person = perDAO.getPersonById(String.valueOf(p.getPersonID()));
-            
             // Lấy tất cả bài đăng
             List<Blog> list = blogDAO.getAllBlog();
             // Tạo Commnent Blog Mới

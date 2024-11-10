@@ -3,6 +3,7 @@
     Created on : Oct 1, 2024, 6:00:42 AM
     Author     : trung
 --%>
+<%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -271,115 +272,119 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>The Impact of Technology on Modern Society</title>
+        <title>Blog Detail</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     </head>
     <body>
-
         <!-- Back Button -->
-    <c:set value="${requestScope.blog}" var="B"/>      
-    <c:set value="${requestScope.listRB}" var="RB"/>
+        <c:set value="${requestScope.blog}" var="B"/>      
+        <c:set value="${requestScope.listRB}" var="RB"/>
 
+        <div class="container row">
 
+            <div>
+                <button id="backButton"> 
+                    <a href="PostListHome">Back</a>
+                </button>
+            </div>
+            <!-- Main Content Section -->
+            <div class="main-content ">
+                <img src="${B.blog_img}" alt="Laptop with code" class="post-image">
+                <center><h3 style="color: gray; font-style: italic;">${B.blog_img_tittle}</h3><center>
+                        <c:if test="${B.blog_flag == 0}">
+                            <h1>${B.blog_tittle}</h1>
+                        </c:if>
 
-    <div class="container row">
-
-
-
-        <div>
-            <button id="backButton"> 
-                <a href="PostListHome">Back</a>
-            </button>
-        </div>
-        <!-- Main Content Section -->
-        <div class="main-content ">
-            <img src="${B.blog_img}" alt="Laptop with code" class="post-image">
-            <center><h3 style="color: gray; font-style: italic;">${B.blog_img_tittle}</h3><center>
-                    <c:if test="${B.blog_flag == 0}">
-                        <h1>${B.blog_tittle}</h1>
-                    </c:if>
-
-                    <c:if test="${B.blog_flag == 1}">
-                        <h1 style="color: red;">${B.blog_tittle}</h1>
-                    </c:if>
-
-                    <div class="meta">
-                        <img src="https://m.yodycdn.com/blog/jerry-meme-yodyvn12.jpg" width="80px" height="80px" alt="Author Image">
-                        <span>${B.person.name}</span>
-                        <span>${B.blog_update_time}</span>
-                    </div>
-                    <br/>
-                    <h3>Summary Information:  </h3> <p>${B.blog_summary_information}</p>
-                    <br/>
-                    <h3>Blog Detail:</h3>
-                    <p>${B.blog_detail}</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                    </div>
-
-                    <div class="related-posts-wrapper">
-                        <div class="related-posts">
-                            <h2>Related Posts</h2>
-                            <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
-                                <a href="PostDetailHome?id=${RB.get(c).blogID}">  
-                                    <div class="related-post">
-                                        <img src="${RB.get(c).blog_img}" alt="Related Post Image">
-                                        <h4>${RB.get(c).blog_tittle}</h4>
-                                    </div>
-                                </a>
-                            </c:forEach>
+                        <c:if test="${B.blog_flag == 1}">
+                            <h1 style="color: red;">${B.blog_tittle}</h1>
+                        </c:if>
+                        <div class="meta">
+                            <br/>
+                            <img style="border-radius: 100px;" src="${imgAuthor}" width="70px" height="70px" alt="Author Image">
+                            <div>
+                                <br/>
+                                <span>${B.person.name}</span>
+                                <span>${B.blog_update_time}</span>
+                            </div>
                         </div>
-                    </div>
+                        <br/>
+                        <h3>Summary Information:  </h3> <p>${B.blog_summary_information}</p>
+                        <br/>
+                        <h3>Blog Detail:</h3>
+                        <p>${B.blog_detail}</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                        </div>
 
-    </div>
-                    
-                    <div class="comments-section">
-                        <h2>Comments</h2>
-                        <c:if test="${sessionScope.user != null}">
-                        <form action="PostDetailHome?id=${param.id}" method="post">
-                            <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..."></textarea>
-                            <button type="submit">Post Comment</button>
-                        </form>
-                        </c:if>
-                        
-                        <c:if test="${sessionScope.user == null}">
-                            <center><h3 style="color: grey;">Bạn phải đăng nhập để sử dụng tính năng bình luận</h3></center>
-                        </c:if>
-                        <div class="posted-comments">
-                            <h3>Previous Comments</h3>
+                        <div class="related-posts-wrapper">
+                            <div class="related-posts">
+                                <h2>Related Posts</h2>
+                                <c:forEach var="c" begin="0" end="${RB.size() - 1}" step ="1">
+                                    <a href="PostDetailHome?id=${RB.get(c).blogID}">  
+                                        <div class="related-post">
+                                            <img src="${RB.get(c).blog_img}" alt="Related Post Image">
+                                            <h4>${RB.get(c).blog_tittle}</h4>
+                                        </div>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
 
-                            <c:forEach items="${requestScope.listC}" var="c">
-                                <div class="comment">
-                                    <img src="https://m.yodycdn.com/blog/anh-dai-dien-hai-yodyvn2.jpg" alt="User Image">
-                                    <p><strong>${c.person.name}:</strong> <i style="color: gray;">${c.comment_date}</i> ${c.comment_text}</p>
-                                </div>
-                            </c:forEach>
+                        </div>
 
-
-                            <c:if test="${requestScope.listC.isEmpty()}">
-                                <br/>
-                                <br/>
-                                <br/>
-
-                                <center> <h3 style="color: gray;">Hãy Là Người Bình Luận Đầu Tiên!</h3> </center>
-                                
-                                <br/>
-                                <br/>
-                                <br/>
+                        <div class="comments-section">
+                            <h2>Comments</h2>
+                            <c:if test="${sessionScope.user != null}">
+                                <form action="PostDetailHome?id=${param.id}" method="post">
+                                    <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..."></textarea>
+                                    <button type="submit">Post Comment</button>
+                                </form>
                             </c:if>
 
+                            <c:if test="${sessionScope.user == null}">
+                                <center><h3 style="color: grey;">Bạn phải đăng nhập để sử dụng tính năng bình luận</h3></center>
+                                </c:if>
+                            <div class="posted-comments">
+                                <h3>Previous Comments</h3>
+
+                                <%int id = 0;%>
+                                <% List<String> listImg = (List<String>) request.getAttribute("listImg"); %>
+                                <c:forEach items="${requestScope.listC}" var="c">
+
+                                    <div class="comment">
+                                        <img src="<%=listImg.get(id)%>" alt="User Image">
+                                        <p><strong>${c.person.name}:</strong> <i style="color: gray;">${c.comment_date}</i> ${c.comment_text}</p>
+                                    </div>
+                                    <% id ++;%>
+                                </c:forEach>
 
 
+
+
+                                <c:if test="${requestScope.listC.isEmpty()}">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+
+                                    <center> <h3 style="color: gray;">Hãy Là Người Bình Luận Đầu Tiên!</h3> </center>
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                </c:if>
+
+
+
+                            </div>
                         </div>
-                    </div>
 
 
 
-                    </body>
-                    </html>
+                        </body>
+                        </html>

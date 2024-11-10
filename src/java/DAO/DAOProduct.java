@@ -9,6 +9,7 @@ import Entity.Product;
 import Entity.ProductAttribute;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,37 @@ import java.util.List;
  */
 public class DAOProduct extends DBContext {
 //Son
+    
+    public boolean insertVideo(int personId, String videoUrl, String altText) {
+        boolean check = true;
+        try {
+            String sql = "INSERT INTO PersonVideo (PersonID, Video_url, alt_text) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, personId);
+            pstmt.setString(2, videoUrl);
+            pstmt.setString(3, altText);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            check = false;
+        }
+        return check;
+    }
+    public boolean attributeExists(int productId, String attributeName) {
+        String sql = "SELECT COUNT(*) FROM ProductAttributes WHERE ProductID = ? AND AttributeName = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, productId);
+            st.setString(2, attributeName);
+
+            try (ResultSet rs = st.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0; // Trả về true nếu thuộc tính tồn tại
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Xử lý ngoại lệ
+        }
+    }
 
     public boolean addProductAttribute(int productId, String attributeName, String attributeValue) {
         String sql = "INSERT INTO ProductAttributes (productId, attributeName, attributeValue) VALUES (?, ?, ?)";
@@ -229,7 +261,6 @@ public class DAOProduct extends DBContext {
                         rs.getString("brand")
                 );
 
-
                 listP.add(p);
             }
         } catch (Exception e) {
@@ -270,36 +301,33 @@ public class DAOProduct extends DBContext {
         }
         return image;
     }
+
     public double calculateSalary(int yearsOfService, double basicSalary, double performanceRating) {
-            if (yearsOfService < 0 || basicSalary <= 0 || performanceRating < 0 || performanceRating > 5) {
-                throw new IllegalArgumentException("Invalid input values");
-            }
-
-            double bonus = 0.0;
-            double deduction = 0.0;
-
-            if (yearsOfService > 10) {
-                bonus = 0.10 * basicSalary;
-            } else if (yearsOfService >= 5) {
-                bonus = 0.05 * basicSalary;
-            }
-
-            if (performanceRating < 3) {
-                deduction = 0.05 * basicSalary;
-            }
-
-            return basicSalary + bonus - deduction;
+        if (yearsOfService < 0 || basicSalary <= 0 || performanceRating < 0 || performanceRating > 5) {
+            throw new IllegalArgumentException("Invalid input values");
         }
-    
 
+        double bonus = 0.0;
+        double deduction = 0.0;
+
+        if (yearsOfService > 10) {
+            bonus = 0.10 * basicSalary;
+        } else if (yearsOfService >= 5) {
+            bonus = 0.05 * basicSalary;
+        }
+
+        if (performanceRating < 3) {
+            deduction = 0.05 * basicSalary;
+        }
+
+        return basicSalary + bonus - deduction;
+    }
 
     public static void main(String[] args) {
         DAOProduct p = new DAOProduct();
         Product d = p.getProductById(2);
-        System.out.println(d.getImg());
-        System.out.println(d != null ? d : "Product with ID not found"); // Kiểm tra sản phẩm
-        String a = p.getImageById(2);
-        System.out.println(a);
-      
+        System.out.println(p.attributeExists(1, "OperatingSystem"));
+        
+
     }
 }

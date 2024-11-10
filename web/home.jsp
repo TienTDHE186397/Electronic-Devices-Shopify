@@ -4,6 +4,7 @@
    Author     : Admin
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Entity.Slider" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -306,7 +307,7 @@
                             Slider slider = sliders.get(i);
                     %>
                     <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
-                        <img class="d-block w-100" src="<%= slider.getSlider_image() %>" alt="<%= slider.getSlider_tittle() %>">
+                        <img class="d-block w-100" src="<%= slider.getSlider_image() %>" alt="<%= slider.getSlider_tittle() %>" width="500px" height="800px">
                         <div class="carousel-caption d-none d-md-block">
                             <h5><%= slider.getSlider_tittle() %></h5>
                             <p><%= slider.getSlider_note() %></p>
@@ -368,8 +369,8 @@
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list1.getProductName()}</h6>
-                                                <div class="price">Giá ưu đãi: ${list1.getPrice() * (1 - list1.getSale() / 100)}đ</div>
-                                                <div class="original-price">Giá gốc: ${list1.getPrice()}đ</div>
+                                                <div class="price">Giá ưu đãi: <fmt:formatNumber value="${list1.price * (1 - list1.sale / 100)}" pattern="#,###" />đ</div>
+                                                <div class="original-price">Giá gốc: <fmt:formatNumber value="${list1.price}" pattern="#,###" />đ</div>
                                                 <div style="color: #000;">Số lượng còn: <b>${list1.getQuantity()}</b></div>
                                                 <div style="color: #000;">Thương hiệu: <b>${list1.getBrand()}</b></div>                                 
                                                 <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
@@ -430,8 +431,8 @@
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list2.getProductName()}</h6>
-                                                <div class="price">Giá ưu đãi: ${list2.getPrice() * (1 - list2.getSale() / 100)}đ</div>
-                                                <div class="original-price">Giá gốc: ${list2.getPrice()}đ</div>                            
+                                                <div class="price">Giá ưu đãi: <fmt:formatNumber value="${list2.price * (1 - list2.sale / 100)}" pattern="#,###" />đ</div>
+                                                <div class="original-price">Giá gốc: <fmt:formatNumber value="${list2.price}" pattern="#,###" />đ</div>                            
                                                 <div style="color: #000;">Số lượng còn: <b>${list2.getQuantity()}</b></div>
                                                 <div style="color: #000;">Thương hiệu: <b>${list2.getBrand()}</b></div> 
                                                 <p>Trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng</p>
@@ -491,8 +492,8 @@
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title" style="overflow: hidden">${list3.getProductName()}</h6>
-                                                <div class="price">Giá ưu đãi: ${list3.getPrice() * (1 - list3.getSale() / 100)}đ</div>
-                                                <div class="original-price">Giá gốc: ${list3.getPrice()}đ</div>                              
+                                                <div class="price">Giá ưu đãi: <fmt:formatNumber value="${list3.price * (1 - list3.sale / 100)}" pattern="#,###" />đ</div>
+                                                <div class="original-price">Giá gốc: <fmt:formatNumber value="${list3.price}" pattern="#,###" />đ</div>                              
                                                 <div style="color: #000;">Số lượng còn: <b>${list3.getQuantity()}</b></div>
                                                 <div style="color: #000;">Thương hiệu: <b>${list3.getBrand()}</b></div> 
 
@@ -551,8 +552,8 @@
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list4.getProductName()}</h6>
-                                                <div class="price">Giá ưu đãi: ${list4.getPrice() * (1 - list4.getSale() / 100)}đ</div>
-                                                <div class="original-price">Giá gốc: ${list4.getPrice()}đ</div>                              
+                                                <div class="price">Giá ưu đãi: <fmt:formatNumber value="${list4.price * (1 - list4.sale / 100)}" pattern="#,###" />đ</div>
+                                                <div class="original-price">Giá gốc: <fmt:formatNumber value="${list4.price}" pattern="#,###" />đ</div>                              
                                                 <div style="color: #000;">Số lượng còn: <b>${list4.getQuantity()}</b></div>
                                                 <div style="color: #000;">Thương hiệu: <b>${list4.getBrand()}</b></div>                             
                                                 <div style="font-style: italic">Trả góp <b>0%</b> qua thẻ tín dụng kỳ hạn <b>3-6 tháng</b></div>
@@ -610,8 +611,8 @@
                                             </a>
                                             <div class="card-body">
                                                 <h6 class="card-title">${list5.getProductName()}</h6>
-                                                <div class="price">Giá ưu đãi: ${list5.getPrice() * (1 - list5.getSale() / 100)}đ</div>
-                                                <div class="original-price">Giá gốc: ${list5.getPrice()}đ</div>                              
+                                                <div class="price">Giá ưu đãi: <fmt:formatNumber value="${list5.price * (1 - list5.sale / 100)}" pattern="#,###" />đ</div>
+                                                <div class="original-price">Giá gốc: <fmt:formatNumber value="${list5.price}" pattern="#,###" />đ</div>                              
                                                 <div style="color: #000;">Số lượng còn: <b>${list5.getQuantity()}</b></div>
                                                 <div style="color: #000;">Thương hiệu: <b>${list5.getBrand()}</b></div>                             
                                                 <div style="font-style: italic">Trả góp <b>0%</b> qua thẻ tín dụng kỳ hạn <b>3-6 tháng</b></div>

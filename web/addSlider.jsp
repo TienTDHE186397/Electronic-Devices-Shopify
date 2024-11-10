@@ -79,27 +79,32 @@
         <div class="container">
             <h2>Add New Slider</h2>
             <form action="addSlider" method="post"  enctype="multipart/form-data">
-                
+                <c:if test="${err2 != null}">
+                    <p style="color: red;">${err2}</p>
+                </c:if>
                 <label for="slidertittle">Slider Tittle:</label>
-                <input type="text" id="blogTitle" name="slidertittle" placeholder="Tittle Slider....." required>
+                <input type="text" id="blogTitle" name="slidertittle" value="${slider_tittle}" placeholder="Tittle Slider....." required>
                 <div class="form-group">
                     <label>Slider Image: </label>
                     <input type="file" class="form-control" id="centeredInput" accept=".jpg" name="sliderimage">
                     <br/>
                     <label>Slider Video: </label>
                     <input type="file" class="form-control" id="centeredInput" accept=".mp4" name="slidervideo">
+                    <c:if test="${err1 != null}">
+                        <p style="color: red;">${err1}</p>
+                    </c:if>
                 </div>
 
                 <label for="sliderbacklink">Slider Backlink:</label>
-                <input type="text" id="blogTitle" name="sliderbacklink" placeholder="Tittle Backlink....." required>
+                <input type="text" id="blogTitle" name="sliderbacklink" value="${slider_backlink}" placeholder="Tittle Backlink....." required>
 
                 <label for="slidernote">Slider Note:</label>
-                <input type="text" id="blogTitle" name="slidernote" placeholder="Note Slider.....">
+                <input type="text" id="blogTitle" name="slidernote" value="${slider_note}"  placeholder="Note Slider....." required>
 
                 <label for="sliderstatus">Slider Status:</label>
                 <select id="blogStatus" name="sliderstatus" required>
-                    <option value="Published">Published</option>
-                    <option value="Hided">Hided</option>
+                    <option value="Published" ${(slider_status == 'Published')? "selected" : ""}>Published</option>
+                    <option value="Hided" ${(slider_status == 'Hided')? "selected" : ""}>Hided</option>
                 </select>
 
                 <button type="submit">Add Slide</button>

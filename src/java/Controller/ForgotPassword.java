@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Email;
+package Controller;
+
 
 import DAO.PersonDAO;
-import Entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +14,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Random;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
-public class ChangePassword extends HttpServlet {
+@WebServlet(name = "ForgotPassword", urlPatterns = {"/ForgotPassword"})
+public class ForgotPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class ChangePassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePassword</title>");
+            out.println("<title>Servlet ForgotPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ForgotPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +63,7 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        request.getRequestDispatcher("forgot.jsp").forward(request, response);
     }
 
     /**
@@ -75,49 +77,55 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        System.out.println("Session ChangePassword" + session.getAttribute("user"));
-        if (session != null) {
-            System.out.println("Session ID: " + session.getId());
-        } else {
-            System.out.println("No session found");
-        }
-        Person person = (Person) session.getAttribute("user");
-        String oldpass = (String) request.getParameter("oldpass");
-        String newpass = (String) request.getParameter("pass");
-        String repass = (String) request.getParameter("repass");
-        PersonDAO pd = new PersonDAO();
-        if (!newpass.equals(repass)) {
-            request.setAttribute("error", "Mật khẩu không khớp");
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-        }
-        System.out.println("PersonInChange " + person);
-        if (person == null) {
-            request.setAttribute("error", "Vui long dang nhap lai");
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response); // Nếu không có người dùng trong session, chuyển hướng về trang đăng nhập
+        registerUser(request, response);
+    }
+
+    private void registerUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String email = request.getParameter("email");
+
+        PasswordUtils pw = new PasswordUtils();
+        PersonDAO personDAO = new PersonDAO();
+        if (!personDAO.isEmailExists(email)) {
+            request.setAttribute("error", "Email not exist Please register account");
+            request.getRequestDispatcher("forgot.jsp").forward(request, response);
             return;
-        } else {
-            PasswordUtils pw = new PasswordUtils();
-            String reversePass = pw.ReverPassword(person.getPasword());
-            String passCom = pw.shiftPassword(newpass);
-            String email = person.getEmail();
-            System.out.println(email);
-            if (!reversePass.equals(oldpass)) {
-                request.setAttribute("error", "Mật khẩu đăng nhập sai ");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-            } else {
-                boolean update = pd.updatePassword(email, passCom);
-                if (update) {
-                    request.setAttribute("message", "Cập nhật thành công");
-                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("error", "Cập nhật thấy bại");
-                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-                }
-            }
+        }
+        String verificationCode = generateVerificationCode();
+        MailSender.sendVerificationEmail(email, verificationCode);
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(120);
+        session.setAttribute("tempEmail", email);
+        session.setAttribute("verificationCode", verificationCode);
+        System.out.println(verificationCode);
+        // Redirect to verification page
+        response.sendRedirect("verifyRePass.jsp");
+    }
 
+    private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Generate a new verification code
+        String newCode = generateVerificationCode();
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+        session.setAttribute("verificationCode", newCode);
+        MailSender.sendVerificationEmail(email, newCode);
+        response.sendRedirect("verifyRePass.jsp");
+    }
+
+    // Tạo một đối tượng Random tĩnh và tái sử dụng
+    private static final Random random = new Random();
+
+    private String generateVerificationCode() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder code = new StringBuilder();
+
+        for (int i = 0; i < 15; i++) {
+            int index = random.nextInt(characters.length());
+            code.append(characters.charAt(index));
         }
 
+        return code.toString();
     }
 
     /**

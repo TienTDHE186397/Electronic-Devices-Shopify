@@ -31,7 +31,6 @@ public class PostListHomeServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -117,7 +116,6 @@ public class PostListHomeServlet extends HttpServlet {
             } catch (Exception e) {
                 System.out.println(e);
             }
-
         }
 
     }

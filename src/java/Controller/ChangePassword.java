@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Email;
+package Controller;
+
 
 import DAO.PersonDAO;
 import Entity.Person;
@@ -14,14 +15,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Random;
+import javax.mail.Session;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "VerifyRePass", urlPatterns = {"/VerifyRePass"})
-public class VerifyRePass extends HttpServlet {
+@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +41,10 @@ public class VerifyRePass extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyRePass</title>");
+            out.println("<title>Servlet ChangePassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VerifyRePass at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +62,7 @@ public class VerifyRePass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
     }
 
     /**
@@ -75,58 +76,49 @@ public class VerifyRePass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy mã xác thực từ form
-        String action = request.getParameter("action");
-        if ("resend".equals(action)) {
-            resendVerificationCode(request, response);
-        } else {
-           verify(request,response);
-        }
-
-    }
-
-    private void verify(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String inputCode = request.getParameter("verificationCode2");
-
-        // Lấy mã xác thực lưu trữ trong session
         HttpSession session = request.getSession();
-        String storedCode = (String) session.getAttribute("verificationCode");
-        // Kiểm tra mã xác thực
-        if (inputCode != null && inputCode.trim().equals(storedCode.trim())) {
-
-            request.setAttribute("message", "Xác thực thành công");
-            request.getRequestDispatcher("newPassword.jsp").forward(request, response);
+        System.out.println("Session ChangePassword" + session.getAttribute("user"));
+        if (session != null) {
+            System.out.println("Session ID: " + session.getId());
         } else {
-            // Xác thực thất bại
-            request.setAttribute("message", "Mã xác thực không chính xác.");
-            request.getRequestDispatcher("forgot.jsp").forward(request, response);
+            System.out.println("No session found");
         }
-    }
-     private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Generate a new verification code
-        String newCode = generateVerificationCode();
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("tempEmail");
-        session.setAttribute("verificationCode", newCode);
-        MailSender.sendVerificationEmail(email, newCode);
-        response.sendRedirect("verifyRePass.jsp");
-    }
+        Person person = (Person) session.getAttribute("user");
+        String oldpass = (String) request.getParameter("oldpass");
+        String newpass = (String) request.getParameter("pass");
+        String repass = (String) request.getParameter("repass");
+        PersonDAO pd = new PersonDAO();
+        if (!newpass.equals(repass)) {
+            request.setAttribute("error", "Mật khẩu không khớp");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        System.out.println("PersonInChange " + person);
+        if (person == null) {
+            request.setAttribute("error", "Vui long dang nhap lai");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response); // Nếu không có người dùng trong session, chuyển hướng về trang đăng nhập
+            return;
+        } else {
+            PasswordUtils pw = new PasswordUtils();
+            String reversePass = pw.ReverPassword(person.getPasword());
+            String passCom = pw.shiftPassword(newpass);
+            String email = person.getEmail();
+            System.out.println(email);
+            if (!reversePass.equals(oldpass)) {
+                request.setAttribute("error", "Mật khẩu đăng nhập sai ");
+                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            } else {
+                boolean update = pd.updatePassword(email, passCom);
+                if (update) {
+                    request.setAttribute("message", "Cập nhật thành công");
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("error", "Cập nhật thấy bại");
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                }
+            }
 
-    // Tạo một đối tượng Random tĩnh và tái sử dụng
-    private static final Random random = new Random();
-
-    private String generateVerificationCode() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder code = new StringBuilder();
-
-        for (int i = 0; i < 15; i++) {
-            int index = random.nextInt(characters.length());
-            code.append(characters.charAt(index));
         }
 
-        return code.toString();
     }
 
     /**

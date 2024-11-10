@@ -5,7 +5,7 @@
 package Controller;
 
 import DAO.*;
-import Email.MailSender;
+import Controller.MailSender;
 import Entity.*;
 import jakarta.servlet.ServletContext;
 import java.io.IOException;

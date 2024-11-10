@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package LoginFaceBook;
+package Controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import Controller.*;
+import DAO.PersonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,13 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "LoginFaceBook", urlPatterns = {"/LoginFaceBook"})
-public class LoginFaceBook extends HttpServlet {
+@WebServlet(name = "newPassword", urlPatterns = {"/newPassword"})
+public class newPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,30 +33,18 @@ public class LoginFaceBook extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String code = request.getParameter("code");
-        System.out.println(code);
-        FacebookLogin FB = new FacebookLogin();
-        String accessToken = FB.getToken(code);
-        System.out.println(accessToken);
-        Account acc = FB.getUserInfo(accessToken);
-        Object Picture = acc.getPicture();
-
-        if (Picture instanceof JsonObject) {
-            JsonObject jsonObject = (JsonObject) Picture;
-
-            try {
-                // Lấy đối tượng 'data' và URL từ nó
-                JsonObject dataObject = jsonObject.getAsJsonObject("data");
-                String imageUrl = dataObject.get("url").getAsString();
-
-                // In ra URL ảnh
-                System.out.println("Image URL: " + imageUrl);
-            } catch (Exception e) {
-                e.printStackTrace(); // In lỗi nếu có
-            }
-        } else {
-            System.out.println("Picture is not a JsonObject.");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet newPassword</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet newPassword at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -85,7 +74,33 @@ public class LoginFaceBook extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String pass = (String) request.getParameter("pass");
+        String repass = (String) request.getParameter("repass");
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("tempEmail");
+        PasswordUtils pw = new PasswordUtils();
+        String passCom = pw.shiftPassword(pass);
+        System.out.println("pass " + pass);
+        System.out.println("repass " + repass);
+        if (pass == null || repass == null || !pass.equals(repass)) {
+            request.setAttribute("error", "Mật khẩu không khớp!");
+            request.getRequestDispatcher("newPassword.jsp").forward(request, response);
+            return;
+        }
+        PersonDAO personDAO = new PersonDAO();
+        boolean add = personDAO.updatePassword(email, passCom);  // Thêm người dùng vào database
+        if (add) {
+            request.setAttribute("message", "Cập nhật mật khẩu thành công");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
+            System.out.println("Cập Nhật Thành Công");
+
+        } else {
+            System.out.println("Cập Nhật Mật Khẩu Thất Bại");
+        }
+        // Xóa thông tin tạm thời trong session
+        session.removeAttribute("verificationCode");
+        session.removeAttribute("tempEmail");
+
     }
 
     /**

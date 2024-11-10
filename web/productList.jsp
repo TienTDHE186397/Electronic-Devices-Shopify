@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -11,7 +12,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MKT DashBoard</title>
+        <title>Product List</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" >
         <link href="css/font-awesome.min.css" rel="stylesheet" >
         <link href="css/global.css" rel="stylesheet">
@@ -246,13 +247,13 @@
 
     </head>
 
-
     <body>
-
+        <%@include file="header.jsp" %>
         <c:set value="${requestScope.listCategory}" var="cate" />
 
 
-        <section id="subs" class="pt-5 pb-5 bg_light_1">
+
+        <section id="subs" class="pt-5 pb-5 bg_light_1" style="margin-top: 30px;">
             <div class="container text-center">
                 <a href="mktdashboard"><h1 class="brand-name"> MKT DashBoard</h1></a>
             </div>
@@ -262,7 +263,6 @@
 
 
             <div>
-
                 <div  style="margin-top: 15px">
                     <div class="row">
                         <div class="col-12 mb-3 mb-lg-"> 
@@ -284,13 +284,13 @@
                                             <!-- from price -->
                                             <div class="col-md-6">
                                                 <label for="filter"><b>From Price:</b></label>
-                                                <input name="fromprice" type="number" class="form-control" placeholder="From Price" value="${param.fromprice == null ? "":param.fromprice}">
+                                                <input name="fromprice" type="number" class="form-control" min="0" placeholder="From Price" value="${param.fromprice == null ? "":param.fromprice}">
                                             </div>
                                             <!-- to price -->
                                             <div class="col-md-6">
                                                 <label for="filter"><b>To Price:</b></label>
-                                                <input name="toprice" type="number" class="form-control" placeholder="To Price" value="${param.toprice == null ? "":param.toprice}">
-                                            </div>  
+                                                <input name="toprice" type="number" class="form-control" min="0" placeholder="To Price" value="${param.toprice == null ? "":param.toprice}">
+                                            </div>
                                         </div>
 
                                         <label for="filter"><b>Short Description:</b></label>
@@ -298,6 +298,7 @@
                                     </span>
                                     <div>
                                         <div class="row ">
+                                            <h3 id="message">${message}</h3>
                                             <b>Filter:</b>
                                             <div class="col-md-6" >
                                                 <select name="category" id="customSelect" onchange="document.getElementById('f1').submit()">
@@ -352,14 +353,12 @@
                                             <tr class="align-content-between">
                                                 <td>${p.productID}</td>
                                                 <td>
-
                                                     <img src="${p.img}" class="img-radius" alt="${p.productName}" width="80px" height="80px">
-
                                                 </td>
                                                 <td>${p.productName}</td>
                                                 <td>${p.category.categoryName}</td>
-                                                <td>${p.price}đ</td>
-                                                <td>${p.price - ((p.sale)*(p.price))/100}đ</td>
+                                                <td><fmt:formatNumber value="${p.price}" type="number" pattern="#,##0"/>đ</td>
+                                                <td><fmt:formatNumber value="${p.price - ((p.sale)*(p.price))/100}" type="number" pattern="#,##0"/>đ</td>
                                                 <td>${p.views}</td>
                                                 <td>${p.sale}%</td>
                                                 <td>${p.status}</td>
@@ -404,7 +403,16 @@
 
 
         <script>
-
+            // Check if there is a message in the JSP
+            window.onload = function () {
+                var message = document.getElementById("message");
+                if (message && message.innerText.trim() !== "") {
+                    // Hide the message after 5 seconds
+                    setTimeout(function () {
+                        message.style.display = "none";
+                    }, 5000);  // 5000 milliseconds = 5 seconds
+                }
+            }
             function goToPage(pageNumber) {
 
                 document.getElementById('pageInput').value = pageNumber;

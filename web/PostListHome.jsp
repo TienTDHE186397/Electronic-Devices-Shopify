@@ -21,7 +21,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="js/bootstrap.bundle.min.js"></script>
 
-
         <style>
             body {
                 font-family: Roboto;
@@ -255,18 +254,19 @@
             }
 
         </style>
-
     </head>
-
-
+    
     <body>
+        
+        <!-- Header start -->
+        <%@include file="header.jsp" %>
+        <!-- Header end -->
+      
 
         <c:set value="${requestScope.listCategory}" var="cate" />
         <c:set value="${requestScope.listRB}" var="RB"/>
 
-        <section id="subs" class="pt-5 pb-5 bg_light_1">
-            <%@include file="header.jsp" %>
-        </section>
+        
         <section class="product-list container">
             <c:set value="${requestScope.listBlogType}" var="listType"/>
             <c:set value="${requestScope.totalP}" var="totalpage"/>

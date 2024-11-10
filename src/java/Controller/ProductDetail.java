@@ -87,12 +87,13 @@ public class ProductDetail extends HttpServlet {
         CategoryDAO cd = new CategoryDAO();
         List category = cd.getAllCategory();
         DAOimgVideo imdao = new DAOimgVideo();
-        List<ImageVideo> video = imdao.getImByProductID(id);
-     
+        List<ImageVideo> video = imdao.getVidByProductID(id);
+        List<ImageVideo> image = imdao.getImByProductID(id);
         request.setAttribute("pro", product);
         request.setAttribute("attribute", attribute);
         request.setAttribute("category", category);
         request.setAttribute("video", video);
+        request.setAttribute("image", image);
         request.getRequestDispatcher("ProductDetail.jsp").forward(request, response);
     }
 
@@ -113,6 +114,38 @@ public class ProductDetail extends HttpServlet {
         String productName = request.getParameter("productName");
         Part imagePart = request.getPart("image");
         String image = "img/default-phone.jpg";
+
+// Khởi tạo các biến với giá trị mặc định hoặc xử lý khi tham số không có
+        int videoID = -1;
+        int imageID = -1;
+
+// Kiểm tra xem tham số videoID hoặc imageID có trong yêu cầu không
+        String videoIDParam = request.getParameter("videoID");
+        String imageIDParam = request.getParameter("imageID");
+
+        DAOimgVideo div = new DAOimgVideo();
+
+// Nếu video cần xóa
+        if (request.getParameter("deleteVideo") != null && videoIDParam != null) {
+            try {
+                videoID = Integer.parseInt(videoIDParam); // Chỉ phân tích cú pháp khi tham số không phải null
+                div.deleteVidByProductID(id, videoID);
+            } catch (NumberFormatException e) {
+                // Log hoặc xử lý ngoại lệ nếu videoID không hợp lệ
+                e.printStackTrace();
+            }
+        }
+
+// Nếu ảnh cần xóa
+        if (request.getParameter("deleteImage") != null && imageIDParam != null) {
+            try {
+                imageID = Integer.parseInt(imageIDParam); // Chỉ phân tích cú pháp khi tham số không phải null
+                div.deleteImageByProductID(id, imageID);
+            } catch (NumberFormatException e) {
+                // Log hoặc xử lý ngoại lệ nếu imageID không hợp lệ
+                e.printStackTrace();
+            }
+        }
         String realImagePath = request.getServletContext().getRealPath("/img");
         String realVideoPath = request.getServletContext().getRealPath("/img");
         DAOProduct dp = new DAOProduct();
@@ -164,9 +197,18 @@ public class ProductDetail extends HttpServlet {
         String[] newAttributeNames2 = request.getParameterValues("attributeName2");
         String[] newAttributeValues2 = request.getParameterValues("attributeValue2");
 
+        if (newAttributeNames2 != null && newAttributeValues2 != null) {
+            for (int i = 0; i < newAttributeNames2.length; i++) {
+                System.out.println("Attribute Name: " + newAttributeNames2[i]);
+                System.out.println("Attribute Value: " + newAttributeValues2[i]);
+            }
+        } else {
+            System.out.println("No attributes found.");
+        }
         String[] newAttributeNames = request.getParameterValues("attributeName");
         String[] newAttributeValues = request.getParameterValues("attributeValue");
         String[] oldAttributeNames = request.getParameterValues("oldAttributeName");
+
         DAOProduct productDAO = new DAOProduct();
 //        int productId, String title, String ProductName, int view, Date releaseDate, int QuantitySold, int category,
 //            int Quantity, int Sale, String img, double price, String publisher, String sortDescription, String description, String status
@@ -189,26 +231,26 @@ public class ProductDetail extends HttpServlet {
         }
         boolean addattri = true;
 
-        if (newAttributeNames2 != null && newAttributeValues2 != null) {
+        if (newAttributeNames2 != null && newAttributeNames2.length > 0 && newAttributeValues2 != null && newAttributeValues2.length > 0) {
+            System.out.println("DA CHECK DUOC ROI");
+
             for (int i = 0; i < newAttributeNames2.length; i++) {
-                boolean exists = false;
                 String newName2 = newAttributeNames2[i];
                 String value2 = newAttributeValues2[i];
-                if (oldAttributeNames != null) {
-                    for (String oldName : oldAttributeNames) {
-                        if (oldName.equals(newName2)) {
-                            exists = true;
-                            break;
-                        }
-                    }
-                }
 
-                if (!exists && value2 != null) {
-                    addattri = productAttributesDAO.addProductAttribute(id, newName2, value2);
-                     
+                // Check if the attribute already exists in the database
+                if (productAttributesDAO.attributeExists(id, newName2)) {
+                    // If it exists, set a message and forward to the same page
+                    request.setAttribute("message", "Attribute " + newName2 + " already exists.");
+                    request.getRequestDispatcher("ProductMKT").forward(request, response);
+                    return; // Exit to prevent further processing
+                } else {
+                    // If it does not exist, add the new attribute
+                    productAttributesDAO.addProductAttribute(id, newName2, value2);
                 }
             }
         }
+
 //------------------------------------------------------------------------------------------------------------------//
         Part videoPart = request.getPart("vidImgValue");
         String vid = "img/default-vid.mp4";
@@ -230,17 +272,72 @@ public class ProductDetail extends HttpServlet {
         boolean a = true;
         //ADD VIDEO VAO DATABASE
         if (newVidName != null && vid != null) {
-            a = imageDAO.addImageVi(id, vid, newVidName);
+            a = imageDAO.addVideo(id, vid, newVidName);
             if (a) {
                 System.out.println("add thanh cong");
             } else {
                 System.out.println("add that bai");
             }
         }
-        
-        
+//-----------------------------------------------------------------------------------------------------------------------------//
+// Xu ly Anh
+//Xu ly Anh
+        List<String> ImagePaths = new ArrayList<>();
+        List<String> ImageNotes = new ArrayList<>();
+
+// Lặp qua các phần của request
+        if (ImagePaths != null) {
+            for (Part part : request.getParts()) {
+                if (part.getName().equals("vidImageValue")) {
+                    // Xử lý video
+                    if (part.getSize() > 0) {
+                        String IMGFilename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+
+                        // Kiểm tra và tạo thư mục nếu chưa tồn tại
+                        if (!Files.exists(Path.of(realVideoPath))) {
+                            Files.createDirectory(Path.of(realVideoPath));
+                        }
+
+                        // Ghi video vào thư mục
+                        part.write(realVideoPath + File.separator + IMGFilename);
+
+                        // Kiểm tra định dạng video
+                        if (IMGFilename.endsWith(".jpg")) {
+                            ImagePaths.add("img/" + IMGFilename); // Lưu đường dẫn video
+                        } else {
+                            ImagePaths.add("img/default-phone.jpg"); // Lưu đường dẫn video mặc định nếu không phải .mp4
+                        }
+                    }
+                } else if (part.getName().equals("vidImageName")) {
+                    // Xử lý ghi chú
+                    String note = request.getParameter(part.getName());
+                    ImageNotes.add(note); // Lưu ghi chú
+                }
+            }
+        }
+        if (ImageNotes != null && ImagePaths != null && ImageNotes.size() == ImagePaths.size()) {
+            // Giả sử bạn đã có personId từ một nơi nào đó
+            for (int i = 0; i < ImageNotes.size(); i++) {
+                String note = ImageNotes.get(i);
+                String path = ImagePaths.get(i);
+
+                a = imageDAO.addImage(id, path, note);
+                if (a) {
+                    System.out.println("add thanh cong");
+                } else {
+                    System.out.println("add that bai");
+                }
+            }
+        } else {
+            // Xử lý khi danh sách null hoặc không cùng kích thước
+            System.out.println("Danh sách videoNotes hoặc videoPaths null hoặc không cùng kích thước.");
+        }
+
         if (a || insertSuccessful) {
-            response.sendRedirect("ProductMKT");
+
+            // After all attributes are added, set a success message and forward
+            request.setAttribute("message", "Update Product successfully.");
+            request.getRequestDispatcher("ProductMKT").forward(request, response);
         } else {
             response.sendRedirect("error.jsp");
         }
@@ -249,7 +346,7 @@ public class ProductDetail extends HttpServlet {
         System.out.println("Video path: " + realVideoPath);
         System.out.println("Video path: " + vid);
         System.out.println("--------------------------------------------------------------------------------");
-        
+
     }
 
 }
