@@ -84,7 +84,7 @@ public class ProductListDAO extends DBContext {
             if (!shortdescription.isEmpty()) {
                 sql += "AND p.sortDescription like N'%" + shortdescription + "%' ";
             }
-            if (!category_id.equals("0")) {
+            if (!category_id.equals("0") && !category_id.isEmpty()) {
                 sql += "AND p.CategoryID = " + Integer.parseInt(category_id) + " ";
             }
             if (!status.isEmpty()) {
@@ -252,7 +252,7 @@ public class ProductListDAO extends DBContext {
         }
         return listP;
     }
-    // Thêm Mới Bài Đăng
+    // Thêm Mới Sản Phẩm
     public void addNewProduct(Product p, Categories c) {
 
         String sql = "INSERT INTO [dbo].[Products]\n"

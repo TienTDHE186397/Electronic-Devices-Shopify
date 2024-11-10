@@ -106,8 +106,8 @@ public class addSliderServlet extends HttpServlet {
                     video = realPath2.substring(realPath2.length() - 12, realPath2.length()) + "/" + filename2;
                 }
             }
-            if (image == null && video == null) {
-                err1 += "Hình ảnh hoặc Video Một Trong 2 Cái Không Được Để Trống! <br/>";
+            if (image == null) {
+                err1 += "Hình ảnh Không Được Để Trống! <br/>";
                 check = false;
             }
 

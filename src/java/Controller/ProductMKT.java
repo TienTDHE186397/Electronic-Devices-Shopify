@@ -47,6 +47,8 @@ public class ProductMKT extends HttpServlet {
             ProductListDAO plDao = new ProductListDAO();
             CategoryDAO categoryDAO = new CategoryDAO();
             // Tìm kiến theo danh sách
+            List<Product> list = plDao.getAllProduct();
+
             List<Product> listP = plDao.searchProduct("", "", "", "", "0", "", "0", 1, 10);
             // Lấy tất cả categories của Product
             List<Categories> listCategory = categoryDAO.getAllCategory();
@@ -54,6 +56,7 @@ public class ProductMKT extends HttpServlet {
             List<Product> listPa = plDao.searchProduct2(search, fromprice, toprice, shortdescription, category, status, sort);
             int totalpage = (int) Math.ceil((double) listPa.size() / 10);
             //Set Attribute
+            request.setAttribute("list", list);
             request.setAttribute("totalpage", String.valueOf(totalpage));
             request.setAttribute("listP", listP);
             request.setAttribute("listCategory", listCategory);
@@ -62,10 +65,12 @@ public class ProductMKT extends HttpServlet {
             // Nếu như truyền giá trị vào thì thực hiện yêu cầu dưới
             ProductListDAO plDao = new ProductListDAO();
             CategoryDAO categoryDAO = new CategoryDAO();
+            List<Product> list = plDao.getAllProduct();
             List<Product> listP = plDao.searchProduct(search, fromprice, toprice, shortdescription, category, status, sort, Integer.parseInt(page), 10);
             List<Categories> listCategory = categoryDAO.getAllCategory();
             List<Product> listPa = plDao.searchProduct2(search, fromprice, toprice, shortdescription, category, status, sort);
             int totalpage = (int) Math.ceil((double) listPa.size() / 10);
+            request.setAttribute("list", list);
             request.setAttribute("totalpage", String.valueOf(totalpage));
             request.setAttribute("listP", listP);
             request.setAttribute("listCategory", listCategory);
