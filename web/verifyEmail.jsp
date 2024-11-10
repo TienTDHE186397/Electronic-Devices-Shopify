@@ -1,9 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<<<<<<< HEAD
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>%>
-=======
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
->>>>>>> 9d2e32296a2d96c2183a40f9eb470b8d33bffd71
+
 <html lang="vi">
     <head>
         <meta charset="UTF-8">

@@ -76,7 +76,74 @@
             .btn-success:hover, .btn-default:hover {
                 opacity: 0.8;
             }
+            .image-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                margin-top: 20px;
+            }
 
+            .image-item {
+                width: 320px;
+                text-align: center;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+                background-color: #f9f9f9;
+            }
+
+            .image-label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                display: block;
+                font-size: 14px;
+            }
+
+            .image-preview {
+                width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+            .file-input, .title-input {
+                background-color: #ddd;
+                font-size: 14px;
+            }
+            .video-container, .image-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                margin-top: 20px;
+            }
+
+            .video-item, .image-item {
+                width: 320px;
+                text-align: center;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+                background-color: #f9f9f9;
+            }
+
+            .video-label, .image-label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                display: block;
+                font-size: 14px;
+            }
+
+            .video-preview, .image-preview {
+                width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+            .file-input, .title-input {
+                background-color: #ddd;
+                font-size: 14px;
+            }
 
 
         </style>
@@ -96,19 +163,19 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-                
+
             <div class="container mt-5">
                 <div class="main">
-                   
+
                     <section class="hero">
-                       
+
                         <form action="ProductDetail" method="post" class="p-4 border rounded" enctype="multipart/form-data">
                             <input style="background-color: #ddd" type="hidden" name="idhi" value="${pro.getProductID()}"> 
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Product</h4>
                             <button style="background-color: #ddd" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                            <h3>${mess}</h3>
+                        <h3>${mess}</h3>
                         <div class="modal-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -137,15 +204,33 @@
 
                             </div>
                             <div class="form-row">
-                                <div>
+                                <div class="video-container">
                                     <c:forEach var="video" items="${video}" varStatus="status">
-                                        <label>Video ${status.index + 1}</label><br/>
-                                        <video width="320" height="240" controls>
-                                            <source src="${pageContext.request.contextPath}/${video.img_video_url}" type="video/mp4">
-                                            Trình duyệt của bạn không hỗ trợ thẻ video.
-                                        </video>
-                                        <input  style="background-color: #ddd" name="vid${status.index}" type="file" class="form-control mt-2" >
-                                        <input  style="background-color: #ddd" name="vidTitle${status.index}" type="text" value="${video.alt_text}" class="form-control mt-2" >
+                                        <div class="video-item">
+                                            <label class="video-label">Video ${status.index + 1}</label>
+                                            <video class="video-preview" controls>
+                                                <source src="${pageContext.request.contextPath}/${video.img_video_url}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <input type="hidden" name="videoID" value="${video.img_video_id}"> 
+
+                                            <input name="vidTitle${status.index}" type="text" value="${video.alt_text}" class="form-control title-input mt-2">
+                                            <button type="submit" class="btn btn-primary" name="deleteVideo" style="background-color: red">Xóa</button>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="image-container">
+                                    <c:forEach var="image" items="${image}" varStatus="status">
+                                        <div class="image-item">
+                                            <label class="image-label">Image ${status.index + 1}</label>
+                                            <img src="${pageContext.request.contextPath}/${image.img_video_url}" alt="Image ${status.index + 1}" class="image-preview">
+                                            <input type="hidden" name="imageID" value="${image.img_video_id}"> 
+                                            <input name="img${status.index}" type="file" class="form-control file-input mt-2">
+                                            <input name="imgTitle${status.index}" type="text" value="${image.alt_text}" class="form-control title-input mt-2">
+                                              <button type="submit" class="btn btn-primary" name="deleteImage" style="background-color: red">Xóa</button>
+                                        </div>
                                     </c:forEach>
                                 </div>
                             </div>
@@ -179,7 +264,12 @@
 
                                 <div class="form-group col-md-6"> 
                                     <label>Status</label>
-                                    <input name="status"  style="background-color: #ddd" value="${pro.getStatus()}" type="text" class="form-control" required>
+
+                                    <select name="status" style="background-color: #ddd" class="form-control" required>
+                                        <option value="Available" ${pro.getStatus() == 'Available' ? 'selected' : ''}>Available</option>
+                                        <option value="Sold Out" ${pro.getStatus() == 'Sold Out' ? 'selected' : ''}>Sold Out</option>
+                                        <option value="Hided" ${pro.getStatus() == 'Hided' ? 'selected' : ''}>Hided</option>
+                                    </select>
                                 </div> 
 
                             </div>
@@ -190,7 +280,7 @@
                             <c:forEach items="${ivideo}" var="i">
                                 <option value="${c.categoryID}" ${(c.categoryID == pro.category.categoryID) ? "selected" : "" } >${c.categoryName}</option>
                             </c:forEach>
-                               
+
                             <c:forEach items="${attribute}" var="a">
                                 <div class="form-row" id="row-${a.getAttributeID()}">
 
@@ -205,7 +295,7 @@
                                     <div class="form-group col-md-1">
 
                                         <form action="DeleteAttributeServlet" method="post" onsubmit="return confirmDelete();">
-                                        <input type="hidden" name="idhi" value="${pro.getProductID()}"> 
+                                            <input type="hidden" name="idhi" value="${pro.getProductID()}"> 
                                             <input type="hidden" name="attributeID" value="${a.getAttributeID()}">
                                             <button type="submit" class="btn btn-danger" onclick="return confirmDelete();">Delete</button>
                                         </form>
@@ -213,8 +303,13 @@
                                 </div>
                             </c:forEach>
 
-                            <button type="button" class="btn btn-primary" onclick="addAttribute()">Thêm thuộc tính</button>
-                            <button type="button" class="btn btn-primary" onclick="addVideoImage()">Thêm Video,ảnh</button>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-primary" onclick="addAttribute()">Thêm thuộc tính</button>
+                                <button type="button" class="btn btn-primary" onclick="addVideo()">Thêm Video</button>
+                                <button type="button" class="btn btn-primary" onclick="addImage()">Thêm Ảnh</button>
+                            </div>
+                            <div id="attributeContainer" style="margin-top: 20px;"></div>
+                            <div id="attributeContainer" style="margin-top: 20px;"></div>
                             <div class="form-group col-md-3">
                                 <label>Sort Description</label>
                                 <textarea name="sortDescription" class="form-control" rows="3" required>${pro.getSortDescription()}</textarea>
@@ -224,7 +319,8 @@
                                 <textarea style="background-color: #ddd" name="description" class="form-control" rows="3" required>${pro.getDescription()}</textarea>
                             </div>
                             <div class="form-group col-md-6">
-                                <div id="attributeContainer" class="mt-3"></div>
+                                <div id="attributeContainer" style="margin-top: 20px;"></div>
+                                <div id="attributeContainer" style="margin-top: 20px;"></div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -261,42 +357,65 @@
     `;
                     const deleteButton = `
         <div class="form-group col-md-2">
-            <button type="button" class="btn btn-danger" onclick="removeAttribute(this)">Xóa</button>
+        <button type="button" class="btn btn-danger delete-button">Xóa</button>
         </div>
     `;
                     // Gắn tất cả các trường vào hàng mới
                     newRow.innerHTML = attributeNameField + attributeValueField + deleteButton;
                     attributeContainer.appendChild(newRow);
+                    newRow.querySelector('.delete-button').addEventListener('click', function () {
+                        newRow.remove();
+                    });
                     // Tăng số lượng thuộc tính
                     attributeCount++;
                 }
-                function addVideoImage() {
+                function addVideo() {
                     const attributeContainer = document.getElementById('attributeContainer');
                     const newRow = document.createElement('div');
                     newRow.classList.add('form-row', 'mb-2');
-                    ////////////////////////////////////////////////////////
-                    // Tạo ô nhập liệu cho thuộc tính mới
-                    const attributeNameField = `
-        <div class="form-group col-md-5">
-            <input type="text" placeholder="Nhập Tên Ảnh or Video" style="font-weight: bold;" name="vidImgName" class="form-control" required>
-        </div>
-    `;
-                    const attributeValueField = `
-        <div class="form-group col-md-5">
-         <input id="vidImgValue" name="vidImgValue" type="file" accept="video/*" class="form-control" required>
-        </div>
-    `;
-                    const deleteButton = `
-        <div class="form-group col-md-2">
-            <button type="button" class="btn btn-danger" onclick="removeAttribute(this)">Xóa</button>
-        </div>
-    `;
-                    // Gắn tất cả các trường vào hàng mới
-                    newRow.innerHTML = attributeNameField + attributeValueField + deleteButton;
+                    newRow.innerHTML = `
+    <div class="form-group col-md-5">
+        <input type="text" placeholder="Nhập Tên Video" style="font-weight: bold;" name="vidImgName" class="form-control" required>
+    </div>
+    <div class="form-group col-md-5">
+        <input name="vidImgValue" type="file" accept="video/*, image/*" class="form-control" required>
+    </div>
+    <div class="form-group col-md-2">
+        <button type="button" class="btn btn-danger delete-button">Xóa</button>
+    </div>
+`;
                     attributeContainer.appendChild(newRow);
-                    // Tăng số lượng thuộc tính
                     attributeCount++;
+
+                    // Gán sự kiện xóa cho nút "Xóa" mới tạo
+                    newRow.querySelector('.delete-button').addEventListener('click', function () {
+                        newRow.remove();
+                    });
                 }
+                function addImage() {
+                    const attributeContainer = document.getElementById('attributeContainer');
+                    const newRow = document.createElement('div');
+                    newRow.classList.add('form-row', 'mb-2');
+                    newRow.innerHTML = `
+    <div class="form-group col-md-5">
+        <input type="text" placeholder="Nhập Tên Ảnh " style="font-weight: bold;" name="vidImageName" class="form-control" required>
+    </div>
+    <div class="form-group col-md-5">
+        <input name="vidImageValue" type="file" accept="video/*, image/*" class="form-control" required>
+    </div>
+    <div class="form-group col-md-2">
+        <button type="button" class="btn btn-danger delete-button">Xóa</button>
+    </div>
+`;
+                    attributeContainer.appendChild(newRow);
+                    attributeCount++;
+
+                    // Gán sự kiện xóa cho nút "Xóa" mới tạo
+                    newRow.querySelector('.delete-button').addEventListener('click', function () {
+                        newRow.remove();
+                    });
+                }
+
 
             </script>
         </div>

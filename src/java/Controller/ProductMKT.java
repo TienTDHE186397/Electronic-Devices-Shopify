@@ -22,22 +22,6 @@ public class ProductMKT extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductMKT</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductMKT at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
         // Lấy giá trị của search 
         String search = request.getParameter("search");
         // Lấy giá trị từ giá nào đến giá nào
@@ -59,7 +43,7 @@ public class ProductMKT extends HttpServlet {
         }
         // Nếu như không truyền vào giá trị nào thì sẽ thực hiện yêu câu dưới
         if (search == null && fromprice == null && toprice == null && shortdescription == null && category == null && status == null && sort == null) {
-            
+
             ProductListDAO plDao = new ProductListDAO();
             CategoryDAO categoryDAO = new CategoryDAO();
             // Tìm kiến theo danh sách
@@ -86,8 +70,15 @@ public class ProductMKT extends HttpServlet {
             request.setAttribute("listP", listP);
             request.setAttribute("listCategory", listCategory);
             request.getRequestDispatcher("productList.jsp").forward(request, response);
-        }
 
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        processRequest(request, response);
     }
 
     @Override

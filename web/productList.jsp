@@ -247,11 +247,13 @@
 
     </head>
 
-
     <body>
-
+        <%@include file="header.jsp" %>
         <c:set value="${requestScope.listCategory}" var="cate" />
-        <section id="subs" class="pt-5 pb-5 bg_light_1">
+
+
+
+        <section id="subs" class="pt-5 pb-5 bg_light_1" style="margin-top: 30px;">
             <div class="container text-center">
                 <a href="mktdashboard"><h1 class="brand-name"> MKT DashBoard</h1></a>
             </div>
@@ -296,6 +298,7 @@
                                     </span>
                                     <div>
                                         <div class="row ">
+                                            <h3 id="message">${message}</h3>
                                             <b>Filter:</b>
                                             <div class="col-md-6" >
                                                 <select name="category" id="customSelect" onchange="document.getElementById('f1').submit()">
@@ -400,7 +403,16 @@
 
 
         <script>
-
+            // Check if there is a message in the JSP
+            window.onload = function () {
+                var message = document.getElementById("message");
+                if (message && message.innerText.trim() !== "") {
+                    // Hide the message after 5 seconds
+                    setTimeout(function () {
+                        message.style.display = "none";
+                    }, 5000);  // 5000 milliseconds = 5 seconds
+                }
+            }
             function goToPage(pageNumber) {
 
                 document.getElementById('pageInput').value = pageNumber;

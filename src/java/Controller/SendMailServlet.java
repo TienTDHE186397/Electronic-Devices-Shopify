@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Email;
+package Controller;
 
-import DAO.PersonDAO;
+
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +13,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Random;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ForgotPassword", urlPatterns = {"/ForgotPassword"})
-public class ForgotPassword extends HttpServlet {
+@WebServlet(name = "SendMailServlet", urlPatterns = {"/SendMailServlet"})
+public class SendMailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +46,10 @@ public class ForgotPassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ForgotPassword</title>");
+            out.println("<title>Servlet SendMailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ForgotPassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SendMailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,7 +67,7 @@ public class ForgotPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("forgot.jsp").forward(request, response);
+        request.getRequestDispatcher("verifyEmail.jsp").forward(request, response);
     }
 
     /**
@@ -76,55 +81,30 @@ public class ForgotPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        registerUser(request, response);
-    }
+        String recipient = request.getParameter("email");
 
-    private void registerUser(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String email = request.getParameter("email");
-
-        PasswordUtils pw = new PasswordUtils();
-        PersonDAO personDAO = new PersonDAO();
-        if (!personDAO.isEmailExists(email)) {
-            request.setAttribute("error", "Email not exist Please register account");
-            request.getRequestDispatcher("forgot.jsp").forward(request, response);
+        if (recipient == null || recipient.isEmpty()) {
+            response.getWriter().println("Invalid email address");
             return;
         }
-        String verificationCode = generateVerificationCode();
-        MailSender.sendVerificationEmail(email, verificationCode);
-        HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(120);
-        session.setAttribute("tempEmail", email);
-        session.setAttribute("verificationCode", verificationCode);
-        System.out.println(verificationCode);
-        // Redirect to verification page
-        response.sendRedirect("verifyRePass.jsp");
+
+        // Tạo token ngẫu nhiên
+        SecureRandom random = new SecureRandom();
+        String token = new BigInteger(130, random).toString(32);
+
+        // Gửi email xác thực với token
+        MailSender.sendVerificationEmail(recipient, token);
+
+        // Phản hồi cho người dùng
+        request.setAttribute("message", "Verification email sent successfully to " + recipient);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("verifyEmail.jsp");
+        dispatcher.forward(request, response);
     }
 
-    private void resendVerificationCode(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Generate a new verification code
-        String newCode = generateVerificationCode();
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("tempEmail");
-        session.setAttribute("verificationCode", newCode);
-        MailSender.sendVerificationEmail(email, newCode);
-        response.sendRedirect("verifyRePass.jsp");
-    }
-
-    // Tạo một đối tượng Random tĩnh và tái sử dụng
-    private static final Random random = new Random();
-
-    private String generateVerificationCode() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder code = new StringBuilder();
-
-        for (int i = 0; i < 15; i++) {
-            int index = random.nextInt(characters.length());
-            code.append(characters.charAt(index));
-        }
-
-        return code.toString();
+    private boolean validateToken(String token) {
+        // Thực hiện kiểm tra token (ví dụ: kiểm tra trong cơ sở dữ liệu)
+        // Trả về true nếu token hợp lệ, false nếu không hợp lệ
+        return true; // Thay đổi theo cách bạn kiểm tra token
     }
 
     /**

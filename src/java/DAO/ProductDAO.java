@@ -26,7 +26,7 @@ CategoryDAO cDAO = new CategoryDAO();
 
 //==============================================================================    
     public Product getProductsById(int id) {
-        String sql = "SELECT * FROM Products WHERE ProductID = ?";
+        String sql = "SELECT * FROM Products WHERE ProductID = ? AND [status] = 'Available'";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -62,7 +62,7 @@ CategoryDAO cDAO = new CategoryDAO();
     public List<Product> getAllProducts() {
         List<Product> listProducts = new ArrayList<>();
         try {
-            String sql = "Select * from Products";
+            String sql = "Select * from Products where [status] = 'Available'";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -98,7 +98,7 @@ CategoryDAO cDAO = new CategoryDAO();
 //==============================================================================    
     public List<Product> getProductByCategory(int id) {
         List<Product> listP = new ArrayList<>();
-        String sql = "Select * from Products WHERE CategoryID = ?";
+        String sql = "Select * from Products WHERE CategoryID = ? AND [status] = 'Available'";
         try {
             
             PreparedStatement st = connection.prepareStatement(sql);
@@ -135,7 +135,7 @@ CategoryDAO cDAO = new CategoryDAO();
 //==============================================================================    
     public List<Product> getListProductBestSellerCategory(int id) {
         List<Product> listP = new ArrayList<>();
-        String sql = "Select TOP 10 * from Products WHERE CategoryID = ? order by QuantitySold desc";
+        String sql = "Select TOP 10 * from Products WHERE CategoryID = ? AND [status] = 'Available' order by QuantitySold desc";
         try {
             
             PreparedStatement st = connection.prepareStatement(sql);
@@ -191,7 +191,7 @@ CategoryDAO cDAO = new CategoryDAO();
 //============================================================================== 
     public List<Product> getProductByBrand(int cateid, String brand) {
         List<Product> listP = new ArrayList<>();
-        String sql = "SELECT * FROM Products Where CategoryID = ? AND brand = ?;";
+        String sql = "SELECT * FROM Products Where CategoryID = ? AND brand = ? AND [status] = 'Available';";
         try {
             
             PreparedStatement st = connection.prepareStatement(sql);

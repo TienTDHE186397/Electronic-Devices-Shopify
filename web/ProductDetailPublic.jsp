@@ -500,7 +500,7 @@
                 border: 1px solid #ccc;
                 border-radius: 4px;
             }
-/*            //phan trang*/
+            /*            //phan trang*/
             .pagination {
                 display: flex;
                 justify-content: center;
@@ -533,7 +533,70 @@
                 background-color: #007bff;
                 color: white;
             }
-            
+            /* General Styles */
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            h1.section-title {
+                font-size: 2.5rem;
+                color: #333;
+                text-align: center;
+                margin-bottom: 30px;
+                font-family: 'Arial', sans-serif;
+                font-weight: bold;
+            }
+
+            /* Video Container */
+            .video-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+
+            .video-item {
+                width: 250px; /* Reduced width */
+                background-color: #f4f4f4;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                text-align: center;
+                padding: 10px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .video-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            }
+
+            .video-label {
+                display: block;
+                font-size: 1.1rem;
+                color: #444;
+                margin-bottom: 10px; /* Reduced margin */
+                font-family: 'Arial', sans-serif;
+                font-weight: bold;
+            }
+
+            /* Video Preview */
+            .video-preview {
+                width: 100%;
+                height: 180px; /* Fixed height for smaller videos */
+                border-radius: 8px;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .video-item {
+                    width: 100%;
+                    max-width: 300px; /* Adjusted for smaller screens */
+                }
+            }
+
         </style>
     </head>
     <body>
@@ -567,7 +630,10 @@
                                 <img src="${imageItem.getImage_url()}" class="d-block w-100" alt="..." />
                             </div>
                         </c:forEach>
+
+
                     </div>
+
 
                     <!-- Controls -->
                     <button class="carousel-control-prev" type="button" data-mdb-target="#<%= carouselId%>" data-mdb-slide="prev">
@@ -665,8 +731,24 @@
 
                 </div>
             </div>
+
+
         </div>
 
+        <div class="form-row container">
+         
+            <div class="video-container">
+                <c:forEach var="video" items="${listVideo}" varStatus="status">
+                    <div class="video-item">
+                        <label class="video-label">${video.alt_text}</label>
+                        <video class="video-preview" controls>
+                            <source src="${pageContext.request.contextPath}/${video.img_video_url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
         <div class="comments-section">
             <h2 style="color: white;">Comments</h2>
             <c:if test="${sessionScope.user != null}">

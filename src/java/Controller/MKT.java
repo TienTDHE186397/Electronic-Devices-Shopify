@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Filter.java to edit this template
  */
-package Filter;
+package Controller;
 
+import Filter.*;
 import Entity.Person;
 import java.io.IOException;
 import java.io.PrintStream;
