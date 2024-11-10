@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ page import="Entity.Person" %>
-<%@ page import="Email.PasswordUtils" %>
+<%@ page import="Controller.PasswordUtils" %>
 <%@ page session="true" %>
 <html lang="en">
     <head>

@@ -80,7 +80,7 @@
         </style>
         <script>
             let timer;
-            let timeLeft = 10;
+            let timeLeft = 120;
 
             function startCountdown() {
                 timer = setInterval(function () {
