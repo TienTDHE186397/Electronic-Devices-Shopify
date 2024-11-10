@@ -4,6 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+            <file>file:/D:/SWP391/webdientu/src/java/DAO/DBContext.java</file>
+            <file>file:/D:/SWP391/webdientu/web/ProductDetailPublic.jsp</file>
+            <file>file:/D:/SWP391/webdientu/src/java/Entity/ProductAttribute.java</file>
+=======
+<<<<<<< HEAD
             <file>file:/D:/Done/webdientu/src/java/Controller/ProductMKT.java</file>
             <file>file:/D:/Done/webdientu/web/productList.jsp</file>
             <file>file:/D:/Done/webdientu/web/profile.jsp</file>
@@ -23,6 +28,7 @@
             <file>file:/D:/Done/webdientu/web/verifyEmail.jsp</file>
 >>>>>>> 15d50a83440efa2d28e023d59b521003330befc8
 >>>>>>> 90f278394fd616ca0d8b9259421871929d462aba
+>>>>>>> b94a7eacbb1691d14117bc610212a3ab91f8ac56
         </group>
     </open-files>
 </project-private>
