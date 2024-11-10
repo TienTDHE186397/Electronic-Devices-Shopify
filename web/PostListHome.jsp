@@ -276,7 +276,7 @@
                         <div class="col-12 mb-3 mb-lg-"> 
 
                             <div class="row">
-                                <form action="PostListHome" method="get">
+                                <form action="PostListHome" method="get" style="margin-top: 50px">
                                     <div class="search col-md-5">
                                         <i style="margin-right: 10px;" class="fa-solid fa-magnifying-glass"></i><input name="search" style="width: 350px; height: 30px; display: inline-block; border: 1px #fff solid" id="myInput" type="text" class="form-control" placeholder=" Tìm Kiếm..." value="${(param.search == null) ? "" : param.search}">
                                     </div>
