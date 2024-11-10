@@ -90,8 +90,8 @@ public class MyOrder {
         this.totalCost = totalCost;
       
     }
-    public MyOrder(String pimg,String orderID, Date orderDate, String personID, String showroomID, double totalMoney, String method, String saleID, String status, String shipStatus, Date completeDate, Date exportedDate, Date inDeliveryDate, Date DeliveredDate, Date receivedDate) {
-        this.pimg = pimg;
+    public MyOrder(String orderID, Date orderDate, String personID, String showroomID, double totalMoney, String method, String saleID, String status, String shipStatus, Date completeDate, Date exportedDate, Date inDeliveryDate, Date DeliveredDate, Date receivedDate) {
+        
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.personID = personID;

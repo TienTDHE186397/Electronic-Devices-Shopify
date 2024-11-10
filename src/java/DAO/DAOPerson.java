@@ -26,7 +26,7 @@ public class DAOPerson extends DBContext {
                 + "LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
                 + "LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
                 + "left join PersonImages pimg on p.PersonID = pimg.PersonID\n"
-                + "WHERE p.RoleID = 1  and pp.IsPrimary = 1 and pa.IsPrimary =1";
+                + "WHERE p.RoleID = 1  and pp.IsPrimary = 1 and pa.IsPrimary = 1 and pimg.IsPrimary = 1 ORDER BY PersonID DESC";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -63,7 +63,8 @@ public class DAOPerson extends DBContext {
                 + "FROM Person p\n"
                 + "LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
                 + "LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
-                + "left join PersonImages pimg on p.PersonID = pimg.PersonID\n";
+                + "left join PersonImages pimg on p.PersonID = pimg.PersonID\n"
+                + "Where pa.IsPrimary = 1 and pp.IsPrimary = 1 and pimg.IsPrimary = 1";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -100,7 +101,8 @@ public class DAOPerson extends DBContext {
                 + " FROM Person p\n"
                 + " LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
                 + " LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
-                + " left join PersonImages pimg on p.PersonID = pimg.PersonID";
+                + " left join PersonImages pimg on p.PersonID = pimg.PersonID"
+                + " Where pa.IsPrimary = 1 and pp.IsPrimary = 1 and pimg.IsPrimary = 1";
         try {
 
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -338,8 +340,9 @@ int rowsAffectedImage = stmtImage.executeUpdate();
                 + " FROM Person p\n"
                 + " LEFT JOIN PersonAddress pa ON p.PersonID = pa.PersonID\n"
                 + " LEFT JOIN PersonPhone pp ON p.PersonID = pp.PersonID\n"
-+ " left join PersonImages pimg on p.PersonID = pimg.PersonID where p.PersonID = ?";
-        try {
+                + " left join PersonImages pimg on p.PersonID = pimg.PersonID\n"
+                + " Where pa.IsPrimary = 1 and pp.IsPrimary = 1 and pimg.IsPrimary = 1 and p.PersonID = ?";
+        try {  
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();

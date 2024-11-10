@@ -27,11 +27,20 @@ import java.util.List;
 @WebServlet(name = "CartCompletion", urlPatterns = {"/cartCompletion"})
 public class CartCompletion extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-
+        DAOAdmin da = new DAOAdmin();
         if (session != null && session.getAttribute("cart") != null) {
 
             String id = request.getParameter("PersonID");
@@ -61,14 +70,15 @@ public class CartCompletion extends HttpServlet {
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
             String paymentMethod = request.getParameter("payment");
-            OrderInformation oi = mod.getOrderInfo(person.getPersonID());
-            mod.createUpdateOrderDetailsProcedure();
-            mod.updateOrderDetails(person.getPersonID(), name, address, phone, paymentMethod, "Complete");
+            int OrderID = da.getNewestOrderID();
+            OrderInformation oi = new OrderInformation(OrderID, name, phone, address, paymentMethod, "In line");
+//            mod.createUpdateOrderDetailsProcedure();
+//            mod.updateOrderDetails(person.getPersonID(), name, address, phone, paymentMethod, "Complete");
             // Update the session's person with new values
-            person.setName(name);
-            person.setPhone(phone);
-            person.setAddress(address);
-            session.setAttribute("user", person);  // Update session with modified person object
+//            person.setName(name);
+//            person.setPhone(phone);
+//            person.setAddress(address);
+//            session.setAttribute("user", person);  // Update session with modified person object
             session.setAttribute("cart", cart);
             String payment = (String) session.getAttribute("payment");
             ServletContext context = request.getServletContext();
@@ -99,20 +109,44 @@ public class CartCompletion extends HttpServlet {
             request.setAttribute("payment", payment);
             request.setAttribute("p", p);
             request.setAttribute("banks", banks);
-            MailSender.sendAccountBank(p.getEmail(), bank, oi, amount);
+//            MailSender.sendAccountBank(p.getEmail(), bank, oi, amount);
             request.getRequestDispatcher("CartCompletion.jsp").forward(request, response);
+//            PrintWriter out = response.getWriter();
+//            out.println(p);
+//            out.print(oi);
+//            out.println(p.getEmail());
+//            out.println(order);
+//            out.println(pe);
+//            out.println(BankName);
+//            out.println(AccountName);
+//            out.println(AccountNumber);
         }
 
     }
 
-    
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

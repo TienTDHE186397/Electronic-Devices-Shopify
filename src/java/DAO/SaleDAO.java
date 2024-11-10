@@ -60,7 +60,7 @@ public class SaleDAO {
         String sql = "Select o.OrderID, o.OrderDate, p.Name as CustomerName, o.TotalMoney, o.[Status]\n"
                 + "From Orders o\n"
                 + "JOIN Person p ON o.PersonID = p.PersonID\n"
-                + "ORDER BY o.OrderID";
+                + "ORDER BY o.OrderID DESC";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);

@@ -3,17 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/PostListHomeServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/PostListServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/SliderDetailServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/addPostServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/MKTDashBoardServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/SliderListServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/ProductMKT.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/addCategories.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/PostDetailHomeServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/PostDetailServlet.java</file>
-            <file>file:/D:/SWP_Presentation/webdientu/src/java/Controller/addProductServlet.java</file>
+            <file>file:/E:/final%20SWP391/webdientu/src/java/DAO/MyOrderDAO.java</file>
+            <file>file:/E:/final%20SWP391/webdientu/src/java/DAO/FeedbackDAO.java</file>
+            <file>file:/E:/final%20SWP391/webdientu/src/java/Controller/CartCompletion.java</file>
+            <file>file:/E:/final%20SWP391/webdientu/src/java/Controller/finishOrder.java</file>
+            <file>file:/E:/final%20SWP391/webdientu/web/CartCompletion.jsp</file>
+            <file>file:/E:/final%20SWP391/webdientu/src/java/DAO/PersonDAO.java</file>
+            <file>file:/E:/final%20SWP391/webdientu/web/CartContact.jsp</file>
         </group>
     </open-files>
 </project-private>

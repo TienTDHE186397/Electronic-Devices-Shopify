@@ -23,13 +23,17 @@ import java.util.List;
  *
  * @author admin
  */
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
 public class MyOrderDAO extends DBContext {
 //    phương thức để select ra tất cả đơn hàng dựa vào ID của người dùng
 
     public List<MyOrder> getOrderByPersonID(String PersonID) {
         List<MyOrder> Order = new ArrayList<>();
         String sql = "SELECT \n"
-                + "    pi.image_url,\n"
                 + "    o.OrderID,\n"
                 + "    o.OrderDate,\n"
                 + "    o.PersonID,\n"
@@ -46,10 +50,9 @@ public class MyOrderDAO extends DBContext {
                 + "    o.receivedDate\n"
                 + "FROM \n"
                 + "    Orders o\n"
-                + "JOIN PersonImages pi ON o.PersonID = pi.PersonID\n"
                 + "WHERE \n"
-                + "    o.PersonID = ?";
-
+                + "    o.PersonID = ?\n"
+                + "Order by o.OrderID DESC";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
@@ -57,7 +60,7 @@ public class MyOrderDAO extends DBContext {
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                MyOrder s = new MyOrder(rs.getString("image_url"),
+                MyOrder s = new MyOrder(
                         rs.getString("OrderID"),
                         rs.getDate("OrderDate"),
                         rs.getString("PersonID"),
@@ -82,11 +85,9 @@ public class MyOrderDAO extends DBContext {
         }
         return Order;
     }
-
     public List<MyOrder> getMyOrderInfo(String OrderID) {
         List<MyOrder> Order = new ArrayList<>();
         String sql = "SELECT \n"
-                + "    pi.image_url,\n"
                 + "    o.OrderID,\n"
                 + "    o.OrderDate,\n"
                 + "    o.PersonID,\n"
@@ -103,7 +104,7 @@ public class MyOrderDAO extends DBContext {
                 + "    o.receivedDate\n"
                 + "FROM \n"
                 + "    Orders o\n"
-                + "JOIN PersonImages pi ON o.PersonID = pi.PersonID\n"
+              
                 + "WHERE \n"
                 + "   o.OrderID = ?";
 
@@ -113,7 +114,7 @@ public class MyOrderDAO extends DBContext {
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                MyOrder s = new MyOrder(rs.getString("image_url"),
+                MyOrder s = new MyOrder(
                         rs.getString("OrderID"),
                         rs.getTimestamp("OrderDate"),
                         rs.getString("PersonID"),
@@ -161,10 +162,12 @@ public class MyOrderDAO extends DBContext {
 
     public String getImgByPersonID(String personID) {
         String img = null;
-        String query = "SELECT pi.image_url \n"
-                + "FROM PersonImages pi \n"
-                + "JOIN Person p ON pi.PersonID = p.PersonID \n"
-                + "WHERE pi.PersonID = ?";
+        String query = """
+                       SELECT pi.image_url 
+                        FROM PersonImages pi 
+                       JOIN Person p ON pi.PersonID = p.PersonID 
+                       WHERE pi.PersonID = ? and IsPrimary = 1
+                       """;
 
         try {
             PreparedStatement st = connection.prepareStatement(query);
@@ -179,7 +182,7 @@ public class MyOrderDAO extends DBContext {
             e.printStackTrace();
         }
         return img;
-    }
+    }  
 //   Phương thức để selcet ra tổng các sản phẩm trong một đơn hàng thông qua OrderID và PersonID
 
     public List<MyOrder> getProductListByOrderID(String PersonID, String orderID) {
@@ -216,7 +219,7 @@ public class MyOrderDAO extends DBContext {
         }
         return productList;
     }
-
+    
     public List<MyOrder> getProductListInfoByOrderID(String orderID) {
         List<MyOrder> productList = new ArrayList<>();
         String query = """
@@ -229,6 +232,7 @@ public class MyOrderDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(query);
 
+            
             st.setString(1, orderID);
 
             ResultSet rs = st.executeQuery();
@@ -250,27 +254,27 @@ public class MyOrderDAO extends DBContext {
         }
         return productList;
     }
-
+    
     public List<MyOrder> getReceiver(String orderID) {
         List<MyOrder> receiver = new ArrayList<>();
         String query = """
-                     select p.Name, pa.Address, pp.Phone
-                     from Person p
-                     Join PersonAddress pa on p.PersonID = pa.PersonID
-                     join PersonPhone pp on p.PersonID = pp.PersonID
-                     join Orders o on p.PersonID =  o.PersonID
-                     where o.OrderID = ?
+                     SELECT p.Name, pa.Address, pp.Phone, p.PersonID
+                     FROM Person p
+                     JOIN PersonAddress pa ON p.PersonID = pa.PersonID AND pa.IsPrimary = 1
+                     JOIN PersonPhone pp ON p.PersonID = pp.PersonID and pp.IsPrimary = 1
+                     JOIN Orders o ON p.PersonID = o.PersonID
+                     WHERE o.OrderID = ?;
                      """;
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, orderID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                MyOrder s = new MyOrder(rs.getString("Name"),
-                        rs.getString("Address"),
+               MyOrder s = new MyOrder(rs.getString("Name"), 
+                        rs.getString("Address"), 
                         rs.getString("Phone"));
                 receiver.add(s);
-
+                
             }
 
         } catch (SQLException e) {
@@ -279,8 +283,7 @@ public class MyOrderDAO extends DBContext {
         }
         return receiver;
     }
-
-    public void Received(SaleOrderL s) {
+     public void Received(SaleOrderL s) {
         String sql = "UPDATE Orders SET ShipStatus = 'received', receivedDate = GETDATE() WHERE OrderID = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, s.getOrderID());
@@ -294,6 +297,8 @@ public class MyOrderDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] args) {
         MyOrderDAO dao = new MyOrderDAO();
@@ -467,6 +472,61 @@ public class MyOrderDAO extends DBContext {
             e.printStackTrace();
         }
         return null;
+    }
+    public boolean addOrder(int personID, int showroom, double totalMoney, String method, String status, String saleNote, String ShipStatus) {
+        String sql = "INSERT INTO [dbo].[Orders]\n"
+                + "           ([PersonID]\n"
+                + "           ,[ShowRoomID]\n"
+                + "           ,[TotalMoney]\n"
+                + "           ,[Method]\n"
+                + "           ,[Status]\n"
+                + "           ,[SaleNote]\n"
+                + "           ,[ShipStatus]) \n"
+                + "     VALUES \n"
+                + "           (?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, personID);
+            ps.setInt(2, showroom);
+            ps.setDouble(3, totalMoney);
+            ps.setString(4, method);
+            ps.setString(5, status);
+            ps.setString(6, saleNote);
+            ps.setString(7, ShipStatus);
+
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean addOrderDetail(int OrderID, int productID, int giftID, int quantity, double price, double total) {
+        String sql = "INSERT INTO [dbo].[OrderDetails]\n"
+                + "           ([OrderID]\n"
+                + "           ,[ProductID]\n"
+                + "           ,[GiftID]\n"
+                + "           ,[Quantity]\n"
+                + "           ,[UnitPrice]\n"
+                + "           ,[TotalCost])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?)";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, OrderID);
+            ps.setInt(2, productID);
+            ps.setInt(3, giftID);
+            ps.setInt(4, quantity);
+            ps.setDouble(5, price);
+            ps.setDouble(6, total);
+            ps.executeUpdate();
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

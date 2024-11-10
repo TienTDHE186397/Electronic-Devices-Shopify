@@ -418,9 +418,9 @@
 
 
 
-
+</c:forEach> 
                     </div>
-                </c:forEach>     
+                  
             </div>
         </div>
 
@@ -428,7 +428,7 @@
 
     </body>
     <script>
-        // Đặt script này ở cuối body hoặc trong window.onload
+        
         window.onload = function () {
             // Lấy tất cả các progress step
             const progressSteps = document.querySelectorAll('.progress-step');

@@ -16,6 +16,7 @@ public class Person {
     private String Phone;
     private int roleID;
     private String Pasword;
+    
 
 //cua son
     public Person() {
@@ -123,6 +124,20 @@ public class Person {
         this.Phone = Phone;
         this.roleID = RoleID;
         this.Pasword = Password;
+        
+    }
+    public Person(int PersonID,String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Address, String Email, String Phone, int RoleID, String Password, String img) {
+        this.PersonID = PersonID;
+        this.Name = Name;
+        this.Gender = Gender;
+        this.DateOfBirth = DateOfBirth;
+        this.StartDate = StartDate;
+        this.Address = Address;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.roleID = RoleID;
+        this.Pasword = Password;
+        this.Image = img;
     }
 
     public Person(int PersonID, String Name, String Gender, String DateOfBirth, LocalDate StartDate, String Email, int RoleID, String Password) {
@@ -176,7 +191,7 @@ public class Person {
         this.roleID = roleID;
         this.Pasword = Pasword;
     }
-
+    
     public int getPersonID() {
         return PersonID;
     }
@@ -252,11 +267,11 @@ public class Person {
     public String getPasword() {
         return Pasword;
     }
-
+    
     public void setPasword(String Pasword) {
         this.Pasword = Pasword;
     }
-
+    
     @Override
     public String toString() {
         return "Person{" + "PersonID=" + PersonID + ", Name=" + Name + ", Gender=" + Gender + ", DateOfBirth=" + DateOfBirth + ", StartDate=" + StartDate + ", Address=" + Address + ", Email=" + Email + ", Phone=" + Phone + ", roleID=" + roleID + ", Pasword=" + Pasword + '}';

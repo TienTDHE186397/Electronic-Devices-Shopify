@@ -151,14 +151,14 @@ public class MyOrderInformationServlet extends HttpServlet {
         }// </editor-fold>
  
 
-//    public static void main(String[] args) {
-//        MyOrderDAO dao = new MyOrderDAO();
-//        
-//        String OrderID = "1";
-//        List<MyOrder> list = dao.getReceiver(OrderID);
-//        for (MyOrder o : list) {
-//            System.out.println(o);
-//        }
-//    
-//    }
+    public static void main(String[] args) {
+        MyOrderDAO dao = new MyOrderDAO();
+        
+        String OrderID = "6";
+        List<MyOrder> list = dao.getMyOrderInfo(OrderID);
+        for (MyOrder o : list) {
+            System.out.println(o);
+        }
+    
+    }
 }

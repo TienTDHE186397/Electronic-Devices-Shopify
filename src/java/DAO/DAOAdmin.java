@@ -334,4 +334,17 @@ public class DAOAdmin extends DBContext {
 
         return null;
     }
+    public int getNewestOrderID(){
+        String sql = "SELECT IDENT_CURRENT('Orders')+1 AS NewIdentityValue;";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch(Exception e){
+            
+        }
+        return -1;
+    }
 }

@@ -121,6 +121,12 @@
                         <span class="text">Post</span>
                     </a>
                 </li>
+                <li>
+                    <a href="customerList">
+                        <i class='bx bxs-group' ></i>
+                        <span class="text">Customer List</span>
+                    </a>
+                </li>
             </ul>
             <ul class="side-menu">
                 </li>

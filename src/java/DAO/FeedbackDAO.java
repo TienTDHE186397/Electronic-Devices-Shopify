@@ -73,7 +73,7 @@ public class FeedbackDAO extends DBContext {
  //lấy ra danh sách cùng những thông tin cần thiết của tất cả các feedaback cho trang FeedbackList
     public List<Feedback> getFeedbackList(String status, int rating) {
         List<Feedback> feedbackList = new ArrayList<>();
-        String sql = "SELECT F.FeedbackID, P.ProductName, Pe.Name AS CustomerName, F.RatedStar, F.CreatedDate, F.Status FROM Feedback F JOIN Person Pe ON F.CustomerID = Pe.PersonID JOIN Products P ON F.ProductID = P.ProductID WHERE 1=1";
+        String sql = "SELECT F.FeedbackID, P.ProductName, Pe.Name AS CustomerName, F.RatedStar, F.CreatedDate, F.Status FROM Feedback F JOIN Person Pe ON F.CustomerID = Pe.PersonID JOIN Products P ON F.ProductID = P.ProductID WHERE 1=1 ORDER BY F.FeedbackID DESC";
 
         // Append filters if they are provided
         if (status != null && !status.isEmpty()) {
@@ -200,7 +200,7 @@ public class FeedbackDAO extends DBContext {
     public int createFeedback(Feedback feedback) throws SQLException {
     String insertSql = "INSERT INTO Feedback (CustomerID, ProductID, RatedStar, " +
                        "FeedbackContent, Status, CreatedDate) " +
-                       "VALUES (?, ?, ?, ?, 'New', GETDATE(),)";
+                       "VALUES (?, ?, ?, ?, 'New', GETDATE())";
                        
     try (PreparedStatement insertStmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
         insertStmt.setString(1, feedback.getCusID());

@@ -95,6 +95,12 @@
             .form-group {
                 margin-bottom: 20px;
             }
+            input[type="text"]{
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
 
         </style>
 
@@ -137,6 +143,12 @@
                     <a href="PostListMKT">
                         <i class='bx bxs-group' ></i>
                         <span class="text">Post</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="customerList">
+                        <i class='bx bxs-group' ></i>
+                        <span class="text">Customer List</span>
                     </a>
                 </li>
             </ul>
@@ -274,20 +286,20 @@
                                             <a href="FeedbackList" class="btn">Trở về trang FeedbackList</a>
                                         </div>
                                     </form>
-                                    <form action="${pageContext.request.contextPath}/DetailMedia" method="post" enctype="multipart/form-data">
+                                    <form action="${pageContext.request.contextPath}/DetailMedia" method="post" enctype="multipart/form-data" onsubmit = "return validateForm(event)">
                                         <input type="hidden" name="formType" value="addMedia">
                                         <input type="hidden" name="feedbackID" value="${c.feedbackID}" />
                                         <div class="form-group">
                                             <label for="images">Attach Images (Max 5 images, .jpg/.png only):</label>
                                             <input type="file" id="images" name="images" accept="image/jpeg,image/png" multiple onchange="validateImages(this)">
                                             <small class="text-muted">Select up to 5 images</small>
-                                            <input type="text" name="descriptionimg" placeholder="Write Your images description......." name="feedback" rows="1" />
+                                            <input type="text" name="descriptionimg" placeholder="Write Your images description......." name="feedback" rows="1" multiple onchange = "validateDesc(this)">
                                         </div>
                                         <div class="form-group">
                                             <label for="videos">Attach Videos (Max 3 videos, 20MB each, .mp4 only):</label>
                                             <input type="file" id="videos" name="videos" accept="video/mp4" multiple onchange="validateVideos(this)">
                                             <small class="text-muted">Select up to 3 videos, max 10MB each</small>
-                                            <input type="text" name="descriptionvid" placeholder="Write Your video description......." name="feedback" rows="1" />
+                                            <input type="text" name="descriptionvid" placeholder="Write Your video description......." name="feedback" rows="1" multiple onchange = "validateDesc(this)">
                                         </div>
                                         <button class="btn" type="submit">Thêm Media</button>
                                     </form>     
@@ -367,30 +379,110 @@
             });
         </script>
         
+        
+        
            <script>
+   // Validation functions for the form
 function validateImages(input) {
-    if (input.files.length > 5) {
-        alert('You can only upload up to 5 images');
+    const files = input.files;
+    
+    
+    // Check number of files
+    if (files.length > 5) {
+        alert(`Please select maximum 5 images`);
         input.value = '';
+        return false;
+    }
+    
+    // Check each file
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Check file type
+        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+            alert('Please upload only JPG or PNG images');
+            input.value = '';
+            return false;
+        }
+        
+        // Check file size
+        if (file.size > 5 * 1024 * 1024) {
+            alert(`Image ${file.name} is too large. Maximum size is ${maxSizeMB}MB`);
+            input.value = '';
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function validateVideos(input) {
+    const files = input.files;
+   // 20MB max per video
+    
+    // Check number of files
+    if (files.length > 3) {
+        alert(`Please select maximum 3 videos`);
+        input.value = '';
+        return false;
+    }
+    
+    // Check each file
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Check file type
+        if (!file.type.match('video/mp4')) {
+            alert('Please upload only MP4 videos');
+            input.value = '';
+            return false;
+        }
+        
+        // Check file size
+        if (file.size > 20 * 1024 * 1024) {
+            alert('Video ${file.name} is too large. Maximum size is 20 MB');
+            input.value = '';
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function validateDesc(input) {
+    if (!input.value || input.value.trim() === '') {
+        alert('Please enter a description');
         return false;
     }
     return true;
 }
 
-function validateVideos(input) {
-    if (input.files.length > 3) {
-        alert('You can only upload up to 3 videos');
-        input.value = '';
+// Form submission validation
+function validateForm(event) {
+    const form = event.target;
+    const imagesInput = form.querySelector('#images');
+    const videosInput = form.querySelector('#videos');
+    const imgDesc = form.querySelector('input[name="descriptionimg"]');
+    const vidDesc = form.querySelector('input[name="descriptionvid"]');
+    
+    // Validate if at least one media type is selected
+    if (imagesInput.files.length === 0 && videosInput.files.length === 0) {
+        alert('Please select at least one image or video');
+        event.preventDefault();
         return false;
     }
     
-    for (let i = 0; i < input.files.length; i++) {
-        if (input.files[i].size > 20 * 1024 * 1024) { // 20MB in bytes
-            alert('Each video must be less than 20MB');
-            input.value = '';
-            return false;
-        }
+    // Validate descriptions if files are present
+    if (imagesInput.files.length > 0 && !validateDesc(imgDesc)) {
+        event.preventDefault();
+        return false;
     }
+    
+    if (videosInput.files.length > 0 && !validateDesc(vidDesc)) {
+        event.preventDefault();
+        return false;
+    }
+    
     return true;
 }
 </script>

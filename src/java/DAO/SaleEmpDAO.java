@@ -62,7 +62,7 @@ public class SaleEmpDAO {
                 + "JOIN Person p ON o.PersonID = p.PersonID\n"
                 + "WHERE\n"
                 + "o.SaleID = ?\n"
-                + "ORDER BY o.OrderID";
+                + "ORDER BY o.OrderDate DESC";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);

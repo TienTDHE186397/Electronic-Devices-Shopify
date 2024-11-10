@@ -177,7 +177,7 @@
         </header>
         <div class="container">
             <main>
-                <form class="feedback-form" action="${pageContext.request.contextPath}/Feedback" method="post" enctype="multipart/form-data">
+                <form class="feedback-form" action="${pageContext.request.contextPath}/Feedback" method="post" enctype="multipart/form-data" onsubmit="return validateForm(event)">
                     <div class="form-group">
                         <label for="fullName">Full Name:</label>
                         <input type="hidden" value="${sessionScope.user.getPersonID()}" name="customerId">
@@ -219,20 +219,20 @@
                     </div>
                     <div class="form-group">
                         <label for="feedback">Feedback:</label>
-                        <textarea style="height: 200px;" placeholder="Write Your feedback......." name="feedback" rows="6"></textarea>
+                        <textarea style="height: 200px;" placeholder="Write Your feedback......." name="feedback" rows="6" onchange = "validateFeedback(this)"></textarea>
                         <br/>
                     </div>
                     <div class="form-group">
                         <label for="images">Attach Images (Max 5 images, .jpg/.png only):</label>
                         <input type="file" id="images" name="images" accept="image/jpeg,image/png" multiple onchange="validateImages(this)">
                         <small class="text-muted">Select up to 5 images</small>
-                        <input type="text" name="descriptionimg" placeholder="Write Your images description......." name="feedback" rows="1" />
+                        <input type="text" name="descriptionimg" placeholder="Write Your images description......." name="feedback" rows="1" onchange="validateDesc(this)">
                     </div>
                     <div class="form-group">
                         <label for="videos">Attach Videos (Max 3 videos, 20MB each, .mp4 only):</label>
                         <input type="file" id="videos" name="videos" accept="video/mp4" multiple onchange="validateVideos(this)">
                         <small class="text-muted">Select up to 3 videos, max 10MB each</small>
-                        <input type="text" name="descriptionvid" placeholder="Write Your videos description......." name="feedback" rows="1" />
+                        <input type="text" name="descriptionvid" placeholder="Write Your videos description......." name="feedback" rows="1" onchange="validateDesc(this)">
                     </div>
 
                     
@@ -246,32 +246,168 @@
         <!-- Footer end -->
     </body>
     
-    <script>
+   
+           <script>
+   // Validation functions for the form
 function validateImages(input) {
-    if (input.files.length > 5) {
-        alert('You can only upload up to 5 images');
+    const files = input.files;
+    
+    
+    // Check number of files
+    if (files.length > 5) {
+        alert(`Please select maximum 5 images`);
         input.value = '';
+        return false;
+    }
+    
+    // Check each file
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Check file type
+        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+            alert('Please upload only JPG or PNG images');
+            input.value = '';
+            return false;
+        }
+        
+        // Check file size
+        if (file.size > 5 * 1024 * 1024) {
+            alert(`Image ${file.name} is too large. Maximum size is ${maxSizeMB}MB`);
+            input.value = '';
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function validateVideos(input) {
+    const files = input.files;
+   // 20MB max per video
+    
+    // Check number of files
+    if (files.length > 3) {
+        alert(`Please select maximum 3 videos`);
+        input.value = '';
+        return false;
+    }
+    
+    // Check each file
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Check file type
+        if (!file.type.match('video/mp4')) {
+            alert('Please upload only MP4 videos');
+            input.value = '';
+            return false;
+        }
+        
+        // Check file size
+        if (file.size > 20 * 1024 * 1024) {
+            alert('Video ${file.name} is too large. Maximum size is 20 MB');
+            input.value = '';
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function validateDesc(input) {
+    if (!input.value || input.value.trim() === '') {
+        alert('Please enter a description');
+        return false;
+    }
+    return true;
+}
+function validateRating() {
+    rating = document.querySelector('input[name="rating"]:checked');
+    if (!rating) {
+        alert('Please select a rating');
         return false;
     }
     return true;
 }
 
-function validateVideos(input) {
-    if (input.files.length > 3) {
-        alert('You can only upload up to 3 videos');
-        input.value = '';
+function validateFeedback(textarea) {
+    const minLength = 10; // Minimum characters required
+    const maxLength = 1000; // Maximum characters allowed
+    
+    const text = textarea.value.trim();
+    
+    if (text.length < minLength) {
+        alert(`Please enter your feedback at least 10 character for feedback`);
         return false;
     }
     
-    for (let i = 0; i < input.files.length; i++) {
-        if (input.files[i].size > 20 * 1024 * 1024) { // 10MB in bytes
-            alert('Each video must be less than 20MB');
-            input.value = '';
+    if (text.length > maxLength) {
+        alert(`Feedback cannot exceed 1000 characters`);
+        textarea.value = text.substring(0, maxLength);
+        return false;
+    }
+    
+    return true;
+}
+
+// Form submission validation
+function validateForm(event) {
+    // Fix: Corrected form element selection
+    const form = event.currentTarget;
+    const imagesInput = form.querySelector('#images');
+    const videosInput = form.querySelector('#videos');
+    const feedback = form.querySelector('textarea[name="feedback"]');
+    const imgDesc = form.querySelector('input[name="descriptionimg"]');
+    const vidDesc = form.querySelector('input[name="descriptionvid"]');
+    
+    // Validate rating
+    if (!validateRating()) {
+        event.preventDefault();
+        return false;
+    }
+    
+    // Validate feedback
+    if (!validateFeedback(feedback)) {
+        event.preventDefault();
+        return false;
+    }
+    
+    if (imagesInput.files.length === 0 && videosInput.files.length === 0) {
+        alert('Please select at least one image or video');
+        event.preventDefault();
+        return false;
+    }
+  
+    
+    // Validate media and descriptions
+    if (imagesInput.files.length > 0 || videosInput.files.length > 0) {
+        if (imagesInput.files.length > 0 && !validateDesc(imgDesc)) {
+            alert('please enter description for images');
+            event.preventDefault();
+            return false;
+        }
+        if(videosInput.files.length === 0){
+            alert('please provide feedback video');
+            event.preventDefault();
+            return false;
+        }
+        
+        if (videosInput.files.length > 0 && !validateDesc(vidDesc)) {
+            alert('please enter description for videos');
+            event.preventDefault();
             return false;
         }
     }
+    
     return true;
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.feedback-form');
+    if (form) {
+        form.addEventListener('submit', validateForm);
+    }
+});
 </script>
 
 </html>

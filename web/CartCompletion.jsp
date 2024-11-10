@@ -77,8 +77,7 @@
                 border-color: #007bff; /* Border color on hover/focus */
                 box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Slightly stronger shadow */
             }
-
-            /* Style each option */
+/* Style each option */
             select[name="selectedBank"] option {
                 padding: 10px; /* Extra padding for readability */
                 color: #333; /* Text color */
@@ -137,7 +136,7 @@
                                 <td><fmt:formatNumber value="${item.getProduct().getPrice()}" type="currency"/></td>
                                 <!-- Display quantity of each product in the cart -->
                                 <td>x${item.getQuantity()}</td>
-                                <td>-<fmt:formatNumber value="${item.getProduct().getPrice()*(10/100)}" type="currency"/></td>
+<td>-<fmt:formatNumber value="${item.getProduct().getPrice()*(10/100)}" type="currency"/></td>
                                 <td>30.000đ</td>
                                 <!-- Display total cost for each product (price * quantity) -->
                                 <td><fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency"/></td>
@@ -178,6 +177,10 @@
                 <h3>Payment Information</h3>
                 <!-- Display bank information for payment transfer -->
                 <form action="finishOrder" method="get" id="cartForm">
+                    <input type="hidden" name="name1" value="${param.name}"/>
+                    <input type="hidden" name="phone1" value="${param.phone}"/>
+                    <input type="hidden" name="address1" value="${param.address}"/>
+                    <input type="hidden" name="method" value="${param.payment}"/>
                     <c:if test="${param.payment=='Chuyển khoản'}">
                         
                     <select name="selectedBank">
@@ -193,7 +196,7 @@
                 
                 
                 <!-- Display total amount for payment -->
-                <p><strong></strong>Amount: <fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency"/></p>
+<p><strong></strong>Amount: <fmt:formatNumber value="${total - (total / 10) + 30000}" type="currency"/></p>
             </div>
         </div>
 

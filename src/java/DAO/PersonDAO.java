@@ -71,26 +71,30 @@ public class PersonDAO extends DBContext {
                 + "    p.Name,\n"
                 + "    p.Gender,\n"
                 + "    p.DateOfBirth,\n"
-                + "    p.StartDate,\n"
-                + "    p.Email,\n"
+                + "    p.StartDate,\n" 
+                + "    p.Email,\n"  
                 + "    p.RoleID,\n"
                 + "    p.Password,\n"
                 + "    \n"
                 + "    -- Retrieve primary address\n"
                 + "    pa.Address AS PrimaryAddress,\n"
-                + "    \n"
+                + "    \n" 
                 + "    -- Retrieve primary phone\n"
-                + "    pp.Phone AS PrimaryPhone\n"
+                + "    pp.Phone AS PrimaryPhone,\n"
+                + "    -- Retrieve primary images\n"
+                + "    pim.image_url As PrimaryImage\n"
                 + "FROM \n"
                 + "    Person p\n"
                 + "LEFT JOIN \n"
                 + "    PersonAddress pa ON p.PersonID = pa.PersonID AND pa.IsPrimary = 1\n"
                 + "LEFT JOIN \n"
                 + "    PersonPhone pp ON p.PersonID = pp.PersonID AND pp.IsPrimary = 1\n"
+                + "LEFT JOIN \n"
+                + "    PersonImages pim ON p.PersonID = pim.PersonID AND pim.IsPrimary = 1\n"
                 + "WHERE \n"
                 + "    p.Email = ?\n"
-                + "    AND p.Password = ?;";
-        try {
+                + "    AND p.Password = ?";     
+        try {  
             PreparedStatement st = connection.prepareStatement(query);
             st.setString(1, email);
             st.setString(2, password);
@@ -106,10 +110,11 @@ public class PersonDAO extends DBContext {
                 String passwordFromDB = rs.getString("Password");
                 String address = rs.getString("PrimaryAddress");
                 String phone = rs.getString("PrimaryPhone");
+                String image = rs.getString("PrimaryImage");
                 //int PersonID,String Name, String Gender, String DateOfBirth, LocalDate StartDate,
                 //String Address, String Email, String Phone, int RoleID, String Password
                 // Tạo đối tượng Person từ dữ liệu lấy được
-                return new Person(personID, name, gender, age, localDate, address, email, phone, roleID, password);
+                return new Person(personID, name, gender, age, localDate, address, email, phone, roleID, password,image);
             }
 
         } catch (SQLException e) {
