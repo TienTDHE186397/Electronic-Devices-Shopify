@@ -716,7 +716,7 @@
                     <form action="cart" method="get">
                         <input type="hidden" name="ProductID" value="${productDetail.getProductID()}">
                         <label><b>Số lượng</b></label>
-                        <input style="width: 50px" type="number" name="quantity" min="1" value="1">
+                        <input style="width: 50px" type="number" name="quantity" min="1" value="1" max="${productDetail.getQuantity()}">
 
                         <c:choose>
                             <c:when test="${empty sessionScope.user}">
@@ -736,7 +736,7 @@
         </div>
 
         <div class="form-row container">
-         
+
             <div class="video-container">
                 <c:forEach var="video" items="${listVideo}" varStatus="status">
                     <div class="video-item">
@@ -749,111 +749,134 @@
                 </c:forEach>
             </div>
         </div>
-        <div class="comments-section">
-            <h2 style="color: white;">Comments</h2>
-            <c:if test="${sessionScope.user != null}">
-                <form action="product-detail?ProductID=${productDetail.getProductID()}" method="post" enctype="multipart/form-data">
-                    <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..." required></textarea>
-                    <div class="button-container">
-                        <button type="button" class="btn btn-primary brown-button" onclick="addVideo()">Thêm Video</button>
-                        <button type="button" class="btn btn-primary brown-button" onclick="addImage()">Thêm Ảnh</button>
-                        <button type="submit" class="btn btn-primary brown-button">Post Comment</button>
-                    </div>
-                    <div id="attributeContainer"></div>
-                </form>
-            </c:if>
-
-            <c:if test="${sessionScope.user == null}">
-                <center><h3 style="color: grey;">Bạn phải đăng nhập để sử dụng tính năng bình luận</h3></center>
-                </c:if>
-
-            <div class="posted-comments">
-                <h3 style="color: white;">Previous Comments</h3>
-
-                <c:forEach var="comment" items="${requestScope.comment}">
-                    <div class="comment">
-                        <img src="https://m.yodycdn.com/blog/anh-dai-dien-hai-yodyvn2.jpg" alt="User Image">
-
-                        <div class="comment-container">
-                            <div class="comment-header">
-                                <strong>Author:</strong> ${comment.person.name}
-                            </div>
-                            <div class="comment-body">
-                                <p style="max-width: 600px; word-wrap: break-word; overflow-wrap: break-word;">
-                                    <strong>Comment:</strong> ${comment.getContent()}
-                                </p>
-                                <p><strong>Created At:</strong> ${comment.getCreateAt()}</p>
-                            </div>
-
-                            <c:if test="${not empty comment.imageUrls}">
-                                <div class="media-section media-images">
-                                    <div class="media-title">Images:</div>
-                                    <img src="${comment.imageUrls[0]}" alt="Comment Image" width="200px" />
-                                    <p><strong>Image Text:</strong> ${comment.imageText[0]}</p>
-                                    <div id="more-images-${comment.commentid}" style="display: none;">
-                                        <c:forEach var="i" begin="1" end="${fn:length(comment.imageUrls) - 1}">
-                                            <img src="${comment.imageUrls[i]}" alt="Comment Image" width="200px" />
-                                            <p><strong>Image Text:</strong> ${comment.imageText[i]}</p>
-                                        </c:forEach>
-                                    </div>
-                                    <button onclick="toggleVisibility('more-images-${comment.commentid}')">See More Images</button>
-                                </div>
-                            </c:if>
-
-                            <!-- Display first video and see more option -->
-                            <c:if test="${not empty comment.videoUrls}">
-                                <div class="media-section media-videos">
-                                    <div class="media-title">Videos:</div>
-                                    <video width="320" height="240" controls>
-                                        <source src="${comment.videoUrls[0]}" type="video/mp4">
-                                    </video>
-                                    <p><strong>Video Text:</strong> ${comment.videoText[0]}</p>
-                                    <div id="more-videos-${comment.commentid}" style="display: none;">
-                                        <c:forEach var="i" begin="1" end="${fn:length(comment.videoUrls) - 1}">
-                                            <video width="320" height="240" controls>
-                                                <source src="${comment.videoUrls[i]}" type="video/mp4">
-                                            </video>
-                                            <p><strong>Video Text:</strong> ${comment.videoText[i]}</p>
-                                        </c:forEach>
-                                    </div>
-                                    <button onclick="toggleVisibility('more-videos-${comment.commentid}')">See More Videos</button>
-                                </div>
-                            </c:if>
-                            <!-- ... -->
-                        </div>
-                    </div>
-                </c:forEach>
-
-                <c:if test="${requestScope.comment.isEmpty()}">
-                    <br/><br/><br/>
-                    <center><h3 style="color: gray;">Hãy Là Người Bình Luận Đầu Tiên!</h3></center>
-                    <br/><br/><br/>
-                </c:if>
-
-                <!-- Phân trang -->
-                <!-- Phân trang -->
-                <div class="pagination">
-                    <c:if test="${currentPage > 1}">
-                        <a class="page-link" href="?ProductID=${param.ProductID}&page=${currentPage - 1}">Previous</a>
-                    </c:if>
-                    <c:forEach var="i" begin="1" end="${requestScope.totalPages}">
-                        <c:choose>
-                            <c:when test="${i == currentPage}">
-                                <span class="current-page">${i}</span> <!-- Current button -->
-                            </c:when>
-                            <c:otherwise>
-                                <a class="page-link" href="?ProductID=${param.ProductID}&page=${i}">${i}</a> <!-- Page button -->
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${currentPage < totalPages}">
-                        <a class="page-link" href="?ProductID=${param.ProductID}&page=${currentPage + 1}">Next</a>
-                    </c:if>
-                </div>
-
+        <div class="row ">
+            <div class="col" style="margin-left: 20px;margin-right: 5px; border: 1px solid grey;border-radius: 10px;background-color: #EDEDED">
+                <h3 style="margin-top: 5px;">Thông số kỹ thuật</h3>
+                <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="border: 1px solid black; padding: 8px; text-align: left;">Mô tả</th>
+                            <th style="border: 1px solid black; padding: 8px; text-align: left;">Thông số</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${listAttribute}" var="value">
+                            <tr>
+                                <td style="border: 1px solid black; padding: 8px;">${value.getAttributeName()}</td>
+                                <td style="border: 1px solid black; padding: 8px;">${value.getAttributeValue()}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                    
+                </table>
 
             </div>
-        </div>
+            <div class="comments-section col">
+                <h2 style="color: white;">Comments</h2>
+                <c:if test="${sessionScope.user != null}">
+                    <form action="product-detail?ProductID=${productDetail.getProductID()}" method="post" enctype="multipart/form-data">
+                        <textarea name="comment" id="comment" rows="5" placeholder="Enter your comment..." required></textarea>
+                        <div class="button-container">
+                            <button type="button" class="btn btn-primary brown-button" onclick="addVideo()">Thêm Video</button>
+                            <button type="button" class="btn btn-primary brown-button" onclick="addImage()">Thêm Ảnh</button>
+                            <button type="submit" class="btn btn-primary brown-button">Post Comment</button>
+                        </div>
+                        <div id="attributeContainer"></div>
+                    </form>
+                </c:if>
+
+                <c:if test="${sessionScope.user == null}">
+                    <center><h3 style="color: grey;">Bạn phải đăng nhập để sử dụng tính năng bình luận</h3></center>
+                    </c:if>
+
+                <div class="posted-comments">
+                    <h3 style="color: white;">Previous Comments</h3>
+
+                    <c:forEach var="comment" items="${requestScope.comment}">
+                        <div class="comment">
+                            <img src="https://m.yodycdn.com/blog/anh-dai-dien-hai-yodyvn2.jpg" alt="User Image">
+
+                            <div class="comment-container">
+                                <div class="comment-header">
+                                    <strong>Author:</strong> ${comment.person.name}
+                                </div>
+                                <div class="comment-body">
+                                    <p style="max-width: 600px; word-wrap: break-word; overflow-wrap: break-word;">
+                                        <strong>Comment:</strong> ${comment.getContent()}
+                                    </p>
+                                    <p><strong>Created At:</strong> ${comment.getCreateAt()}</p>
+                                </div>
+
+                                <c:if test="${not empty comment.imageUrls}">
+                                    <div class="media-section media-images">
+                                        <div class="media-title">Images:</div>
+                                        <img src="${comment.imageUrls[0]}" alt="Comment Image" width="200px" />
+                                        <p><strong>Image Text:</strong> ${comment.imageText[0]}</p>
+                                        <div id="more-images-${comment.commentid}" style="display: none;">
+                                            <c:forEach var="i" begin="1" end="${fn:length(comment.imageUrls) - 1}">
+                                                <img src="${comment.imageUrls[i]}" alt="Comment Image" width="200px" />
+                                                <p><strong>Image Text:</strong> ${comment.imageText[i]}</p>
+                                            </c:forEach>
+                                        </div>
+                                        <button onclick="toggleVisibility('more-images-${comment.commentid}')">See More Images</button>
+                                    </div>
+                                </c:if>
+
+                                <!-- Display first video and see more option -->
+                                <c:if test="${not empty comment.videoUrls}">
+                                    <div class="media-section media-videos">
+                                        <div class="media-title">Videos:</div>
+                                        <video width="320" height="240" controls>
+                                            <source src="${comment.videoUrls[0]}" type="video/mp4">
+                                        </video>
+                                        <p><strong>Video Text:</strong> ${comment.videoText[0]}</p>
+                                        <div id="more-videos-${comment.commentid}" style="display: none;">
+                                            <c:forEach var="i" begin="1" end="${fn:length(comment.videoUrls) - 1}">
+                                                <video width="320" height="240" controls>
+                                                    <source src="${comment.videoUrls[i]}" type="video/mp4">
+                                                </video>
+                                                <p><strong>Video Text:</strong> ${comment.videoText[i]}</p>
+                                            </c:forEach>
+                                        </div>
+                                        <button onclick="toggleVisibility('more-videos-${comment.commentid}')">See More Videos</button>
+                                    </div>
+                                </c:if>
+                                <!-- ... -->
+                            </div>
+                        </div>
+                    </c:forEach>
+
+                    <c:if test="${requestScope.comment.isEmpty()}">
+                        <br/><br/><br/>
+                        <center><h3 style="color: gray;">Hãy Là Người Bình Luận Đầu Tiên!</h3></center>
+                        <br/><br/><br/>
+                    </c:if>
+
+                    <!-- Phân trang -->
+                    <!-- Phân trang -->
+                    <div class="pagination">
+                        <c:if test="${currentPage > 1}">
+                            <a class="page-link" href="?ProductID=${param.ProductID}&page=${currentPage - 1}">Previous</a>
+                        </c:if>
+                        <c:forEach var="i" begin="1" end="${requestScope.totalPages}">
+                            <c:choose>
+                                <c:when test="${i == currentPage}">
+                                    <span class="current-page">${i}</span> <!-- Current button -->
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="page-link" href="?ProductID=${param.ProductID}&page=${i}">${i}</a> <!-- Page button -->
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                        <c:if test="${currentPage < totalPages}">
+                            <a class="page-link" href="?ProductID=${param.ProductID}&page=${currentPage + 1}">Next</a>
+                        </c:if>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>                
         <script>
             function toggleVisibility(id) {
                 const element = document.getElementById(id);
