@@ -12,7 +12,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Product List</title>
+        <title>Product List MKT</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" >
         <link href="css/font-awesome.min.css" rel="stylesheet" >
         <link href="css/global.css" rel="stylesheet">
@@ -271,7 +271,7 @@
                                     <center>
                                         <div style="margin-bottom: 5px">
                                             <h1>PRODUCT LIST</h1>                                  
-                                            <span style="background-color: #eeecfd; padding:5px;">TOTAL Product: <b>${requestScope.listP.size()}</b></span>
+                                            <span style="background-color: #eeecfd; padding:5px;">TOTAL Product: <b>${requestScope.list.size()}</b></span>
                                         </div>
                                     </center>
                                     <br/>

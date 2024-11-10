@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Done/webdientu/src/java/Controller/DetailMediaServlet.java</file>
-            <file>file:/D:/Done/webdientu/src/java/Controller/FeedbackDetailServlet.java</file>
-            <file>file:/D:/Done/webdientu/src/java/Controller/FeedbackServlet.java</file>
-            <file>file:/D:/Done/webdientu/src/java/DAO/DBContext.java</file>
-            <file>file:/D:/Done/webdientu/src/java/Controller/FeedbackformServlet.java</file>
-            <file>file:/D:/Done/webdientu/web/FeedbackDetail.jsp</file>
-            <file>file:/D:/Done/webdientu/web/verifyRePass.jsp</file>
-            <file>file:/D:/Done/webdientu/web/verifyEmail.jsp</file>
+            <file>file:/D:/Done/webdientu/src/java/Controller/ProductMKT.java</file>
+            <file>file:/D:/Done/webdientu/web/productList.jsp</file>
+            <file>file:/D:/Done/webdientu/web/profile.jsp</file>
+            <file>file:/D:/Done/webdientu/src/java/DAO/ProductListDAO.java</file>
         </group>
     </open-files>
 </project-private>
