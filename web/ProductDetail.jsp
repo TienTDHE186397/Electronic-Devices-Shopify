@@ -172,10 +172,15 @@
                         <form action="ProductDetail" method="post" class="p-4 border rounded" enctype="multipart/form-data">
                             <input style="background-color: #ddd" type="hidden" name="idhi" value="${pro.getProductID()}"> 
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Product</h4>
+                            <h4 class="modal-title">Edit Product 
+                                
+                            </h4>
+                           
                             <button style="background-color: #ddd" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <h3>${mess}</h3>
+                         <c:if test="${param.message != null}">
+                             <p style="color: red;"> ${param.message} !!</p>
+                                </c:if>
                         <div class="modal-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -326,7 +331,6 @@
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 <input type="submit" class="btn btn-success" value="Save">
                             </div>
-
 
                     </form>
                 </section>

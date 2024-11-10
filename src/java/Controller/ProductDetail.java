@@ -32,6 +32,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Date;
 
 /**
@@ -230,6 +231,7 @@ public class ProductDetail extends HttpServlet {
             }
         }
         boolean addattri = true;
+        boolean check = true;
 
         if (newAttributeNames2 != null && newAttributeNames2.length > 0 && newAttributeValues2 != null && newAttributeValues2.length > 0) {
             System.out.println("DA CHECK DUOC ROI");
@@ -242,7 +244,7 @@ public class ProductDetail extends HttpServlet {
                 if (productAttributesDAO.attributeExists(id, newName2)) {
                     // If it exists, set a message and forward to the same page
                     request.setAttribute("message", "Attribute " + newName2 + " already exists.");
-                    request.getRequestDispatcher("ProductMKT").forward(request, response);
+                    response.sendRedirect("ProductDetail?ID=" + id + "&message=" + URLEncoder.encode("Attribute " + newName2 + " already exists.", "UTF-8"));
                     return; // Exit to prevent further processing
                 } else {
                     // If it does not exist, add the new attribute
