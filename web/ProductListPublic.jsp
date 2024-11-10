@@ -3,6 +3,7 @@
     Created on : Oct 8, 2024, 5:55:43 AM
     Author     : Dokkuhai
 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -303,8 +304,8 @@
                             <div class="card-body" style="padding: 10px;">
                                 <div class="card-title" style="font-size: 12px; margin-bottom: 5px; ">${hotproduct.getProductName()}</div>
                                 <div style="color: #F95A74">Thương hiệu: ${hotproduct.getBrand()}</div>
-                                <div class="price">Giá ưu đãi: ${hotproduct.getPrice() * (1 - hotproduct.getSale() / 100)}đ </div>
-                                <div class="original-price">Giá gốc: ${hotproduct.getPrice()}đ</div>
+                                <div class="price">Giá ưu đãi: <fmt:formatNumber value="${hotproduct.price * (1 - hotproduct.sale / 100)}" pattern="#,###" />đ </div>
+                                <div class="original-price">Giá gốc: <fmt:formatNumber value="${hotproduct.price}" pattern="#,###" />đ</div>
                                 <div class="buy-option">                              
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
@@ -387,7 +388,7 @@
                                     <div style="color: #000;">Thương hiệu: <b>${list1.getBrand()}</b></div>
                                     <div style="color: #000;">Số lượng còn: <b>${list1.getQuantity()}</b></div>
                                     <div style="font-style: italic">Trả góp 0% qua thẻ tín dụng</div>
-                                    <p class="price">Giá ưu đãi: ${list1.getPrice() * (1 - list1.getSale() / 100)}đ  <span class="original-price">${list1.getPrice()}đ</span></p>
+                                    <p class="price">Giá ưu đãi: <fmt:formatNumber value="${list1.price * (1 - list1.sale / 100)}" pattern="#,###" />đ  <span class="original-price"><fmt:formatNumber value="${list1.price}" pattern="#,###" />đ</span></p>
                                     <div class="buy-option">
                                     <c:choose>
                                         <c:when test="${empty sessionScope.user}">
