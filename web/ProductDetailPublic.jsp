@@ -3,6 +3,7 @@
     Created on : Oct 9, 2024, 11:25:44 PM
     Author     : Dokkuhai
 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.UUID" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -701,11 +702,11 @@
                         <tbody>
                             <tr>
                                 <td style="font-size: 20px;"><b>Giá niêm yết:</b></td>
-                                <td style="font-size: 20px;text-decoration: line-through;color: gray;">${productDetail.getPrice()}đ</td>
+                                <td style="font-size: 20px;text-decoration: line-through;color: gray;"><fmt:formatNumber value="${productDetail.price}" pattern="#,###" />đ</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 20px"><b>Giá khuyến mại: </b></td>
-                                <td style="font-size: 20px; color: red"><b>${productDetail.getPrice() * (1 - productDetail.getSale() / 100)}đ</b></td>
+                                <td style="font-size: 20px; color: red"><b><fmt:formatNumber value="${productDetail.price * (1 - productDetail.sale / 100)}" pattern="#,###" />đ</b></td>
                             </tr>
                         </tbody>
                     </table>
